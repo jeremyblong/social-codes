@@ -1,0 +1,149 @@
+{
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "E4C6181B",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "213924859284573",
+      "referenceName" : "10 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : false,
+      "internalID" : "BE53471C",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "29334059834958",
+      "referenceName" : "25 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "6.99",
+      "familyShareable" : false,
+      "internalID" : "0345FE30",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "239487294587293485",
+      "referenceName" : "50 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "8.99",
+      "familyShareable" : false,
+      "internalID" : "3B55175E",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "23049823929999928287",
+      "referenceName" : "75 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "10.99",
+      "familyShareable" : false,
+      "internalID" : "1AD904DA",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "102992892899992",
+      "referenceName" : "100 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "13.99",
+      "familyShareable" : false,
+      "internalID" : "94E68E72",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "1118882282828239299999",
+      "referenceName" : "125 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "15.99",
+      "familyShareable" : false,
+      "internalID" : "A95CCC57",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "00029292827847374",
+      "referenceName" : "150 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "19.99",
+      "familyShareable" : false,
+      "internalID" : "D36BF5D7",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "19828474747777747467",
+      "referenceName" : "200 tokens",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "22.99",
+      "familyShareable" : false,
+      "internalID" : "E35508CE",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "187127272672222",
+      "referenceName" : "250 tokens",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

@@ -1,0 +1,66 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '11.0'
+
+target 'client' do
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera/Permission-Camera.podspec"
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+  pod 'GoogleSignIn'
+  pod 'Firebase/AdMob'
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone/Permission-Microphone.podspec"
+  pod 'react-native-twilio-video-webrtc', path: '../node_modules/react-native-twilio-video-webrtc'
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications/Permission-Notifications.podspec"
+  # pod 'RNFBAdMob', :path => '../node_modules/@react-native-firebase/admob'
+  # pod 'Google-Mobile-Ads-SDK'
+  
+  # pod 'react-native-admob-native-ads', :path => '../node_modules/react-native-admob-native-ads'
+
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
+  pod 'react-native-ffmpeg', :path => '../node_modules/react-native-ffmpeg'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  target 'clientTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  use_flipper!({ 'Flipper-Folly' => '2.3.0' }) # update this part
+  post_install do |installer|
+    flipper_post_install(installer)
+  end
+end
+
+target 'client-tvOS' do
+  # Pods for client-tvOS
+
+  target 'client-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end

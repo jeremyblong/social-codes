@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "796752027417",
+    "project_id": "fairwage-freelancing",
+    "storage_bucket": "fairwage-freelancing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796752027417:android:7499761fc895014f30ef88",
+        "android_client_info": {
+          "package_name": "com.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796752027417-dutegdijcd5mj06c570mkle8s5nkedve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTD7hCE8Mkpoal_Hx3vAc3G0Ic-aYaoQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796752027417-dutegdijcd5mj06c570mkle8s5nkedve.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "796752027417-kimdu3u2st4lall64hrhnp44falinitp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reactjs.native.example.client"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
