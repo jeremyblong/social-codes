@@ -36,7 +36,7 @@ export default StyleSheet.create({
       borderBottomWidth: 1,
       borderColor: "#FFFFFF",
       alignItems: 'flex-start',
-      backgroundColor: "#b8f2f5"
+      backgroundColor: "#ffd530"
     },
     customModalBody: {
       flex: 1, 
@@ -122,7 +122,8 @@ export default StyleSheet.create({
     },
     name:{
       fontSize:16,
-      color:"blue"
+      color:"#303030",
+      fontWeight: "bold"
     },
     headText: {
       fontSize: 34,

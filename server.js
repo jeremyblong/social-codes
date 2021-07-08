@@ -200,6 +200,9 @@ app.use("/downvote/subcomment/comment", require("./routes/forums/comments/likesD
 app.use("/delete/comment/forums/thread", require("./routes/forums/comments/delete/deleteComment.js"));
 app.use("/gather/active/gigs/jobs", require("./routes/activeGigs/home/gatherActiveJobsGigs.js"));
 app.use("/gather/agreement/details/and/job", require("./routes/activeGigs/individual/gatherGigData.js"));
+app.use("/gather/active/live/jobs", require("./routes/activeGigs/listOfJobs/gatherListOfJobs.js"));
+app.use("/fetch/specific/job/active", require("./routes/activeGigs/individual/gatherJobByID.js"));
+app.use("/make/full/payment/entire", require("./routes/activeGigs/individual/payments/makeCompleteFullPaymentIndividual.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

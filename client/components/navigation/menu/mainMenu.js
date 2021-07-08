@@ -379,13 +379,13 @@ constructor(props) {
                                             <Text style={styles.sub}>Manage active, pending and submitted proposals</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
+                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("active-live-gigs-in-progress");
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/seeker.png")} style={[styles.shortViewIcon, { tintColor: "purple" }]} />
                                         <Text style={styles.largeSized}>Active Gigs/Jobs</Text>
                                         <Text>Current *active* accepted jobs</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> : null}
                                     <View style={styles.shortView}>
                                         
                                     </View>
@@ -394,12 +394,12 @@ constructor(props) {
                                     </View>
                                 </View>
                                 <View style={styles.halfed}>
-                                    <TouchableOpacity onPress={() => {
+                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("manage-applicants-jobs");
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/applicant.png")} style={styles.shortViewIcon} />
                                         <Text style={styles.midSized}>View/Manage applicants</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> : null}
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("forums-main");
                                     }} style={styles.tallView}>
@@ -436,9 +436,12 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
-                                    <View style={styles.shortView}>
-                                        
-                                    </View>
+                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("active-live-jobs-main");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/job-job.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
+                                        <Text style={styles.largeSized}>Active Gigs/Current Jobs</Text>
+                                    </TouchableOpacity> : null}
                                     <View style={styles.shortView}>
                                         
                                     </View>
@@ -480,7 +483,8 @@ const mapStateToProps = (state) => {
     return {
         page: _.has(state.jobData, "data") && _.has(state.jobData.data, "page") ? state.jobData.data.page : 1,
         fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`,
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        accountType: state.signupData.authData.accountType
     }
 }
 export default connect(mapStateToProps, { signedInUserData, addJobData, addPortfolioData })((props) => {

@@ -849,17 +849,17 @@ constructor (props) {
                                     style={styles.introVideo}
                                 />
                             </View> : null}
-                            {typeof user.currentActiveJobs !== "undefined" && user.currentActiveJobs.length > 0 ? <Fragment><Text style={styles.headerText}>Active Jobs</Text>
-                            <Text style={styles.subText}>These are active jobs posted by this user</Text>
-                            <Carousel
-                                ref={(c) => { this._carousel = c; }}
-                                data={this.state.user.currentActiveJobs}
-                                renderItem={this._renderItem}
-                                sliderWidth={width}
-                                itemWidth={width * 0.95}
-                            /></Fragment> : null}
                         </View>
                     </View>
+                    {typeof user.currentActiveJobs !== "undefined" && user.currentActiveJobs.length > 0 ? <Fragment><View style={{ margin: 15 }}><Text style={styles.headerText}>Active Jobs</Text>
+                    <Text style={styles.subText}>These are active jobs posted by this user</Text></View>
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.state.user.currentActiveJobs}
+                        renderItem={this._renderItem}
+                        sliderWidth={width}
+                        itemWidth={width * 0.90}
+                    /></Fragment> : null}
                     <View style={{ marginTop: 25 }} />
                     <View style={styles.nextContainer}>
                         {user !== null && typeof user.employmentHistory !== "undefined" && user.employmentHistory.length > 0 ? user.employmentHistory.slice(0, 2).map((history, index) => {
@@ -1835,17 +1835,17 @@ constructor (props) {
         const passed = this.props.props.route.params.item;
         return (
             <Fragment>
-                <Header>
+                <Header style={styles.headerGrey}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Public Profile</Title>
-                        <Subtitle>View wall, photos & more...</Subtitle>
+                        <Title style={styles.goldText}>Public Profile</Title>
+                        <Subtitle style={styles.goldText}>View wall, photos & more...</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -1927,13 +1927,13 @@ constructor (props) {
                         </TouchableOpacity>    
                     </View>
                 </RBSheet> : null}
-                {this.state.selected !== null ? <SlidingUpPanel  ref={c => this._panel = c}>
+                {this.state.selected !== null ? <SlidingUpPanel allowDragging={false} ref={c => this._panel = c}>
                     <TouchableOpacity onPress={() => {
                         this._panel.hide();
                     }} style={styles.touchableTwo}>
                         <Image source={require("../../../assets/icons/close.png")} style={styles.closeIcon} />
                     </TouchableOpacity>
-                    <RenderSlideUpPane selected={this.state.selected} props={this.props.props} />
+                    <RenderSlideUpPane  selected={this.state.selected} props={this.props.props} />
                 </SlidingUpPanel> : null}
             </Fragment>
         )

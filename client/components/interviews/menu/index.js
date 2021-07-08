@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styles from './styles.js';
 import { View, Text, Image, FlatList } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { connect } from 'react-redux';
@@ -64,9 +64,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any pending interviews for you right now!</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
+                        <AwesomeButtonCartman type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
                             this.props.props.navigation.push("manage-applicants-jobs");
-                        }} stretch={true}>View pending applicants</AwesomeButtonBlue>
+                        }} stretch={true}>View pending applicants</AwesomeButtonCartman>
                     </View>
                 </View>
             );
@@ -114,17 +114,17 @@ constructor(props) {
         const { interviews } = this.state;
         return (
             <View style={{ flex: 1 }}>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Interviews Home</Title>
-                        <Subtitle>Video calling & more</Subtitle>
+                        <Title style={{ color: "#ffd530" }}>Interviews Home</Title>
+                        <Subtitle style={{ color: "#ffd530" }}>Video calling & more</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -136,16 +136,16 @@ constructor(props) {
                             console.log("int", interview);
                             return (
                                 <Fragment key={index}>
-                                    <View style={[ styles.card, { borderColor: "blue" }]}>
+                                    <View style={[ styles.card, { borderColor: "#ffd530" }]}>
                                         <View style={styles.cardContent}>
                                             <Text style={styles.name}>Interviewing with {interview.firstName} {interview.lastName}</Text>
                                             <Text style={styles.sub}>{interview.username}</Text>
                                             <Text style={[styles.description, { marginTop: 10, marginBottom: 10 }]}>On {months[interview.day.month]} {this.calculateDay(interview.day.day)}, {interview.day.year}</Text>
                                             <Text style={[styles.date, { marginBottom: 20 }]}>Scheduled for {interview.fullTime}</Text>
                                             <View style={{ margin: 7.5 }}>
-                                                <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                                <AwesomeButtonCartman backgroundColor={"#303030"} backgroundShadow={"#ffd530"} type={"secondary"} onPress={() => {
                                                     this.props.props.navigation.push("activate-video-call-prescreen", { interview })
-                                                }} stretch={true}>View Meeting</AwesomeButtonBlue>
+                                                }} stretch={true}>View Meeting</AwesomeButtonCartman>
                                             </View>
                                             <View style={{ height: 20 }} />
                                         </View>

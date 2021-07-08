@@ -25,6 +25,13 @@ export default StyleSheet.create({
     grayButton: {
         backgroundColor: "#303030"
     },
+    thumbnailVideo: {
+        minWidth: 55,
+        minHeight: 55,
+        maxWidth: 55,
+        maxHeight: 55,
+        borderRadius: 40
+    },
     absoluteBadge: {
         top: 15
     }

@@ -257,18 +257,18 @@ constructor(props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={styles.headerGrey}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheet.close();
                             }} transparent>
-                                <Icon style={{ color: "black" }} name='arrow-back' />
-                                <NativeText style={{ color: "black" }}>Back</NativeText>
+                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                                {Platform.OS === "ios" ? <NativeText style={{ color: "black" }}>Back</NativeText> : null}
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Search</Title>
-                            <Subtitle>Search Settings & more...</Subtitle>
+                            <Title style={styles.goldText}>Search</Title>
+                            <Subtitle style={styles.goldText}>Search Settings & more...</Subtitle>
                         </Body>
                         <Right>
                             

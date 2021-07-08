@@ -48,6 +48,7 @@ export default StyleSheet.create({
         },
         flex: 1,
         height: "100%",
+        marginTop: 15,
         maxHeight: height * 0.40,
         shadowOpacity: 0.37,
         marginBottom: 20,

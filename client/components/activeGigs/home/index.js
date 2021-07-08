@@ -9,7 +9,7 @@ import LottieView from 'lottie-react-native';
 import Config from "react-native-config";
 import axios from "axios";
 import { connect } from "react-redux";
-
+import Video from "react-native-video";
 
 const { width, height } = Dimensions.get("window");
 
@@ -88,7 +88,11 @@ constructor(props) {
                                             this.props.props.navigation.push("individual-active-gig-manage", { item });
                                         }} thumbnail>
                                             <Left>
-                                                <Thumbnail square source={{ uri: item.photo }} />
+                                            {item.type === "video" ? <Video source={{uri: item.photo }} 
+                                            ref={(ref) => {
+                                                this.player = ref
+                                            }}
+                                            style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: item.photo }} />}
                                             </Left>
                                             <Body>
                                                 <Text>{item.otherUserFirstName} {item.otherUserLastName}</Text>

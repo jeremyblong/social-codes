@@ -15,6 +15,12 @@ export default StyleSheet.create({
     smallColumn: {
         width: (width * 0.20)
     },
+    headerGrey: {
+        backgroundColor: "#303030"
+    },
+    goldText: {
+        color: "#ffd530"
+    },
     margin: {
         margin: 15
     },

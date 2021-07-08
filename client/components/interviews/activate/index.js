@@ -156,7 +156,7 @@ constructor(props) {
         console.log("interview:", this.props.props.route.params.interview, "this.state:", this.state);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -165,8 +165,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Initiate</Title>
-                        <Subtitle>Interview with {interview.firstName} {interview.lastName}</Subtitle>
+                        <Title style={styles.goldText}>Initiate</Title>
+                        <Subtitle style={styles.goldText}>Interview with {interview.firstName} {interview.lastName}</Subtitle>
                     </Body>
                     <Right />
                 </Header>

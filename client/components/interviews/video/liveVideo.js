@@ -4,7 +4,7 @@ import {
   TwilioVideoParticipantView,
   TwilioVideo
 } from 'react-native-twilio-video-webrtc';
-import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image, Platform } from "react-native";
 import styles from "./styles.js";
 import axios from 'axios';
 import Config from "react-native-config";
@@ -130,7 +130,7 @@ const LiveVideoPeerToPeerHelper = (props) => {
         {
             status === 'disconnected' &&
             <View>
-            <Header>
+            <Header style={styles.header}>
                 <Left>
                     <Button onPress={() => {
                         props.props.navigation.goBack();
@@ -139,8 +139,8 @@ const LiveVideoPeerToPeerHelper = (props) => {
                     </Button>
                 </Left>
                 <Body>
-                    <Title>LIVE INTERVIEW</Title>
-                    <Subtitle>LIVE VIDEO INTERVIEW CALL</Subtitle>
+                    <Title style={styles.goldText}>LIVE INTERVIEW</Title>
+                    <Subtitle style={styles.goldText}>LIVE VIDEO INTERVIEW CALL</Subtitle>
                 </Body>
                 <Right />
             </Header>
@@ -156,7 +156,7 @@ const LiveVideoPeerToPeerHelper = (props) => {
                 <Text style={styles.sub}>When you are ready, feel free to press the "connect" button and we will connect you to the conference room and notfiy the other user of your arrival!</Text>
             </View>
             <View style={styles.centered}>
-                <LottieView style={{ maxWidth: 300, maxHeight: 300, minHeight: 300, minWidth: 300 }} source={require("../../../assets/animations/videocall.json")} autoPlay loop />
+                <LottieView style={{ maxWidth: 250, maxHeight: 250, minHeight: 250, minWidth: 250, width: 250, height: 250 }} source={require("../../../assets/animations/conference.json")} autoPlay loop />
             </View>
             </View>
         }

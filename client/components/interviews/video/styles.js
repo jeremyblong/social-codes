@@ -5,8 +5,15 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35, 
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffd530"
     },
+    header: {
+        backgroundColor: "#303030"
+    },
+    goldText: {
+        color: "#ffd530"
+    },  
     container: {
         width,
         height,
@@ -41,8 +48,8 @@ export default StyleSheet.create({
     },
     centered: {
         position: 'absolute',
-        left: (width / 2) - 150,
-        top: height - 325
+        left: (width / 2) - 125,
+        top: height - 275
     },
     hr: {
         marginTop: 15,

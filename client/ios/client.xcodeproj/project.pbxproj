@@ -26,6 +26,8 @@
 		90E1B22B2667622C00FF7FA9 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		921BFC94AC4AC3866917FDBB /* libPods-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22AFF7B77B91255BA0CF33E /* libPods-client.a */; };
 		B312D2172971599C9CE32AA0 /* libPods-client-clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8BD16FED9EC68051394EC7B /* libPods-client-clientTests.a */; };
+		F4C1F4AF58C34144A089D7A9 /* ChunkFive Print.otf in Resources */ = {isa = PBXBuildFile; fileRef = E15EDC996F8C432081683EEB /* ChunkFive Print.otf */; };
+		49DC8FCF22A448A2A6D50D85 /* Oswald Stencil.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FD2972B581147DA9D2AB889 /* Oswald Stencil.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,8 @@
 		EFC2B9DEF84A4ADDB76CA68D /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		F9F2A94FA0070006DBDEADA9 /* Pods-client-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOS.release.xcconfig"; path = "Target Support Files/Pods-client-tvOS/Pods-client-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FE8DAE4DC93744FE8D36BDE7 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		E15EDC996F8C432081683EEB /* ChunkFive Print.otf */ = {isa = PBXFileReference; name = "ChunkFive Print.otf"; path = "../assets/fonts/ChunkFive Print.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8FD2972B581147DA9D2AB889 /* Oswald Stencil.ttf */ = {isa = PBXFileReference; name = "Oswald Stencil.ttf"; path = "../assets/fonts/Oswald Stencil.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,8 @@
 				D3BC81ED5A234209A95DC5CD /* rubicon-icon-font.ttf */,
 				CB059BF5D6914A4187E4BD55 /* SimpleLineIcons.ttf */,
 				EFC2B9DEF84A4ADDB76CA68D /* Zocial.ttf */,
+				E15EDC996F8C432081683EEB /* ChunkFive Print.otf */,
+				8FD2972B581147DA9D2AB889 /* Oswald Stencil.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -409,6 +415,8 @@
 				904FC8212613CA1A009FCE53 /* Configuration.storekit in Resources */,
 				907A0C0E2609952F00728881 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F4C1F4AF58C34144A089D7A9 /* ChunkFive Print.otf in Resources */,
+				49DC8FCF22A448A2A6D50D85 /* Oswald Stencil.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

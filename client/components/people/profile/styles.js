@@ -15,8 +15,11 @@ export default StyleSheet.create({
         maxWidth: 35,
         maxHeight: 35
     },
+    goldText: {
+        color: "#ffd530"
+    },
     header:{
-        backgroundColor: "#00BFFF",
+        backgroundColor: "#303030",
         height:200,
         maxHeight: 200,
         margin: 15
@@ -169,7 +172,7 @@ export default StyleSheet.create({
         borderRadius: 40
     },
     scroller: {
-        maxWidth: "100%"
+        flexDirection: "row"
     },
     sendIcon: {
         width: 60,
@@ -483,6 +486,9 @@ export default StyleSheet.create({
         width:250,
         borderRadius:30,
         backgroundColor: "#00BFFF",
+    },
+    headerGrey: {
+        backgroundColor: "#303030"
     },
     tagger: {
         backgroundColor: "#f5f5f5",

@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, Platform } from "react
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import styles from "./styles.js";
 import { Header, Left, Body, Right, Title, Subtitle, Button, Content, Input, Item } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import axios from "axios";
 import Config from "react-native-config";
 import { addSignupData, userSignedIn, signedInUserData } from "../../actions/auth/signup.js";
@@ -168,7 +168,7 @@ const FirstRoute = (props) => {
                 <TouchableOpacity onPress={() => {
                     change(!visibility);
                 }} style={{ zIndex: 999, maxWidth: 60 }}>
-                    {visibility === true ? <Text style={{ color: "blue" }}>Show</Text> : <Text style={{ color: "blue" }}>Hide</Text>}
+                    {visibility === true ? <Text style={{ color: "#303030" }}>Show</Text> : <Text style={{ color: "#303030" }}>Hide</Text>}
                 </TouchableOpacity>
             </View>
           </Item>
@@ -178,7 +178,7 @@ const FirstRoute = (props) => {
             </View> */}
         </Content>
         <View style={styles.bottomed}>
-            {calculate() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Join & Continue To Next Page</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={handleSubmissionNextPage} stretch={true}>Join & Continue To Next Page</AwesomeButtonBlue>}
+            {calculate() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Join & Continue To Next Page</AwesomeButtonCartman> : <AwesomeButtonCartman backgroundProgress={"black"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} type={"anchor"} onPress={handleSubmissionNextPage} stretch={true}>Join & Continue To Next Page</AwesomeButtonCartman>}
         </View>
     </View> 
     );
@@ -272,7 +272,7 @@ const SecondRoute = (props) => {
                     <TouchableOpacity onPress={() => {
                         change(!visibility);
                     }} style={{ zIndex: 999, maxWidth: 60 }}>
-                        {visibility === true ? <Text style={{ color: "blue" }}>Show</Text> : <Text style={{ color: "blue" }}>Hide</Text>}
+                        {visibility === true ? <Text style={{ color: "#303030" }}>Show</Text> : <Text style={{ color: "#303030" }}>Hide</Text>}
                     </TouchableOpacity>
                 </View>
             </Item>
@@ -283,9 +283,9 @@ const SecondRoute = (props) => {
             </Content>
             
             <View style={styles.bottomed}>
-                {calculateLogin() ? <AwesomeButtonBlue type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonBlue> : <AwesomeButtonBlue progress type={"secondary"} onPress={(next) => {
+                {calculateLogin() ? <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonCartman> : <AwesomeButtonCartman progress type={"anchor"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
                     handleSubmission(next);
-                }} stretch={true}>Sign-in</AwesomeButtonBlue>}
+                }} stretch={true}>Sign-in</AwesomeButtonCartman>}
             </View>
             <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>

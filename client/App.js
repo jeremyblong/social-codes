@@ -96,7 +96,8 @@ import InitialAskQuestionPage from "./pages/forums/createPost/initial/index.js";
 import ForumListingIndividualPage from "./pages/forums/individual/individualListing/forumListing.js";
 import HomeActiveGigsDashboardHelper from "./pages/activeGigs/home/index.js";
 import IndividualGigManagePage from "./pages/activeGigs/individual/index.js";
-
+import ActiveJobsMainPageHelperPage from "./pages/activeGigs/active/listOfJobs/index.js";
+import IndividualActiveJobPage from "./pages/activeGigs/active/individual/index.js";
 
 
 const { width, height } = Dimensions.get("window");
@@ -385,35 +386,35 @@ constructor(props) {
     
     this.getFcmToken();
 
-    // /* Success */
-    // const unsubscribe = messaging().onMessage(async remoteMessage => {
-    //   console.log("Notification when app is on foreground", remoteMessage);
+    /* Success */
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log("Notification when app is on foreground", remoteMessage);
 
-    //   Toast.show({
-    //     text1: remoteMessage.notification.title,
-    //     text2: remoteMessage.notification.body,
-    //     visibilityTime: 6500,
-    //     type: "success"
-    //   });
-    // });
+      Toast.show({
+        text1: remoteMessage.notification.title,
+        text2: remoteMessage.notification.body,
+        visibilityTime: 6500,
+        type: "success"
+      });
+    });
 
-    // /* Success */
-    // messaging().onNotificationOpenedApp(remoteMessage => {
-    //   console.log('Notification caused app to open from background state:', remoteMessage);
+    /* Success */
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('Notification caused app to open from background state:', remoteMessage);
 
-    //   // this.props.navigation.navigate(remoteMessage.data.dl);
-    //   this.props.checkToNavigatePushNotification({
-    //     redirect: true,
-    //     route: remoteMessage.data.dl
-    //   })
-    // });
+      // this.props.navigation.navigate(remoteMessage.data.dl);
+      this.props.checkToNavigatePushNotification({
+        redirect: true,
+        route: remoteMessage.data.dl
+      })
+    });
 
-    // /* Success */
-    // messaging().getInitialNotification().then(remoteMessage => {
-    //   if (remoteMessage) {
-    //     console.log('Notification caused app to open from quit state:', remoteMessage);
-    //   }
-    // });
+    /* Success */
+    messaging().getInitialNotification().then(remoteMessage => {
+      if (remoteMessage) {
+        console.log('Notification caused app to open from quit state:', remoteMessage);
+      }
+    });
     
     GetLocation.getCurrentPosition({
 			enableHighAccuracy: true,
@@ -525,6 +526,8 @@ constructor(props) {
               <Stack.Screen name="individual-forum-post-visit" component={ForumListingIndividualPage} />
               <Stack.Screen name="active-live-gigs-in-progress" component={HomeActiveGigsDashboardHelper} />
               <Stack.Screen name="individual-active-gig-manage" component={IndividualGigManagePage} />
+              <Stack.Screen name="active-live-jobs-main" component={ActiveJobsMainPageHelperPage} />
+              <Stack.Screen name="active-job-individual-full-listing" component={IndividualActiveJobPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />
