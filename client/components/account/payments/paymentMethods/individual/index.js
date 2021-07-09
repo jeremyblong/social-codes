@@ -91,8 +91,9 @@ constructor(props) {
                             }} transparent>
                                 <Image source={require("../../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
                             </Button>
-                            <Title style={{ paddingTop: 10 }}>Credit Card</Title>
+                            
                         </Left>
+                        <Body><Title style={{ paddingTop: 10 }}>Credit Card</Title></Body>
                     </Header>
                     <List>
                         <ListItem onPress={() => {

@@ -11,6 +11,9 @@ export default StyleSheet.create({
     listItem: {
         minHeight: 70
     },
+    header: {
+        backgroundColor: "#303030"
+    },
     container: {
         backgroundColor: "white",
         height, 

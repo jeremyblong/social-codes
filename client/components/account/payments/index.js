@@ -44,7 +44,7 @@ const PaymentMainPageHelper =  (props) => {
                     <Right />
                 </Header>
                 <List>
-                    {user !== null && user.accountType === "work" ? <ListItem button={true} onPress={() => {
+                    {user !== null && user.accountType === "hire" ? <ListItem button={true} onPress={() => {
                         props.props.navigation.push("payments-cards");
                     }} style={styles.listItem}>
                         <Left>
@@ -54,7 +54,7 @@ const PaymentMainPageHelper =  (props) => {
                             <Image source={require("../../../assets/icons/payment-methods.png")} style={styles.icon} />
                         </Right>
                     </ListItem> : null}
-                    {user !== null && user.accountType === "hire" ? <ListItem button={true} onPress={() => {
+                    {user !== null && user.accountType === "work" ? <ListItem button={true} onPress={() => {
                         props.props.navigation.push("payouts-main-homepage");
                     }}style={styles.listItem}>
                         <Left>

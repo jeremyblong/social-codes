@@ -7,6 +7,7 @@ import styles from './styles.js';
 import axios from "axios";
 import Config from "react-native-config";
 import { connect } from "react-redux";
+import IndividualActiveJobHelper from "../active/individual/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -21,6 +22,8 @@ constructor(props) {
     componentDidMount() {
 
         const gigData = this.props.props.route.params.item;
+
+        console.log("gigData", gigData);
 
         axios.get(`${Config.ngrok_url}/gather/agreement/details/and/job`, {
             params: {
@@ -39,23 +42,23 @@ constructor(props) {
     }
     render() {
         const menu = <Side props={this.props} />;
-        const item = this.props.props.route.params.item;
-
-        console.log("this.props.props", this.props.props);
+ 
+        const gigData = this.props.props.route.params.item;
+        console.log("this.props.props item.jobID", this.props.props);
         return (
            <Fragment>
                 <SideMenu openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
-                    <Header>
+                        <Header style={{ backgroundColor: "#303030" }}>
                             <Left>
                                 <Button onPress={() => {
                                     this.props.props.navigation.goBack();
                                 }} transparent>
-                                    <Icon style={{ color: "black" }} name='arrow-back' />
+                                    <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                                 </Button>
                             </Left>
                             <Body>
-                                <Title>Individual Gig</Title>
-                                <Subtitle>Manage your gig & more...</Subtitle>
+                                <Title style={styles.goldText}>Pending Jobs</Title>
+                                <Subtitle style={styles.goldText}>Live Active Jobs</Subtitle>
                             </Body>
                             <Right>
                                 <Button onPress={() => {
@@ -63,16 +66,13 @@ constructor(props) {
                                         menuOpen: !this.state.menuOpen
                                     })
                                 }} transparent>
-                                    <Icon style={{ color: "black" }} name='menu' />
+                                    <Icon style={{ color: "#ffd530" }} name='menu' />
                                 </Button>
                             </Right>
                         </Header>
-                        <View style={styles.container}>
-                            <View style={styles.margin}>
-                                <Text style={styles.headerText}>Job is <Text style={{ textDecorationLine: "underline" }}>active</Text> with {item.otherUserFirstName} {item.otherUserLastName} {"\n"}{"\n"}Username: {item.otherUserUsername}</Text>
-                                <View style={styles.hr} />
-                            </View>
-                        </View>
+                        <IndividualActiveJobHelper item={{
+                            jobID: gigData.jobID
+                        }} props={this.props.props} />
                 </SideMenu>
            </Fragment>
         )

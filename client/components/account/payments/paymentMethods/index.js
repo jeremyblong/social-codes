@@ -106,15 +106,17 @@ constructor(props) {
         return (
             <Fragment>
                 <View style={styles.container}>
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left style={{ flexDirection: "row" }}>
                             <Button onPress={() => {
                                 this.props.props.navigation.navigate("payments-main");
                             }} transparent>
-                                <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                             </Button>
-                            <Title style={{ paddingTop: 10 }}>Edit your payment methods</Title>
+                            
                         </Left>
+                        <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>Edit your payment methods</Title></Body>
+                        <Right></Right>
                     </Header>
                     <List>
                     <ListItem button={true} onPress={() => {

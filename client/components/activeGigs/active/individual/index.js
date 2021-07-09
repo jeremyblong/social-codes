@@ -30,7 +30,8 @@ constructor(props) {
         axios.get(`${Config.ngrok_url}/fetch/specific/job/active`, {
             params: {
                 id: this.props.unique_id,
-                jobID: passedData.jobID
+                jobID: passedData.jobID,
+                applicant: passedData.with
             }
         }).then((res) => {
             if (res.data.message === "Located specific job!") {
@@ -435,20 +436,6 @@ constructor(props) {
         console.log("this.state activeGigs individual index.js state", this.state);
         return (
             <Fragment>
-                <Header style={{ backgroundColor: "#303030" }}>
-                    <Left>
-                        <Button onPress={() => {
-                            this.props.props.navigation.goBack();
-                        }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title style={styles.goldText}>Pending Jobs</Title>
-                        <Subtitle style={styles.goldText}>Live Active Jobs</Subtitle>
-                    </Body>
-                    <Right />
-                </Header>
                 
                 <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={styles.container}>
                     {job !== null ? <SlideUpPaymentHelper job={job} rate={job.ratePerProjectCompletion} props={this.props} sheetRef={this.sheetRef} /> : null}

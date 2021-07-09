@@ -7,15 +7,17 @@ const PaymentCardAddNewHelper =  (props) => {
     return (
         <Fragment>
             <View style={styles.container}>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left style={{ flexDirection: "row" }}>
                         <Button onPress={() => {
                             props.props.navigation.push("payments-cards");
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
-                        <Title style={{ paddingTop: 10 }}>Add new payment form</Title>
+                        
                     </Left>
+                    <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>New payment form</Title></Body>
+                    <Right></Right>
                 </Header>
                 <List>
                     <ListItem button={true} onPress={() => {

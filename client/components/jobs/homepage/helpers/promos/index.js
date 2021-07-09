@@ -13,7 +13,7 @@ const PromoHelper = (props) => {
     const _renderItem = ({item, index}) => {
         return (
             <Fragment>
-                <JobHelperSubComponent manage={false} props={props} item={item} />
+                <JobHelperSubComponent manage={false} props={props.props} item={item} />
             </Fragment>
         );
     }

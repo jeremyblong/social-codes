@@ -27,6 +27,21 @@ export default StyleSheet.create({
         maxHeight: 55,
         borderRadius: 40
     },
+    myImage: {
+        maxWidth: "100%", 
+        maxHeight: height * 0.40
+    },
+    background: {
+        width,
+        height,
+        backgroundColor: "white",
+        padding: 15
+    },
+    headText: {
+        fontSize: 34,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
     greyButton: {
         backgroundColor: "#303030",
         width: 125,

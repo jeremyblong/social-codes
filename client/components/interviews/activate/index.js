@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styles from './styles.js';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { connect } from 'react-redux';
@@ -205,15 +205,15 @@ constructor(props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.bottom}>
-                        {hide === false && ready === true ? <AwesomeButtonBlue type={"primary"} backgroundColor={"blue"} onPress={() => {
+                        {hide === false && ready === true ? <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
                             this.setState({
                                 showHireDialog: true
                             })
-                        }} stretch={true}>Hire Applicant</AwesomeButtonBlue> : null}
+                        }} stretch={true}>Hire Applicant</AwesomeButtonCartman> : null}
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                             this.props.props.navigation.push("video-call-live-active-peer-to-peer-interview", { interview });
-                        }} stretch={true}>Initiate Video Call</AwesomeButtonBlue>
+                        }} stretch={true}>Initiate Video Call</AwesomeButtonCartman>
                     </View>
                 </View>
                 

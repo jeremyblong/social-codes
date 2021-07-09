@@ -34,7 +34,7 @@ export default StyleSheet.create({
     blackHr: {
         borderBottomWidth: 2,
         borderBottomColor: "black",
-        width: 350,
+        width: "100%",
         marginTop: 35,
         marginBottom: 35
     },

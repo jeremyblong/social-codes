@@ -379,13 +379,6 @@ constructor(props) {
                                             <Text style={styles.sub}>Manage active, pending and submitted proposals</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("active-live-gigs-in-progress");
-                                    }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/seeker.png")} style={[styles.shortViewIcon, { tintColor: "purple" }]} />
-                                        <Text style={styles.largeSized}>Active Gigs/Jobs</Text>
-                                        <Text>Current *active* accepted jobs</Text>
-                                    </TouchableOpacity> : null}
                                     <View style={styles.shortView}>
                                         
                                     </View>
@@ -394,6 +387,19 @@ constructor(props) {
                                     </View>
                                 </View>
                                 <View style={styles.halfed}>
+                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("active-live-jobs-main");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/job-job.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
+                                        <Text style={styles.largeSized}>Active Gigs/Current Jobs</Text>
+                                    </TouchableOpacity> : null}
+                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("active-live-gigs-in-progress");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/seeker.png")} style={[styles.shortViewIcon, { tintColor: "purple" }]} />
+                                        <Text style={styles.largeSized}>Active Gigs/Jobs</Text>
+                                        <Text>Current *active* accepted jobs</Text>
+                                    </TouchableOpacity> : null}
                                     {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("manage-applicants-jobs");
                                     }} style={styles.shortView}>
@@ -436,12 +442,7 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
-                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("active-live-jobs-main");
-                                    }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/job-job.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
-                                        <Text style={styles.largeSized}>Active Gigs/Current Jobs</Text>
-                                    </TouchableOpacity> : null}
+                                    
                                     <View style={styles.shortView}>
                                         
                                     </View>

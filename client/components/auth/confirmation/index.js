@@ -9,6 +9,7 @@ import axios from "axios";
 import Config from "react-native-config";
 import { CometChat } from "@cometchat-pro/react-native-chat";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
+import messaging from '@react-native-firebase/messaging';
 
 class EmailConfirmationHelper extends Component {
 constructor (props) {
@@ -72,28 +73,52 @@ constructor (props) {
                 lastName,
                 birthdate,
                 phoneNumber
-            }).then((res) => {
+            }).then(async (res) => {
                 if (res.data.message === "Successfully registered!") {
                     console.log(res.data);
 
-                    CometChat.login(res.data.user.cometChatAuthToken).then(
-                        User => {
-                            console.log("Login successfully:", User);
-                            // User loged in successfully.
+                    const fcmToken = await messaging().getToken();
 
-                            this.props.userSignedIn(true);
-
-                            this.props.signedInUserData(res.data.user);
-
-                            setTimeout(() => {
-                                this.props.props.navigation.push("homepage");
-                            }, 1000)
-                        },
-                        error => {
-                          console.log("Login failed with exception:", error);
-                          // User login failed, check error and take appropriate action.
+                    setTimeout(() => {
+                        if (fcmToken) {
+                            console.log(fcmToken);
+                            console.log("Your Firebase Token is:", fcmToken);
+                            
+                            axios.post(`${Config.ngrok_url}/save/firebase/token`, {
+                                token: fcmToken,
+                                unique_id: res.data.user.unique_id
+                            }).then((responseeeeeeeeee) => {
+                                if (responseeeeeeeeee.data.message === "Saved firebase token!") {
+                                    console.log(responseeeeeeeeee.data);
+    
+                                    CometChat.login(res.data.user.cometChatAuthToken).then(
+                                        User => {
+                                            console.log("Login successfully:", User);
+                                            // User loged in successfully.
+                
+                                            this.props.userSignedIn(true);
+                
+                                            this.props.signedInUserData(res.data.user);
+                
+                                            setTimeout(() => {
+                                                this.props.props.navigation.push("homepage");
+                                            }, 1000)
+                                        },
+                                        error => {
+                                          console.log("Login failed with exception:", error);
+                                          // User login failed, check error and take appropriate action.
+                                        }
+                                    );
+                                } else {
+                                    console.log("err", res.data);
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                        } else {
+                            console.log("Failed", "No token received");
                         }
-                    );
+                    }, 750)
                 } else {
                     console.log("Err", res.data);
                 }
@@ -110,28 +135,52 @@ constructor (props) {
                 lastName,
                 birthdate,
                 phoneNumber
-            }).then((res) => {
+            }).then(async (res) => {
                 if (res.data.message === "Successfully registered!") {
                     console.log(res.data);
 
-                    CometChat.login(res.data.user.cometChatAuthToken).then(
-                        User => {
-                            console.log("Login successfully:", User);
-                            // User loged in successfully.
+                    const fcmToken = await messaging().getToken();
 
-                            this.props.userSignedIn(true);
-
-                            this.props.signedInUserData(res.data.user);
-
-                            setTimeout(() => {
-                                this.props.props.navigation.push("homepage");
-                            }, 1000)
-                        },
-                        error => {
-                          console.log("Login failed with exception:", error);
-                          // User login failed, check error and take appropriate action.
-                        }
-                    );
+                    setTimeout(() => {
+                        if (fcmToken) {
+                            console.log(fcmToken);
+                            console.log("Your Firebase Token is:", fcmToken);
+                            
+                            axios.post(`${Config.ngrok_url}/save/firebase/token`, {
+                                token: fcmToken,
+                                unique_id: res.data.user.unique_id
+                            }).then((responseeeeee) => {
+                                if (responseeeeee.data.message === "Saved firebase token!") {
+                                    console.log(responseeeeee.data);
+    
+                                    CometChat.login(res.data.user.cometChatAuthToken).then(
+                                        User => {
+                                            console.log("Login successfully:", User);
+                                            // User loged in successfully.
+                
+                                            this.props.userSignedIn(true);
+                
+                                            this.props.signedInUserData(res.data.user);
+                
+                                            setTimeout(() => {
+                                                this.props.props.navigation.push("homepage");
+                                            }, 1000)
+                                        },
+                                        error => {
+                                          console.log("Login failed with exception:", error);
+                                          // User login failed, check error and take appropriate action.
+                                        }
+                                    )
+                                } else {
+                                    console.log("err", res.data);
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                        } else {
+                            console.log("Failed", "No token received");
+                        };
+                    }, 750)
                 } else {
                     console.log("Err", res.data);
                 }
@@ -212,6 +261,7 @@ const mapStateToProps = (state) => {
     return {
         signupData: state.signupData.data,
         code: state.signupData.data.verifcationCode,
+        unique_id: state.signupData.data.unique_id,
         emailOrNot: state.signupData.data.email,
         accountType: state.signupData.data.accountType,
         password: state.signupData.data.password,

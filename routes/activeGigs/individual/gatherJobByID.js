@@ -9,7 +9,7 @@ const cors = require('cors');
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.get("/", (req, res) => {
 
-        const { id, jobID } = req.query;
+        const { id, jobID, applicant } = req.query;
 
         const database = db.db("db");
 
@@ -19,15 +19,22 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             if (user) {
                 console.log(user);
 
-                for (let index = 0; index < user.appliedJobsAlready.length; index++) {
-                    const job = user.appliedJobsAlready[index];
-                    // matching applicant proposal submitted by original user
-                    if (job.jobID === jobID) {
-                        res.json({
-                            message: "Located specific job!",
-                            job
-                        })
+                if (typeof user.applicantsForPostedJobs != "undefined" && user.applicantsForPostedJobs.length > 0) {
+                    for (let index = 0; index < user.applicantsForPostedJobs.length; index++) {
+                        const job = user.applicantsForPostedJobs[index];
+                        // matching applicant proposal submitted by original user
+                        if (job.jobID === jobID && applicant === job.applicant) {
+                            res.json({
+                                message: "Located specific job!",
+                                job
+                            })
+                        }
                     }
+                } else {
+                    res.json({
+                        message: "Located specific job!",
+                        job: null
+                    })
                 }
             } else {
                 res.json({

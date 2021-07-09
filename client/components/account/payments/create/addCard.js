@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { View, Text, Image } from 'react-native';
-import { Header, Left, Button, Title, Text as NativeText } from 'native-base';
+import { Header, Left, Button, Title, Text as NativeText, Body, Right } from 'native-base';
 import styles from './styles.js';
 import { CreditCardInput } from "react-native-credit-card-input";
 import Config from "react-native-config";
@@ -90,15 +90,17 @@ constructor(props) {
         return (
             <Fragment>
                 <View style={styles.container}>
-                    <Header>
+                    <Header style={styles.header}>
                         <Left style={{ flexDirection: "row" }}>
                             <Button onPress={() => {
                                 this.props.props.navigation.goBack();
                             }} transparent>
-                                <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                             </Button>
-                            <Title style={{ paddingTop: 10 }}>Add card details</Title>
+                            
                         </Left>
+                        <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>Add card details</Title></Body>
+                        <Right></Right>
                     </Header>
                     <View style={{ marginTop: 40 }}>
                         <CreditCardInput validatePostalCode={() => {

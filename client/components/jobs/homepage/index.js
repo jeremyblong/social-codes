@@ -170,7 +170,7 @@ constructor(props) {
                         onScroll={this.scrolling}
                         ListHeaderComponent={() => {
                             return (
-                                <PromoHelper activeJobs={this.state.activeJobs} loaded={this.state.ready} />
+                                <PromoHelper activeJobs={this.state.activeJobs} props={this.props} loaded={this.state.ready} />
                             );
                         }}
                         data={activeJobs}

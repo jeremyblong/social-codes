@@ -18,6 +18,13 @@ export default StyleSheet.create({
         fontWeight: "bold",
         color: "blue"
     },
+    headerIcon: {
+        maxWidth: 35,
+        maxHeight: 35
+    },
+    goldText: {
+        color: "#ffd530"
+    },
     hr: {
         borderBottomColor: "grey",
         borderBottomWidth: 2,

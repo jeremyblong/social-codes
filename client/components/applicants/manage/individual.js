@@ -748,7 +748,7 @@ constructor(props) {
             
             <Toast ref={(ref) => Toast.setRef(ref)} />
                 
-                {selected !== null ? <SlidingUpPanel containerStyle={{ position: "absolute", bottom: 0, right: 0, top: 0, left: 0 }} allowDragging={false} height={height} ref={c => this.RBSheet = c}>
+                {selected !== null ? <SlidingUpPanel containerStyle={{  }} allowDragging={false} ref={c => this.RBSheet = c}>
                     <ScrollView contentContainerStyle={{ paddingBottom: 50, zIndex: 9999999999 }} style={styles.scrollContainer}>
                     <TouchableOpacity onPress={() => {
                         this.RBSheet.hide();

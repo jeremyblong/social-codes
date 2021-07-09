@@ -64,7 +64,7 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any pending interviews for you right now!</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
                             this.props.props.navigation.push("manage-applicants-jobs");
                         }} stretch={true}>View pending applicants</AwesomeButtonCartman>
                     </View>
@@ -143,7 +143,7 @@ constructor(props) {
                                             <Text style={[styles.description, { marginTop: 10, marginBottom: 10 }]}>On {months[interview.day.month]} {this.calculateDay(interview.day.day)}, {interview.day.year}</Text>
                                             <Text style={[styles.date, { marginBottom: 20 }]}>Scheduled for {interview.fullTime}</Text>
                                             <View style={{ margin: 7.5 }}>
-                                                <AwesomeButtonCartman backgroundColor={"#303030"} backgroundShadow={"#ffd530"} type={"secondary"} onPress={() => {
+                                                <AwesomeButtonCartman backgroundColor={"#303030"} backgroundShadow={"grey"} type={"anchor"} textColor={"white"} onPress={() => {
                                                     this.props.props.navigation.push("activate-video-call-prescreen", { interview })
                                                 }} stretch={true}>View Meeting</AwesomeButtonCartman>
                                             </View>

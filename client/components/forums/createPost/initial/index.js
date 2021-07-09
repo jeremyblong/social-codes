@@ -501,7 +501,7 @@ constructor(props) {
                                     this.RBSheet.close();
                                 }} transparent>
                                     <Icon style={{ color: "black" }} name='arrow-back' />
-                                    <Text style={{ color: "black" }}>Back</Text>
+                                    {Platform.OS === "ios" ? <Text style={{ color: "black" }}>Back</Text> : null}
                                 </Button>
                             </Left>
                             <Body>

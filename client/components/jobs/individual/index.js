@@ -3814,8 +3814,8 @@ constructor(props) {
                                 }) 
                             }
                         }}>
-                        <Text name="first" selectedIconStyle={{ borderTopWidth: 2, borderTopColor: 'blue' }}>Project</Text>
-                        <Text name="second" selectedIconStyle={{ borderTopWidth: 2, borderTopColor: 'blue' }}>Milestone(s)</Text>
+                        <Text name="first" style={{ color: "#303030" }} selectedIconStyle={{ borderTopWidth: 2, borderTopColor: 'blue' }}>Project</Text>
+                        <Text name="second" style={{ color: "#303030" }} selectedIconStyle={{ borderTopWidth: 2, borderTopColor: 'blue' }}>Milestone(s)</Text>
                     </Tabs>
                 </View>}
                 {this.state.page === "first" ? this.renderFirstPage() : this.renderSecondPage()}

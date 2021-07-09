@@ -520,7 +520,7 @@ export default StyleSheet.create({
     largerText: {
         fontStyle: "italic",
         fontWeight: "bold", 
-        color: "#660000", 
+        color: "white", 
         fontSize: 26,
         textAlign: "center"
     },
