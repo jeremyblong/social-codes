@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles.js';
 import { Header, Left, Body, Right, Title, Subtitle, Button } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 
@@ -39,17 +39,17 @@ constructor (props) {
     render() {
         return (
            <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Account Type</Title>
-                    <Subtitle>Choose your account type</Subtitle>
+                    <Title style={styles.goldText}>Account Type</Title>
+                    <Subtitle style={styles.goldText}>Choose your account type</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -91,7 +91,7 @@ constructor (props) {
                 <View style={styles.bottomContainer}>
                     <View style={{ margin: 10 }}>
                         <Text style={styles.greyTextTwo}>By signing up, I agree to "The Fair Market".com's {"\n"} <Text style={{ textDecorationLine: "underline" }}>Terms & Conditions</Text> & <Text style={{ textDecorationLine: "underline" }}>Privacy Policy</Text></Text>
-                        {this.calculateReadiness() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
+                        {this.calculateReadiness() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
                     </View>
                 </View>
            </Fragment>

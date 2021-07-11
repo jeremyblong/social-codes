@@ -24,8 +24,12 @@ export default StyleSheet.create({
     },
     headerIcon: {
         maxWidth: 35,
+        tintColor: "#ffd530",
         maxHeight: 35
     },
+    goldText: {
+        color: "#ffd530"
+    },  
     circle: {
         borderWidth:1,
         borderColor: 'rgba(0,0,0,0.4)',

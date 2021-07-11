@@ -664,7 +664,7 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
                 }
             }}
             >
-            <Header>
+            <Header style={{ backgroundColor: "#303030" }}>
                 <Left>
                     <Button onPress={() => {
                         CheckinRBSheet.current.close();
@@ -673,8 +673,8 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
                     </Button>
                 </Left>
                 <Body>
-                    <Title>Check-in</Title>
-                    <Subtitle>Share a location!</Subtitle>
+                    <Title style={styles.goldText}>Check-in</Title>
+                    <Subtitle style={styles.goldText}>Share a location!</Subtitle>
                 </Body>
                 <Right>
                     {/* <Button onPress={() => {
@@ -705,6 +705,7 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
 
                     Keyboard.dismiss();
                 }}
+                textColor={"#303030"}
             />
             <List style={{ flex: 1 }}>
                 <FlatList

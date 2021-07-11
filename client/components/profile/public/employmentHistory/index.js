@@ -210,17 +210,17 @@ constructor(props) {
         const { start, end, switched } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={styles.header}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.push("public-profile-main");
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Employment</Title>
-                        <Subtitle>Employment History</Subtitle>
+                        <Title style={styles.goldText}>Employment</Title>
+                        <Subtitle style={styles.goldText}>Employment History</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -337,13 +337,13 @@ constructor(props) {
                 </ScrollView>
                 <Footer>
                     <FooterTab>
-                        <Button onPress={this.clearInputs} vertical>
-                            <Icon name="close" />
-                            <Text>Clear Inputs</Text>
+                        <Button style={{ backgroundColor: "#303030" }} onPress={this.clearInputs} vertical>
+                            <Icon style={{ color: "#ffd530" }} name="close" />
+                            <Text style={styles.goldText}>Clear Inputs</Text>
                         </Button>
-                        <Button onPress={this.saveInformation} vertical>
-                            <Icon style={{ color: "blue" }} name="save" />
-                            <Text style={{ color: "blue" }}>Save Job</Text>
+                        <Button style={{ backgroundColor: "#303030" }} onPress={this.saveInformation} vertical>
+                            <Icon style={{ color: "#ffd530" }} name="save" />
+                            <Text style={{ color: "#ffd530" }}>Save Job</Text>
                         </Button>
                     </FooterTab>
                 </Footer>

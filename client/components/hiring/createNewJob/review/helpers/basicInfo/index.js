@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Input, Item, Icon, Form, Textarea } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { addJobData } from "../../../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
@@ -103,7 +103,7 @@ constructor (props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheet.close();
@@ -112,8 +112,8 @@ constructor (props) {
                             </Button>
                         </Left>
                     <Body>
-                        <Title>Post a job</Title>
-                        <Subtitle>Create a job listing</Subtitle>
+                        <Title style={styles.goldText}>Post a job</Title>
+                        <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
                     </Body>
                     <Right>
 
@@ -169,7 +169,7 @@ constructor (props) {
                         </KeyboardAwareScrollView>
                     </ScrollView>
                     <View style={styles.bottomView}>
-                        {this.renderContinuation() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
+                        {this.renderContinuation() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>}
                     </View>
                 </RBSheet>
            </Fragment>

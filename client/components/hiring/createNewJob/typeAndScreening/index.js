@@ -6,7 +6,7 @@ import * as Progress from 'react-native-progress';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Switch } from 'react-native-switch';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from 'react-redux';
 import { addJobData } from "../../../../actions/jobs/data.js";
 
@@ -124,7 +124,7 @@ constructor(props) {
         console.log("this.state. typeAndScreening:", this.state);
         return (
            <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -133,16 +133,16 @@ constructor(props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post Job</Title>
-                    <Subtitle>Timelines & Screening</Subtitle>
+                    <Title style={styles.goldText}>Post Job</Title>
+                    <Subtitle style={styles.goldText}>Timelines & Screening</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text>Restart Process</Text>
+                            <Text style={styles.goldText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.43} width={width} />
+                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.43} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50, paddingTop: 10 }} style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>What type of project do you have?</Text>
@@ -272,7 +272,7 @@ constructor(props) {
                     </View>
                     <View style={[styles.thickHr, { marginBottom: 35 }]} />
                     <View style={styles.margin}>
-                        {this.renderButtons() ? <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
+                        {this.renderButtons() ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman> : <AwesomeButtonCartman type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonCartman>}
                     </View>
                 </ScrollView>
                 <RBSheet
@@ -287,7 +287,7 @@ constructor(props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheet.close();
@@ -296,8 +296,8 @@ constructor(props) {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Screening Questions</Title>
-                            <Subtitle>Select screening questions</Subtitle>
+                            <Title style={styles.goldText}>Screening Questions</Title>
+                            <Subtitle style={styles.goldText}>Select screening questions</Subtitle>
                         </Body>
                         <Right />
                     </Header>
@@ -393,7 +393,7 @@ constructor(props) {
                                         }
                                     }} selected={question.selected}>
                                         <Left>
-                                            <Text style={question.selected === true ? styles.blueText : null}>{question.title}</Text>
+                                            <Text style={question.selected === true ? styles.blueText : { color: "black" }}>{question.title}</Text>
                                         </Left>
                                         <Right>
                                             <Icon name="arrow-forward" />

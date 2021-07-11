@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, Keyboard, ScrollView }
 import { Header, Left, Body, Right, Title, Subtitle, Button, Input, Item, Icon, Form, Textarea } from 'native-base';
 import styles from './styles.js';
 import * as Progress from 'react-native-progress';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { addJobData } from "../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
@@ -147,25 +147,25 @@ constructor (props) {
         console.log(this.state);
         return (
            <Fragment>
-                {this.props.props.review === true ? null : <Header>
+                {this.props.props.review === true ? null : <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post a job</Title>
-                    <Subtitle>Create a job listing</Subtitle>
+                    <Title style={styles.goldText}>Post a job</Title>
+                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text>Restart Process</Text>
+                            <Text style={styles.goldText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>}
-                <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.15} width={width} />
+                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.15} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>Great! Let's give your job more details</Text>
@@ -217,7 +217,7 @@ constructor (props) {
                     
                 </ScrollView>
                 <View style={styles.bottomView}>
-                    {this.renderContinuation() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
+                    {this.renderContinuation() ? <AwesomeButtonCartman textColor={"white"} type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonCartman> : <AwesomeButtonCartman textColor={"white"} type={"anchor"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>}
                 </View>
            </Fragment>
         )

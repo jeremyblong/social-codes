@@ -15,6 +15,9 @@ export default StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold"
     },
+    goldText: {
+        color: "#ffd530"
+    },
     margin: {
         margin: 15
     },
@@ -38,7 +41,7 @@ export default StyleSheet.create({
     },
     largeText: {
         fontSize: 22,
-        color: "blue",
+        color: "#303030",
         fontWeight: "bold",
         marginTop: 15
     }

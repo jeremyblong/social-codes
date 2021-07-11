@@ -9,6 +9,15 @@ export default StyleSheet.create({
       maxHeight: 200,
       margin: 15
     },
+    greyButton: {
+      backgroundColor: "#303030"
+    },
+    headerGrey: {
+      backgroundColor: "#303030"
+    },    
+    goldText: {
+      color: "#ffd530"
+    },
     avatar: {
       width: 160,
       height: 160,
@@ -133,7 +142,9 @@ export default StyleSheet.create({
       right: 10,
       top: 10,
       maxWidth: 35,
-      maxHeight: 35
+      maxHeight: 35,
+      minWidth: 35, 
+      minHeight: 35
     },
     centeredMargin: {
       justifyContent: "center",

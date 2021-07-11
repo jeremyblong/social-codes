@@ -7,7 +7,7 @@ import * as Progress from 'react-native-progress';
 import { addJobData } from "../../../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
 import { TagSelect } from 'react-native-tag-select';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import languages from "../../../../../../data_sets/listOfAllProgrammingLanguages.json";
 import uuid from "react-native-uuid";
@@ -43,9 +43,9 @@ constructor (props) {
         const { selectedTags } = this.props;
 
         if ((typeof selected !== "undefined" && selected.length > 0) && (typeof languagesSelected !== "undefined" && languagesSelected.length > 0) && ((typeof selectedTags !== "undefined" && selectedTags.length > 0) || (typeof additionalTags !== "undefined" && additionalTags.length > 0))) {
-            return <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>
+            return <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>
         } else {
-            return <AwesomeButtonBlue type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
+            return <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonCartman>;
         }
     }
     componentDidMount() {
@@ -166,7 +166,7 @@ constructor (props) {
                     }}
                 >
                      <ScrollView style={styles.container}>
-                        <Header>
+                        <Header style={{ backgroundColor: "#303030" }}>
                             <Left>
                                 <Button onPress={() => {
                                     this.RBSheet.close();
@@ -175,8 +175,8 @@ constructor (props) {
                                 </Button>
                             </Left>
                         <Body>
-                            <Title>Post a job</Title>
-                            <Subtitle>Create a job listing</Subtitle>
+                            <Title style={styles.goldText}>Post a job</Title>
+                            <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
                         </Body>
                             <Right>
                                 
@@ -203,15 +203,15 @@ constructor (props) {
                                     selectText="Pick Items"
                                     searchInputPlaceholderText="Search items..."
                                     onChangeInput={ (text)=> console.log(text)}
-                                    tagRemoveIconColor="blue"
-                                    tagBorderColor="blue"
-                                    tagTextColor="blue"
-                                    selectedItemTextColor="blue"
-                                    selectedItemIconColor="blue"
+                                    tagRemoveIconColor="darkred"
+                                    tagBorderColor="darkred"
+                                    tagTextColor="darkred"
+                                    selectedItemTextColor="darkred"
+                                    selectedItemIconColor="darkred"
                                     itemTextColor="#000"
                                     displayKey="name"
-                                    searchInputStyle={{ color: 'blue' }}
-                                    submitButtonColor="blue"
+                                    searchInputStyle={{ color: 'darkred' }}
+                                    submitButtonColor="darkred"
                                     submitButtonText="Submit"
                                 />
                                 <Text style={styles.headerText}>Soft Skills</Text>
@@ -225,15 +225,15 @@ constructor (props) {
                                     selectText="Pick Items"
                                     searchInputPlaceholderText="Search items..."
                                     onChangeInput={ (text)=> console.log(text)}
-                                    tagRemoveIconColor="blue"
-                                    tagBorderColor="blue"
-                                    tagTextColor="blue"
-                                    selectedItemTextColor="blue"
-                                    selectedItemIconColor="blue"
+                                    tagRemoveIconColor="darkred"
+                                    tagBorderColor="darkred"
+                                    tagTextColor="darkred"
+                                    selectedItemTextColor="darkred"
+                                    selectedItemIconColor="darkred"
                                     itemTextColor="#000"
                                     displayKey="name"
-                                    searchInputStyle={{ color: 'blue' }}
-                                    submitButtonColor="blue"
+                                    searchInputStyle={{ color: 'darkred' }}
+                                    submitButtonColor="darkred"
                                     submitButtonText="Submit"
                                 />
                             </View>

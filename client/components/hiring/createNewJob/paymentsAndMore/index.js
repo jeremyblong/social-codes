@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Icon, Picker } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from 'react-redux';
 import { addJobData } from "../../../../actions/jobs/data.js";
 import * as Progress from 'react-native-progress';
@@ -15,7 +15,7 @@ import {
 const { height, width } = Dimensions.get("window");
 
 const chartConfig = {
-    backgroundGradientFrom: "blue",
+    backgroundGradientFrom: "#ffd530",
     backgroundGradientFromOpacity: 1,
     backgroundGradientTo: "black",
     backgroundGradientToOpacity: 1,
@@ -23,8 +23,8 @@ const chartConfig = {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
-    fillShadowGradient: "blue",
-    fillShadowGradientOpacity: "blue"
+    fillShadowGradient: "black",
+    fillShadowGradientOpacity: "black"
 };
 
 class PaymentsAndMoreHelper extends Component {
@@ -102,15 +102,15 @@ constructor(props) {
 
         if (fixed === false) {
             if ((typeof rate !== "undefined" && rate.length > 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (min !== 0 && max !== 0) && (typeof error !== "undefined" && error.length === 0) && tokensRequired !== 0) {
-                return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
             } else {
-                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
             }
         } else {
             if ((typeof rate !== "undefined" && rate.length > 0) && (fixedBudget !== 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && tokensRequired !== 0) {
-                return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
             } else {
-                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
             } 
         }
     }
@@ -147,7 +147,7 @@ constructor(props) {
         const { rate, lengthOfProject, timeRequirement, fixed, min, max, error } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -156,16 +156,16 @@ constructor(props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post Job</Title>
-                    <Subtitle>Payments & More...</Subtitle>
+                    <Title style={styles.goldText}>Post Job</Title>
+                    <Subtitle style={styles.goldText}>Payments & More...</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text>Restart Process</Text>
+                            <Text style={styles.goldText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.90} width={width} />
+                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.90} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>How would you like to pay your freelancer or agency?</Text>
@@ -191,7 +191,7 @@ constructor(props) {
                                 <Text style={rate === "hourly" ? styles.titleSelected : styles.title}>Pay by the hour</Text>
                                 <Text>Pay hourly to easily scale up and down</Text>
                                 <View style={styles.topRight}>
-                                    {rate === "hourly" ? <Image source={require("../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "blue" }} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
+                                    {rate === "hourly" ? <Image source={require("../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "darkred" }} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -209,7 +209,7 @@ constructor(props) {
                                 <Text style={rate === "fixed-rate" ? styles.titleSelected : styles.title}>Pay a fixed price</Text>
                                 <Text>Define a payment before work begins and pay only when the work is delivered</Text>
                                 <View style={styles.topRight}>
-                                    {rate === "fixed-rate" ? <Image source={require("../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "blue" }} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
+                                    {rate === "fixed-rate" ? <Image source={require("../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "darkred" }} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -297,7 +297,7 @@ constructor(props) {
                                 <Text style={styles.bold}>More than 6 months</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "more-than-6-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "more-than-6-months" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             this.setState({
@@ -311,7 +311,7 @@ constructor(props) {
                                 <Text style={styles.bold}>3 to 6 months</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "3-6-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "3-6-months" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             this.setState({
@@ -325,7 +325,7 @@ constructor(props) {
                                 <Text style={styles.bold}>1 to 3 months</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "1-3-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "1-3-months" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             this.setState({
@@ -339,7 +339,7 @@ constructor(props) {
                                 <Text style={styles.bold}>Less than 1 month</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "less-than-1-month" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={lengthOfProject === "less-than-1-month" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.margin}>
@@ -357,7 +357,7 @@ constructor(props) {
                                 <Text style={styles.bold}>More than 30 hours a week</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "more-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "more-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             this.setState({
@@ -371,7 +371,7 @@ constructor(props) {
                                 <Text style={styles.bold}>Less than 30 hours a week</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "less-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "less-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             this.setState({
@@ -385,7 +385,7 @@ constructor(props) {
                                 <Text style={styles.bold}>I don't know yet</Text>
                                
                             </View>
-                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "unknown" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                            <Image source={require("../../../../assets/icons/un-selected.png")} style={timeRequirement === "unknown" ? [styles.absoluteRight, { tintColor: "darkred" }] : styles.absoluteRight} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.margin}>
@@ -396,7 +396,7 @@ constructor(props) {
                             style={{ width: "100%" }}
                             placeholder="Select token amount..."
                             placeholderStyle={{ color: "black" }}
-                            placeholderIconColor="blue"
+                            placeholderIconColor="darkred"
                             selectedValue={this.state.tokensRequired}
                             onValueChange={(value) => {
                                 this.setState({

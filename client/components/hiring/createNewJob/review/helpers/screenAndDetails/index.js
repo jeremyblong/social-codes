@@ -131,7 +131,7 @@ constructor(props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheetTwo.close();
@@ -140,14 +140,14 @@ constructor(props) {
                             </Button>
                         </Left>
                     <Body>
-                        <Title>Post Job</Title>
-                        <Subtitle>Timelines & Screening</Subtitle>
+                        <Title style={styles.goldText}>Post Job</Title>
+                        <Subtitle style={styles.goldText}>Timelines & Screening</Subtitle>
                     </Body>
                         <Right>
                         
                         </Right>
                     </Header>
-                    <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.43} width={width} />
+                    <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.43} width={width} />
                     <ScrollView contentContainerStyle={{ paddingBottom: 50, paddingTop: 10 }} style={styles.container}>
                         <View style={styles.margin}>
                             <Text style={styles.headerText}>What type of project do you have?</Text>
@@ -299,7 +299,7 @@ constructor(props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheet.close();
@@ -312,8 +312,8 @@ constructor(props) {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Screening Questions</Title>
-                            <Subtitle>Select screening questions</Subtitle>
+                            <Title style={styles.goldText}>Screening Questions</Title>
+                            <Subtitle style={styles.goldText}>Select screening questions</Subtitle>
                         </Body>
                         <Right />
                     </Header>
@@ -409,7 +409,7 @@ constructor(props) {
                                         }
                                     }} selected={question.selected}>
                                         <Left>
-                                            <Text style={question.selected === true ? styles.blueText : null}>{question.title}</Text>
+                                            <Text style={question.selected === true ? styles.blueText : { color: "black" }}>{question.title}</Text>
                                         </Left>
                                         <Right>
                                             <Icon name="arrow-forward" />

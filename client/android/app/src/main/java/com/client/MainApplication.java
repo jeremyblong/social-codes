@@ -9,6 +9,7 @@ import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.arthenica.reactnative.RNFFmpegPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 // import com.ammarahmed.rnadmob.nativeads.RNAdmobNativePackage;
+// import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -23,7 +24,7 @@ import com.brentvatne.react.ReactVideoPackage;
 // import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 // import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
 import com.twiliorn.library.TwilioPackage;
-import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
+// import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -49,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new RNFetchBlobPackage());
           // packages.add(new RNFileViewerPackage());
           packages.add(new TwilioPackage());
+          // packages.add(new ReactNativeFirebaseMessagingPackage());
           // packages.add(new RNAdmobNativePackage());
           // packages.add(new ReactNativeFirebaseMessagingPackage());
           return packages;

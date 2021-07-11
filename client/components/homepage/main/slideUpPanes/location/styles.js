@@ -15,11 +15,15 @@ export default StyleSheet.create({
         alignItems: "center",
         alignContent: "center"
     },
+    goldText: {
+        color: "#ffd530"
+    },
     checkinIconExit: {
         maxWidth: 25, 
         maxHeight: 25, 
         minWidth: 25, 
-        minHeight: 25
+        minHeight: 25,
+        tintColor: "#ffd530"
     },
     customIconButton: {
         backgroundColor: "#E9EBEE",

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Icon, Picker } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from 'react-redux';
 import { addJobData } from "../../../../../../actions/jobs/data.js";
 import LottieView from 'lottie-react-native';
@@ -16,7 +16,7 @@ import _ from "lodash";
 const { height, width } = Dimensions.get("window");
 
 const chartConfig = {
-    backgroundGradientFrom: "blue",
+    backgroundGradientFrom: "#ffd530",
     backgroundGradientFromOpacity: 1,
     backgroundGradientTo: "black",
     backgroundGradientToOpacity: 1,
@@ -24,8 +24,8 @@ const chartConfig = {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
-    fillShadowGradient: "blue",
-    fillShadowGradientOpacity: "blue"
+    fillShadowGradient: "black",
+    fillShadowGradientOpacity: "black"
 };
 
 class PaymentsAndMoreSubComponent extends Component {
@@ -86,15 +86,15 @@ constructor(props) {
 
         if (fixed === false) {
             if ((typeof rate !== "undefined" && rate.length > 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (min !== 0 && max !== 0) && (typeof error !== "undefined" && error.length === 0) && (tokensRequired !== 0)) {
-                return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
             } else {
-                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
             }
         } else {
             if ((typeof rate !== "undefined" && rate.length > 0) && (fixedBudget !== 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (tokensRequired !== 0)) {
-                return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
             } else {
-                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
             } 
         }
     }
@@ -151,7 +151,7 @@ constructor(props) {
                             }
                         }}
                     >
-                        <Header>
+                        <Header style={{ backgroundColor: "#303030" }}>
                             <Left>
                                 <Button onPress={() => {
                                     this.RBSheet.close();
@@ -160,8 +160,8 @@ constructor(props) {
                                 </Button>
                             </Left>
                         <Body>
-                            <Title>Post Job</Title>
-                            <Subtitle>Payments & More...</Subtitle>
+                            <Title style={styles.goldText}>Post Job</Title>
+                            <Subtitle style={styles.goldText}>Payments & More...</Subtitle>
                         </Body>
                             <Right>
                             

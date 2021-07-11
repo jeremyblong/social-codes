@@ -956,9 +956,9 @@ constructor (props) {
                                                                         this.setState({
                                                                             [`visible-${index}`]: true
                                                                         })
-                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "blue" }} />
-                                                                        <Text style={{ color: "blue", fontWeight: "bold" }}>Un-Like</Text>
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                        <Text style={{ color: "#ffd530", fontWeight: "bold" }}>Un-Like</Text>
                                                                     </Button>
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
@@ -985,9 +985,9 @@ constructor (props) {
                                                                         this.setState({
                                                                             [`visible-${index}`]: true
                                                                         })
-                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                        <Text>Like</Text>
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                        <Text style={{ color: "#ffd530" }}>Like</Text>
                                                                     </Button>
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
@@ -1066,9 +1066,9 @@ constructor (props) {
                                                             
                                                             <Button onPress={() => {
                                                                 this.handleRedirectToIndividualPage(post);
-                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                <Text>Comment</Text>
+                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                <Text style={{ color: "#ffd530" }}>Comment</Text>
                                                             </Button>
                                                             <Button onPress={() => {
                                                                 this.setState({
@@ -1078,9 +1078,9 @@ constructor (props) {
                                                                         this.openBottomSheetCustom();
                                                                     }, 650)
                                                                 })
-                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                <Text>Share</Text>
+                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                <Text style={{ color: "#ffd530" }}>Share</Text>
                                                             </Button>
                                                         </FooterTab>
                                                     </Footer>
@@ -1197,8 +1197,8 @@ constructor (props) {
                                                                             [`visible-${index}`]: true
                                                                         })
                                                                     }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "blue" }} />
-                                                                        <Text style={{ color: "blue", fontWeight: "bold" }}>Un-Like</Text>
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                        <Text style={{ fontWeight: "bold", color: "#ffd530" }}>Un-Like</Text>
                                                                     </Button>
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
@@ -1225,9 +1225,9 @@ constructor (props) {
                                                                         this.setState({
                                                                             [`visible-${index}`]: true
                                                                         })
-                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                        <Text>Like</Text>
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                        <Text style={{ color: "#ffd530" }}>Like</Text>
                                                                     </Button>
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
@@ -1306,9 +1306,9 @@ constructor (props) {
                                                             
                                                             <Button onPress={() => {
                                                                 this.handleRedirectToIndividualPage(post);
-                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                <Text>Comment</Text>
+                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                <Text style={{ color: "#ffd530" }}>Comment</Text>
                                                             </Button>
                                                             <Button onPress={() => {
                                                                 this.setState({
@@ -1318,9 +1318,9 @@ constructor (props) {
                                                                         this.openBottomSheetCustom();
                                                                     }, 650)
                                                                 })
-                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                <Text>Share</Text>
+                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                <Text style={{ color: "#ffd530" }}>Share</Text>
                                                             </Button>
                                                         </FooterTab>
                                                     </Footer>
@@ -1422,9 +1422,9 @@ constructor (props) {
                                                                                     this.setState({
                                                                                         [`visible-${index}`]: true
                                                                                     })
-                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "blue" }} />
-                                                                                    <Text style={{ color: "blue", fontWeight: "bold" }}>Un-Like</Text>
+                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                                    <Text style={{ color: "#ffd530", fontWeight: "bold" }}>Un-Like</Text>
                                                                                 </Button>
                                                                             )}>
                                                                             <View style={styles.popoverTwo}>
@@ -1451,9 +1451,9 @@ constructor (props) {
                                                                                     this.setState({
                                                                                         [`visible-${index}`]: true
                                                                                     })
-                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                                    <Text>Like</Text>
+                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                                    <Text style={{ color: "#ffd530" }}>Like</Text>
                                                                                 </Button>
                                                                             )}>
                                                                             <View style={styles.popoverTwo}>
@@ -1532,9 +1532,9 @@ constructor (props) {
                                                                         
                                                                         <Button onPress={() => {
                                                                             this.handleRedirectToIndividualPage(post);
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                            <Text>Comment</Text>
+                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                            <Text style={{ color: "#ffd530" }}>Comment</Text>
                                                                         </Button>
                                                                         <Button onPress={() => {
                                                                             this.setState({
@@ -1544,9 +1544,9 @@ constructor (props) {
                                                                                     this.openBottomSheetCustom();
                                                                                 }, 650)
                                                                             })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                                            <Text>Share</Text>
+                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffd530" }} />
+                                                                            <Text style={{ color: "#ffd530" }}>Share</Text>
                                                                         </Button>
                                                                     </FooterTab>
                                                                 </Footer>

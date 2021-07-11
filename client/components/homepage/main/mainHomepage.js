@@ -224,7 +224,7 @@ constructor () {
         const {images} = this.state;
         const {countFrom} = this.state;
         return(
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", minHeight: 375, height: 375 }}>
             <TouchableOpacity style={[styles.imageContent, styles.imageContent1]} onPress={() => {
                 this.setState({
                     images: this.state.images.filter((picture, index) => {
@@ -609,7 +609,7 @@ constructor () {
                                 this.player = ref
                             }}
                             muted={true}
-                            style={{ minWidth: 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, minHeight: 50, borderRadius: 40 }}
+                            style={{ minWidth: 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, minHeight: 50, borderRadius: 5, bottom: -2.5 }}
                         />
                     </TouchableOpacity>
                 );
@@ -619,7 +619,7 @@ constructor () {
                     <TouchableOpacity onPress={() => {
                         this.redirectToUsersProfileWithoutPane(post);
                     }}>
-                        <Thumbnail source={{ uri: `${Config.wasabi_url}/${picture}` }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 40 }} />
+                        <Thumbnail source={{ uri: `${Config.wasabi_url}/${picture}` }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 5, bottom: -2.5 }} />
                     </TouchableOpacity>
                 );
             }
@@ -628,7 +628,7 @@ constructor () {
                 <TouchableOpacity onPress={() => {
                     this.redirectToUsersProfileWithoutPane(post);
                 }}>
-                    <Thumbnail source={{ uri: post.photo }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 40 }} />
+                    <Thumbnail source={{ uri: post.photo }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 5, bottom: -2.5 }} />
                 </TouchableOpacity>
             );
         } else {
@@ -636,7 +636,7 @@ constructor () {
                 <TouchableOpacity onPress={() => {
                     this.redirectToUsersProfileWithoutPane(post);
                 }}>
-                    <Thumbnail source={{ uri: Config.no_image_avaliable }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 40 }} />
+                    <Thumbnail source={{ uri: Config.no_image_avaliable }} style={{ minWidth: typeof maxDimension !== "undefined" ? maxDimension : 50, minHeight: typeof maxDimension !== "undefined" ? maxDimension : 50, maxWidth: typeof maxDimension !== "undefined" ? maxDimension : null, maxHeight: typeof maxDimension !== "undefined" ? maxDimension : null, borderRadius: 5, bottom: -2.5 }} />
                 </TouchableOpacity>
             );
         }
@@ -1092,7 +1092,7 @@ constructor () {
     renderNameAndActivity = () => {
         const { selection } = this.props;
         return (
-            <Text style={styles.fullName}>{this.props.fullName}{selection !== null ? <Fragment><Text style={{ fontWeight: "normal" }}> is at </Text>{selection.poi.name}</Fragment> : ""}</Text>
+            <Text style={styles.fullName}>{this.props.fullName}{selection !== null ? <Fragment><Text style={{ fontWeight: "normal", top: 10 }}> is at </Text>{selection.poi.name}</Fragment> : ""}</Text>
         );
     }
     renderSuggestionsRow = ({ item }, hidePanel) => {
@@ -1254,8 +1254,8 @@ constructor () {
                     {ready === true ? <FlatList   
                         ListHeaderComponent={() => {
                             return (
-                                <Fragment>
-                                    <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030" }}>
+                                <View style={{ height: 340, minHeight: 340 }}>
+                                    <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030", paddingTop: 15, paddingBottom: 10, height: 100 }}>
                                         <Left>
                                             <Button transparent>
                                                 <Image source={require("../../../assets/images/social_code_long.png")} style={styles.maxedIconLogo} />
@@ -1266,9 +1266,9 @@ constructor () {
                                         </Body>
                                         <Right style={{ position: "absolute", right: -15 }}>
                                             
-                                            {/* <Button transparent>
-                                                <Icon name='search' />
-                                            </Button> */}
+                                            <Button transparent>
+                                                <Icon style={{ color: "#fdd530" }} name='search' />
+                                            </Button>
                                             <Button button={true} onPress={() => {
                                                 this.props.props.navigation.push("messaging-conversations");
                                             }} transparent>
@@ -1276,7 +1276,7 @@ constructor () {
                                             </Button>
                                         </Right>
                                     </Header>
-                                    <Footer style={{ borderColor: "transparent" }}>
+                                    <Footer style={{ borderColor: "transparent", height: 65 }}>
                                         <FooterTab style={{ backgroundColor: "#303030" }}>
                                             <Button style={{ backgroundColor: "#fdd530" }} active>
                                                 <Image source={require("../../../assets/icons/home.png")} style={[styles.maxedIconSmall, { tintColor: "#303030" }]} />
@@ -1305,21 +1305,8 @@ constructor () {
                                             </Button>
                                         </FooterTab>
                                     </Footer>
-                                    <View style={styles.row}>
-                                        {user !== null ? <View style={styles.columnSmall}>
-                                            {this.renderPhotoOrVideo(user, 45)}
-                                        </View> : <Fragment><View style={styles.loadingProfileOutter}><View style={styles.loadingProfilePic}></View></View></Fragment>}
-                                        <TouchableOpacity onPress={() => {
-                                            console.log("clicked");
-                                            
-                                            this.RBSheet.open();
-                                        }} style={styles.columnLarge}>
-                                            <View style={{ height: 45, borderColor: 'white', borderWidth: 1, borderRadius: 25, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
-                                                <Text style={{ marginTop: 12, fontSize: 15, color: "white" }}>What's on your mind?</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Footer style={Platform.OS === "android" ? { borderColor: "transparent" } : { borderColor: "transparent" }}>
+                                    
+                                    <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50 }}>
                                         <FooterTab>
                                             <Button style={styles.greyButton}>
                                                 <View style={styles.row}>
@@ -1341,7 +1328,22 @@ constructor () {
                                             </Button>
                                         </FooterTab>
                                     </Footer>
-                                    <View style={styles.thickLine} />
+                                    {/* <View style={styles.thickLine} /> */}
+                                    <View style={[styles.row, { height: 100 }]}>
+                                        {user !== null ? <View style={styles.columnSmall}>
+                                            {this.renderPhotoOrVideo(user, 45)}
+                                        </View> : <Fragment><View style={styles.loadingProfileOutter}><View style={styles.loadingProfilePic}></View></View></Fragment>}
+                                        <TouchableOpacity onPress={() => {
+                                            console.log("clicked");
+                                            
+                                            this.RBSheet.open();
+                                        }} style={styles.columnLarge}>
+                                            <View style={{ height: 45, borderColor: '#ffd530', borderWidth: 1, borderRadius: 5, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
+                                                <Text style={{ marginTop: 12, fontSize: 15, color: "white" }}>What's got ya thinkin'...</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                    {/* <View style={styles.thickLine} /> */}
                                     <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
                                         <TouchableOpacity style={styles.buttonCustom}>
                                             <View style={styles.roundedButton}>
@@ -1361,7 +1363,7 @@ constructor () {
                                         }) : null}
                                     </ScrollView>
                                     <View style={styles.thickLine} />
-                                </Fragment>
+                                </View>
                             );
                         }}
                         data={this.props.posts}
@@ -1547,7 +1549,7 @@ constructor () {
                                             </Left>
                                             </CardItem>
                                             <CardItem>
-                                            <Body style={{}}>
+                                            <Body style={{  }}>
                                                 {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
                                                     <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
                                                         {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
@@ -2201,7 +2203,7 @@ constructor () {
                             />
                             {this.props.selection !== null ? <View style={{ marginBottom: 35 }} /> : null}
                             <View style={typeof pictures !== "undefined" && pictures.length > 0 ? styles.pictureContainer : styles.hideContainer}>
-                                <View style={{ flex: 1, minHeight: 300, marginBottom: 50 }}>
+                                <View style={{ flex: 1, minHeight: 500, marginBottom: 50 }}>
                                     {[1, 3, 4].includes(imagesToShow.length)  && this.renderOne()}
                                     {imagesToShow.length >= 2 && imagesToShow.length != 4 && this.renderTwo()}
                                     {imagesToShow.length >= 4 && this.renderThree()}
@@ -2230,8 +2232,15 @@ constructor () {
                                 <Text style={styles.closeVideoText}>Remove video from post</Text>
                             </TouchableOpacity>
                             </View> : null}
-                            {selection !== null ? <Fragment><View style={styles.centered}>
+                            {selection !== null ? <Fragment>
+                            <TouchableOpacity onPress={() => {
+                                this.props.addPostCreationOptions({});
+                            }} style={styles.mapTouchable}>
+                                <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
+                            </TouchableOpacity>
+                            <View style={styles.centered}>   
                                 <MapView
+                                    loadingEnabled 
                                     style={styles.map}
                                     region={{
                                         latitude: selection.position.lat, 
@@ -2240,11 +2249,11 @@ constructor () {
                                         longitudeDelta: 0.0421
                                     }}
                                 >
-                                    <TouchableOpacity onPress={() => {
+                                    {/* <TouchableOpacity onPress={() => {
                                         this.props.addPostCreationOptions({});
                                     }} style={styles.mapTouchable}>
                                         <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                     <Marker
                                         key={1}
                                         coordinate={{ 

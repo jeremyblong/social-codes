@@ -7,7 +7,8 @@ import {
     Dimensions,
     ImageBackground,
     FlatList, 
-    ScrollView
+    ScrollView,
+    Platform
 } from 'react-native';
 import styles from './styles.js';
 import SearchBar from 'react-native-search-bar';
@@ -1119,11 +1120,17 @@ constructor(props) {
                             }
                         }}
                     >
-                        <Header>
-                            <Left />
+                        <Header style={styles.headerGrey}>
+                            <Left>
+                                <Button onPress={() => {
+                                    this.RBSheetFour.close();
+                                }} transparent>
+                                    <Icon name="close" style={{ color: "#ffd530" }} />
+                                </Button>
+                            </Left>
                             <Body>
-                                <Title>My Skills</Title>
-                                <Subtitle>Skills & More...</Subtitle>
+                                <Title style={styles.goldText}>My Skills</Title>
+                                <Subtitle style={styles.goldText}>Skills & More...</Subtitle>
                             </Body>
                             <Right />
                         </Header>
@@ -1163,17 +1170,17 @@ constructor(props) {
                             />
                             <Text style={{ fontWeight: "bold", marginTop: 10 }}>Add up to 10 skills. Remove skills by deleting tags...</Text>
                         </View>
-                        <Footer>
+                        <Footer style={Platform.OS === "android" ? { marginBottom: 25 } : {}}>
                             <FooterTab>
-                                <Button onPress={() => {
+                                <Button style={styles.greyButton} onPress={() => {
                                     this.RBSheetFour.close();
                                 }} vertical>
-                                    <Icon name="close" />
-                                    <Text>Cancel</Text>
+                                    <Icon style={{ color: "#ffd530" }} name="close" />
+                                    <Text style={styles.goldText}>Cancel</Text>
                                 </Button>
-                                <Button onPress={this.handleSavingTags} vertical>
-                                    <Icon name="save" />
-                                    <Text>Save</Text>
+                                <Button style={styles.greyButton} onPress={this.handleSavingTags} vertical>
+                                    <Icon style={{ color: "#ffd530" }} name="save" />
+                                    <Text style={styles.goldText}>Save</Text>
                                 </Button>
                             </FooterTab>
                         </Footer>

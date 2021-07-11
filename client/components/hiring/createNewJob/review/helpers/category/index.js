@@ -43,7 +43,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                     }
                 }}
             >
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             RBSheetRef.close();
@@ -52,8 +52,8 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post a job</Title>
-                    <Subtitle>Create a job listing</Subtitle>
+                    <Title style={styles.goldText}>Post a job</Title>
+                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -67,7 +67,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                             <LinearGradient colors={['#AFF8D8', "#AFF8D8",'#AFF8D8']} style={styles.boxedLong}>
                                 <Text style={styles.topLeftText}>Web, Mobile & Software {"\n"}Development</Text>
                                 <View style={styles.centered}>
-                                    <Image style={[styles.centerImage, { top: -20 }]} source={require("../../../../../../assets/icons/globe-3d.png")}/>
+                                    <Image style={[styles.centerImage, { top: -20 }]} source={null}/>
                                 </View>
                             </LinearGradient>
                         </TouchableOpacity>
@@ -79,7 +79,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#FFB7B2", "#FFB7B2", "#FFB7B2"]}>
                                     <Text style={styles.topLeftText}>Mobile App Development</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 80 }]} source={require("../../../../../../assets/icons/phone.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 80, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -89,7 +89,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#FFDAC1", "#FFDAC1", "#FFDAC1"]}>
                                     <Text style={styles.topLeftText}>Writing</Text>
                                     <View style={styles.centeredCustom}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 50 }]} source={require("../../../../../../assets/icons/writing.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 50, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -101,7 +101,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#E2F0CB", "#E2F0CB", "#E2F0CB"]} style={styles.boxedLong}>
                                     <Text style={styles.topLeftText}>Artificial Intelligence - {"\n"}Machine Learning</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImage, { marginTop: 0 }]} source={require("../../../../../../assets/icons/humanoid.png")}/>
+                                        <Image style={[styles.centerImage, { marginTop: 0 }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -113,7 +113,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#B5EAD7", "#B5EAD7", "#B5EAD7"]}>
                                     <Text style={styles.topLeftText}>Graphic Design & Video Animations</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 100 }]} source={require("../../../../../../assets/icons/info-flex.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 100, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -123,7 +123,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#C7CEEA", "#C7CEEA", "#C7CEEA"]}>
                                     <Text style={styles.topLeftText}>Game Development</Text>
                                     <View style={styles.centeredCustom}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 125 }]} source={require("../../../../../../assets/icons/gear.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 125, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -135,7 +135,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#E8D595", "#E8D595", "#E8D595"]} style={styles.boxedLong}>
                                     <Text style={styles.topLeftText}>IT - Networking</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImageCustomTwo, { marginTop: 75 }]} source={require("../../../../../../assets/icons/server.png")}/>
+                                        <Image style={[styles.centerImageCustomTwo, { marginTop: 75, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -147,7 +147,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#AAD9CD", "#AAD9CD", "#AAD9CD"]}>
                                     <Text style={styles.topLeftText}>Translation</Text>
                                     <View style={styles.centeredCustom}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 150 }]} source={require("../../../../../../assets/icons/data.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 150, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -157,7 +157,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#FFB7B2", "#FFB7B2", "#FFB7B2"]}>
                                     <Text style={styles.topLeftText}>Sales Marketing</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 100 }]} source={require("../../../../../../assets/icons/soc.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 100, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -169,7 +169,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#FBE4FF", "#FBE4FF", "#FBE4FF"]} style={styles.boxedLong}>
                                     <Text style={styles.topLeftText}>Legal & More</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImage, { maxWidth: 300 }]} source={require("../../../../../../assets/icons/legal.png")}/>
+                                        <Image style={[styles.centerImage, { maxWidth: 300 }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -181,7 +181,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#85E3FF", "#85E3FF", "#85E3FF"]}>
                                     <Text style={styles.topLeftText}>Social Media / Marketing</Text>
                                     <View style={styles.centered}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 150 }]} source={require("../../../../../../assets/icons/social-media.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 150, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -191,7 +191,7 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                                 <LinearGradient colors={["#FFDAC1", "#FFDAC1", "#FFDAC1"]}>
                                     <Text style={styles.topLeftText}>Engineering & Architecture</Text>
                                     <View style={styles.centeredCustom}>
-                                        <Image style={[styles.centerImageCustom, { marginTop: 75 }]} source={require("../../../../../../assets/icons/arch.png")}/>
+                                        <Image style={[styles.centerImageCustom, { marginTop: 75, minHeight: "100%" }]} source={null}/>
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>

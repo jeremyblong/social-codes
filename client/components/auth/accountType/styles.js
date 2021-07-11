@@ -15,6 +15,9 @@ export default StyleSheet.create({
         backgroundColor: "white",
         flex: 1
     },
+    goldText: {
+        color: "#ffd530"
+    },
     margin: {
         margin: 20
     },
@@ -51,7 +54,7 @@ export default StyleSheet.create({
     selectedRow: {
         flexDirection: "row",
         borderWidth: 1,
-        borderColor: "blue",
+        borderColor: "#303030",
         maxHeight: 250,
         width: "100%"    
     },

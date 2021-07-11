@@ -424,12 +424,12 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
                                         <Text style={styles.largeSized}>Payment Methods</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
+                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.handleRedirect();
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/card.png")} style={styles.shortViewIcon} />
                                         <Text style={styles.largeSized}>Create a project and/or job</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> : null}
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("previously-submitted-proposals");
                                     }} style={styles.shortView}>
@@ -442,7 +442,12 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
-                                    
+                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("payment-onboarding");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/onboarding.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
+                                        <Text style={styles.largeSized}>Onboarding & Payment Set-up</Text>
+                                    </TouchableOpacity> : null}
                                     <View style={styles.shortView}>
                                         
                                     </View>

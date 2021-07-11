@@ -17,10 +17,13 @@ export default StyleSheet.create({
     margin: {
         margin: 10
     },
+    goldText: {
+        color: "#ffd530"
+    },
     headerText: {
         margin: 10,
         fontSize: 15,
         fontWeight: "bold",
-        color: "blue"
+        color: "darkred"
     }
 })

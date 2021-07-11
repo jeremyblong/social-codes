@@ -6,7 +6,7 @@ import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 import axios from "axios";
 import Config from "react-native-config";
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 
 
 const { height, width } = Dimensions.get("window");
@@ -111,17 +111,17 @@ constructor (props) {
         const { suggestions, message } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Username</Title>
-                    <Subtitle>Choose your username</Subtitle>
+                    <Title style={styles.goldText}>Username</Title>
+                    <Subtitle style={styles.goldText}>Choose your username</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -185,7 +185,7 @@ constructor (props) {
                     </View>
                     <View style={styles.bottomContainer}>
                         <View style={{ margin: 10 }}>
-                           {this.renderConditional() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue>:  <AwesomeButtonBlue type={"secondary"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
+                           {this.renderConditional() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman>:  <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
                         </View>
                     </View>
                 </View>

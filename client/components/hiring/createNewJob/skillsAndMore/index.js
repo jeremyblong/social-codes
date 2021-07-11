@@ -7,7 +7,7 @@ import * as Progress from 'react-native-progress';
 import { addJobData } from "../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
 import { TagSelect } from 'react-native-tag-select';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import languages from "../../../../data_sets/listOfAllProgrammingLanguages.json";
 import uuid from "react-native-uuid";
@@ -53,9 +53,9 @@ constructor (props) {
         // const { selectedTags } = this.props;
 
         if ((typeof selected !== "undefined" && selected.length > 0) && (typeof languagesSelected !== "undefined" && languagesSelected.length > 0) && ((typeof softPreselected !== "undefined" && softPreselected.length > 0) || (typeof additionalTags !== "undefined" && additionalTags.length > 0))) {
-            return <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>
+            return <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>
         } else {
-            return <AwesomeButtonBlue type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
+            return <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonCartman>;
         }
     }
     componentDidMount() {
@@ -133,7 +133,7 @@ constructor (props) {
         console.log(this.props.tags);
         return (
            <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -142,16 +142,16 @@ constructor (props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post a job</Title>
-                    <Subtitle>Create a job listing</Subtitle>
+                    <Title style={styles.goldText}>Post a job</Title>
+                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text>Restart Process</Text>
+                            <Text style={styles.goldText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.55} width={width} />
+                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.55} width={width} />
                 <ScrollView style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>Please select any relevant tags for your job based on the cateogry of job you selected... <Text style={{ color: "red" }}>(Required)</Text></Text>
@@ -209,7 +209,7 @@ constructor (props) {
                             />
                         </View>
                         <View style={{ marginTop: 15, marginBottom: 15 }}>
-                            <Text style={{ color: "blue" }}>If NO "Soft Skills" are shown - you MUST add custom skills in the box below before proceeding...</Text>
+                            <Text style={{ color: "darkred" }}>If NO "Soft Skills" are shown - you MUST add custom skills in the box below before proceeding...</Text>
                         </View>
                         <Text style={styles.headerText}>Enter any other tags you would like to include below</Text>
                         <Tags

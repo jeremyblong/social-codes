@@ -2547,118 +2547,234 @@ constructor(props) {
     }
     handleFileSelection = async () => {
 
-        try {
-            const res = await DocumentPicker.pick({
-              type: [DocumentPicker.types.allFiles],
-            });
-            console.log(
-              res.uri,
-              res.type, // mime type
-              res.name,
-              res.size
-            );
-
-            const { uri, type, name, size } = res;
-
-            const fs = RNFetchBlob.fs;
-
-            let imagePath = null;
-
-            RNFetchBlob.config({
-                fileCache: true
-            }).fetch("GET", uri)
-            // the image is now dowloaded to device's storage
-            .then(resp => {
-                // the image path you can use it directly with Image component
-                imagePath = resp.path();
-                return resp.readFile("base64");
-            })
-            .then(base64Data => {
-
-                const { milestone, milestoneCount } = this.state;
-
-                if (milestone === true) {
-                    this.setState({
-                        spinner: true
-                    }, () => {
-                        axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
-                            base64: base64Data,
-                            id: this.props.unique_id,
-                            type
-                        }).then((res) => {
-                            if (res.data.message === "Successfully uploaded content!") {
-                                console.log(res.data);
-                
-                                const { generatedID } = res.data;
-                
-                                this.setState({
-                                    spinner: false,
-                                    attachments: [...this.state.attachments, {
-                                        type,
-                                        id: generatedID
-                                    }]
-                                })
-                            } else {
-                                console.log("err", res.data);
-                
-                                Toast.show({
-                                    type: "error",
-                                    position: 'top',
-                                    text1: 'ERROR OCCURRED WHILE UPLOADING!',
-                                    text2: "An unknown error occurred while uploading your content, please try again...",
-                                    visibilityTime: 4500
-                                });
-                            }
-                        }).catch((err) => {
-                            console.log(err);
+        if (Platform.OS === "ios") {
+            try {
+                const res = await DocumentPicker.pick({
+                  type: [DocumentPicker.types.allFiles],
+                });
+                console.log(
+                  res.uri,
+                  res.type, // mime type
+                  res.name,
+                  res.size
+                );
+    
+                const { uri, type, name, size } = res;
+    
+                const fs = RNFetchBlob.fs;
+    
+                let imagePath = null;
+    
+                RNFetchBlob.config({
+                    fileCache: true
+                }).fetch("GET", uri)
+                // the image is now downloaded to device's storage
+                .then(resp => {
+                    // the image path you can use it directly with Image component
+                    imagePath = resp.path();
+                    return resp.readFile("base64");
+                })
+                .then(base64Data => {
+    
+                    const { milestone, milestoneCount } = this.state;
+    
+                    if (milestone === true) {
+                        this.setState({
+                            spinner: true
+                        }, () => {
+                            axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
+                                base64: base64Data,
+                                id: this.props.unique_id,
+                                type
+                            }).then((res) => {
+                                if (res.data.message === "Successfully uploaded content!") {
+                                    console.log(res.data);
+                    
+                                    const { generatedID } = res.data;
+                    
+                                    this.setState({
+                                        spinner: false,
+                                        attachments: [...this.state.attachments, {
+                                            type,
+                                            id: generatedID
+                                        }]
+                                    })
+                                } else {
+                                    console.log("err", res.data);
+                    
+                                    Toast.show({
+                                        type: "error",
+                                        position: 'top',
+                                        text1: 'ERROR OCCURRED WHILE UPLOADING!',
+                                        text2: "An unknown error occurred while uploading your content, please try again...",
+                                        visibilityTime: 4500
+                                    });
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
                         })
-                    })
+                    } else {
+                        this.setState({
+                            spinner: true
+                        }, () => {
+                            axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
+                                base64: base64Data,
+                                id: this.props.unique_id,
+                                type
+                            }).then((res) => {
+                                if (res.data.message === "Successfully uploaded content!") {
+                                    console.log(res.data);
+                    
+                                    const { generatedID } = res.data;
+                      
+                                    this.setState({
+                                        spinner: false,
+                                        attachments: [...this.state.attachments, {
+                                            type,
+                                            id: generatedID
+                                        }]
+                                    })
+                                } else {
+                                    console.log("err", res.data);
+                    
+                                    Toast.show({
+                                        type: "error",
+                                        position: 'top',
+                                        text1: 'ERROR OCCURRED WHILE UPLOADING!',
+                                        text2: "An unknown error occurred while uploading your content, please try again...",
+                                        visibilityTime: 4500
+                                    });
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                        })
+                    }
+                    // remove the file from storage
+                    return fs.unlink(imagePath);
+                }).catch((err) => {
+                    console.log(err);
+                });
+    
+              } catch (err) {
+                console.log(err);
+                if (DocumentPicker.isCancel(err)) {
+                  // User cancelled the picker, exit any dialogs or menus and move on
                 } else {
-                    this.setState({
-                        spinner: true
-                    }, () => {
-                        axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
-                            base64: base64Data,
-                            id: this.props.unique_id,
-                            type
-                        }).then((res) => {
-                            if (res.data.message === "Successfully uploaded content!") {
-                                console.log(res.data);
-                
-                                const { generatedID } = res.data;
-                  
-                                this.setState({
-                                    spinner: false,
-                                    attachments: [...this.state.attachments, {
-                                        type,
-                                        id: generatedID
-                                    }]
-                                })
-                            } else {
-                                console.log("err", res.data);
-                
-                                Toast.show({
-                                    type: "error",
-                                    position: 'top',
-                                    text1: 'ERROR OCCURRED WHILE UPLOADING!',
-                                    text2: "An unknown error occurred while uploading your content, please try again...",
-                                    visibilityTime: 4500
-                                });
-                            }
-                        }).catch((err) => {
-                            console.log(err);
-                        })
-                    })
+                    console.log(err);
+                    throw err;
                 }
-                // remove the file from storage
-                return fs.unlink(imagePath);
-            });
+            }
+        } else {
+            try {
+                const res = await DocumentPicker.pick({
+                  type: [DocumentPicker.types.allFiles],
+                });
+                console.log(
+                  res.uri,
+                  res.type, // mime type
+                  res.name,
+                  res.size
+                );
+    
+                const { uri, type, name, size } = res;
+    
+                const fs = RNFetchBlob.fs;
+    
+                let imagePath = null;
+    
+                RNFetchBlob.fs.readFile(uri, 'base64').then(base64Data => {
 
-          } catch (err) {
-            if (DocumentPicker.isCancel(err)) {
-              // User cancelled the picker, exit any dialogs or menus and move on
-            } else {
-              throw err;
+                    console.log("base64Data", base64Data);
+    
+                    const { milestone, milestoneCount } = this.state;
+    
+                    if (milestone === true) {
+                        this.setState({
+                            spinner: true
+                        }, () => {
+                            axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
+                                base64: base64Data,
+                                id: this.props.unique_id,
+                                type
+                            }).then((res) => {
+                                if (res.data.message === "Successfully uploaded content!") {
+                                    console.log(res.data);
+                    
+                                    const { generatedID } = res.data;
+                    
+                                    this.setState({
+                                        spinner: false,
+                                        attachments: [...this.state.attachments, {
+                                            type,
+                                            id: generatedID
+                                        }]
+                                    })
+                                } else {
+                                    console.log("err", res.data);
+                    
+                                    Toast.show({
+                                        type: "error",
+                                        position: 'top',
+                                        text1: 'ERROR OCCURRED WHILE UPLOADING!',
+                                        text2: "An unknown error occurred while uploading your content, please try again...",
+                                        visibilityTime: 4500
+                                    });
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                        })
+                    } else {
+                        this.setState({
+                            spinner: true
+                        }, () => {
+                            axios.post(`${Config.ngrok_url}/upload/content/attachment`, {
+                                base64: base64Data,
+                                id: this.props.unique_id,
+                                type
+                            }).then((res) => {
+                                if (res.data.message === "Successfully uploaded content!") {
+                                    console.log(res.data);
+                    
+                                    const { generatedID } = res.data;
+                      
+                                    this.setState({
+                                        spinner: false,
+                                        attachments: [...this.state.attachments, {
+                                            type,
+                                            id: generatedID
+                                        }]
+                                    })
+                                } else {
+                                    console.log("err", res.data);
+                    
+                                    Toast.show({
+                                        type: "error",
+                                        position: 'top',
+                                        text1: 'ERROR OCCURRED WHILE UPLOADING!',
+                                        text2: "An unknown error occurred while uploading your content, please try again...",
+                                        visibilityTime: 4500
+                                    });
+                                }
+                            }).catch((err) => {
+                                console.log(err);
+                            })
+                        })
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+    
+              } catch (err) {
+                console.log(err);
+                if (DocumentPicker.isCancel(err)) {
+                  // User cancelled the picker, exit any dialogs or menus and move on
+                } else {
+                    console.log(err);
+                    throw err;
+                }
             }
         }
     }

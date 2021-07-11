@@ -6,7 +6,11 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffd530"
+    },
+    goldText: {
+        color: "#ffd530"
     },
     container: {
         width,
@@ -54,7 +58,8 @@ export default StyleSheet.create({
     boxedSelected: {
         flexDirection: "row",
         borderWidth: 2,
-        borderColor: "blue",
+        backgroundColor: "#ffd530",
+        borderColor: "darkred",
         height: 75
     },
     redText: {
@@ -63,7 +68,8 @@ export default StyleSheet.create({
     },
     boxedContainerSelected: {
         borderWidth: 1,
-        borderColor: "blue",
+        borderColor: "darkred",
+        backgroundColor: "#ffd530",
         flexDirection: "row",
         height: 50,
         marginTop: 15
@@ -76,8 +82,9 @@ export default StyleSheet.create({
         marginTop: 15
     },
     titleSelected: {
-        color: "blue",
+        color: "darkred",
         fontSize: 15,
+        backgroundColor: "#ffd530",
         fontWeight: "bold",
         textAlign: "left" 
     },

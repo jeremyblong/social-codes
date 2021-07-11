@@ -6,7 +6,11 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffd530"
+    },
+    goldText: {
+        color: "#ffd530"
     },
     container: {
         width,
@@ -56,7 +60,7 @@ export default StyleSheet.create({
     },
     selected: {
         borderWidth: 2,
-        borderColor: "blue",
+        borderColor: "darkred",
         marginTop: 15
     },
     rightHalf: {
@@ -71,7 +75,7 @@ export default StyleSheet.create({
     },
     innerText: {
         textAlign: "center",
-        color: "blue",
+        color: "darkred",
         marginBottom: 10,
         fontSize: 18
     },      
@@ -91,7 +95,7 @@ export default StyleSheet.create({
         borderBottomWidth: 10
     },
     blueText: {
-        color: "blue"
+        color: "darkred"
     },
     row: {
         flexDirection: "row"
@@ -101,7 +105,7 @@ export default StyleSheet.create({
         marginTop: 4,
         marginLeft: 10,
         fontSize: 18,
-        color: "blue"
+        color: "darkred"
     },
     circle: {
         borderWidth:1,
@@ -133,7 +137,7 @@ export default StyleSheet.create({
     },
     plus: {
         maxWidth: 30,
-        tintColor: "blue",
+        tintColor: "darkred",
         maxHeight: 30
     }
 })

@@ -14,6 +14,9 @@ export default StyleSheet.create({
         zIndex: -1,
         backgroundColor: "white"
     },
+    goldText: {
+        color: "#fdd530"
+    },
     margin: {
         margin: 20
     },

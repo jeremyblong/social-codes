@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'rea
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Icon, Picker, List, ListItem } from 'native-base';
 import styles from './styles.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from 'react-redux';
 import { addJobData } from "../../../../actions/jobs/data.js";
 import * as Progress from 'react-native-progress';
@@ -106,22 +106,22 @@ constructor(props) {
 
         if (changed === true) {
             if ((typeof selected !== "undefined" && selected.length > 0) && (typeof amountOfFreelancers !== "undefined" && amountOfFreelancers.length > 0) && (numberOfFreelancers !== 0)) {
-                return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmissionMultipleFreelancers}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmissionMultipleFreelancers}>Submit & Continue</AwesomeButtonCartman>;
             } else {
-                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
             }
         } else {
             if (multiple === true) {
                 if ((typeof selected !== "undefined" && selected.length > 0) && (typeof amountOfFreelancers !== "undefined" && amountOfFreelancers.length > 0) && (numberOfFreelancers !== 0)) {
-                    return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmissionMultipleFreelancers}>Submit & Continue</AwesomeButtonBlue>;
+                    return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmissionMultipleFreelancers}>Submit & Continue</AwesomeButtonCartman>;
                 } else {
-                    return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                    return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
                 }
             } else {
                 if ((typeof selected !== "undefined" && selected.length > 0) && (typeof amountOfFreelancers !== "undefined" && amountOfFreelancers.length > 0)) {
-                    return <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={this.handleSubmissionSingleFreelancer}>Submit & Continueee</AwesomeButtonBlue>;
+                    return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmissionSingleFreelancer}>Submit & Continueee</AwesomeButtonCartman>;
                 } else {
-                    return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
+                    return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
                 }
             }
         }
@@ -132,7 +132,7 @@ constructor(props) {
         console.log(this.state);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -141,16 +141,16 @@ constructor(props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Post Job</Title>
-                    <Subtitle>Additional Details</Subtitle>
+                    <Title style={styles.goldText}>Post Job</Title>
+                    <Subtitle style={styles.goldText}>Additional Details</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text>Restart Process</Text>
+                            <Text style={styles.goldText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"blue"} unfilledColor={"lightgrey"} progress={0.75} width={width} />
+                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.75} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                     <KeyboardAwareScrollView>
@@ -270,7 +270,7 @@ constructor(props) {
                         </Picker>
                         <Text style={[styles.headerText, { marginTop: 35 }]}>Job Success Score</Text>
                         <List style={{ marginTop: 25 }}>
-                            <ListItem noIndent style={jobSuccessPicked === "any-job-success" ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={jobSuccessPicked === "any-job-success" ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     jobSuccessPicked: "any-job-success"
                                 })
@@ -282,7 +282,7 @@ constructor(props) {
                                 <Icon name="arrow-forward" style={jobSuccessPicked === "any-job-success" ? { color: "blue" } : null} />
                             </Right>
                             </ListItem>
-                            <ListItem noIndent style={jobSuccessPicked === "80-and-up" ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={jobSuccessPicked === "80-and-up" ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     jobSuccessPicked: "80-and-up"
                                 })
@@ -294,7 +294,7 @@ constructor(props) {
                                 <Icon name="arrow-forward" style={jobSuccessPicked === "80-and-up" ? { color: "blue" } : null} />
                             </Right>
                             </ListItem>
-                            <ListItem noIndent style={jobSuccessPicked === "90-and-up" ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={jobSuccessPicked === "90-and-up" ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     jobSuccessPicked: "90-and-up"
                                 })
@@ -309,7 +309,7 @@ constructor(props) {
                         </List>
                         <Text style={[styles.headerText, { marginTop: 35 }]}>Min Amount Earned</Text>
                         <List style={{ marginTop: 25 }}>
-                            <ListItem noIndent style={amountEarned === 0 ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={amountEarned === 0 ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     amountEarned: 0
                                 })
@@ -321,7 +321,7 @@ constructor(props) {
                                 <Icon name="arrow-forward" style={amountEarned === 0 ? { color: "blue" } : null} />
                             </Right>
                             </ListItem>
-                            <ListItem noIndent style={amountEarned === 100 ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={amountEarned === 100 ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     amountEarned: 100
                                 })
@@ -333,7 +333,7 @@ constructor(props) {
                                 <Icon name="arrow-forward" style={amountEarned === 100 ? { color: "blue" } : null} />
                             </Right>
                             </ListItem>
-                            <ListItem noIndent style={amountEarned === 1000 ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={amountEarned === 1000 ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     amountEarned: 1000
                                 })
@@ -345,7 +345,7 @@ constructor(props) {
                                 <Icon name="arrow-forward" style={amountEarned === 1000 ? { color: "blue" } : null} />
                             </Right>
                             </ListItem>
-                            <ListItem noIndent style={amountEarned === 10000 ? { backgroundColor: "#cde1f9" } : null} button={true} onPress={() => {
+                            <ListItem noIndent style={amountEarned === 10000 ? { backgroundColor: "#ffd530" } : null} button={true} onPress={() => {
                                 this.setState({
                                     amountEarned: 10000
                                 })

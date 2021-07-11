@@ -55,7 +55,7 @@
                 android:resource="@xml/file_viewer_provider_paths"
             />
         </provider>
-        <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>
+        <!-- <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>
           <receiver 
             android:enabled="true"
             android:exported="true"
@@ -71,18 +71,17 @@
           <intent-filter>
             <action android:name="io.invertase.firebase.notifications.BackgroundAction"/>
           </intent-filter>
-        </receiver>
-        <service
+        </receiver> -->
+        <!-- <service
             android:name=".java.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+        </service> -->
         <service android:name="io.invertase.firebase.notifications.RNFirebaseBackgroundNotificationActionsService"/>
         <service android:name="com.transistorsoft.locationmanager.service.TrackingService" android:foregroundServiceType="location" />
         <service android:name="com.transistorsoft.locationmanager.service.LocationRequestService" android:foregroundServiceType="location" />
-        <!-- Add this line for Message service  -->
         <!-- <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
           <intent-filter>
             <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -90,7 +89,7 @@
         </service> -->
         
       <!-- Add this line to enable backgound messaging services -->
-      <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService"/>
+      <!-- <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService"/> -->
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

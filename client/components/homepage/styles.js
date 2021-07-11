@@ -5,8 +5,8 @@ const { height, width } = Dimensions.get("window");
 
 export default StyleSheet.create({
     logo: {
-        maxWidth: width,
-        height: 125
+        maxWidth: width * 0.80,
+        height: 45
     },
     centered: {
         justifyContent: 'center',

@@ -160,8 +160,8 @@ constructor () {
         return (
             <Fragment>
                 <LinearGradient colors={['black', '#303030', 'blue']} style={styles.background}>
-                    <View style={[styles.centered, { maxHeight: 400 }]}>
-                        <Image source={require("../../assets/images/code.jpg")} style={styles.logo} />
+                    <View style={[styles.centered, { maxHeight: 400, paddingTop: 25 }]}>
+                        <Image source={require("../../assets/images/social_code_long.png")} style={styles.logo} />
                         <Text style={styles.whiteMedium}>{"Hire expert freelancers for your custom software job online!"}</Text>
                         <LottieView
                             source={require("../../assets/animations/tech.json")}
@@ -176,7 +176,7 @@ constructor () {
                     <View style={styles.bottom}>
                         <AwesomeButton onPress={() => {
                             this.props.props.navigation.navigate("auth-main");
-                        }} stretch={true} backgroundColor={"#ffd530"} textColor={"black"} backgroundShadow={"black"} borderRadius={10} borderColor={"black"} borderWidth={2}>Continue with email/username</AwesomeButton>
+                        }} stretch={true} backgroundColor={"black"} textColor={"white"} backgroundShadow={"black"} borderRadius={10} borderColor={"black"} borderWidth={2}>Continue with email/username</AwesomeButton>
                         <View style={styles.hr} />
                         <GoogleSigninButton
                             style={{ width: "75%", minWidth: "75%", minHeight: 48, height: 48 }}

@@ -9,8 +9,8 @@ export default StyleSheet.create({
         maxHeight: "100%"
     },
     maxedIconLogo: {
-        maxWidth: 250,
-        minWidth: 250,
+        maxWidth: 200,
+        minWidth: 200,
         maxHeight: 35
     },
     maxedIconSmall: {
@@ -84,7 +84,7 @@ export default StyleSheet.create({
     contact: {
         minHeight: "70%",
         minWidth: 50,
-        borderRadius: 50,
+        borderRadius: 5,
         marginRight: 10
     },
     buttonCustom: {
@@ -158,7 +158,8 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     pictureContainer: {
-        height: "50%"
+        height: "50%",
+        minHeight: 350
     },
     hideContainer: {
         height: 0
@@ -345,7 +346,7 @@ export default StyleSheet.create({
     },
     thickLine: {
         borderBottomColor: "lightgrey",
-        borderBottomWidth: 10
+        borderBottomWidth: 2.5
     },
     horizontalScroll: {
         minHeight: 70,
@@ -447,7 +448,7 @@ export default StyleSheet.create({
         elevation: 17
     },
     roundedButton: {
-        borderRadius: 25,
+        borderRadius: 5,
         borderWidth: 1,
         width: 125,
         flexDirection: "row",
@@ -460,7 +461,13 @@ export default StyleSheet.create({
         paddingTop: 15,
         paddingLeft: 15,
         maxWidth: 35,
-        maxHeight: 35
+        minWidth: 35, 
+        minHeight: 35,
+        maxHeight: 35,
+        position: "absolute",
+        left: 15,
+        bottom: 100,
+        zIndex: 9999999999999999999999999999999999999
     },
     mapCustom: {
         width: width * 1.05,
@@ -534,7 +541,8 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center", 
         alignContent: "center",
-        marginTop: 50
+        marginTop: 50,
+        height: height - 450
     },
     innerImage: {
         maxWidth: 50, 
@@ -569,12 +577,16 @@ export default StyleSheet.create({
     imageContent:{
         borderWidth:1,
         borderColor:'black',
-        height: 150, 
+        flex: 1,
+        height: 500, 
+        minHeight: 500
     },
     imageContent1:{
         width: width * 1.05,
         marginLeft: -20,
-        height: 500
+        flex: 1,
+        height: 500,
+        minHeight: 500
     },
     imageContentCustom: {
         width: width * 1.05,

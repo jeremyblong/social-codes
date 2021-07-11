@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions, Animated, Keyboard } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions, Animated, Keyboard, Platform } from 'react-native';
 import styles from './styles.js';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 import DatePicker from "react-native-date-picker";
@@ -188,17 +188,17 @@ constructor (props) {
         const { error, verifcationError, editable } = this.state;
         return (
            <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Personal Details</Title>
-                    <Subtitle>Personal information...</Subtitle>
+                    <Title style={styles.goldText}>Personal Details</Title>
+                    <Subtitle style={styles.goldText}>Personal information...</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -275,7 +275,7 @@ constructor (props) {
                 </ScrollView>
                 <View style={styles.bottomContainer}>
                     <View style={{ margin: 10 }}>
-                        {this.calculateReadiness() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
+                        {this.calculateReadiness() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
                     </View>
                 </View>
                 <RBSheet
@@ -308,9 +308,9 @@ constructor (props) {
                         </View>
                         <View style={{ marginTop: 10 }} />
                         <View style={{ margin: 15 }}>
-                            <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                            <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={() => {
                                 this.RBSheet.close();
-                            }} stretch={true}>Select Date & Continue</AwesomeButtonBlue>
+                            }} stretch={true}>Select Date & Continue</AwesomeButtonCartman>
                         </View>
                 </RBSheet>
                 <RBSheet
@@ -327,7 +327,7 @@ constructor (props) {
                     }}
                     >
                         <View style={{ flex: 1 }}>
-                            <View style={{ marginTop: 50, margin: 10 }}>
+                            <View style={Platform.OS === "ios" ? { marginTop: 50, margin: 10 } : { marginTop: 25, margin: 10, marginBottom: 25 }}>
                                 <Text style={styles.header}>Enter the code that was just sent to the number provided</Text>
                                 <View style={{ marginTop: 10 }} />
                                 <Text style={styles.greyText}>You have a limited amount of times you can attempt to properly validate your phone number with the code provided. Please pay attention to your entry and make sure it is correct.</Text>
@@ -354,11 +354,11 @@ constructor (props) {
                         <View style={styles.bottomContainer}>
                             <View style={{ margin: 10 }}>
                                 <View style={{ marginBottom: 20 }}>
-                                    <AwesomeButtonBlue type={"primary"} stretch={true} onPress={() => {
+                                    <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={() => {
                                         this.RBSheetTWO.close();
-                                    }}>Close/Exit</AwesomeButtonBlue>
+                                    }}>Close/Exit</AwesomeButtonCartman>
                                 </View>
-                                {this.calculateReadinessSheet() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue>}
+                                {this.calculateReadinessSheet() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonCartman>}
                             </View>
                         </View>
                 </RBSheet>

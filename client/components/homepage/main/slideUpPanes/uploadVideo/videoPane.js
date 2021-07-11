@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
-import { View, Text, Image, TouchableOpacity, Keyboard, Dimensions, ScrollView, AsyncStorage } from "react-native";
+import { View, Text, Image, TouchableOpacity, Keyboard, Dimensions, ScrollView, Platform } from "react-native";
 import styles from "./styles.js";
 import { Header, Left, Body, Right, Icon, Button, Title, Subtitle, Textarea, Thumbnail } from 'native-base';
 import axios from "axios";
@@ -184,18 +184,18 @@ const UploadVideoPaneHelper = ({ uploadVideoPaneRef, unique_id, fullName, userna
                         textStyle={{ color: "white", fontWeight: "bold", textAlign: "center" }}
                         textContent={`Uploading your video, \n${uploadPercentage}% uploaded...`}
                     />
-                     <Header>
+                     <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 uploadVideoPaneRef.current.close();
                             }} transparent>
-                                <Icon style={{ color: "black" }} name='arrow-back' />
-                                    <Text style={{ fontSize: 18 }}>Back</Text>
+                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                                {Platform.OS === "ios" ? <Text style={{ fontSize: 18 }}>Back</Text> : null}
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Upload Video</Title>
-                            <Subtitle>Upload video to wall</Subtitle>
+                            <Title style={styles.goldText}>Upload Video</Title>
+                            <Subtitle style={styles.goldText}>Upload video to wall</Subtitle>
                         </Body>
                         <Right />
                     </Header>

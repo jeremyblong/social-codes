@@ -51,7 +51,10 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         otherUserFirstName: interview.firstName,
                                         otherUserLastName: interview.lastName,
                                         otherUserUsername: interview.username,
-                                        with: interview.with
+                                        with: interview.with,
+                                        paidFull: false,
+                                        paidPartial: false,
+                                        payments: []
                                     };
             
                                     if (user.activeHiredApplicants) {
@@ -93,7 +96,10 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 otherUserFirstName: firstName,
                                 otherUserLastName: lastName,
                                 otherUserUsername: username,
-                                with: id
+                                with: id,
+                                paidFull: false,
+                                paidPartial: false,
+                                payments: []
                             };
     
                             if (user.activeHiredApplicants) {

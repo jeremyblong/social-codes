@@ -283,7 +283,7 @@ const SecondRoute = (props) => {
             </Content>
             
             <View style={styles.bottomed}>
-                {calculateLogin() ? <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonCartman> : <AwesomeButtonCartman progress type={"anchor"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
+                {calculateLogin() ? <AwesomeButtonCartman style={{ zIndex: -1 }} type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ zIndex: -1 }} progress type={"anchor"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
                     handleSubmission(next);
                 }} stretch={true}>Sign-in</AwesomeButtonCartman>}
             </View>
