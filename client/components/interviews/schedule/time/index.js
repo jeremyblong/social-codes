@@ -6,7 +6,7 @@ import { saveVideoConferenceInfo } from "../../../../actions/skype/index.js";
 import { connect } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import moment from 'moment';
 import axios from 'axios';
 import Config from 'react-native-config';
@@ -42,7 +42,7 @@ constructor(props) {
         if (time !== null) {
             return (
                 <Fragment>
-                    <TouchableOpacity style={[ styles.card, { borderColor: "blue" }]} onPress={() => {
+                    <TouchableOpacity style={[ styles.card, { borderColor: "#303030" }]} onPress={() => {
 
                     }}>
                     <View style={styles.cardContent}>
@@ -87,7 +87,7 @@ constructor(props) {
         const { time } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -96,8 +96,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Video Call</Title>
-                        <Subtitle>Time & Confirmation</Subtitle>
+                        <Title style={styles.goldText}>Video Call</Title>
+                        <Subtitle style={styles.goldText}>Time & Confirmation</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -109,11 +109,11 @@ constructor(props) {
                                 <Text style={styles.headerText}>Please select a date and time to schedule your video call...</Text>
                                 <Text style={{ marginTop: 10 }}>We will send a link to the other to join at the desired time - the link will only expire after a successful meet</Text>
                                 <View style={{ marginTop: 20 }} />
-                                <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                                     this.setState({
                                         isTimePickerVisible: true
                                     })
-                                }} stretch={true}>Select Time</AwesomeButtonBlue>
+                                }} stretch={true}>Select Time</AwesomeButtonCartman>
                             </View>
                             <View style={styles.margin}>
                                 {this.renderTime()}
@@ -123,9 +123,9 @@ constructor(props) {
                     </View>
                     {time !== null ? <View style={styles.footer}>
                         <View style={styles.margin}>
-                            <AwesomeButtonBlue backgroundColor={"blue"} type={"primary"} onPress={() => {
+                            <AwesomeButtonCartman backgroundColor={"#ffd530"} textColor={"black"} type={"anchor"} onPress={() => {
                                 this.handleContinuation();
-                            }} stretch={true}>SEND INVITATION</AwesomeButtonBlue>
+                            }} stretch={true}>SEND INVITATION</AwesomeButtonCartman>
                         </View>
                     </View> : null}
                 </View>

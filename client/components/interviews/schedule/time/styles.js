@@ -5,7 +5,11 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35, 
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffd530"
+    },
+    goldText: {
+        color: "#ffd530"
     },
     container: {
         width,
@@ -58,7 +62,7 @@ export default StyleSheet.create({
     },
     date:{
         fontSize:15,
-        color:"blue",
+        color:"darkred",
         fontWeight: "bold",
         marginTop:5
     }

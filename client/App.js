@@ -10,11 +10,13 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { navigationRef } from "./RootNavigation.js";
 import Config from "react-native-config";
+import uuid from "react-native-uuid";
 import IntroSlider from "./components/intro/intro.js";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GetLocation from 'react-native-get-location';
 import io from 'socket.io-client';
+import PushNotification from "react-native-push-notification";
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 import UserInactivity from 'react-native-user-inactivity';
@@ -98,6 +100,7 @@ import HomeActiveGigsDashboardHelper from "./pages/activeGigs/home/index.js";
 import IndividualGigManagePage from "./pages/activeGigs/individual/index.js";
 import ActiveJobsMainPageHelperPage from "./pages/activeGigs/active/listOfJobs/index.js";
 import IndividualActiveJobPage from "./pages/activeGigs/active/individual/index.js";
+import { Notifications } from 'react-native-notifications';
 
 
 const { width, height } = Dimensions.get("window");
@@ -390,6 +393,16 @@ constructor(props) {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log("Notification when app is on foreground", remoteMessage);
 
+      Notifications.postLocalNotification({
+        body: remoteMessage.notification.body,
+        title: remoteMessage.notification.title,
+        sound: "chime.aiff",
+        alertAction: "Slide to open :)",
+        silent: false,
+        userInfo: {},
+        fireDate: new Date()
+    });
+
       Toast.show({
         text1: remoteMessage.notification.title,
         text2: remoteMessage.notification.body,
@@ -399,6 +412,27 @@ constructor(props) {
     });
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.log('Message handled in the background!', remoteMessage);
+
+      const generated = uuid.v4();
+
+      PushNotification.createChannel(
+        {
+          channelId: generated, // (required)
+          channelName: generated, // (required)
+          soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+          importance: 4, // (optional) default: 4. Int value of the Android notification importance
+          vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+        }, (created) => {
+          console.log(`createChannel returned '${created}'`);
+
+          PushNotification.localNotification({
+            /* Android Only Properties */
+            channelId: generated, // (required) channelId, if the channel doesn't exist, notification will not trigger.
+            bigText: remoteMessage.notification.title, // (optional) default: "message" prop
+            subText: remoteMessage.notification.body
+          });
+        }
+      );
     });
     /* Success */
     messaging().onNotificationOpenedApp(remoteMessage => {

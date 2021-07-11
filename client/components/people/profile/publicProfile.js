@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions, ScrollView, FlatList } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions, ScrollView, FlatList, Platform } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Textarea, Card, CardItem, Thumbnail, List, ListItem, FooterTab, Footer } from 'native-base';
 import styles from './styles.js';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
@@ -1902,7 +1902,7 @@ constructor (props) {
                             </Button>
                         </Left>
                         <Body style={{ width: 250, minWidth: 250 }}>
-                            <Title style={{ textAlign: "left" }}>Message {`${user.firstName} ${user.lastName}`}</Title>
+                            <Title style={Platform.OS === "android" ? { textAlign: "left", marginLeft: 30 } : { textAlign: "left" }}>Message {`${user.firstName} ${user.lastName}`}</Title>
                         </Body>
                         <Right />
                     </Header>

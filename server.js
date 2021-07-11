@@ -203,6 +203,7 @@ app.use("/gather/agreement/details/and/job", require("./routes/activeGigs/indivi
 app.use("/gather/active/live/jobs", require("./routes/activeGigs/listOfJobs/gatherListOfJobs.js"));
 app.use("/fetch/specific/job/active", require("./routes/activeGigs/individual/gatherJobByID.js"));
 app.use("/make/full/payment/entire", require("./routes/activeGigs/individual/payments/makeCompleteFullPaymentIndividual.js"));
+app.use("/check/active/debit/credit/cards", require("./routes/account/payments/payments/check/checkForPaymentMethods.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

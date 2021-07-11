@@ -6,6 +6,7 @@
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <GoogleMobileAds/GoogleMobileAds.h>
+#import "RNNotifications.h"
 
 
 #ifdef FB_SONARKIT_ENABLED
@@ -35,6 +36,7 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
+  [RNNotifications startMonitorNotifications];
   [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
   [FIRApp configure];
   [GMSServices provideAPIKey:@"AIzaSyAcGAoF3Bjr_mIg2S9HivKzwfcfelGVMfQ"];
@@ -61,5 +63,12 @@ static void InitializeFlipper(UIApplication *application) {
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+// might need to remove these for IOS to run properly????
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  [RNNotifications didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
+}
 @end

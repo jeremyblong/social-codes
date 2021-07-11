@@ -148,6 +148,32 @@ constructor(props) {
             console.log(err);
         })
     }
+    checkIfCardsRegistered = () => {
+
+        axios.get(`${Config.ngrok_url}/check/active/debit/credit/cards`, {
+            params: {
+                id: this.props.unique_id
+            }
+        }).then((res) => {
+            if (res.data.message === "User HAS REGISTERED a card already!") {
+                this.setState({
+                    showHireDialog: true
+                })
+            } else {
+                console.log("err", res.data);
+
+                Toast.show({
+                    type: "error",
+                    position: "top",
+                    visibilityTime: 4500,
+                    text1: "You MUST register a debit/credit card before proceeding to hire this user...",
+                    text2: "You MUST have a payment method on file before hiring/proceeding with this user, Please add a payment method and try again!"
+                })
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render () {
         const interview = this.props.props.route.params.interview;
 
@@ -206,9 +232,7 @@ constructor(props) {
                     </View>
                     <View style={styles.bottom}>
                         {hide === false && ready === true ? <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
-                            this.setState({
-                                showHireDialog: true
-                            })
+                            this.checkIfCardsRegistered();
                         }} stretch={true}>Hire Applicant</AwesomeButtonCartman> : null}
                         <View style={{ marginTop: 30 }} />
                         <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {

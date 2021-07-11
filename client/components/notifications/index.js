@@ -111,6 +111,8 @@ constructor(props) {
                         this.props.props.navigation.push("friends-pending");
                     } else if (notification.link === "interview") {
                         this.props.props.navigation.push("manage-all-active-proposal-related");
+                    } else if (notification.link === "video-conference") {
+                        this.props.props.navigation.push("video-interview-calls-homepage");
                     }
                 })
             } else {

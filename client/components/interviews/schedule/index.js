@@ -40,7 +40,7 @@ constructor(props) {
         console.log("interviews schedule index.js state, ", this.state, this.props);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -49,8 +49,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Video Call</Title>
-                        <Subtitle>Schedule a video call</Subtitle>
+                        <Title style={styles.goldText}>Video Call</Title>
+                        <Subtitle style={styles.goldText}>Schedule a video call</Subtitle>
                     </Body>
                     <Right />
                 </Header>

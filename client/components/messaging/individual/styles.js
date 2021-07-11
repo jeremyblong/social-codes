@@ -12,8 +12,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
     },
     headerProfilePic: {
-        maxWidth: "55%", 
-        minWidth: "55%",
+        maxWidth: 40, 
+        minWidth: 40,
         minHeight: "150%",
         borderRadius: 120,
         maxHeight: "150%"
@@ -38,6 +38,7 @@ export default StyleSheet.create({
     },  
     smallerIcon: {
         maxWidth: 35,
+        tintColor: "#ffd530",
         maxHeight: 35
     },
     bottomButton: {

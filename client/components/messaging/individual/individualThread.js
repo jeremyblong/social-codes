@@ -11,7 +11,7 @@ import uuid from 'react-native-uuid';
 import moment from 'moment';
 import axios from 'axios';
 import LottieView from 'lottie-react-native';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Dialog from "react-native-dialog";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -974,7 +974,7 @@ constructor (props) {
                     }} label="Delete" />
                     </Dialog.Container>
                 </View>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left style={{ maxWidth: 50 }}>
                         <Button onPress={() => {
                             this.props.props.navigation.push("messaging-conversations");
@@ -985,7 +985,7 @@ constructor (props) {
                     <Left>
                         <Button transparent>
                             {this.renderPicOrVideo()}
-                            <Title style={styles.title}>{this.props.props.route.params.conversation.conversationWith.name}</Title>
+                            {Platform.OS === "ios" ? <Title style={styles.title}>{this.props.props.route.params.conversation.conversationWith.name}</Title> : null}
                         </Button>
                     </Left>
                     <Body>
@@ -1001,7 +1001,7 @@ constructor (props) {
                                 justifyContent:'center',
                                 width: 35,
                                 height: 35,
-                                backgroundColor:'#fff',
+                                backgroundColor:'#ffd530',
                                 borderRadius:35,
                             }}
                         >
@@ -1016,7 +1016,7 @@ constructor (props) {
                                 justifyContent:'center',
                                 width: 35,
                                 height: 35,
-                                backgroundColor:'#fff',
+                                backgroundColor:'#ffd530',
                                 borderRadius:35,
                             }}
                         >
@@ -1030,7 +1030,7 @@ constructor (props) {
                                 justifyContent:'center',
                                 width: 35,
                                 height: 35,
-                                backgroundColor:'#fff',
+                                backgroundColor:'#ffd530',
                                 borderRadius:35,
                                 }}
                             >
@@ -1038,7 +1038,7 @@ constructor (props) {
                         </TouchableOpacity>
                     </Right>
                 </Header>
-                <AwesomeButtonBlue type={"secondary"} stretch={true} onPress={() => {}}>Hire This User</AwesomeButtonBlue>
+                <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={() => {}}>Hire This User</AwesomeButtonCartman>
                 <GiftedChat 
                     onInputTextChanged={(value) => {
                         this.typing(value);
@@ -1079,7 +1079,7 @@ constructor (props) {
                         {this.state.mediaMsg !== null ? <Image source={{ uri: this.state.mediaMsg.uri }} style={styles.previewImage} /> : null}
                     </View>
                     <View style={styles.bottomButton}>
-                        <AwesomeButtonBlue type={"secondary"} onPress={this.sendMediaMessage} stretch={true}>Submit & Send Message</AwesomeButtonBlue>
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.sendMediaMessage} stretch={true}>Submit & Send Message</AwesomeButtonCartman>
                     </View>
                 </RBSheet>
             </Fragment>
