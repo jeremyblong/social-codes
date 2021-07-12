@@ -204,6 +204,8 @@ app.use("/gather/active/live/jobs", require("./routes/activeGigs/listOfJobs/gath
 app.use("/fetch/specific/job/active", require("./routes/activeGigs/individual/gatherJobByID.js"));
 app.use("/make/full/payment/entire", require("./routes/activeGigs/individual/payments/makeCompleteFullPaymentIndividual.js"));
 app.use("/check/active/debit/credit/cards", require("./routes/account/payments/payments/check/checkForPaymentMethods.js"));
+app.use("/make/quick/payment/partial", require("./routes/activeGigs/individual/payments/partialQuick/makePartialQuickPayment.js"));
+app.use("/gather/onboarding/links", require("./routes/auth/stripeOnboarding/links/createLinks.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

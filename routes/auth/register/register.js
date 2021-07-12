@@ -94,7 +94,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 phoneNumber,
                                 cometChatAuthToken: json.data.authToken,
                                 stripeCustomerAccount: account,
-                                skillsApiToken: JSON.parse(body).access_token
+                                skillsApiToken: JSON.parse(body).access_token,
+                                paymentHistory: []
                             });
         
                             newUser.save((err, data) => {
@@ -188,7 +189,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 phoneNumber,
                                 cometChatAuthToken: json.data.authToken,
                                 stripeConnectAccount: account,
-                                skillsApiToken: JSON.parse(body).access_token
+                                skillsApiToken: JSON.parse(body).access_token,
+                                paymentHistory: []
                             });
         
                             newUser.save((err, data) => {

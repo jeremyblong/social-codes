@@ -327,8 +327,13 @@ constructor(props) {
                         </List>
                         <View style={styles.margin}>
                             <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
+                            <View style={styles.hrCustom} />
+                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{passedData.paidFull === true ? "Full payment completed." : "Full payment has NOT been recieved."}</Text></Text>
+                            <View style={styles.hrCustom} />
+                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{passedData.paidPartial === true ? "Partial payment has been completed!" : "Partial payment has NOT been recieved."}</Text></Text>
                             {this.renderQuestions(job)}
                         </View>
+                        
                     </Fragment>
                 );
             }
@@ -433,12 +438,14 @@ constructor(props) {
 
         console.log(this.props.props.route.params.item);
 
+        const passedData = this.props.props.route.params.item;
+
         console.log("this.state activeGigs individual index.js state", this.state);
         return (
             <Fragment>
                 
                 <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={styles.container}>
-                    {job !== null ? <SlideUpPaymentHelper job={job} rate={job.ratePerProjectCompletion} props={this.props} sheetRef={this.sheetRef} /> : null}
+                    {job !== null ? <SlideUpPaymentHelper job={job} withID={passedData.with} rate={job.ratePerProjectCompletion} props={this.props} sheetRef={this.sheetRef} /> : null}
                     {this.renderPayHourlyOrNot()}
                 </ScrollView>
                 <Footer style={{ borderColor: "transparent", backgroundColor: "#303030" }}>

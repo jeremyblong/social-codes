@@ -34,15 +34,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 })
             } else {
 
-                let otherUserData = null;
-
-                for (let index = 0; index < users.length; index++) {
-                    const element = users[index];
-                    if (element.unique_id === otherUserID) {
-                        otherUserData = element;
-                    }
-                }
-                console.log("otherUserData", otherUserData);
                 const promise = new Promise(async (resolve, reject) => {
                     for (let index = 0; index < users.length; index++) {
                         const user = users[index];
@@ -57,10 +48,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         currency: 'usd',
                                         customer: user.stripeCustomerAccount.id,
                                         description: 'Complete payment for project completion.',
-                                        transfer_data: {
-                                            destination: otherUserData.stripeConnectAccount.id,
-                                            amount: Math.round(Number(Math.round(rate * 100) * 0.90))
-                                        }
                                     }).then((payment) => {
                                         console.log(payment);
         

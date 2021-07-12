@@ -41,7 +41,7 @@ export default StyleSheet.create({
     thinBlackHr: {
         borderBottomWidth: 2,
         borderBottomColor: "black",
-        width: 350,
+        width: "100%",
         marginTop: 10,
         marginBottom: 10
     },
@@ -58,10 +58,18 @@ export default StyleSheet.create({
     },  
     hr: {
         borderBottomWidth: 2,
-        borderBottomColor: "white",
+        borderBottomColor: "black",
         marginTop: 35,
-        marginBottom: 35
+        marginBottom: 35,
+        width: "100%"
     }, 
+    hrCustom: {
+        borderBottomWidth: 2,
+        borderBottomColor: "black",
+        marginTop: 10,
+        marginBottom: 10,
+        width: "100%"
+    },
     priceText: {
         color: "white",
         fontWeight: "bold",

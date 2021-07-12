@@ -19,6 +19,9 @@ const UserSchema =  new mongoose.Schema({
     loginEmail: {
         type: String
     },
+    paymentHistory: {
+        type: Array
+    },
     unique_id: {
         type: String
     },

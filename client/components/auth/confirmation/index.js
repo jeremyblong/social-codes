@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles.js';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Icon } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { addSignupData, userSignedIn, signedInUserData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -90,25 +90,37 @@ constructor (props) {
                             }).then((responseeeeeeeeee) => {
                                 if (responseeeeeeeeee.data.message === "Saved firebase token!") {
                                     console.log(responseeeeeeeeee.data);
-    
-                                    CometChat.login(res.data.user.cometChatAuthToken).then(
-                                        User => {
-                                            console.log("Login successfully:", User);
-                                            // User loged in successfully.
-                
-                                            this.props.userSignedIn(true);
-                
-                                            this.props.signedInUserData(res.data.user);
-                
-                                            setTimeout(() => {
-                                                this.props.props.navigation.push("homepage");
-                                            }, 1000)
-                                        },
-                                        error => {
-                                          console.log("Login failed with exception:", error);
-                                          // User login failed, check error and take appropriate action.
-                                        }
-                                    );
+
+                                    if (accountType === "work") {
+
+                                        this.props.addSignupData({
+                                            ...res.data.user,
+                                            cometChatAuthToken: res.data.user.cometChatAuthToken
+                                        })
+
+                                        setTimeout(() => {
+                                            this.props.props.navigation.push("stripe-onboarding-authentication", { auth: res.data.user.unique_id });
+                                        }, 1250);
+                                    } else {
+                                        CometChat.login(res.data.user.cometChatAuthToken).then(
+                                            User => {
+                                                console.log("Login successfully:", User);
+                                                // User loged in successfully.
+                    
+                                                this.props.userSignedIn(true);
+                    
+                                                this.props.signedInUserData(res.data.user);
+                    
+                                                setTimeout(() => {
+                                                    this.props.props.navigation.push("homepage");
+                                                }, 1000)
+                                            },
+                                            error => {
+                                              console.log("Login failed with exception:", error);
+                                              // User login failed, check error and take appropriate action.
+                                            }
+                                        );
+                                    }
                                 } else {
                                     console.log("err", res.data);
                                 }
@@ -152,25 +164,37 @@ constructor (props) {
                             }).then((responseeeeee) => {
                                 if (responseeeeee.data.message === "Saved firebase token!") {
                                     console.log(responseeeeee.data);
-    
-                                    CometChat.login(res.data.user.cometChatAuthToken).then(
-                                        User => {
-                                            console.log("Login successfully:", User);
-                                            // User loged in successfully.
-                
-                                            this.props.userSignedIn(true);
-                
-                                            this.props.signedInUserData(res.data.user);
-                
-                                            setTimeout(() => {
-                                                this.props.props.navigation.push("homepage");
-                                            }, 1000)
-                                        },
-                                        error => {
-                                          console.log("Login failed with exception:", error);
-                                          // User login failed, check error and take appropriate action.
-                                        }
-                                    )
+
+                                    if (accountType === "work") {
+
+                                        this.props.addSignupData({
+                                            ...res.data.user,
+                                            cometChatAuthToken: res.data.user.cometChatAuthToken
+                                        })
+
+                                        setTimeout(() => {
+                                            this.props.props.navigation.push("stripe-onboarding-authentication", { auth: res.data.user.unique_id });
+                                        }, 1250);
+                                    } else {
+                                        CometChat.login(res.data.user.cometChatAuthToken).then(
+                                            User => {
+                                                console.log("Login successfully:", User);
+                                                // User loged in successfully.
+                    
+                                                this.props.userSignedIn(true);
+                    
+                                                this.props.signedInUserData(res.data.user);
+                    
+                                                setTimeout(() => {
+                                                    this.props.props.navigation.push("homepage");
+                                                }, 1000)
+                                            },
+                                            error => {
+                                              console.log("Login failed with exception:", error);
+                                              // User login failed, check error and take appropriate action.
+                                            }
+                                        )
+                                    }
                                 } else {
                                     console.log("err", res.data);
                                 }
@@ -215,7 +239,7 @@ constructor (props) {
     render() {
         return (
            <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -224,8 +248,8 @@ constructor (props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>Confirmation</Title>
-                    <Subtitle>Email confirmation</Subtitle>
+                    <Title style={styles.goldText}>Confirmation</Title>
+                    <Subtitle style={styles.goldText}>Email confirmation</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -250,7 +274,7 @@ constructor (props) {
                 </View>
                 <View style={styles.bottomContainer}>
                     <View style={{ margin: 10 }}>
-                        {this.calculateReadiness() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
+                        {this.calculateReadiness() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
                     </View>
                 </View>
            </Fragment>

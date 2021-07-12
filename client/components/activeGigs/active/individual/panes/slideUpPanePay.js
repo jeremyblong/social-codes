@@ -12,7 +12,7 @@ import Dialog from "react-native-dialog";
 
 const { width, height } = Dimensions.get("window"); 
 
-const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job }) => {
+const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
     const [ customPayment, setCustomPayment ] = useState(null);
     const [ switched, setSwitched ] = useState(false);
     const [ presetPayment, setPresetPayment ] = useState(0); 
@@ -24,19 +24,43 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job }) => {
         setPresetPayment(amount);
 
         setVisiblityModal(true);
+
+        axios.post(`${Config.ngrok_url}/make/quick/payment/partial`, {
+            rate: amount,
+            id: unique_id,
+            date: job.date,
+            jobID: job.jobID,
+            otherUserID: withID
+        }).then((res) => {
+            if (res.data.message === "Made PARTIAL QUICK payment!") {
+                console.log(res.data);
+
+                sheetRef.current.close();
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
     }
     const makeCompletePayment = () => {
         console.log("make complete payment...");
+
+        console.log(job);
         
         axios.post(`${Config.ngrok_url}/make/full/payment/entire`, {
             rate,
             id: unique_id,
             date: job.date,
             jobID: job.jobID,
-            otherUserID: job.with
+            otherUserID: withID
         }).then((res) => {
             if (res.data.message === "Made COMPLETE payment!") {
                 console.log(res.data);
+
+                setSwitched(false);
+
+                sheetRef.current.close();
             } else {
                 console.log("Err", res.data);
             }
@@ -149,7 +173,7 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job }) => {
                         />
                         <Text style={styles.switchedText}>Pay entire project {"\n"}cost of ${rate}</Text>
                     </View>
-                    {switched === true ? <AwesomeButtonCartman style={{ marginTop: 15 }} onPress={this.makeCompletePayment} type={"anchor"} stretch={true} textColor={"white"}>Submit FULL Payment</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} stretch={true} textColor={"white"}>Submit FULL Payment</AwesomeButtonCartman>}
+                    {switched === true ? <AwesomeButtonCartman style={{ marginTop: 15 }} onPress={makeCompletePayment} type={"anchor"} stretch={true} textColor={"white"}>Submit FULL Payment</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} stretch={true} textColor={"white"}>Submit FULL Payment</AwesomeButtonCartman>}
                 </View>
             </View>
         </RBSheet>

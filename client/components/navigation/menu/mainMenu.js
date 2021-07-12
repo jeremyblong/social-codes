@@ -329,6 +329,12 @@ constructor(props) {
                             </View>
                             <View style={{ flexDirection: "row", margin: 15 }}>
                                 <View style={styles.halfed}>
+                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("payment-onboarding");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/onboarding.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
+                                        <Text style={styles.largeSized}>Onboarding & Payment Set-up</Text>
+                                    </TouchableOpacity> : null}
                                     <TouchableOpacity onPress={() => {}} style={styles.tallView}>
                                         <View style={styles.halfHeight}>
                                             {user !== null && typeof user !== "undefined" && typeof user.profilePics !== "undefined" && user.profilePics.length > 0 && user.profilePics[user.profilePics.length - 1].type === "video" ? <Video source={{uri: `${Config.wasabi_url}/${user.profilePics[user.profilePics.length - 1].picture}` }} 
@@ -442,12 +448,6 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
-                                    {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("payment-onboarding");
-                                    }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/onboarding.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
-                                        <Text style={styles.largeSized}>Onboarding & Payment Set-up</Text>
-                                    </TouchableOpacity> : null}
                                     <View style={styles.shortView}>
                                         
                                     </View>
