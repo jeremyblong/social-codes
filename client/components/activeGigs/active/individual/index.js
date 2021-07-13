@@ -11,6 +11,7 @@ import SlideUpPaymentHelper from "./panes/slideUpPanePay.js";
 import Popover from 'react-native-popover-view';
 import Video from 'react-native-video';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import _ from "lodash";
 
 const { width, height } = Dimensions.get("window");
 
@@ -52,16 +53,16 @@ constructor(props) {
     calculateLength = (duration, date) => {
         switch (duration) {
             case "Less than 1 month":
-                return `due by/within ${moment(date += 1000 * 60 * 60 * 24 * 30).format("MMMM Do YYYY")}...`;
+                return ` deposit is due by/within ${moment(date += 1000 * 60 * 60 * 24 * 30).format("MMMM Do YYYY")} as a payment guarantee...`;
                 break;
             case "1 to 3 months":
-                return `due by/within ${moment(date += 1000 * 60 * 60 * 24 * 30).format("MMMM Do YYYY")} to ${moment(date += 1000 * 60 * 60 * 24 * 90).format("MMMM Do YYYY")}...`;
+                return ` deposit is due by/within ${moment(date += 1000 * 60 * 60 * 24 * 30).format("MMMM Do YYYY")} to ${moment(date += 1000 * 60 * 60 * 24 * 90).format("MMMM Do YYYY")} as a payment guarantee...`;
                 break;
             case "3 to 6 months":
-                return `due by/within ${moment(date += 1000 * 60 * 60 * 24 * 90).format("MMMM Do YYYY")} to ${moment(date += 1000 * 60 * 60 * 24 * 180).format("MMMM Do YYYY")}...`;
+                return ` deposit is due by/within ${moment(date += 1000 * 60 * 60 * 24 * 90).format("MMMM Do YYYY")} to ${moment(date += 1000 * 60 * 60 * 24 * 180).format("MMMM Do YYYY")} as a payment guarantee...`;
                 break;
             case "More than 6 months":
-                return `due by/within ${moment(date += 1000 * 60 * 60 * 24 * 180).format("MMMM Do YYYY")} or more...`;
+                return ` deposit is due by/within ${moment(date += 1000 * 60 * 60 * 24 * 180).format("MMMM Do YYYY")} or longer as a payment guarantee...`;
                 break;
             default:
                 break;
@@ -289,7 +290,7 @@ constructor(props) {
                         <View style={[styles.centered, { marginTop: 25 }]}>
                             <View style={styles.centeredPriceBox}>
                                 <View style={styles.margin}>
-                                    <Text style={styles.priceText}>$<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{job.ratePerProjectCompletion}</Text> is {this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                    <Text style={styles.priceText}>$<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{job.ratePerProjectCompletion}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
                                     <View style={styles.hr} />
                                     <View style={styles.centered}>
                                         <Button onPress={this.onButtonPress} style={styles.greyButton} info>
@@ -328,9 +329,9 @@ constructor(props) {
                         <View style={styles.margin}>
                             <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
                             <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{passedData.paidFull === true ? "Full payment completed." : "Full payment has NOT been recieved."}</Text></Text>
+                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
                             <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{passedData.paidPartial === true ? "Partial payment has been completed!" : "Partial payment has NOT been recieved."}</Text></Text>
+                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
                             {this.renderQuestions(job)}
                         </View>
                         
@@ -480,7 +481,15 @@ constructor(props) {
 }
 const mapStateToProps = (state) => {
     return {
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        fullPaymentCompleted: _.has(state.payments, "fullPaymentCompleted") ? state.payments.fullPaymentCompleted : {
+            completed: false,
+            jobID: null
+        },
+        partialPaymentCompleted: _.has(state.payments, "partialPaymentCompleted") ? state.payments.partialPaymentCompleted : {
+            completed: false,
+            jobID: null
+        }
     }
 }
 export default connect(mapStateToProps, { })(IndividualActiveJobHelper);

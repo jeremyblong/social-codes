@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import Config from "react-native-config";
 import axios from "axios";
 import Dialog from "react-native-dialog";
+import { paymentCompletedFull, paymentCompletedPartial } from "../../../../../actions/payments/index.js";
 
 const { width, height } = Dimensions.get("window"); 
 
-const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
+const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID, paymentCompletedFull, paymentCompletedPartial }) => {
     const [ customPayment, setCustomPayment ] = useState(null);
     const [ switched, setSwitched ] = useState(false);
     const [ presetPayment, setPresetPayment ] = useState(0); 
@@ -24,9 +25,10 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
         setPresetPayment(amount);
 
         setVisiblityModal(true);
-
+    }
+    const managePartialPaymentProceed = () => {
         axios.post(`${Config.ngrok_url}/make/quick/payment/partial`, {
-            rate: amount,
+            rate: presetPayment,
             id: unique_id,
             date: job.date,
             jobID: job.jobID,
@@ -35,7 +37,15 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
             if (res.data.message === "Made PARTIAL QUICK payment!") {
                 console.log(res.data);
 
+                paymentCompletedPartial({
+                    completed: true,
+                    jobID: job.jobID
+                });
+
+                setVisiblityModal(false);
+
                 sheetRef.current.close();
+                
             } else {
                 console.log("Err", res.data);
             }
@@ -59,6 +69,11 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
                 console.log(res.data);
 
                 setSwitched(false);
+
+                paymentCompletedFull({
+                    completed: true,
+                    jobID: job.jobID
+                });
 
                 sheetRef.current.close();
             } else {
@@ -96,7 +111,7 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
                     setVisiblityModal(false);
                 }} label="Cancel" />
                 <Dialog.Button onPress={() => {
-                    setVisiblityModal(false);
+                    managePartialPaymentProceed();
                 }} label="Pay Freelancer" />
                 </Dialog.Container>
             </View>
@@ -115,7 +130,7 @@ const SlideUpPaymentHelper = ({ sheetRef, rate, unique_id, job, withID }) => {
                     </Body>
                 </Header>
                 <View style={styles.subContainer}>
-                    <Text style={styles.headerText}>Make a custom payment and/or a one time payment OR pay the entire job depending on how much work your freelancer(s) have completed...</Text>
+                    <Text style={styles.headerText}>Make a custom payment and/or a one time payment OR pay the entire job depending on how much work you want to guarantee to your freelancer(s)...</Text>
                     <Form>
                         <Item stackedLabel>
                             <Label>Custom Payment Amount ($)</Label>
@@ -184,4 +199,4 @@ const mapStateToProps = (state) => {
         unique_id: state.signupData.authData.unique_id
     }
 }
-export default connect(mapStateToProps, { })(SlideUpPaymentHelper);
+export default connect(mapStateToProps, { paymentCompletedFull, paymentCompletedPartial })(SlideUpPaymentHelper);

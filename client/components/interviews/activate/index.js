@@ -75,7 +75,7 @@ constructor(props) {
                 console.log(res.data);
 
                 this.setState({
-                    hide: true
+                    hide: false
                 }, () => {
                     setTimeout(() => {
                         Toast.show({
@@ -108,37 +108,35 @@ constructor(props) {
 
                 const { user } = res.data;
 
-                let bool = false;
-
                 console.log("interview !~!!", interview);
                 
                 if (interview.hostID === this.props.unique_id) {
 
-                    if (typeof user.activeHiredApplicants !== "undefined" && user.activeHiredApplicants.length > 0) {
+                    const promise = new Promise((resolve, reject) => {
+                        for (let index = 0; index < user.activeHiredApplicants.length; index++) {
+                            const applicant = user.activeHiredApplicants[index];
+                            if (applicant.with === interview.with) {
+                                resolve(true);
+                            }
+                            if ((user.activeHiredApplicants.length - 1) === index) {
+                                resolve(false);
+                            }
+                        }
+                    })
+
+                    promise.then((passedData) => {
                         this.setState({
                             user,
                             ready: true,
-                            hide: user.activeHiredApplicants.filter((item) => {
-                                if (item.with === interview.with) {
-                                    console.log("boom");
-                                    return true;
-                                } 
-                            }) || false  
+                            hide: passedData === true ? false : user.activeJobs.includes(interview.jobID)
                         })
-                    } else {
-                        console.log("else ran!!!!!");
-                        this.setState({
-                            user,
-                            ready: true,
-                            hide: false
-                        })
-                    }
+                    })  
                 } else {
                     console.log("This one ran...")
                     this.setState({
                         user,
                         ready: true,
-                        hide: true
+                        hide: false
                     })
                 }
             } else {
@@ -231,7 +229,7 @@ constructor(props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.bottom}>
-                        {hide === false && ready === true ? <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
+                        {hide === true && ready === true ? <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
                             this.checkIfCardsRegistered();
                         }} stretch={true}>Hire Applicant</AwesomeButtonCartman> : null}
                         <View style={{ marginTop: 30 }} />

@@ -33,7 +33,14 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                     err
                 })
             } else {
+                let otherUserData = null;
 
+                for (let index = 0; index < users.length; index++) {
+                    const element = users[index];
+                    if (element.unique_id === otherUserID) {
+                        otherUserData = element;
+                    }
+                }
                 const promise = new Promise(async (resolve, reject) => {
                     for (let index = 0; index < users.length; index++) {
                         const user = users[index];
@@ -43,11 +50,17 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 const card = user.cardPaymentMethods[iiiii];
                                 
                                 if (card.primary === true) {
-                                    const charge = await stripe.charges.create({
+                                    const paymentIntent = await stripe.paymentIntents.create({
                                         amount: Number(Math.round(rate * 100)),
                                         currency: 'usd',
+                                        payment_method_types: ['card'],
                                         customer: user.stripeCustomerAccount.id,
-                                        description: 'Complete payment for project completion.',
+                                        description: 'Pre-Complete payment for project completion.',
+                                        application_fee_amount: Math.round(Number(Math.round(rate * 100) * 0.20)),
+                                        on_behalf_of: otherUserData.stripeConnectAccount.id,
+                                        transfer_data: {
+                                            destination: otherUserData.stripeConnectAccount.id
+                                        }
                                     }).then((payment) => {
                                         console.log(payment);
         
@@ -113,7 +126,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     collection.save(user);
 
                                     res.json({
-                                        message: "Made COMPLETE payment!"
+                                        message: "Made PARTIAL QUICK payment!"
                                     })
                                 }
                             }

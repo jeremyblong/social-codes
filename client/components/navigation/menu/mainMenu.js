@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Dialog from "react-native-dialog";
 import { signedInUserData } from "../../../actions/auth/signup.js";
 import SideMenu from "react-native-side-menu";
@@ -126,12 +126,12 @@ constructor(props) {
         return (
             <View style={styles.margin}>        
                 <View style={[styles.margin, { minWidth: width * 0.85 }]}>
-                    <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                    <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                         this.setState({
                             showDialog: true,
                             activeSections: []
                         })
-                    }} stretch={true}>Sign-out/Deauthenticate</AwesomeButtonBlue>
+                    }} stretch={true}>Sign-out/Deauthenticate</AwesomeButtonCartman>
                 </View>
             </View>
         );
@@ -388,9 +388,9 @@ constructor(props) {
                                     <View style={styles.shortView}>
                                         
                                     </View>
-                                    <View style={styles.shortView}>
+                                    {/* <View style={styles.shortView}>
                                         
-                                    </View>
+                                    </View> */}
                                 </View>
                                 <View style={styles.halfed}>
                                     {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
