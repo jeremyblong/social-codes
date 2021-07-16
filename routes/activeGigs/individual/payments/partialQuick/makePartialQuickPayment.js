@@ -5,10 +5,13 @@ const mongo = require("mongodb");
 const config = require("config");
 const cors = require('cors');
 const stripe = require('stripe')(config.get("stripeSecretKey"));
+const axios = require("axios");
+const { v4: uuidv4 } = require('uuid');
+const moment = require('moment');
 
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
-    router.post("/", (req, res) => {
+    router.post("/", (req, respppppp) => {
 
         const { 
             rate,
@@ -28,7 +31,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             if (err) {
                 console.log(err);
 
-                res.json({
+                respppppp.json({
                     message: "An error occurred while fetching users to update",
                     err
                 })
@@ -112,21 +115,70 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 const applicant = user.activeHiredApplicants[index];
                                 
                                 if (applicant.jobID === jobID) {
-                                    applicant.paidFull = true;
 
-                                    const paymentNew = {
-                                        ...passedData.payment,
-                                        payer: passedData.user.firstName + passedData.user.lastName,
-                                        payerID: passedData.user.unique_id
+
+                                    const configgg = {
+                                        headers: {
+                                            "Authorization": `key=${config.get("firebaseCloudMessagingServerKey")}`,
+                                            "Content-Type": "application/json"
+                                        }
                                     }
-                                    applicant.payments.push(paymentNew);
+                    
+                                    const notification_addition = {
+                                        id: uuidv4(),
+                                        system_date: Date.now(),
+                                        date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                                        data: {
+                                            title: `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
+                                            body: `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of ${Math.round(Number(Math.round(Number(rate)) * 0.80)).toFixed(2)} to be paid upon project completion!`
+                                        },
+                                        from: user,
+                                        link: "notifications"
+                                    };
+                    
+                                    axios.post("https://fcm.googleapis.com/fcm/send", {
+                                        "to": user.firebasePushNotificationToken,
+                                        "notification": {
+                                            "title": `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
+                                            "body": `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of $${Math.round(Number(Math.round(Number(rate)) * 0.80)).toFixed(2)} to be paid upon project completion!`,
+                                            "mutable_content": true,
+                                            "sound": "Tri-tone"
+                                        },
+                                        "data": {
+                                            // use company logo 
+                                            "url": `${config.get("logoImage")}`,
+                                            "dl": "notifications"
+                                            // use company logo ^^^^^^^^^^^^^^^^^^^^^^^^^
+                                        }
+                                    }, configgg).then((res) => {
+            
+                                        console.log("RES", res.data);
+                    
+                                        if (user.notifications) {
+                                            user.notifications.push(notification_addition);
+                                        } else {
+                                            user["notifications"] = [notification_addition];
+                                        }
+                                        
+                                        applicant.paidFull = true;
 
-                                    console.log("pushed new payment in second half...")
+                                        const paymentNew = {
+                                            ...passedData.payment,
+                                            payer: passedData.user.firstName + passedData.user.lastName,
+                                            payerID: passedData.user.unique_id
+                                        }
+                                        applicant.payments.push(paymentNew);
 
-                                    collection.save(user);
+                                        console.log("pushed new payment in second half...")
 
-                                    res.json({
-                                        message: "Made PARTIAL QUICK payment!"
+                                        collection.save(user);
+
+                                        respppppp.json({
+                                            message: "Made PARTIAL QUICK payment!"
+                                        })
+                    
+                                    }).catch((err) => {
+                                        console.log(err);
                                     })
                                 }
                             }

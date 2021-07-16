@@ -206,6 +206,9 @@ app.use("/make/full/payment/entire", require("./routes/activeGigs/individual/pay
 app.use("/check/active/debit/credit/cards", require("./routes/account/payments/payments/check/checkForPaymentMethods.js"));
 app.use("/make/quick/payment/partial", require("./routes/activeGigs/individual/payments/partialQuick/makePartialQuickPayment.js"));
 app.use("/gather/onboarding/links", require("./routes/auth/stripeOnboarding/links/createLinks.js"));
+app.use("/make/custom/payment/one", require("./routes/activeGigs/individual/payments/custom/makeCustomPayment.js"));
+app.use("/make/set/payment/hourly/min", require("./routes/activeGigs/individual/payments/hourly/makeHourlyMultiplePayment.js"));
+app.use("/make/custom/hourly/payment", require("./routes/activeGigs/individual/payments/hourly/customPaymentHourly.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

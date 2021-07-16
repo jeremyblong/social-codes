@@ -24,6 +24,7 @@ import com.brentvatne.react.ReactVideoPackage;
 // import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 // import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
 import com.twiliorn.library.TwilioPackage;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
 // import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 
 public class MainApplication extends Application implements ReactApplication {

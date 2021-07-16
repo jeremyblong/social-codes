@@ -4,9 +4,11 @@ const { height, width } = Dimensions.get("window");
 
 export default StyleSheet.create({
     header:{
-      backgroundColor: "#00BFFF",
+      backgroundColor: "#ffd530",
       height:200,
       maxHeight: 200,
+      minHeight: 200,
+      minWidth: "90%",
       margin: 15
     },
     greyButton: {

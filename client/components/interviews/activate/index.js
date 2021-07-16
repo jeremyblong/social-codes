@@ -113,14 +113,18 @@ constructor(props) {
                 if (interview.hostID === this.props.unique_id) {
 
                     const promise = new Promise((resolve, reject) => {
-                        for (let index = 0; index < user.activeHiredApplicants.length; index++) {
-                            const applicant = user.activeHiredApplicants[index];
-                            if (applicant.with === interview.with) {
-                                resolve(true);
+                        if (typeof user.activeHiredApplicants !== "undefined" && user.activeHiredApplicants.length > 0) {
+                            for (let index = 0; index < user.activeHiredApplicants.length; index++) {
+                                const applicant = user.activeHiredApplicants[index];
+                                if (applicant.with === interview.with) {
+                                    resolve(true);
+                                }
+                                if ((user.activeHiredApplicants.length - 1) === index) {
+                                    resolve(false);
+                                }
                             }
-                            if ((user.activeHiredApplicants.length - 1) === index) {
-                                resolve(false);
-                            }
+                        } else {
+                            resolve(false);
                         }
                     })
 

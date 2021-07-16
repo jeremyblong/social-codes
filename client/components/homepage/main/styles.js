@@ -13,15 +13,24 @@ export default StyleSheet.create({
         minWidth: 200,
         maxHeight: 35
     },
+    coverLoadingVideo: {
+        height,
+        width,
+        position: "absolute",
+        bottom: 0,
+        top: 0,
+        right: 0,
+        left: 0
+    },
     maxedIconSmall: {
-        maxHeight: 35,
-        maxWidth: 35,
-        minWidth: 35
+        maxHeight: 30,
+        maxWidth: 30,
+        minWidth: 30
     },
     maxedIconSmallCustom: {
-        maxHeight: 35,
-        maxWidth: 35,
-        minWidth: 35
+        maxHeight: 30,
+        maxWidth: 30,
+        minWidth: 30
     },
     greyButton: {
         backgroundColor: "#303030"

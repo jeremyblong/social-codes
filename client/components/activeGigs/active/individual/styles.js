@@ -38,6 +38,14 @@ export default StyleSheet.create({
         marginTop: 35,
         marginBottom: 35
     },
+    mainText: {
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 25
+    },
     thinBlackHr: {
         borderBottomWidth: 2,
         borderBottomColor: "black",
@@ -58,10 +66,10 @@ export default StyleSheet.create({
     },  
     hr: {
         borderBottomWidth: 2,
-        borderBottomColor: "black",
-        marginTop: 35,
-        marginBottom: 35,
-        width: "100%"
+        borderBottomColor: "white",
+        marginTop: 20,
+        marginBottom: 20,
+        width: 250
     }, 
     hrCustom: {
         borderBottomWidth: 2,
@@ -105,7 +113,7 @@ export default StyleSheet.create({
     centeredPriceBox: {
         backgroundColor: "#303030",
         width: width * 0.80,
-        height: 325,
+        height: 375,
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",

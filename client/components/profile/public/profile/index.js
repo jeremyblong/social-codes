@@ -852,6 +852,7 @@ constructor(props) {
             console.log(err);
         })
     }
+    
     render() {
         console.log("profile-public state: ", this.state);
 
