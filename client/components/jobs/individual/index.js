@@ -2657,8 +2657,8 @@ constructor(props) {
                     console.log(err);
                 });
     
-              } catch (err) {
-                console.log(err);
+                } catch (err) {
+                    console.log(err);
                 if (DocumentPicker.isCancel(err)) {
                   // User cancelled the picker, exit any dialogs or menus and move on
                 } else {

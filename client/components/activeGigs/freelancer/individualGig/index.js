@@ -10,23 +10,24 @@ import {
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
 import styles from './styles.js';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
-import SheetHelperPaymentsDisplayRef from "./sheets/payments.js";
+import SheetHelperPaymentsDisplayRef from "./sheets/payments/payments.js";
+import moment from "moment";
+import SubmitWorkRefPane from "./sheets/submittingWork/index.js";
 
 class ViewJobActiveClientFreelancerHelper extends Component {
 constructor(props) {
     super(props);
 
     this.state = {
-
+        
     }
     this.paymentsRef = React.createRef(null);
+    this.submitWorkRef = React.createRef(null);
 }
-    componentDidMount() {
-        const passedData = this.props.props.route.params.item;
-    }
     render() {
-        console.log(this.props.props.route.params.item);
-
+        // console.log(this.props.props.route.params.item);
+        console.log("this.state freelancer index.js", this.state);
+        
         const passedData = this.props.props.route.params.item;
         return (
             <Fragment>
@@ -54,23 +55,28 @@ constructor(props) {
 
                     <View style={styles.postContent}>
                         <Text style={styles.postTitle}>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            This is the place where you will be able to manage uploads, content trading, payments and much more...
                         </Text>
-
+                        <View style={styles.greyHr} />
                         <Text style={styles.postDescription}>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. 
-                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
-                            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. 
-                        </Text>
-
-                        <Text style={styles.tags}>
-                            Lorem, ipsum, dolor, sit, amet, consectetuer, adipiscing, elit. 
+                            Please use this page to upload completed work (zip files, code, images, etc...) and manage your job and much more... Click payments to see what payments the client has deposited prior to submitting any work. Make sure the client has deposited funds <Text style={{ textDecorationLine: "underline" }}>before</Text> so you know funds will be released upon both parties agreeing the work was completed or mediation from <Text style={{ color: "darkred", fontStyle: 'italic' }}>Social Codes</Text> but always try to work things out before contacting us.
                         </Text>
 
                         <Text style={styles.date}>
-                            2017-11-27 13:03:01
+                            Project started {moment(passedData.systemDate).fromNow()}
                         </Text>
+                        <View style={styles.greyHr} />
+                        <View style={styles.boxed}>
+                            <TouchableOpacity onPress={() => {
+                                console.log("clicked");
 
+                                this.submitWorkRef.current.open();
+                            }} style={styles.row}>
+                                <Image source={require("../../../../assets/icons/ana.png")} style={styles.icon} />
+                                <Text style={styles.iconText}>Submit project files and more...</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={styles.with}>With...</Text>
                         <View style={styles.profile}>
                             {passedData.type === "picture" ? <Image style={styles.avatar}
                             source={{uri: passedData.photo }}/> : null}
@@ -79,6 +85,7 @@ constructor(props) {
                                 {passedData.otherUserFirstName} {passedData.otherUserLastName} {"\n"}aka {passedData.otherUserUsername}
                             </Text>
                         </View>
+                        <SubmitWorkRefPane submitWorkRef={this.submitWorkRef} props={this.props} /> 
                         <SheetHelperPaymentsDisplayRef payments={passedData.payments} props={this.props} paymentsRef={this.paymentsRef} />
                         <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
                             this.paymentsRef.current.open();

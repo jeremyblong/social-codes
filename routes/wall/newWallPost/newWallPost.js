@@ -108,7 +108,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             taggedUsers: tagged.length > 0 ? tagged : null,
                                             taggedLocation: Object.keys(selectionParsed).length > 0 ? true : false,
                                             taggedLocationData: Object.keys(selectionParsed).length > 0 ? selectionParsed : null,
-                                            videoLink: parsedPrep !== null ? prep : null,
+                                            videoLink: parsedPrep !== null ? prep.replace(/"|'/g, '') : null,
                                             videoLinkIncluded: parsedPrep !== null ? true : false
                                         };
                         
@@ -148,7 +148,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     taggedUsers: tagged.length > 0 ? tagged : null,
                                     taggedLocation: Object.keys(selectionParsed).length > 0 ? true : false,
                                     taggedLocationData: Object.keys(selectionParsed).length > 0 ? selectionParsed : null,
-                                    videoLink: parsedPrep !== null ? prep : null,
+                                    videoLink: parsedPrep !== null ? prep.replace(/"|'/g, '') : null,
                                     videoLinkIncluded: parsedPrep !== null ? true : false
                                 };
                 

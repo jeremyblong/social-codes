@@ -8,7 +8,8 @@ import {
     ImageBackground,
     FlatList, 
     ScrollView,
-    Platform
+    Platform,
+    PermissionsAndroid
 } from 'react-native';
 import styles from './styles.js';
 import SearchBar from 'react-native-search-bar';
@@ -76,6 +77,10 @@ constructor(props) {
             launchImageLibrary({
                 includeBase64: true,
                 quality: 1,
+                storageOptions: {
+                    cameraRoll: true,
+                    waitUntilSaved: true,
+                },
                 mediaType: "photo"
             }, this.uploadPhotoCallback)
         },  750);
@@ -102,24 +107,77 @@ constructor(props) {
 
             let imagePath = null;
 
-            this.setState({
-                spinner: true
-            }, () => {
-                RNFetchBlob.config({
-                    fileCache: true
-                }).fetch("GET", data.uri)
-                // the image is now dowloaded to device's storage
-                .then(resp => {
-                    // the image path you can use it directly with Image component
-                    console.log("resp:", resp);
-    
-                    imagePath = resp.path();
-                    return resp.readFile("base64");
+            if (Platform.OS === "ios") {
+                this.setState({
+                    spinner: true
+                }, () => {
+                    RNFetchBlob.config({
+                        fileCache: true
+                    }).fetch("GET", data.uri)
+                    // the image is now dowloaded to device's storage
+                    .then(resp => {
+                        // the image path you can use it directly with Image component
+                        console.log("resp:", resp);
+        
+                        imagePath = resp.path();
+                        return resp.readFile("base64");
+                    })
+                    .then(base64Data => {
+                        // here's base64 encoded image
+                        console.log(base64Data);
+        
+                        axios.post(`${Config.ngrok_url}/upload/profile/pic/video`, {
+                            base64: base64Data,
+                            unique_id: this.props.unique_id
+                        }).then((res) => {
+                            if (res.data.message === "Uploaded video!") {
+                                console.log(res.data);
+            
+                                const { profilePic } = res.data;
+            
+                                this.setState({
+                                    spinner: false,
+                                    profilePic
+                                })
+                            } else {
+                                console.log("Err", res.data);
+            
+                                this.setState({
+                                    spinner: false
+                                })
+                            }
+                        }).catch((err) => {
+                            
+                            if (err.response.status === 413) {
+
+                                console.log("Request failed with status 413!");
+
+                                this.setState({
+                                    spinner: false
+                                }, () => {
+                                    setTimeout(() => {
+                                        Toast.show({
+                                            text1: 'VIDEO IS TOO LARGE!',
+                                            text2: 'Video is too large in size or length - trim the video and try again.',
+                                            visibilityTime: 4500,
+                                            position: "top",
+                                            type: "error"
+                                        });
+                                    }, 750)
+                                })
+                            } else {
+                                this.setState({
+                                    spinner: false
+                                })
+                            }
+                        })
+                    });
                 })
-                .then(base64Data => {
-                    // here's base64 encoded image
-                    console.log(base64Data);
-    
+            } else {
+                RNFetchBlob.fs.readFile(data.uri, 'base64').then(base64Data => {
+
+                    console.log("base64Data", base64Data);
+
                     axios.post(`${Config.ngrok_url}/upload/profile/pic/video`, {
                         base64: base64Data,
                         unique_id: this.props.unique_id
@@ -166,7 +224,7 @@ constructor(props) {
                         }
                     })
                 });
-            })
+            }
         }
     }
     _renderTruncatedFooter = (handlePress) => {

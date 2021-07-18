@@ -6,8 +6,9 @@ export default StyleSheet.create({
     container: {
         zIndex: -1,
         width,
-        height,
-        backgroundColor: "white"
+        height: "100%",
+        backgroundColor: "white",
+        flex: 1
     },
     headerIcon: {
         tintColor: "#ffd530",
@@ -16,6 +17,41 @@ export default StyleSheet.create({
     },  
     margin: {
         margin: 15
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        padding: 10,
+        minWidth: "100%"
+    },
+    with: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "darkred",
+        marginTop: 15
+    },
+    icon: {
+        maxWidth: 40,
+        maxHeight: 40,
+        marginRight: 10
+    },
+    iconText: {
+        fontWeight: "bold",
+        fontSize: 16
+    },
+    boxed: {
+        borderWidth: 2,
+        borderColor: "black",
+        minWidth: "100%"
+    },
+    greyHr: {
+        borderBottomWidth: 2,
+        borderBottomColor: "grey",
+        width: "100%",
+        marginTop: 15,
+        marginBottom: 15
     },
     goldText: {
         color: "#ffd530"
