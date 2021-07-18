@@ -102,6 +102,7 @@ import ActiveJobsMainPageHelperPage from "./pages/activeGigs/active/listOfJobs/i
 import IndividualActiveJobPage from "./pages/activeGigs/active/individual/index.js";
 import { Notifications } from 'react-native-notifications';
 import StripeOnboardingRegisterPage from "./pages/auth/onboarding/stripeOnboarding.js";
+import ViewJobActiveClientFreelancerHelper from "./pages/activeGigs/freelancer/individualGig/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -565,6 +566,7 @@ constructor(props) {
               <Stack.Screen name="active-live-jobs-main" component={ActiveJobsMainPageHelperPage} />
               <Stack.Screen name="active-job-individual-full-listing" component={IndividualActiveJobPage} />
               <Stack.Screen name="stripe-onboarding-authentication" component={StripeOnboardingRegisterPage} />
+              <Stack.Screen name="client-freelancer-view-job-active" component={ViewJobActiveClientFreelancerHelper} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />

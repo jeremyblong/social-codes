@@ -351,9 +351,9 @@ constructor(props) {
                         <View style={styles.margin}>
                             <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
                             <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
+                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.minimumHourlyPaymentCompleted.completed === true && this.props.minimumHourlyPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full deposit completed for pending completion." : "Full deposit has NOT been received."}</Text></Text>
                             <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
+                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.customPaymentCompleted.completed === true && this.props.customPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Custom payment has been completed for pending completion!" : "Custom payment has NOT been received."}</Text></Text>
                             {this.renderQuestions(job)}
                         </View>
                     </Fragment>
@@ -563,6 +563,14 @@ const mapStateToProps = (state) => {
             jobID: null
         },
         partialPaymentCompleted: _.has(state.payments, "partialPaymentCompleted") ? state.payments.partialPaymentCompleted : {
+            completed: false,
+            jobID: null
+        },
+        minimumHourlyPaymentCompleted: _.has(state.payments, "minimumHourlyPaymentCompleted") ? state.payments.minimumHourlyPaymentCompleted : {
+            completed: false,
+            jobID: null
+        },
+        customPaymentCompleted: _.has(state.payments, "customPaymentCompleted") ? state.payments.customPaymentCompleted : {
             completed: false,
             jobID: null
         }

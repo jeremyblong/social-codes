@@ -78,7 +78,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         
                                                 const paymentNew = {
                                                     ...payment,
-                                                    payer: user.firstName + user.lastName,
+                                                    payer: user.firstName + " " + user.lastName,
                                                     payerID: user.unique_id
                                                 }
         
@@ -132,7 +132,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             title: `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
                                             body: `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of ${Math.round(Number(Math.round(Number(rate)) * 0.80)).toFixed(2)} to be paid upon project completion!`
                                         },
-                                        from: user,
+                                        from: user.unique_id,
                                         link: "notifications"
                                     };
                     
@@ -164,18 +164,22 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
                                         const paymentNew = {
                                             ...passedData.payment,
-                                            payer: passedData.user.firstName + passedData.user.lastName,
+                                            payer: passedData.user.firstName + " " + passedData.user.lastName,
                                             payerID: passedData.user.unique_id
                                         }
                                         applicant.payments.push(paymentNew);
 
                                         console.log("pushed new payment in second half...")
 
-                                        collection.save(user);
-
-                                        respppppp.json({
-                                            message: "Made PARTIAL QUICK payment!"
-                                        })
+                                        collection.save(user, (err, result) => {
+                                            if (err) {
+                                                console.log("err occurred while saving db info", err);
+                                            } else {
+                                                respppppp.json({
+                                                    message: "Made PARTIAL QUICK payment!"
+                                                })
+                                            }
+                                        });
                     
                                     }).catch((err) => {
                                         console.log(err);

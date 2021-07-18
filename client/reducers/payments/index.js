@@ -1,4 +1,4 @@
-import { PAYMENT_COMPLETED_FULL, PAYMENT_COMPLETED_PARTIAL } from "../../actions/types.js";
+import { PAYMENT_COMPLETED_FULL, PAYMENT_COMPLETED_PARTIAL, PAYMENT_COMPLETED_CUSTOM_HOURLY, PAYMENT_COMPLETED_MINIMUM_HOURLY } from "../../actions/types.js";
 
 
 export default (state = {}, action) => {
@@ -13,6 +13,16 @@ export default (state = {}, action) => {
                 ...state,
                 partialPaymentCompleted: action.payload
             }
+		case PAYMENT_COMPLETED_CUSTOM_HOURLY: 
+			return {
+				...state,
+				customPaymentCompleted: action.payload
+			}
+		case PAYMENT_COMPLETED_MINIMUM_HOURLY: 
+			return {
+				...state,
+				minimumHourlyPaymentCompleted: action.payload
+			}
 		default: 
 			return state;
 	}

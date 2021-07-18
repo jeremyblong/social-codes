@@ -81,7 +81,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         
                                                 const paymentNew = {
                                                     ...payment,
-                                                    payer: user.firstName + user.lastName,
+                                                    payer: user.firstName + " " + user.lastName,
                                                     payerID: user.unique_id
                                                 }
         
@@ -134,7 +134,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             title: `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
                                             body: `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of ${Math.round(Number(Math.round(rate) * 0.80)).toFixed(2)} to be paid upon project completion!`
                                         },
-                                        from: user,
+                                        from: user.unique_id,
                                         link: "notifications"
                                     };
                     
@@ -162,23 +162,26 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             user["notifications"] = [notification_addition];
                                         }
                                         
-                                        applicant.paidFull = true;
+                                        applicant.paidPartial = true;
 
                                         const paymentNew = {
                                             ...passedData.payment,
-                                            payer: passedData.user.firstName + passedData.user.lastName,
+                                            payer: passedData.user.firstName + " " + passedData.user.lastName,
                                             payerID: passedData.user.unique_id
                                         }
                                         applicant.payments.push(paymentNew);
 
                                         console.log("pushed new payment in second half...")
 
-                                        collection.save(user);
-
-                                        respppppppp.json({
-                                            message: "Made a custom payment for an hourly agreement!"
-                                        })
-                    
+                                        collection.save(user, (err, result) => {
+                                            if (err) {
+                                                console.log("err occurred while saving db info", err);
+                                            } else {
+                                                respppppppp.json({
+                                                    message: "Made a custom payment for an hourly agreement!"
+                                                })
+                                            }
+                                        });
                                     }).catch((err) => {
                                         console.log(err);
                                     })

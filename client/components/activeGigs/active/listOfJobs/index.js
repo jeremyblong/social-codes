@@ -83,7 +83,7 @@ constructor(props) {
                                       
                                         <Body>
                                             <Button onPress={() => {
-                                                // this.props.props.navigation.push("active-job-individual-full-listing", { item })
+                                                this.props.props.navigation.push("client-freelancer-view-job-active", { item })
                                             }} style={styles.greyButton} info>
                                                 <Text style={{ color: "#ffd530" }}>Visit Job</Text>
                                             </Button>

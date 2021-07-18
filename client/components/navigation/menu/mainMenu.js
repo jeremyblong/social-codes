@@ -413,6 +413,12 @@ constructor(props) {
                                         <Text style={styles.midSized}>View/Manage applicants</Text>
                                     </TouchableOpacity> : null}
                                     <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("payments-main");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
+                                        <Text style={styles.largeSized}>Payment Methods</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("forums-main");
                                     }} style={styles.tallView}>
                                         <View style={styles.halfHeight}>
@@ -424,12 +430,7 @@ constructor(props) {
                                             <Text style={styles.sub}>Ask questions, answer questions, community help & more...</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("payments-main");
-                                    }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
-                                        <Text style={styles.largeSized}>Payment Methods</Text>
-                                    </TouchableOpacity>
+                                   
                                     {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.handleRedirect();
                                     }} style={styles.shortView}>
@@ -448,9 +449,15 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
+                                    {this.props.accountType === "work" ? <Fragment><View style={styles.shortView}>
+                                        
+                                    </View>
                                     <View style={styles.shortView}>
                                         
                                     </View>
+                                    <View style={styles.shortView}>
+                                        
+                                    </View></Fragment> : null}
                                 </View>   
                             </View>
                             <List>

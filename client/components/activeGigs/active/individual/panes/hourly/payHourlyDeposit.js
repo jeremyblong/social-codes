@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import Config from "react-native-config";
 import axios from "axios";
 import Dialog from "react-native-dialog";
+import { paymentCompletedCustomHourly, paymentCompletedMinimumHourly } from "../../../../../../actions/payments/index.js";
 
 const { width, height } = Dimensions.get("window"); 
 
-const PayHourlyDepositPaneHelper = ({ sheetRefHourly, rate, unique_id, job, withID }) => {
+const PayHourlyDepositPaneHelper = ({ sheetRefHourly, rate, unique_id, job, withID, paymentCompletedCustomHourly, paymentCompletedMinimumHourly }) => {
     console.log("passed job --- ", job);
     const [ customPayment, setCustomPayment ] = useState("");
     const [ typed, setTyped ] = useState(false);
@@ -32,6 +33,11 @@ const PayHourlyDepositPaneHelper = ({ sheetRefHourly, rate, unique_id, job, with
         }).then((res) => {
             if (res.data.message === "Made a custom payment for an hourly agreement!") {
                 console.log(res.data);
+
+                paymentCompletedCustomHourly({
+                    completed: true,
+                    jobID: job.jobID
+                });
 
                 sheetRefHourly.current.close();
             } else {
@@ -55,6 +61,11 @@ const PayHourlyDepositPaneHelper = ({ sheetRefHourly, rate, unique_id, job, with
                 console.log(res.data);
 
                 setHourlyModal(false);
+
+                paymentCompletedMinimumHourly({
+                    completed: true,
+                    jobID: job.jobID
+                })
 
                 sheetRefHourly.current.close();
             } else {
@@ -159,4 +170,4 @@ const mapStateToProps = (state) => {
         unique_id: state.signupData.authData.unique_id
     }
 }
-export default connect(mapStateToProps, {  })(PayHourlyDepositPaneHelper);
+export default connect(mapStateToProps, { paymentCompletedCustomHourly, paymentCompletedMinimumHourly })(PayHourlyDepositPaneHelper);
