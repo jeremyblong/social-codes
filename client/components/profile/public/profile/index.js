@@ -8,8 +8,7 @@ import {
     ImageBackground,
     FlatList, 
     ScrollView,
-    Platform,
-    PermissionsAndroid
+    Platform
 } from 'react-native';
 import styles from './styles.js';
 import SearchBar from 'react-native-search-bar';
@@ -22,7 +21,7 @@ import Config from "react-native-config";
 import Spinner from 'react-native-loading-spinner-overlay';
 import _ from 'lodash';
 import { Card, CardItem, Thumbnail, Text as NativeText, Button, Icon, Left, Body, Right, Header, Title, Subtitle, FooterTab, Footer } from 'native-base';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import ReadMore from 'react-native-read-more-text';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Video from 'react-native-video';
@@ -33,6 +32,9 @@ import Side from "../../../navigation/sidemenu/index.js";
 import Tags from "react-native-tags";
 import Dialog from "react-native-dialog";
 import EducationSlideUpPaneHelper from "./slideUpPanes/education/index.js";
+import uuid from "react-native-uuid";
+import ImagePicker from 'react-native-image-crop-picker';
+import * as RNFS from "react-native-fs";
 
 
 const { height, width } = Dimensions.get("window");
@@ -53,6 +55,7 @@ constructor(props) {
         showDialog: false,
         skills: [],
         ready: false,
+        uploadPercentage: 0,
         menuOpen: false,
         deletePortfolioItemDialog: false
     }
@@ -90,17 +93,95 @@ constructor(props) {
 
         this.RBSheetThree.close();
 
-        setTimeout(() => {
-            launchImageLibrary({
-                quality: 1,
+        if (Platform.OS === "ios") {
+            setTimeout(() => {
+                launchImageLibrary({
+                    quality: 1,
+                    mediaType: "video",
+                    videoQuality: "medium",
+                    durationLimit: 7,
+                    path: "video"
+                }, this.uploadPhotoCallbackCustom)
+            },  750);
+        } else {
+            ImagePicker.openPicker({
                 mediaType: "video",
-                videoQuality: "medium",
-                durationLimit: 7
-            }, this.uploadPhotoCallbackCustom)
-        },  750);
+            }).then((video) => {
+                console.log(video);
+
+                const formData = new FormData();
+
+                formData.append("video", { uri: video.path, name: uuid.v4() + ".mp4", type: video.mime });
+                formData.append("unique_id", this.props.unique_id);
+
+                axios({
+                    method: "post",
+                    url: `${Config.ngrok_url}/upload/profile/pic/video/android`,
+                    data: formData,
+                    headers: { 
+                        "Content-Type": "multipart/form-data" 
+                    },
+                    onUploadProgress: progress => {
+                        const { total, loaded } = progress;
+                        const totalSizeInMB = total / 1000000;
+                        const loadedSizeInMB = loaded / 1000000;
+                        const uploadPercentage = (loadedSizeInMB / totalSizeInMB);
+                        
+                        this.setState({
+                            uploadPercentage: uploadPercentage.toFixed(2)
+                        })
+                        console.log("total size in MB ==> ", totalSizeInMB);
+                        console.log("uploaded size in MB ==> ", loadedSizeInMB);
+                    }
+                }).then((res) => {
+                    if (res.data.message === "Uploaded video!") {
+                        console.log(res.data);
+    
+                        const { profilePic } = res.data;
+    
+                        this.setState({
+                            spinner: false,
+                            profilePic
+                        })
+                    } else {
+                        console.log("Err", res.data);
+    
+                        this.setState({
+                            spinner: false
+                        })
+                    }
+                }).catch((err) => {
+                        
+                    if (err.response.status === 413) {
+
+                        console.log("Request failed with status 413!");
+
+                        this.setState({
+                            spinner: false
+                        }, () => {
+                            setTimeout(() => {
+                                Toast.show({
+                                    text1: 'VIDEO IS TOO LARGE!',
+                                    text2: 'Video is too large in size or length - trim the video and try again.',
+                                    visibilityTime: 4500,
+                                    position: "top",
+                                    type: "error"
+                                });
+                            }, 750)
+                        })
+                    } else {
+                        this.setState({
+                            spinner: false
+                        })
+                    }
+                })
+            }).catch((err) => {
+                console.log(err.message);
+            });
+        }
     }
-    uploadPhotoCallbackCustom = (data) => {
-        console.log("my data:", data);
+    uploadPhotoCallbackCustom = async (data) => {
+        console.log("my data custom callback:", data);
 
         if (!_.has(data, "didCancel")) {
             // do logic here...
@@ -173,58 +254,7 @@ constructor(props) {
                         })
                     });
                 })
-            } else {
-                RNFetchBlob.fs.readFile(data.uri, 'base64').then(base64Data => {
-
-                    console.log("base64Data", base64Data);
-
-                    axios.post(`${Config.ngrok_url}/upload/profile/pic/video`, {
-                        base64: base64Data,
-                        unique_id: this.props.unique_id
-                    }).then((res) => {
-                        if (res.data.message === "Uploaded video!") {
-                            console.log(res.data);
-        
-                            const { profilePic } = res.data;
-        
-                            this.setState({
-                                spinner: false,
-                                profilePic
-                            })
-                        } else {
-                            console.log("Err", res.data);
-        
-                            this.setState({
-                                spinner: false
-                            })
-                        }
-                    }).catch((err) => {
-                        
-                        if (err.response.status === 413) {
-
-                            console.log("Request failed with status 413!");
-
-                            this.setState({
-                                spinner: false
-                            }, () => {
-                                setTimeout(() => {
-                                    Toast.show({
-                                        text1: 'VIDEO IS TOO LARGE!',
-                                        text2: 'Video is too large in size or length - trim the video and try again.',
-                                        visibilityTime: 4500,
-                                        position: "top",
-                                        type: "error"
-                                    });
-                                }, 750)
-                            })
-                        } else {
-                            this.setState({
-                                spinner: false
-                            })
-                        }
-                    })
-                });
-            }
+            } 
         }
     }
     _renderTruncatedFooter = (handlePress) => {
@@ -478,10 +508,10 @@ constructor(props) {
                     <Text style={styles.info}>$20 Minimum Hourly Charge</Text>
                     <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
                     <View style={{ marginTop: 10, width: "100%", margin: 20 }}>
-                        <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                        <AwesomeButtonCartman textColor={"white"} type={"anchor"} onPress={() => {
                             this.redirectToUsersProfileWithoutPane();
-                        }} stretch={true}>View public profile/live view</AwesomeButtonBlue>
-                    </View>
+                        }} stretch={true}>View public profile/live view</AwesomeButtonCartman>
+                    </View> 
                     <View style={styles.thickHr} />
                     <View style={styles.row}>
                         <View style={styles.leftAlign}>

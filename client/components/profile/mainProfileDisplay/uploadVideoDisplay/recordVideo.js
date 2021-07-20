@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Platform } from 'react-native';
 import { RNCamera, FaceDetector } from 'react-native-camera';
 import styles from './styles.js';
 import { Switch } from 'react-native-switch';
@@ -113,25 +113,58 @@ constructor(props) {
 
         let imagePath = null;
 
-        this.setState({
-            spinner: true
-        }, () => {
-            RNFetchBlob.config({
-                fileCache: true
+        if (Platform.OS === "ios") {
+
+            this.setState({
+                spinner: true
+            }, () => {
+                RNFetchBlob.config({
+                    fileCache: true
+                })
+                .fetch("GET", uri)
+                // the image is now dowloaded to device's storage
+                .then(resp => {
+                    // the image path you can use it directly with Image component
+                    console.log("resp:", resp);
+        
+                    imagePath = resp.path();
+                    return resp.readFile("base64");
+                })
+                .then(base64Data => {
+                    // here's base64 encoded image
+                    console.log(base64Data);
+        
+                    axios.post(`${Config.ngrok_url}/upload/profile/video`, {
+                        unique_id: this.props.unique_id,
+                        video64: base64Data
+                    }).then(response => {
+                        if (response.data.message === "Uploaded video!") {
+                            console.log("image uploaded", response.data);   
+        
+                            this.setState({
+                                spinner: false
+                            }, () => {
+                                this.props.props.navigation.push("public-profile-main");
+                            })
+                        } else {
+                            this.setState({
+                                spinner: false
+                            });
+                            console.log("err", response.data);
+                        }
+                    }).catch(err => {
+                        this.setState({
+                            spinner: false
+                        });
+                        console.log(err)
+                    })
+                });
             })
-            .fetch("GET", uri)
-            // the image is now dowloaded to device's storage
-            .then(resp => {
-                // the image path you can use it directly with Image component
-                console.log("resp:", resp);
-    
-                imagePath = resp.path();
-                return resp.readFile("base64");
-            })
-            .then(base64Data => {
-                // here's base64 encoded image
-                console.log(base64Data);
-    
+        } else {
+            RNFetchBlob.fs.readFile(uri, 'base64').then(base64Data => {
+
+                console.log("base64Data", base64Data);
+        
                 axios.post(`${Config.ngrok_url}/upload/profile/video`, {
                     unique_id: this.props.unique_id,
                     video64: base64Data
@@ -157,7 +190,7 @@ constructor(props) {
                     console.log(err)
                 })
             });
-        })
+        }
     }
     renderContentOne = () => {
         const { uri } = this.state;
@@ -243,9 +276,9 @@ constructor(props) {
                             disabled={false}
                             activeText={'Front'}
                             inActiveText={'Rear'}
-                            circleSize={50}
-                            barHeight={35}
-                            circleBorderWidth={5}
+                            circleSize={35}
+                            barHeight={30}
+                            circleBorderWidth={4}
                             backgroundActive={'green'}
                             backgroundInactive={'gray'}
                             circleActiveColor={'#30a566'}

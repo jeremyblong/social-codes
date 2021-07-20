@@ -209,6 +209,7 @@ app.use("/gather/onboarding/links", require("./routes/auth/stripeOnboarding/link
 app.use("/make/custom/payment/one", require("./routes/activeGigs/individual/payments/custom/makeCustomPayment.js"));
 app.use("/make/set/payment/hourly/min", require("./routes/activeGigs/individual/payments/hourly/makeHourlyMultiplePayment.js"));
 app.use("/make/custom/hourly/payment", require("./routes/activeGigs/individual/payments/hourly/customPaymentHourly.js"));
+app.use("/upload/profile/pic/video/android", require("./routes/profile/videos/uploadExistingVideoAndroid.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

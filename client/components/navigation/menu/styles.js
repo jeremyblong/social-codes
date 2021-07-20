@@ -113,7 +113,6 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     stretch: {
-        resizeMode: 'cover',
         maxWidth: "100%",
         minWidth: "100%",
         minHeight: "100%",

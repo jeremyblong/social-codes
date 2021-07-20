@@ -17,6 +17,12 @@ export default StyleSheet.create({
     margin: {
         margin: 15
     },
+    modalVideoPicture: {
+        width: "100%", 
+        height: "100%", 
+        minWidth: "100%", 
+        minHeight: "100%"
+    },
     goldText: {
         color: "#ffd530"
     },

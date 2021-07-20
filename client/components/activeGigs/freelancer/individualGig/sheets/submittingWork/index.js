@@ -1,12 +1,19 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styles from './styles.js';
-import { Dimensions, View, Text, Platform, Image } from "react-native";
+import { Dimensions, View, Text, Platform, Image, TouchableOpacity, ScrollView } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { Header, Left, Body, Right, Button, Icon, Title, Text as NativeText, Subtitle, List, ListItem } from 'native-base';
+import { Header, Left, Body, Right, Button, Icon, Title, Text as NativeText, Subtitle, List, ListItem, Thumbnail } from 'native-base';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import DocumentPicker from 'react-native-document-picker';
 import RNFetchBlob from "rn-fetch-blob";
 import Modal from 'react-native-modal';
+import uuid from "react-native-uuid";
+import Video from 'react-native-video';
+import FileViewer from 'react-native-file-viewer';
+import Pdf from 'react-native-pdf';
+import RNFS from 'react-native-fs';
+import Toast from 'react-native-toast-message';
+
 
 const { height } = Dimensions.get("window");
 
@@ -14,7 +21,8 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
     const [ uploaded, setUploaded ] = useState([]);
     const [ isVisible, setVisiblity ] = useState(false);
     const [ selected, setSelected ] = useState(null);
-
+    const [ videoModal, setVisiblityVideo ] = useState(false); 
+    const [ fileViewerModal, setFileViewerModal ] = useState(false); 
 
     const findFilesAndSelect = async () => {
         try {
@@ -24,42 +32,113 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
             for (const res of results) {
 
                 const { uri, type, name, size } = res;
+
+                console.log(res);
     
                 let imagePath = null;
 
                 if (Platform.OS === "ios") {
-                    RNFetchBlob.config({
-                        fileCache: true
-                    }).fetch("GET", uri)
-                    // the image is now downloaded to device's storage
-                    .then(resp => {
-                        // the image path you can use it directly with Image component
-                        imagePath = resp.path();
-                        return resp.readFile("base64");
-                    })
-                    .then((base64Data) => {
-                        
-                        setUploaded([...uploaded, base64Data]);
-                    });
-                } else {
-                    RNFetchBlob.fs.readFile(uri, 'base64').then(base64Data => {
+                    if (type === "image/png" || type === "image/jpg" || type === "image/jpeg") {
+                        RNFetchBlob.config({
+                            fileCache: true
+                        }).fetch("GET", uri)
+                        // the image is now downloaded to device's storage
+                        .then(resp => {
+                            // the image path you can use it directly with Image component
+                            imagePath = resp.path();
+                            return resp.readFile("base64");
+                        })
+                        .then((base64Data) => {
+                            
+                            setUploaded(prevArray => [...prevArray, {
+                                base64: base64Data,
+                                type,
+                                name,
+                                size,
+                                id: uuid.v4(),
+                                video: false
+                            }]);
+                        });
+                    } else if (type === "video/mp4") {
                         setUploaded(prevArray => [...prevArray, {
-                            base64: base64Data,
+                            link: uri,
                             type,
                             name,
-                            size
+                            size,
+                            id: uuid.v4(),
+                            video: true
                         }]);
-                    }).catch(err => {
-                        console.log(err);
-                    });
+                    }
+                } else {
+                    if (type === "image/png" || type === "image/jpg" || type === "image/jpeg") {
+                        RNFetchBlob.fs.readFile(uri, 'base64').then(base64Data => {
+                            setUploaded(prevArray => [...prevArray, {
+                                base64: base64Data,
+                                type,
+                                name,
+                                size,
+                                id: uuid.v4(),
+                                video: false
+                            }]);
+                        }).catch(err => {
+                            console.log(err);
+                        });
+                    } else if (type === "video/mp4") {
+                        setUploaded(prevArray => [...prevArray, {
+                            link: uri,
+                            type,
+                            name,
+                            size,
+                            id: uuid.v4(),
+                            video: true
+                        }]);
+                    } else if (type === "application/pdf") {
+
+                        setUploaded(prevArray => [...prevArray, {
+                            link: uri,
+                            type,
+                            name,
+                            size,
+                            id: uuid.v4(),
+                            video: false
+                        }]);
+                    } else if (type === "application/msword") {
+
+                        // const base64File = await RNFS.readFile(uri, "base64");
+
+                        setUploaded(prevArray => [...prevArray, {
+                            link: uri,
+                            type,
+                            name,
+                            size,
+                            id: uuid.v4(),
+                            video: false
+                        }]);
+                    }
                 }
             }
         } catch (err) {
             if (DocumentPicker.isCancel(err)) {
                 // User cancelled the picker, exit any dialogs or menus and move on
                 console.log(err);
+
+                Toast.show({
+                    text1: 'Cancelled the picker!',
+                    text2: "You have cancelled the picker selection...",
+                    type: "info",
+                    visibilityTime: 4500,
+                    position: "top"
+                });
             } else {
                 console.log("err", err);
+
+                Toast.show({
+                    text1: "Critical error has occurred while picking documents...",
+                    text2: "Critical error has occurred.",
+                    type: "error",
+                    visibilityTime: 4500,
+                    position: "top"
+                });
                 throw err;
             }
         }
@@ -86,6 +165,7 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
                     }
                 }}
                 >
+                <Toast ref={(ref) => Toast.setRef(ref)} />
                 <View style={styles.container}>
                     <Header style={{ backgroundColor: "white" }}>
                         <Left>
@@ -112,34 +192,106 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
                             setVisiblity(false);
                         }} stretch={true}>Close Preview</AwesomeButtonCartman>
                     </Modal> : null}
+                    {selected !== null ? <Modal isVisible={videoModal}>
+                        <View style={styles.modal}>
+                            <View style={styles.margin}>
+                                <Video source={{ uri: selected.link }}
+                                    ref={(ref) => {
+                                        
+                                    }}
+                                    loop
+                                    autoPlay
+                                    style={styles.modalVideoPicture} 
+                                />
+                            </View>
+                        </View>
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                            setVisiblityVideo(false);
+                        }} stretch={true}>Close Preview</AwesomeButtonCartman>
+                    </Modal> : null}
+                    <ScrollView contentContainerStyle={{ paddingBottom: 150 }} >
                     <View style={styles.margin}>
-                        <Text style={styles.mainText}>Submit your work only AFTER confirming the client has deposited funds. Submit appropriate amounts of work or if paid in full, complete and send over the files or code in whole.</Text>
+                        {typeof uploaded !== "undefined" && uploaded.length > 0 ? <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} backgroundColor={"#ffd530"} type={"anchor"} textColor={"black"} onPress={() => {
+
+                        }} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} type={"disabled"} textColor={"white"} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman>}
+                        <Text style={styles.mainText}>Submit your work only AFTER confirming the client has deposited funds. Submit appropriate amounts of work or if paid in full, complete and send over the files or code in whole. <Text style={{ color: "darkred" }}>Only select LOCAL files as other files (cloud) will close the program... </Text></Text>
                         <AwesomeButtonCartman style={{ marginTop: 15 }} type={"anchor"} textColor={"white"} onPress={findFilesAndSelect} stretch={true}>Select File(s)</AwesomeButtonCartman>
-                        <List>
-                            {uploaded.map((upload, index) => {
-                                return (
-                                    <Fragment key={index}>
-                                        <ListItem button={true} onPress={() => {
-                                            if (upload.type === "image/png" || upload.type === "image/jpg" || upload.type === "image/jpeg") {
-                                                setSelected(upload);
-                                            
-                                                setTimeout(() => {
-                                                    setVisiblity(true);
-                                                }, 500)
-                                            }
-                                        }}>
-                                            <Left>
-                                                <Text>{upload.name}</Text>
-                                            </Left>
-                                            <Right>
-                                                <Icon name="arrow-forward" />
-                                            </Right>
-                                        </ListItem>
-                                    </Fragment>
-                                );
-                            })}
-                        </List>
+                        
+                            <List>
+                                {uploaded.map((upload, index) => {
+                                    return (
+                                        <Fragment key={index}>
+                                            <ListItem style={{ maxHeight: 65 }}>
+                                                <Left>
+                                                    <TouchableOpacity onPress={() => {
+                                                        setUploaded(uploaded.filter((item) => {
+                                                            if (item.id !== upload.id) {
+                                                                return item;
+                                                            }
+                                                        }))
+                                                    }}>
+                                                        <Thumbnail style={{ maxWidth: 30, maxHeight: 30, marginRight: 20 }} source={require("../../../../../../assets/icons/close.png")} />
+                                                    </TouchableOpacity>
+                                                    <Text style={{ marginTop: 10 }}>{upload.name}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <TouchableOpacity onPress={() => {
+                                                        if (upload.type === "image/png" || upload.type === "image/jpg" || upload.type === "image/jpeg") {
+                                                            setSelected(upload);
+                                                        
+                                                            setTimeout(() => {
+                                                                setVisiblity(true);
+                                                            }, 500);
+                                                        } else if (upload.type === "video/mp4") {
+                                                            setSelected(upload);
+
+                                                            setTimeout(() => {
+                                                                setVisiblityVideo(true);
+                                                            }, 500);
+                                                        } else if (upload.type === "application/pdf") {
+                                                            FileViewer.open(upload.link)
+                                                            .then(() => {
+                                                                // success
+                                                            })
+                                                            .catch(error => {
+                                                                // error
+                                                                Toast.show({
+                                                                    text1: 'Critical error while trying to open pdf...',
+                                                                    text2: 'Please try this action again or choose a *local* file.',
+                                                                    type: "error",
+                                                                    visibilityTime: 4500,
+                                                                    position: "top"
+                                                                });
+                                                            });
+                                                        } else if (upload.type === "application/msword") {
+                                                            FileViewer.open(upload.link)
+                                                            .then(() => {
+                                                                // success
+                                                            })
+                                                            .catch(error => {
+                                                                // error
+                                                                Toast.show({
+                                                                    text1: 'Critical error while trying to open word doc...',
+                                                                    text2: 'Please try this action again or choose a *local* file.',
+                                                                    type: "error",
+                                                                    visibilityTime: 4500,
+                                                                    position: "top"
+                                                                });
+
+                                                            });
+                                                        }
+                                                    }}>
+                                                        <Icon style={{ minWidth: 40, minHeight: 40, marginTop: 20 }} name="arrow-forward" />
+                                                    </TouchableOpacity>
+                                                    
+                                                </Right>
+                                            </ListItem>
+                                        </Fragment>
+                                    );
+                                })}
+                            </List>
                     </View>
+                    </ScrollView>
                 </View>
             </RBSheet>
         </Fragment>

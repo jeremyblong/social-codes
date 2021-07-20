@@ -97,6 +97,7 @@ export default StyleSheet.create({
     topLeft: {
         position: "absolute",
         left: 25,
+        zIndex: 0,
         top: 25,
         flexDirection: "row"
     },
