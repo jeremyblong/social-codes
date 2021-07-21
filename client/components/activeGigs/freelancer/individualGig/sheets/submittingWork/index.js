@@ -16,6 +16,7 @@ import Config from 'react-native-config';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { saveFilesPane } from "../../../../../../actions/work/index.js";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,9 +27,12 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
     const [ videoModal, setVisiblityVideo ] = useState(false); 
     const [ fileViewerModal, setFileViewerModal ] = useState(false); 
     const [ progress, setProgress ] = useState(0);
+    const [ spinner, setSpinner ] = useState(false);
 
     const handleSubmissionFilesFinal = () => {
         console.log("handleSubmissionFilesFinal clicked...");
+
+        setSpinner(true);
 
         const formData = new FormData();
 
@@ -63,6 +67,8 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
                         saveFilesPane(files);
                         setUploaded([]);
 
+                        setSpinner(false);
+
                         Toast.show({
                             text1: "Successfully uploaded content!",
                             text2: "Successfully uploaded content/data, your information is now public to the client!",
@@ -76,9 +82,13 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
                         }, 2500)
                     } else {
                         console.log("Err", res.data);
+
+                        setSpinner(false);
                     }
                 }).catch((err) => {
                     console.log(err.message);
+
+                    setSpinner(false);
                 })       
             }
         }
@@ -194,6 +204,12 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
     console.log("uploaded", uploaded);
     return (
         <Fragment>
+            <Spinner
+                visible={spinner}
+                textContent={`Uploading your content, ${progress.toFixed(0)}% complete...`}
+                overlayColor={"rgba(0, 0, 0, 0.75)"}
+                textStyle={{ color: "white" }}
+            />
             <RBSheet
                 ref={submitWorkRef}
                 height={height * 0.90}

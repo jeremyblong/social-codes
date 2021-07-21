@@ -18,6 +18,12 @@ export default StyleSheet.create({
     margin: {
         margin: 15
     },
+    modalPicOrVideo: {
+        width: "100%", 
+        height: "100%", 
+        minWidth: "100%", 
+        minHeight: "100%"
+    },
     row: {
         flexDirection: "row",
         justifyContent: "center",
@@ -36,6 +42,17 @@ export default StyleSheet.create({
         maxWidth: 40,
         maxHeight: 40,
         marginRight: 10
+    },
+    modal: {
+        minWidth: "90%",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        margin: 20,
+        backgroundColor: "white",
+        flex: 1,
+        height: 325,
+        maxHeight: 350
     },
     iconText: {
         fontWeight: "bold",

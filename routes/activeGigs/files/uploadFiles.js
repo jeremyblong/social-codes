@@ -67,6 +67,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                     fileArray.push({
                         fullUri: file.location,
                         fileName: file.originalname,
+                        type: file.mimetype,
                         id: uuidv4()
                     })
                 }
