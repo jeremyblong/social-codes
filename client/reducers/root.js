@@ -8,6 +8,7 @@ import invitation from "./skype/index.js";
 import wallPostSettings from "./wall/wall.js";
 import forum from "./forum/index.js";
 import payments from "./payments/index.js";
+import savedFiles from "./work/index.js";
 
 export default combineReducers({
 	location,
@@ -18,5 +19,6 @@ export default combineReducers({
     videoInvitationInfo: invitation,
     wallPosts: wallPostSettings,
     forum,
-    payments
+    payments,
+    savedFiles
 });

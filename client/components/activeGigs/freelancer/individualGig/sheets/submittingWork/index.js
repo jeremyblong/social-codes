@@ -10,19 +10,79 @@ import Modal from 'react-native-modal';
 import uuid from "react-native-uuid";
 import Video from 'react-native-video';
 import FileViewer from 'react-native-file-viewer';
-import Pdf from 'react-native-pdf';
-import RNFS from 'react-native-fs';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import Config from 'react-native-config';
+import { connect } from 'react-redux';
+import * as Progress from 'react-native-progress';
+import { saveFilesPane } from "../../../../../../actions/work/index.js";
 
+const { width, height } = Dimensions.get("window");
 
-const { height } = Dimensions.get("window");
-
-const SubmitWorkRefPane = ({ submitWorkRef }) => {
+const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, saveFilesPane }) => {
     const [ uploaded, setUploaded ] = useState([]);
     const [ isVisible, setVisiblity ] = useState(false);
     const [ selected, setSelected ] = useState(null);
     const [ videoModal, setVisiblityVideo ] = useState(false); 
     const [ fileViewerModal, setFileViewerModal ] = useState(false); 
+    const [ progress, setProgress ] = useState(0);
+
+    const handleSubmissionFilesFinal = () => {
+        console.log("handleSubmissionFilesFinal clicked...");
+
+        const formData = new FormData();
+
+        formData.append("id", unique_id);
+        formData.append("otherUser", passedData.with);
+        formData.append("jobID", passedData.jobID); 
+        formData.append("activeHiredID", passedData.id);
+        formData.append("fullName", fullName);
+
+        const config = {
+            onUploadProgress: (progressEvent) => {
+              let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              console.log(percentCompleted);
+
+              setProgress(percentCompleted);
+            },
+            headers: { "Content-Type": "multipart/form-data" }
+        }
+
+        for (let index = 0; index < uploaded.length; index++) {
+            const file = uploaded[index];
+            
+            formData.append("files", { uri: file.link, name: file.name, type: file.type });
+
+            if ((uploaded.length - 1) === index) {
+                axios.post(`${Config.ngrok_url}/post/files/upload/client`, formData, config).then((res) => {
+                    if (res.data.message === "Uploaded Files!") {
+                        console.log(res.data);
+
+                        const { files } = res.data;
+                        
+                        saveFilesPane(files);
+                        setUploaded([]);
+
+                        Toast.show({
+                            text1: "Successfully uploaded content!",
+                            text2: "Successfully uploaded content/data, your information is now public to the client!",
+                            type: "success",
+                            visibilityTime: 4500,
+                            position: "top"
+                        })
+
+                        setTimeout(() => {
+                            submitWorkRef.current.close();
+                        }, 2500)
+                    } else {
+                        console.log("Err", res.data);
+                    }
+                }).catch((err) => {
+                    console.log(err.message);
+                })       
+            }
+        }
+    }
 
     const findFilesAndSelect = async () => {
         try {
@@ -39,26 +99,14 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
 
                 if (Platform.OS === "ios") {
                     if (type === "image/png" || type === "image/jpg" || type === "image/jpeg") {
-                        RNFetchBlob.config({
-                            fileCache: true
-                        }).fetch("GET", uri)
-                        // the image is now downloaded to device's storage
-                        .then(resp => {
-                            // the image path you can use it directly with Image component
-                            imagePath = resp.path();
-                            return resp.readFile("base64");
-                        })
-                        .then((base64Data) => {
-                            
-                            setUploaded(prevArray => [...prevArray, {
-                                base64: base64Data,
-                                type,
-                                name,
-                                size,
-                                id: uuid.v4(),
-                                video: false
-                            }]);
-                        });
+                        setUploaded(prevArray => [...prevArray, {
+                            link: uri,
+                            type,
+                            name,
+                            size,
+                            id: uuid.v4(),
+                            video: false
+                        }]);
                     } else if (type === "video/mp4") {
                         setUploaded(prevArray => [...prevArray, {
                             link: uri,
@@ -71,18 +119,14 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
                     }
                 } else {
                     if (type === "image/png" || type === "image/jpg" || type === "image/jpeg") {
-                        RNFetchBlob.fs.readFile(uri, 'base64').then(base64Data => {
-                            setUploaded(prevArray => [...prevArray, {
-                                base64: base64Data,
-                                type,
-                                name,
-                                size,
-                                id: uuid.v4(),
-                                video: false
-                            }]);
-                        }).catch(err => {
-                            console.log(err);
-                        });
+                        setUploaded(prevArray => [...prevArray, {
+                            link: uri,
+                            type,
+                            name,
+                            size,
+                            id: uuid.v4(),
+                            video: false
+                        }]);
                     } else if (type === "video/mp4") {
                         setUploaded(prevArray => [...prevArray, {
                             link: uri,
@@ -145,7 +189,8 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
     }
     useEffect(() => {
         setUploaded([]);
-    }, [])
+    }, []);
+    console.log("passed:", passedData);
     console.log("uploaded", uploaded);
     return (
         <Fragment>
@@ -182,10 +227,11 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
                         </Body>
                         <Right />
                     </Header>
+                    <Progress.Bar fillStyle={"#ffd530"} progress={progress} width={width} />
                     {selected !== null ? <Modal isVisible={isVisible}>
                         <View style={styles.modal}>
                             <View style={styles.margin}>
-                                <Image source={{ uri: `data:${selected.type};base64,${selected.base64}` }} style={{ width: "100%", height: "100%", minWidth: "100%", minHeight: "100%"}} />
+                                <Image source={{ uri: selected.link }} style={{ width: "100%", height: "100%", minWidth: "100%", minHeight: "100%"}} />
                             </View>
                         </View>
                         <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
@@ -212,7 +258,7 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
                     <ScrollView contentContainerStyle={{ paddingBottom: 150 }} >
                     <View style={styles.margin}>
                         {typeof uploaded !== "undefined" && uploaded.length > 0 ? <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} backgroundColor={"#ffd530"} type={"anchor"} textColor={"black"} onPress={() => {
-
+                            handleSubmissionFilesFinal();
                         }} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} type={"disabled"} textColor={"white"} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman>}
                         <Text style={styles.mainText}>Submit your work only AFTER confirming the client has deposited funds. Submit appropriate amounts of work or if paid in full, complete and send over the files or code in whole. <Text style={{ color: "darkred" }}>Only select LOCAL files as other files (cloud) will close the program... </Text></Text>
                         <AwesomeButtonCartman style={{ marginTop: 15 }} type={"anchor"} textColor={"white"} onPress={findFilesAndSelect} stretch={true}>Select File(s)</AwesomeButtonCartman>
@@ -297,4 +343,10 @@ const SubmitWorkRefPane = ({ submitWorkRef }) => {
         </Fragment>
     );
 }
-export default SubmitWorkRefPane;
+const mapStateToProps = (state) => {
+    return {
+        unique_id: state.signupData.authData.unique_id,
+        fullName: state.signupData.authData.firstName + " " + state.signupData.authData.lastName
+    }
+}
+export default connect(mapStateToProps, { saveFilesPane })(SubmitWorkRefPane);

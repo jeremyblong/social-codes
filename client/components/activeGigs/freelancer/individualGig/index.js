@@ -85,7 +85,7 @@ constructor(props) {
                                 {passedData.otherUserFirstName} {passedData.otherUserLastName} {"\n"}aka {passedData.otherUserUsername}
                             </Text>
                         </View>
-                        <SubmitWorkRefPane submitWorkRef={this.submitWorkRef} props={this.props} /> 
+                        <SubmitWorkRefPane passedData={passedData} submitWorkRef={this.submitWorkRef} props={this.props} /> 
                         <SheetHelperPaymentsDisplayRef payments={passedData.payments} props={this.props} paymentsRef={this.paymentsRef} />
                         <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
                             this.paymentsRef.current.open();
