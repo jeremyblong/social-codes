@@ -7,7 +7,7 @@ import Config from "react-native-config";
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import ReadMore from 'react-native-read-more-text';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Toast from 'react-native-toast-message';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
@@ -67,7 +67,7 @@ constructor(props) {
                 return `$${proposal.ratePerProjectCompletion.toFixed(2)} per project completion`;
             }
         } else {
-            return `$${proposal.hourlyRate} billed at an hourly rate`;
+            return `$${proposal.hourlyRate.toFixed(2)} billed at an hourly rate`;
         }
     }
     renderLoading = () => {
@@ -81,9 +81,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any "already submitted" proposals from your account right now...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
                             this.props.props.navigation.push("jobs-homepage");
-                        }} stretch={true}>Apply to jobs</AwesomeButtonBlue>
+                        }} stretch={true}>Apply to jobs</AwesomeButtonCartman>
                     </View>
                 </View>
             );
@@ -217,56 +217,115 @@ constructor(props) {
                     
                     {typeof proposals !== 'undefined' && proposals.length > 0 ? proposals.map((proposal, index) => {
                         console.log("proposal", proposal);
-                        const { title, description, category, pricing, skillLevel, task, typeOfProject } = proposal.jobData;
-                        return (
-                            <Fragment>
-                                <Card>
-                                    <CardItem style={styles.bottomBorder} header>
-                                        <NativeText style={{ color: "blue" }}>{this.calculateHeader(proposal)}</NativeText>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Body style={{ flexDirection: "row", justifyContent: "center" }}>
-                                            <Text style={styles.centeredTitleText}>Job/listing information</Text>
-                                        </Body>
-                                    </CardItem>
-                                    <CardItem>
-                                        
-                                        <Body>
-                                            <Text style={styles.midsizedText}>Title: {title} {"\n \n"}</Text>
-                                            <ReadMore
-                                                numberOfLines={3}
-                                                renderTruncatedFooter={this._renderTruncatedFooter}
-                                                renderRevealedFooter={this._renderRevealedFooter}
-                                            >
-                                                <Text style={styles.midsizedText}>Description: {description} {"\n \n"}</Text>
-                                            </ReadMore>
-                                            <Text style={[styles.midsizedText, { marginTop: 10 }]}>{this.calculatePricingDisplay(proposal.jobData)}</Text>
-                                            <View style={styles.hr} />
-                                            <ReadMore
-                                                numberOfLines={3}
-                                                renderTruncatedFooter={this._renderTruncatedFooter}
-                                                renderRevealedFooter={this._renderRevealedFooter}
-                                            >
-                                                <NativeText style={{ fontWeight: "bold" }}><NativeText style={{ color: "blue" }}>Submitted Cover Letter</NativeText>: {"\n"}</NativeText>
-                                                <NativeText>
-                                                    {proposal.coverLetterText}
-                                                </NativeText>
-                                            </ReadMore>
+                        
+                        if (proposal.jobData !== null) {
+                            const { title, description, category, pricing, skillLevel, task, typeOfProject } = proposal.jobData;
+                            return (
+                                <Fragment>
+                                    <Card>
+                                        <CardItem style={styles.bottomBorder} header>
+                                            <NativeText style={{ color: "blue" }}>{this.calculateHeader(proposal)}</NativeText>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Body style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                <Text style={styles.centeredTitleText}>Job/listing information</Text>
+                                            </Body>
+                                        </CardItem>
+                                        <CardItem>
                                             
-                                        </Body>
-                                    </CardItem>
-                                    <CardItem style={styles.topBorder} footer>
-                                        <NativeText style={{ color: "blue" }}>{proposal.date}</NativeText>
-                                    </CardItem>
-                                    <CardItem>
-                                        <AwesomeButtonBlue type={"secondary"} onPress={() => {
-                                            this.searchForJobAndRedirect(proposal);
-                                        }} stretch={true}>View Listing</AwesomeButtonBlue>
-                                    </CardItem>
-                                </Card>
-                                <View style={styles.thickHr} />
-                            </Fragment>
-                        );
+                                            <Body>
+                                                <Text style={styles.midsizedText}>Title: {title} {"\n \n"}</Text>
+                                                <ReadMore
+                                                    numberOfLines={3}
+                                                    renderTruncatedFooter={this._renderTruncatedFooter}
+                                                    renderRevealedFooter={this._renderRevealedFooter}
+                                                >
+                                                    <Text style={styles.midsizedText}>Description: {description} {"\n \n"}</Text>
+                                                </ReadMore>
+                                                <Text style={[styles.midsizedText, { marginTop: 10 }]}>{this.calculatePricingDisplay(proposal.jobData)}</Text>
+                                                <View style={styles.hr} />
+                                                <ReadMore
+                                                    numberOfLines={3}
+                                                    renderTruncatedFooter={this._renderTruncatedFooter}
+                                                    renderRevealedFooter={this._renderRevealedFooter}
+                                                >
+                                                    <NativeText style={{ fontWeight: "bold" }}><NativeText style={{ color: "blue" }}>Submitted Cover Letter</NativeText>: {"\n"}</NativeText>
+                                                    <NativeText>
+                                                        {proposal.coverLetterText}
+                                                    </NativeText>
+                                                </ReadMore>
+                                                
+                                            </Body>
+                                        </CardItem>
+                                        <CardItem style={styles.topBorder} footer>
+                                            <NativeText style={{ color: "blue" }}>{proposal.date}</NativeText>
+                                        </CardItem>
+                                        <CardItem>
+                                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                                                this.searchForJobAndRedirect(proposal);
+                                            }} stretch={true}>View Listing</AwesomeButtonCartman>
+                                        </CardItem>
+                                    </Card>
+                                    <View style={styles.thickHr} />
+                                </Fragment>
+                            );
+                        } else {
+                            return (
+                                <Fragment>
+                                    <Card style={{ backgroundColor: "#ffd530" }}>
+                                        <CardItem style={styles.bottomBorder} header>
+                                            <NativeText style={{ color: "darkred" }}>{this.calculateHeader(proposal)}</NativeText>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Body style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                <Text style={styles.centeredTitleText}>Job/listing information (JOB NO LONGER EXISTS)</Text>
+                                            </Body>
+                                        </CardItem>
+                                        <CardItem>
+                                            
+                                            <Body>
+                                                <Text style={[styles.midsizedText, { marginBottom: 10 }]}>(JOB NO LONGER EXISTS - It was either completed or removed...)</Text>
+                                                <ReadMore
+                                                    numberOfLines={3}
+                                                    renderTruncatedFooter={this._renderTruncatedFooter}
+                                                    renderRevealedFooter={this._renderRevealedFooter}
+                                                >
+                                                    <Text style={styles.midsizedText}>(JOB NO LONGER EXISTS - It was either completed or removed...)</Text>
+                                                </ReadMore>
+                                                <Text style={[styles.midsizedText, { marginTop: 10 }]}>(JOB NO LONGER EXISTS - It was either completed or removed...)</Text>
+                                                <View style={styles.hr} />
+                                                <ReadMore
+                                                    numberOfLines={3}
+                                                    renderTruncatedFooter={this._renderTruncatedFooter}
+                                                    renderRevealedFooter={this._renderRevealedFooter}
+                                                >
+                                                    <NativeText style={{ fontWeight: "bold" }}><NativeText style={{ color: "darkred" }}>Submitted Cover Letter</NativeText>: {"\n"}</NativeText>
+                                                    <NativeText>
+                                                        {proposal.coverLetterText}
+                                                    </NativeText>
+                                                </ReadMore>
+                                                
+                                            </Body>
+                                        </CardItem>
+                                        <CardItem style={styles.topBorder} footer>
+                                            <NativeText style={{ color: "darkred" }}>{proposal.date}</NativeText>
+                                        </CardItem>
+                                        <CardItem>
+                                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                                                Toast.show({
+                                                    text1: "This job is no longer on our marketplace, sorry for any inconveniences.",
+                                                    text2: "This job has been completed or was removed after your application...",
+                                                    type: "error", 
+                                                    visibilityTime: 3500,
+                                                    position: "top"
+                                                })
+                                            }} stretch={true}>View Listing</AwesomeButtonCartman>
+                                        </CardItem>
+                                    </Card>
+                                    <View style={styles.thickHr} />
+                                </Fragment>
+                            );
+                        }
                     }) : this.renderLoading()}
                 </ScrollView>
             </Fragment>

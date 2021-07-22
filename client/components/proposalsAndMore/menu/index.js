@@ -10,6 +10,7 @@ import Config from "react-native-config";
 import axios from "axios";
 import { connect } from 'react-redux';
 import moment from "moment";
+import uuid from "react-native-uuid";
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 
 const { height, width } = Dimensions.get("window");
@@ -114,23 +115,25 @@ constructor(props) {
                         {typeof alreadySubmitted !== "undefined" && alreadySubmitted.length > 0 ? <FlatList
                             data={alreadySubmitted}
                             renderItem={({ item, index }) => {
-                                return (
-                                    <ListItem button={true} onPress={() => {
-                                        this.props.props.navigation.push("already-submitted-proposals-menu", { job: item.jobData, item });
-                                    }} style={{ padding: 5 }} key={index}>
-                                        <Left>
-                                            <Text numberOfLines={4}>{item.jobData.title}{"\n"}{moment(item.systemDate).fromNow()}</Text>
-                                        </Left>
-                                        <Right>
-                                            <Icon name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                );
+                                if (item !== null) {
+                                    return (
+                                        <ListItem button={true} onPress={() => {
+                                            this.props.props.navigation.push("already-submitted-proposals-menu", { job: item.jobData, item });
+                                        }} style={{ padding: 5 }} key={index}>
+                                            <Left>
+                                                <Text numberOfLines={4}>{item.jobData.title}{"\n"}{moment(item.systemDate).fromNow()}</Text>
+                                            </Left>
+                                            <Right>
+                                                <Icon name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                    );
+                                }
                             }}
                             // onEndReached={({ distanceFromEnd }) => {
                             //     console.log(distanceFromEnd);
                             // }}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item) => item !== null ? item.id : uuid.v4()}
                             // onEndReached={this._handleLoadMore}
                             // onEndReachedThreshold={0.005}
                             initialNumToRender={3}

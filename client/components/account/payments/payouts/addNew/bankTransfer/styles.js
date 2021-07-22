@@ -5,13 +5,17 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 40,
-        maxHeight: 40
+        maxHeight: 40,
+        tintColor: "#ffd530"
     },
     container: {
         backgroundColor: "white",
         minHeight: height,
         width,
         zIndex: -1
+    },
+    goldText: {
+        color: "#ffd530"
     },
     mainHeaderText: {
         fontSize: 30,

@@ -9,7 +9,7 @@ const cors = require('cors');
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.put("/", (req, respppppppp) => {
 
-        const { id, file, otherUserID, jobID } = req.body;
+        const { id, file, otherUserID, passedID } = req.body;
 
         const database = db.db("db");
 
@@ -33,7 +33,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                             for (let i = 0; i < user.activeHiredApplicants.length; i++) {
                                 const applicant = user.activeHiredApplicants[i];
                                 // check for matching applicant
-                                if (applicant.jobID === jobID) {
+                                if (applicant.id === passedID) {
                                     for (let iiiiii = 0; iiiiii < applicant.uploadedWork.length; iiiiii++) {
                                         const work = applicant.uploadedWork[iiiiii];
 
@@ -71,7 +71,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                             for (let i = 0; i < user.activeHiredApplicants.length; i++) {
                                 const applicant = user.activeHiredApplicants[i];
                                 // check for matching applicant
-                                if (applicant.jobID === jobID) {
+                                if (applicant.id === passedID) {
                                     for (let iiiiii = 0; iiiiii < applicant.uploadedWork.length; iiiiii++) {
                                         const work = applicant.uploadedWork[iiiiii];
                                         // check for matching file

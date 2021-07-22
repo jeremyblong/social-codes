@@ -45,7 +45,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 } else {
                                     console.log("err", response.data);
         
-                                    reject();
+                                    resolve(null);
                                 }
                             }).catch((err) => {
                                 console.log(err);

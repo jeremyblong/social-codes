@@ -135,7 +135,7 @@ constructor(props) {
                                 index: i 
                             })
                         }}>
-                        <Animated.Text style={{ opacity: 1, fontWeight: "bold", fontSize: 18, color: "white" }}>{route.title}</Animated.Text>
+                        <Animated.Text style={{ opacity: 1, fontWeight: "bold", fontSize: 15, color: "white" }}>{route.title}</Animated.Text>
                         </TouchableOpacity>
                     );
                 } else {
@@ -147,7 +147,7 @@ constructor(props) {
                                 index: i 
                             })
                         }}>
-                        <Animated.Text style={{ opacity: 1, fontWeight: "bold", fontSize: 18, color: "black" }}>{route.title}</Animated.Text>
+                        <Animated.Text style={{ opacity: 1, fontWeight: "bold", fontSize: 15, color: "black" }}>{route.title}</Animated.Text>
                         </TouchableOpacity>
                     );
                 }

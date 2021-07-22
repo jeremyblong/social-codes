@@ -96,7 +96,7 @@ constructor(props) {
         const { friends } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -105,8 +105,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Accepted Friends</Title>
-                        <Subtitle>View your friends!</Subtitle>
+                        <Title style={styles.goldText}>Accepted Friends</Title>
+                        <Subtitle style={styles.goldText}>View your friends!</Subtitle>
                     </Body>
                     <Right />
                 </Header>

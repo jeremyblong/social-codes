@@ -19,7 +19,7 @@
   "dependencies": {
     "@cometchat-pro/chat": "^2.3.3",
     "@cometchat-pro/react-native-calls": "^1.0.8",
-    "@cometchat-pro/react-native-chat": "^2.3.1",
+    "@cometchat-pro/react-native-chat": "^2.3.4",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/cameraroll": "^4.0.4",
@@ -87,6 +87,7 @@
     "react-native-tags": "^2.2.0",
     "react-native-twilio-video-webrtc": "^2.0.0",
     "react-native-unordered-list": "^1.0.4",
+    "react-native-v8": "^0.64.2-patch.0",
     "react-native-video": "^5.1.1",
     "react-router-native": "^5.2.0",
     "react-syntax-highlighter": "^15.4.3",

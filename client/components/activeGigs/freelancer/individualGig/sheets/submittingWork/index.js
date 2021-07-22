@@ -20,7 +20,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 const { width, height } = Dimensions.get("window");
 
-const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, saveFilesPane }) => {
+const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, saveFilesPane, previousFiles }) => {
     const [ uploaded, setUploaded ] = useState([]);
     const [ isVisible, setVisiblity ] = useState(false);
     const [ selected, setSelected ] = useState(null);
@@ -38,7 +38,7 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
 
         formData.append("id", unique_id);
         formData.append("otherUser", passedData.with);
-        formData.append("jobID", passedData.jobID); 
+        formData.append("passedID", passedData.id); 
         formData.append("activeHiredID", passedData.id);
         formData.append("fullName", fullName);
 
@@ -64,7 +64,7 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
 
                         const { files } = res.data;
                         
-                        saveFilesPane(files);
+                        saveFilesPane([...previousFiles, files]);
                         setUploaded([]);
 
                         setSpinner(false);
@@ -362,7 +362,8 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
 const mapStateToProps = (state) => {
     return {
         unique_id: state.signupData.authData.unique_id,
-        fullName: state.signupData.authData.firstName + " " + state.signupData.authData.lastName
+        fullName: state.signupData.authData.firstName + " " + state.signupData.authData.lastName,
+        previousFiles: _.has(state.savedFiles, "filesSaved") ? state.savedFiles.filesSaved : []
     }
 }
 export default connect(mapStateToProps, { saveFilesPane })(SubmitWorkRefPane);

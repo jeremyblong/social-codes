@@ -39,6 +39,28 @@ constructor(props) {
     this.paymentsRef = React.createRef(null);
     this.submitWorkRef = React.createRef(null);
 }
+    componentDidMount() {
+        const passedData = this.props.props.route.params.item;
+
+        axios.get(`${Config.ngrok_url}/gather/uploaded/files`, {
+            params: {
+                id: this.props.unique_id,
+                passedID: passedData.id
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered files!") {
+                console.log(res.data);
+
+                const { files } = res.data;
+
+                this.props.saveFilesPane([...files]);
+            } else {
+                console.log("Err" , res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     deleteItem = (file) => {
 
         const passedData = this.props.props.route.params.item;
@@ -47,7 +69,7 @@ constructor(props) {
             file,
             id: this.props.unique_id,
             otherUserID: passedData.with,
-            jobID: passedData.jobID
+            passedID: passedData.id
         }).then((res) => {
             if (res.data.message === "Removed/deleted file!") {
                 console.log(res.data);

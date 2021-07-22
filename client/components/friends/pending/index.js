@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import Dialog from "react-native-dialog";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Video from 'react-native-video';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 
 
 const { width, height } = Dimensions.get("window");
@@ -205,7 +205,7 @@ constructor(props) {
                                             addVisible: true,
                                             friend
                                         })
-                                    }} style={[styles.buttonCustom, { marginRight: 15 }]} primary>
+                                    }} style={[styles.buttonCustom, { marginRight: 15 }]} dark>
                                         <Text style={[styles.customText, { color: "white" }]}>Confirm</Text>
                                     </Button>
                                     <Button onPress={() => {
@@ -230,9 +230,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any pending friend requests at the current moment...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                             this.props.props.navigation.push("homepage");
-                        }} stretch={true}>Return to homepage</AwesomeButtonBlue>
+                        }} stretch={true}>Return to homepage</AwesomeButtonCartman>
                     </View>
                 );
             } else {
@@ -356,7 +356,7 @@ constructor(props) {
         console.log("pending index.js state", this.state);
         return (
             <Fragment>
-                 <Header>
+                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -365,8 +365,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Friends Menu</Title>
-                        <Subtitle>Navigate friend options</Subtitle>
+                        <Title style={styles.goldText}>Friends Menu</Title>
+                        <Subtitle style={styles.goldText}>Navigate friend options</Subtitle>
                     </Body>
                     <Right />
                 </Header>

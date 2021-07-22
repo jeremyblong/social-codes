@@ -14,7 +14,7 @@ constructor(props) {
     render() {
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
                             this.props.props.navigation.goBack();
@@ -23,8 +23,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>New Payout</Title>
-                        <Subtitle>Add a new payout method</Subtitle>
+                        <Title style={styles.goldText}>New Payout</Title>
+                        <Subtitle style={styles.goldText}>Add a new payout method</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -36,7 +36,7 @@ constructor(props) {
                                 this.props.props.navigation.push("bank-account-start-verifcation");
                             }} style={styles.listitem}>
                             <Left>
-                                <NativeText numberOfLines={3}><NativeText style={{ color: "blue", fontWeight: "bold" }}>Bank Transfer</NativeText> {"\n"}- Get paid in 5-7 business days {"\n"}- No fees</NativeText>
+                                <NativeText numberOfLines={3}><NativeText style={{ color: "darkred", fontWeight: "bold" }}>Bank Transfer</NativeText> {"\n"}- Get paid in 5-7 business days {"\n"}- No fees</NativeText>
                             </Left>
                             <Right>
                                 <Icon name="arrow-forward" />
@@ -44,7 +44,7 @@ constructor(props) {
                             </ListItem>
                             <ListItem button={true} onPress={() => {}} style={styles.listitem}>
                             <Left>
-                                <NativeText numberOfLines={3}><NativeText style={{ color: "blue", fontWeight: "bold" }}>Paypal</NativeText> {"\n"}- Get paid in 3-4 hours {"\n"}- May include fees</NativeText>
+                                <NativeText numberOfLines={3}><NativeText style={{ color: "darkred", fontWeight: "bold" }}>Paypal</NativeText> {"\n"}- Get paid in 3-4 hours {"\n"}- May include fees</NativeText>
                             </Left>
                             <Right>
                                 <Icon name="arrow-forward" />
@@ -52,7 +52,7 @@ constructor(props) {
                             </ListItem>
                             <ListItem button={true} onPress={() => {}} style={styles.listitem}>
                             <Left>
-                                <NativeText numberOfLines={3}><NativeText style={{ color: "blue", fontWeight: "bold" }}>Mechanic2Day Cash Card</NativeText> {"\n"}- Get paid instantly {"\n"}- May include fees</NativeText>
+                                <NativeText numberOfLines={3}><NativeText style={{ color: "darkred", fontWeight: "bold" }}>Mechanic2Day Cash Card</NativeText> {"\n"}- Get paid instantly {"\n"}- May include fees</NativeText>
                             </Left>
                             <Right>
                                 <Icon name="arrow-forward" />

@@ -212,6 +212,7 @@ app.use("/make/custom/hourly/payment", require("./routes/activeGigs/individual/p
 app.use("/upload/profile/pic/video/android", require("./routes/profile/videos/uploadExistingVideoAndroid.js"));
 app.use("/post/files/upload/client", require("./routes/activeGigs/files/uploadFiles.js"));
 app.use("/delete/file/from/application", require("./routes/activeGigs/files/deleteRemoveFile.js"));
+app.use("/gather/uploaded/files", require("./routes/activeGigs/files/gather/gatherFiles.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

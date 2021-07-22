@@ -19,6 +19,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         const collection = database.collection("users");
 
+        const generatedID = uuidv4();
+
         collection.find({ unique_id: { $in: [ id, interview.with ]}}).toArray((err, users) => {
             if (err) {
 
@@ -42,7 +44,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     console.log(response.data);
             
                                     const newApplicant = {
-                                        id: uuidv4(),
+                                        id: generatedID,
                                         date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
                                         systemDate: Date.now(),
                                         jobID: interview.jobID,
@@ -87,7 +89,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         if (user.unique_id === interview.with) {
                             
                             const newApplicant = {
-                                id: uuidv4(),
+                                id: generatedID,
                                 date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
                                 systemDate: Date.now(),
                                 jobID: interview.jobID,

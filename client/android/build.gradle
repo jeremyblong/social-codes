@@ -51,7 +51,12 @@ allprojects {
         maven {
             url("${project(':react-native-background-geolocation').projectDir}/libs")
         }
-
+        maven {
+            url("$rootDir/../node_modules/react-native-v8/dist")
+        }
+        maven {
+            url("$rootDir/../node_modules/v8-android/dist")
+        }
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }

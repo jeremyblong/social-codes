@@ -129,7 +129,7 @@ constructor(props) {
         console.log("payouts.index.js", this.state);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
                             this.props.props.navigation.goBack();
@@ -138,8 +138,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Payout Homepage</Title>
-                        <Subtitle>Manage payouts, payments & more...</Subtitle>
+                        <Title style={styles.goldText}>Payout Homepage</Title>
+                        <Subtitle style={styles.goldText}>Manage payouts, payments & more...</Subtitle>
                     </Body>
                     <Right />
                 </Header>

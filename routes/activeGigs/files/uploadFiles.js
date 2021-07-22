@@ -39,7 +39,7 @@ var upload = multer({
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", upload.array("files"), (req, resppppppppp) => {
 
-        const { id, otherUser, jobID, activeHiredID, fullName } = req.body;
+        const { id, otherUser, passedID, activeHiredID, fullName } = req.body;
 
         console.log(req.files);
 
@@ -80,7 +80,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                             for (let indexxxx = 0; indexxxx < user.activeHiredApplicants.length; indexxxx++) {
                                 const applicant = user.activeHiredApplicants[indexxxx];
                                 
-                                if (applicant.jobID === jobID) {
+                                if (applicant.id === passedID) {
                                     if (_.has(applicant, "uploadedWork")) {
                                         applicant.uploadedWork.push(...fileArray);
                                     } else {
@@ -114,7 +114,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                             for (let indexxxx = 0; indexxxx < user.activeHiredApplicants.length; indexxxx++) {
                                 const applicant = user.activeHiredApplicants[indexxxx];
                                 
-                                if (applicant.jobID === jobID) {
+                                if (applicant.id === passedID) {
                                     if (_.has(applicant, "uploadedWork")) {
                                         applicant.uploadedWork.push(...fileArray);
                                     } else {

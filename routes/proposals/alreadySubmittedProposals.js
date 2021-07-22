@@ -41,8 +41,10 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     resolve(element);
                                 } else {
                                     console.log("err", response.data);
+
+                                    element.jobData = null;
         
-                                    reject();
+                                    resolve(element);
                                 }
                             }).catch((err) => {
                                 console.log(err);
@@ -68,7 +70,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 }
             } else {
                 res.json({
-                    message: "User could NOT be found."
+                    message: "User could NOT be found.",
+                    values: []
                 })
             }
         }).catch((err) => {

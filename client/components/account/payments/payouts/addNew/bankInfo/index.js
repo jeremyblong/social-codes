@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText, Form, Item, Input, Label } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
 import { Config } from "react-native-config";
@@ -57,7 +57,7 @@ constructor(props) {
         console.log("bankInfo state", this.state);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
                             this.props.props.navigation.goBack();
@@ -66,16 +66,16 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Account Info</Title>
-                        <Subtitle>Add account information</Subtitle>
+                        <Title style={styles.goldText}>Account Info</Title>
+                        <Subtitle style={styles.goldText}>Add account information</Subtitle>
                     </Body>
                     <Right />
                 </Header>
+                <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={25} extraScrollHeight={25}>
                 <View style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.mainHeaderText}>Add account info</Text>
                         <View style={styles.hr} />
-                        <KeyboardAwareScrollView>
                         <Form>
                             <Item style={styles.item} floatingLabel>
                             <Label>Account Type (Checking/Savings)</Label>
@@ -123,12 +123,13 @@ constructor(props) {
                             }} />
                             </Item>
                         </Form>
-                        </KeyboardAwareScrollView>
+                        
                     </View>
                     <View style={styles.bottom}>
-                        {this.calculateReadiness() ? <AwesomeButtonBlue style={{ marginTop: 15 }} type={"primary"} onPress={this.processNewBankAccountAddittion} stretch={true}>Next/Continue</AwesomeButtonBlue> : <AwesomeButtonBlue style={{ marginTop: 15 }} type={"disabled"} onPress={() => {}} stretch={true}>Next/Continue</AwesomeButtonBlue>}
+                        {this.calculateReadiness() ? <AwesomeButtonCartman textColor={"white"} style={{ marginTop: 15 }} type={"anchor"} onPress={this.processNewBankAccountAddittion} stretch={true}>Next/Continue</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} onPress={() => {}} stretch={true}>Next/Continue</AwesomeButtonCartman>}
                     </View>
                 </View>
+                </KeyboardAwareScrollView>
             </Fragment>
         )
     }

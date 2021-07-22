@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 
 
 class BankTransferBeginHelper extends Component {
@@ -16,7 +16,7 @@ constructor(props) {
     render() {
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
                             this.props.props.navigation.goBack();
@@ -25,8 +25,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>New Payout</Title>
-                        <Subtitle>Add a new payout method</Subtitle>
+                        <Title style={styles.goldText}>New Payout</Title>
+                        <Subtitle style={styles.goldText}>Add a new payout method</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -42,9 +42,9 @@ constructor(props) {
                         <View style={styles.hr} />
                     </View>
                     <View style={styles.bottom}>
-                        <AwesomeButtonBlue style={{ marginTop: 10 }} type={"secondary"} onPress={() => {
+                        <AwesomeButtonCartman style={{ marginTop: 10 }} textColor={"white"} type={"anchor"} onPress={() => {
                             this.props.props.navigation.push("add-bank-account-payout-information")
-                        }} stretch={true}>Next/Continue</AwesomeButtonBlue>
+                        }} stretch={true}>Next/Continue</AwesomeButtonCartman>
                     </View>
                 </View>
             </Fragment>
