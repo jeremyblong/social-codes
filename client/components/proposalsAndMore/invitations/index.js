@@ -126,6 +126,7 @@ constructor(props) {
         const { photo, type, ready, hide } = this.state;
         return (
             <Fragment>
+                
                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
@@ -141,7 +142,7 @@ constructor(props) {
                     <Right />
                 </Header>
                 <Toast ref={(ref) => Toast.setRef(ref)} />
-                <ScrollView contentContainerStyle={{ paddingBottom: 0 }}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 0 }} style={{ zIndex: -1 }}>
                     <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.headerTitle}>

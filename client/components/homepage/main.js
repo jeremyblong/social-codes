@@ -15,7 +15,7 @@ import axios from 'axios';
 import Config from "react-native-config";
 import { CometChat } from "@cometchat-pro/react-native-chat"
 import messaging from '@react-native-firebase/messaging';
-
+import Video from "react-native-video";
 const { height, width } = Dimensions.get("window");
 
 
@@ -159,11 +159,20 @@ constructor () {
         console.log("this.state ", this.state);
         return (
             <Fragment>
-                <LinearGradient colors={['black', '#303030', 'blue']} style={styles.background}>
+                {/* <LinearGradient colors={['black', '#303030', 'blue']} style={styles.background}> */}
+                <Video
+                    source={require("../../assets/video/world.mp4")}
+                    style={styles.backgroundVideo}
+                    muted={true}
+                    repeat={true}
+                    resizeMode={"cover"}
+                    rate={1.0}
+                    ignoreSilentSwitch={"obey"}
+                />
                     <View style={[styles.centered, { maxHeight: 400, paddingTop: 25 }]}>
                         <Image source={require("../../assets/images/social_code_long.png")} style={styles.logo} />
                         <Text style={styles.whiteMedium}>{"Hire expert freelancers for your custom software job online!"}</Text>
-                        <LottieView
+                        {/* <LottieView
                             source={require("../../assets/animations/tech.json")}
                             ref={animation => {
                                 this.animation = animation;
@@ -171,7 +180,7 @@ constructor () {
                             loop
                             style={{ marginTop: height * 0.135, minWidth: 350, minHeight: 325 }} 
                             autoPlay
-                        />
+                        /> */}
                     </View>
                     <View style={styles.bottom}>
                         <AwesomeButton onPress={() => {
@@ -186,7 +195,7 @@ constructor () {
                             disabled={this.state.isSigninInProgress} 
                         />
                     </View>
-                </LinearGradient>
+                {/* </LinearGradient> */}
             </Fragment>
         )
     }

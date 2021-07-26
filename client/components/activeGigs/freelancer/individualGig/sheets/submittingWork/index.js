@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { saveFilesPane } from "../../../../../../actions/work/index.js";
 import Spinner from 'react-native-loading-spinner-overlay';
+import _ from "lodash";
 
 const { width, height } = Dimensions.get("window");
 

@@ -8,7 +8,7 @@ import styles from './styles.js';
 import DialogInput from 'react-native-dialog-input';
 import Modal from 'react-native-modal';
 import RNPickerSelect from 'react-native-picker-select';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import uuid from 'react-native-uuid';
 import axios from "axios";
 import Config from "react-native-config";
@@ -108,43 +108,45 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                             }} style={styles.topLeftExit}>
                                 <Image source={require("../../../../../../assets/icons/close.png")} style={{ maxWidth: 45, maxHeight: 45 }} />
                             </TouchableOpacity>
-                            <Text style={styles.label}>Select the language you're using...</Text>
-                            <RNPickerSelect
-                                style={styles}
-                                onValueChange={(value) => {
-                                    setLanguage(value);
-                                }}
-                                items={[
-                                    { label: 'JavaScript', value: 'javascript' },
-                                    { label: 'Python', value: 'python' },
-                                    { label: 'TypeScript', value: 'typescript' },
-                                    { label: "Java", value: "java" },
-                                    { label: "Kotlin", value: "kotlin" },
-                                    { label: "Swift", value: "swift" },
-                                    { label: "C#", value: "c#" },
-                                    { label: "C", value: "c" },
-                                    { label: "C++", value: "c++" },
-                                    { label: "php", value: "php" },
-                                    { label: "Go", value: "go" },
-                                    { label: "Matlab", value: "matlab" },
-                                    { label: "Ruby", value: "ruby" }
-                                ]}
-                            />
-                            <Text style={[styles.headerText, { fontSize: 18, marginBottom: 10 }]}>Enter your code snippet below</Text>
-                            <Textarea value={codeChunk} onChangeText={(value) => {
-                                setCodeChunk(value);
-                            }} rowSpan={8} style={styles.textareaModal} bordered placeholder="Enter your solution/code-snippet here..." placeholderTextColor={"grey"} />
-                            <View style={styles.hr} />
-                            <Text style={styles.label}>Enter a comment for this code snippet</Text>
-                            <Textarea value={comment} onChangeText={(value) => {
-                                setComment(value);
-                            }} rowSpan={8} style={styles.bareTextArea} bordered placeholder="Enter your comment for this code snippet here.." placeholderTextColor={"grey"} />
-                            <AwesomeButtonBlue type={"secondary"} style={{ marginTop: 20 }} onPress={() => {
-                                setIsPopupVisible(false);
+                            <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={{ paddingTop: 75, margin: 3 }}>
+                                <Text style={styles.label}>Select the language you're using...</Text>
+                                <RNPickerSelect
+                                    style={styles}
+                                    onValueChange={(value) => {
+                                        setLanguage(value);
+                                    }}
+                                    items={[
+                                        { label: 'JavaScript', value: 'javascript' },
+                                        { label: 'Python', value: 'python' },
+                                        { label: 'TypeScript', value: 'typescript' },
+                                        { label: "Java", value: "java" },
+                                        { label: "Kotlin", value: "kotlin" },
+                                        { label: "Swift", value: "swift" },
+                                        { label: "C#", value: "c#" },
+                                        { label: "C", value: "c" },
+                                        { label: "C++", value: "c++" },
+                                        { label: "php", value: "php" },
+                                        { label: "Go", value: "go" },
+                                        { label: "Matlab", value: "matlab" },
+                                        { label: "Ruby", value: "ruby" }
+                                    ]}
+                                />
+                                <Text style={[styles.headerText, { fontSize: 18, marginBottom: 10 }]}>Enter your code snippet below</Text>
+                                <Textarea value={codeChunk} onChangeText={(value) => {
+                                    setCodeChunk(value);
+                                }} rowSpan={8} style={styles.textareaModal} bordered placeholder="Enter your solution/code-snippet here..." placeholderTextColor={"grey"} />
+                                <View style={styles.hr} />
+                                <Text style={styles.label}>Enter a comment for this code snippet</Text>
+                                <Textarea value={comment} onChangeText={(value) => {
+                                    setComment(value);
+                                }} rowSpan={8} style={styles.bareTextArea} bordered placeholder="Enter your comment for this code snippet here.." placeholderTextColor={"grey"} />
+                                <AwesomeButtonCartman type={"anchor"} textColor={"white"} style={{ marginTop: 20 }} onPress={() => {
+                                    setIsPopupVisible(false);
 
-                                addToSnippets();
-                            }} backgroundColor={"blue"} textColor={"white"} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonBlue>
-                        </View>
+                                    addToSnippets();
+                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonCartman>
+                            </ScrollView>
+                            </View>
                     </Modal>
                     <DialogInput 
                         modalStyle={styles.modal} 
@@ -176,17 +178,17 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                             setShowLinkModal(false);
                         }}>
                     </DialogInput>
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 rawBottomSheet.current.close();
                             }} transparent>
-                                <Icon style={{ color: "black" }} name='arrow-back' />
+                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Comment</Title>
-                            <Subtitle>Leave a comment</Subtitle>
+                            <Title style={styles.goldText}>Comment</Title>
+                            <Subtitle style={styles.goldText}>Leave a comment</Subtitle>
                         </Body>
                         <Right>
                          
@@ -264,9 +266,9 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                                         </View>
                                     );
                                 }) : null}
-                                <AwesomeButtonBlue style={{ marginTop: 30 }} type={"secondary"} onPress={() => {
+                                <AwesomeButtonCartman style={{ marginTop: 30 }} type={"anchor"} textColor={"white"} onPress={() => {
                                     handleCommentSubmission();
-                                }} backgroundColor={"blue"} textColor={"white"} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonBlue>
+                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonCartman>
                         </View>
                     </ScrollView>
             </RBSheet>

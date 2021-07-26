@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions } from "react-native";
 import styles from "./styles.js";
 import { Header, Left, Body, Right, Button, Icon, Title, Subtitle } from 'native-base';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Video from 'react-native-video';
 import Config from 'react-native-config';
 import axios from "axios";
@@ -114,7 +114,7 @@ constructor(props) {
         const { fileUrl } = this.state;
         return (
             <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -123,8 +123,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Introduction</Title>
-                        <Subtitle>Video Introduction</Subtitle>
+                        <Title style={styles.goldText}>Introduction</Title>
+                        <Subtitle style={styles.goldText}>Video Introduction</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -136,7 +136,7 @@ constructor(props) {
                         <View style={styles.hr} />
                         <Text style={styles.subText}>Typically people upload a video talking about their skills, work history, personality but really anything that you think will make you stand out. Don't be fearful - share your best self!</Text>
                         <View style={{ marginTop: 25 }}>
-                            {typeof fileUrl !== "undefined" && fileUrl !== null && fileUrl.length > 0 ? <AwesomeButtonBlue type={"primary"} onPress={this.uploadVideoDatabase} stretch={true}>Upload Video</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleVideoPicker} stretch={true}>Select a introduction video</AwesomeButtonBlue>}
+                            {typeof fileUrl !== "undefined" && fileUrl !== null && fileUrl.length > 0 ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.uploadVideoDatabase} stretch={true}>Upload Video</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleVideoPicker} stretch={true}>Select a introduction video</AwesomeButtonCartman>}
                             <View style={styles.hr} />
                             {typeof fileUrl !== "undefined" && fileUrl !== null && fileUrl.length > 0 ? <Video source={{uri: this.state.fileUrl }}   // Can be a URL or a local file.
                                 ref={(ref) => {

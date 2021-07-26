@@ -11,7 +11,7 @@ const moment = require('moment');
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, respppp) => {
 
-        const { id, interview, firstName, lastName, username } = req.body;
+        const { id, interview, firstName, lastName, username, interviewID } = req.body;
 
         console.log(req.body);
 
@@ -56,7 +56,9 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         with: interview.with,
                                         paidFull: false,
                                         paidPartial: false,
-                                        payments: []
+                                        payments: [],
+                                        completedFreelancer: false,
+                                        completedClient: false
                                     };
             
                                     if (user.activeHiredApplicants) {
@@ -64,10 +66,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     } else {
                                         user["activeHiredApplicants"] = [newApplicant];
                                     }
-            
-                                    collection.save(user);
-            
-                                    resolve(user);
+
+                                    for (let iiiii = 0; iiiii < user.activeInterviews.length; iiiii++) {
+                                        const interviewww = user.activeInterviews[iiiii];
+                                        if (interviewww.id === interviewID) {
+                                            user.activeInterviews.splice(index, 1);
+
+                                            collection.save(user, (err, result) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                } else {
+                                                    resolve(user);
+                                                }
+                                            });
+                                        }
+                                    }
                                 } else {
                                     console.log("err", response.data);
 
@@ -101,7 +114,9 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 with: id,
                                 paidFull: false,
                                 paidPartial: false,
-                                payments: []
+                                payments: [],
+                                completedFreelancer: false,
+                                completedClient: false
                             };
     
                             if (user.activeHiredApplicants) {
@@ -110,58 +125,77 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 user["activeHiredApplicants"] = [newApplicant];
                             }
 
-                            const configgg = {
-                                headers: {
-                                    "Authorization": `key=${config.get("firebaseCloudMessagingServerKey")}`,
-                                    "Content-Type": "application/json"
+                            for (let iiiii = 0; iiiii < user.activeInterviews.length; iiiii++) {
+                                const interviewww = user.activeInterviews[iiiii];
+                                if (interviewww.id === interviewID) {
+                                    user.activeInterviews.splice(index, 1);
+
+                                    collection.save(user, (err, result) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            const configgg = {
+                                                headers: {
+                                                    "Authorization": `key=${config.get("firebaseCloudMessagingServerKey")}`,
+                                                    "Content-Type": "application/json"
+                                                }
+                                            }
+                            
+                                            const notificationAddition = {
+                                                id: uuidv4(),
+                                                system_date: Date.now(),
+                                                date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                                                data: {
+                                                    title: `${firstName} ${lastName} decided to HIRE YOU for a job you interviewed for! Congratulations on your new gig!`,
+                                                    body: `You have been selected out of all the canidates to work on this gig, to get started view the "active Gigs/Jobs" section in the menu to learn more...`,
+                                                },
+                                                from: id,
+                                                link: "accepted-job-interview"
+                                            };
+                            
+                                            axios.post("https://fcm.googleapis.com/fcm/send", {
+                                                "to": user.firebasePushNotificationToken,
+                                                "notification": {
+                                                    "title": `${firstName} ${lastName} decided to HIRE YOU for a job you interviewed for! Congratulations on your new gig!`,
+                                                    "body": `You have been selected out of all the canidates to work on this gig, to get started view the "active Gigs/Jobs" section in the menu to learn more...`,
+                                                    "mutable_content": true,
+                                                    "sound": "Tri-tone"
+                                                },
+                                                "data": {
+                                                    // use company logo 
+                                                    "url": `${config.get("logoImage")}`,
+                                                    "dl": "notifications"
+                                                    // use company logo ^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                }
+                                            }, configgg).then((res) => {
+                    
+                                                console.log("RES", res.data);
+                
+                                                if (user.notifications) {
+                                                    user.notifications.push(notificationAddition);
+                                                } else {
+                                                    user["notifications"] = [notificationAddition];
+                                                }
+                                                
+                                                collection.save(user, (err, result) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    } else {
+                                                        respppp.json({
+                                                            message: "Hired user!",
+                                                            user
+                                                        })
+                                                    }
+                                                });
+                
+                                                
+                                            }).catch((err) => {
+                                                console.log(err);
+                                            })
+                                        }
+                                    });
                                 }
                             }
-            
-                            const notificationAddition = {
-                                id: uuidv4(),
-                                system_date: Date.now(),
-                                date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-                                data: {
-                                    title: `${firstName} ${lastName} decided to HIRE YOU for a job you interviewed for! Congratulations on your new gig!`,
-                                    body: `You have been selected out of all the canidates to work on this gig, to get started view the "active Gigs/Jobs" section in the menu to learn more...`,
-                                },
-                                from: id,
-                                link: "accepted-job-interview"
-                            };
-            
-                            axios.post("https://fcm.googleapis.com/fcm/send", {
-                                "to": user.firebasePushNotificationToken,
-                                "notification": {
-                                    "title": `${firstName} ${lastName} decided to HIRE YOU for a job you interviewed for! Congratulations on your new gig!`,
-                                    "body": `You have been selected out of all the canidates to work on this gig, to get started view the "active Gigs/Jobs" section in the menu to learn more...`,
-                                    "mutable_content": true,
-                                    "sound": "Tri-tone"
-                                },
-                                "data": {
-                                    // use company logo 
-                                    "url": `${config.get("logoImage")}`,
-                                    "dl": "notifications"
-                                    // use company logo ^^^^^^^^^^^^^^^^^^^^^^^^^
-                                }
-                            }, configgg).then((res) => {
-    
-                                console.log("RES", res.data);
-
-                                if (user.notifications) {
-                                    user.notifications.push(notificationAddition);
-                                } else {
-                                    user["notifications"] = [notificationAddition];
-                                }
-                                
-                                collection.save(user);
-
-                                respppp.json({
-                                    message: "Hired user!",
-                                    user
-                                })
-                            }).catch((err) => {
-                                console.log(err);
-                            })
                         }
                     }
                 })

@@ -376,7 +376,6 @@ constructor () {
     componentDidMount() {
         axios.get("https://randomuser.me/api/?results=30").then((res) => {
             if (res.data) {
-                console.log(res.data);
 
                 const { results } = res.data;
 
@@ -384,7 +383,7 @@ constructor () {
                     data: results
                 })
             } else {
-                console.log(res.data);
+                
             }
         }).catch((err) => {
             console.log(err);
@@ -397,7 +396,6 @@ constructor () {
         }).then((res) => {
 
             if (res.data.message === "Located friends to tag!") {
-                console.log(res.data);
 
                 const { friends, user } = res.data;
 
@@ -463,7 +461,6 @@ constructor () {
         });
     }
     launchImageLibrary = () => {
-        console.log("launchImageLibrary clicked");
 
         const options = {
             mediaType: "photo",
@@ -474,7 +471,6 @@ constructor () {
         launchImageLibrary(options, this.handleImageUpload)
     }
     handleImageUpload = (data) => {
-        console.log("handleImageUpload", data);
 
         if (_.has(data, "base64")) {
             data.index = this.state.images.length + 1;
@@ -644,7 +640,6 @@ constructor () {
         }
     }
     likeReactPost = (post) => {
-        console.log("POSTIE:", post);
     
         axios.post(`${Config.ngrok_url}/like/react/post/wall`, {
             post,
@@ -661,8 +656,6 @@ constructor () {
                         return id;
                     }
                 });
-
-                console.log("checkIndex ADDED LIKE: ", checkIndex);
     
                 if (checkIndex !== -1) {
                     
@@ -684,7 +677,6 @@ constructor () {
         })
     }
     removeLikeResponse = (post) => {
-        console.log("revoke like....", post);
 
         axios.post(`${Config.ngrok_url}/like/react/post/wall/revoke/remove`, {
             post,
@@ -700,8 +692,6 @@ constructor () {
                         return id;
                     }
                 });
-                
-                console.log("check index REMOVE LIKE....:", checkIndex);
 
                 if (checkIndex !== -1) {
                     
@@ -931,8 +921,6 @@ constructor () {
     }
     likeSharedPostRespond = (post) => {
 
-        console.log("post :)", post);
-
         axios.post(`${Config.ngrok_url}/like/react/post/wall/shared/posting`, {
             post,
             id: this.props.unique_id,
@@ -948,8 +936,6 @@ constructor () {
                         return id;
                     }
                 });
-
-                console.log("checkIndex ADDED LIKE: ", checkIndex);
     
                 if (checkIndex !== -1) {
                     
@@ -987,8 +973,6 @@ constructor () {
                         return id;
                     }
                 });
-                
-                console.log("check index REMOVE LIKE....:", checkIndex);
 
                 if (checkIndex !== -1) {
                     
@@ -1013,8 +997,6 @@ constructor () {
         this.props.props.navigation.push("individual-wall-posting-view", { post })
     }
     loadMoreContentForWall = (info) => {
-
-        console.log("LOAD MORE CONTENT FOR WALL............", info);
 
         if (info.distanceFromEnd >= 0) {
             axios.get(`${Config.ngrok_url}/gather/more/wall/posts/unique`, {
@@ -1098,7 +1080,6 @@ constructor () {
         );
     }
     renderSuggestionsRow = ({ item }, hidePanel) => {
-        console.log("item", item);
         return (
             <TouchableOpacity onPress={() => {
                 this.onSuggestionTap(item.acquaintanceUsername, hidePanel)
@@ -1116,8 +1097,6 @@ constructor () {
           )
     }
     onSuggestionTap = (username, hidePanel) => {
-        console.log("username", username);
-
         this.setState({
             wallText: this.state.wallText + username,
             taggedUsers: [...this.state.taggedUsers, username]
@@ -1143,8 +1122,6 @@ constructor () {
                     char = char.split(';')[0];
                 }
 
-                console.log("char", char);
-
                 const regexed = char.split("@")[1].replace(/[\W_]+/g, "");
 
                 taggedUsers.push(regexed);
@@ -1160,8 +1137,6 @@ constructor () {
         })
     }
     wallPostCallback = (data) => {
-        console.log("callback ", data);
-
         if (data === "@") {
             this.setState({
                 friends: typeof this.state.stored !== "undefined" && this.state.stored.length > 0 ? [...this.state.stored] : []
@@ -1177,8 +1152,6 @@ constructor () {
         }
     }
     onChangeTextMainInput = (wallText) => {
-        console.log("wallText", wallText);
-
         this.setState({
             wallText
         })
@@ -1218,9 +1191,7 @@ constructor () {
         }
     }
     handlePlaying = (isVisible, index) => {
-        console.log("isvisible", isVisible);
         if (this.state.postLoaded === true && this.state[`playing-${index}`] !== true) {
-            console.log("SETSTATE");
             this.setState({
                 [`playing-${index}`]: true
             })
@@ -1238,8 +1209,6 @@ constructor () {
         if(countFrom && images.length > countFrom) {
             imagesToShow.length = countFrom;
         }
-
-        console.log("mainHomepage state:", this.state);
         if (hideVideo === true) {
             return (
                 <Fragment>
@@ -1333,7 +1302,7 @@ constructor () {
                                         </Footer>
                                         {/* <View style={styles.thickLine} /> */}
                                         <View style={[styles.row, { height: 100 }]}>
-                                            {user !== null ? <View style={styles.columnSmall}>
+                                            {user !== null ? <View style={[styles.columnSmall, { paddingRight: 20 }]}>
                                                 {this.renderPhotoOrVideo(user, 45)}
                                             </View> : <Fragment><View style={styles.loadingProfileOutter}><View style={styles.loadingProfilePic}></View></View></Fragment>}
                                             <TouchableOpacity onPress={() => {

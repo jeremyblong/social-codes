@@ -5,13 +5,17 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffd530"
     },
     container: {
         width,
         height, //
         backgroundColor: "white",
         zIndex: -1
+    },
+    goldText: {
+        color: "#ffd530"
     },
     margin: {
         margin: 15

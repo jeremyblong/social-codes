@@ -155,7 +155,9 @@ constructor(props) {
     }
     renderProfilePictureVideo = (obj) => {
 
-        const profilePic = obj.profilePic[0]; 
+        console.log("obj!!!", obj);
+
+        const profilePic = obj.profilePic[obj.profilePic.length - 1]; 
 
         console.log("profilePic", profilePic);
 
@@ -170,19 +172,19 @@ constructor(props) {
                     </TouchableOpacity>
                 );
             } else {
-                console.log(`${Config.wasabi_url}/${profilePic}`);
+                console.log(`${Config.wasabi_url}/${profilePic.picture}`);
                 return (
                     <TouchableOpacity onPress={this.handleRedirectToProfile}>
                         <Video  
                             resizeMode="cover"
                             repeat
-                            source={{uri: `${Config.wasabi_url}/${profilePic}` }}   // Can be a URL or a local file.
+                            source={{uri: `${Config.wasabi_url}/${profilePic.picture}` }}   // Can be a URL or a local file.
                             autoplay={true}
                             ref={(ref) => {
                                 this.player = ref
                             }}
                             muted={true}
-                            style={[styles.avatar, { top: -135 }]}
+                            style={styles.avatar}
                         />
                     </TouchableOpacity>
                 );
@@ -497,8 +499,8 @@ constructor(props) {
                                 photo: true
                             })}
                            <View style={{ flexDirection: "column", marginLeft: 15 }}>
-                                <Text style={styles.posterText}>Posted by <Text style={{ color: "blue" }}>{forum.firstName} {forum.lastName}</Text></Text>
-                                <Text style={styles.posterText}>Also known as <Text style={{ color: "blue" }}>{forum.username}</Text></Text>
+                                <Text style={styles.posterText}>Posted by <Text style={{ color: "darkred" }}>{forum.firstName} {forum.lastName}</Text></Text>
+                                <Text style={styles.posterText}>Also known as <Text style={{ color: "darkred" }}>{forum.username}</Text></Text>
                            </View>
                         </View>
                         <View>
@@ -523,9 +525,9 @@ constructor(props) {
                                                     this.setState({
                                                         isVisible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "blue" }} />
-                                                    <Text style={{ color: "blue", fontWeight: "bold" }}>Un-Like</Text>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffd530" }}>
+                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
+                                                    <Text style={{ color: "darkred", fontWeight: "bold" }}>Un-Like</Text>
                                                 </Button>
                                             )}>
                                             <View style={styles.popoverTwo}>
@@ -552,9 +554,9 @@ constructor(props) {
                                                     this.setState({
                                                         isVisible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                                    <Text>Like</Text>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
+                                                    <Text style={{ color: "#fdd530" }}>Like</Text>
                                                 </Button>
                                             )}>
                                             <View style={styles.popoverTwo}>
@@ -633,9 +635,9 @@ constructor(props) {
                                         
                                         <Button onPress={() => {
                                             this.rawBottomSheet.current.open();
-                                        }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                            <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
-                                            <Text>Comment</Text>
+                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                            <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
+                                            <Text style={styles.goldText}>Comment</Text>
                                         </Button>
                                         
                                     </FooterTab>
@@ -800,17 +802,17 @@ constructor(props) {
         console.log(this.state);
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Icon style={{ color: "black" }} name='arrow-back' />
+                            <Icon style={{ color: "#ffd530" }} name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>{forum !== null ? forum.username : "-------------"}</Title>
-                        <Subtitle>Individual forum listing</Subtitle>
+                        <Title style={styles.goldText}>{forum !== null ? forum.username : "-------------"}</Title>
+                        <Subtitle style={styles.goldText}>Individual forum listing</Subtitle>
                     </Body>
                     <Right>
                         <Button transparent>

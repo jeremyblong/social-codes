@@ -33,6 +33,7 @@ constructor(props) {
         modalVisible: false,
         selected: null,
         videoModalVisible: false,
+        confirmationCompleteModal: false,
         questionModal: false,
         selectedFile: null
     }
@@ -86,11 +87,38 @@ constructor(props) {
             console.log(err);
         })
     }
+    markJobAsComplete = () => {
+        console.log("markJobAsComplete clicked...");
+
+        const passedData = this.props.props.route.params.item;
+
+        axios.post(`${Config.ngrok_url}/complete/freelance/gig/half/freelancer`, {
+            id: this.props.unique_id,
+            activeID: passedData.id,
+            otherUserID: passedData.with
+        }).then((res) => {
+            if (res.data.message === "Successfully updated users accounts and posted notification!") {
+                console.log(res.data);
+
+                Toast.show({
+                    text1: 'You have successfully marked your half of this job complete!',
+                    text2: 'Please wait for the other user to confirm before funds will be released...',
+                    type: "success",
+                    visibilityTime: 4500,
+                    position: "top"
+                });
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
         // console.log(this.props.props.route.params.item);
         console.log("this.state freelancer index.js", this.state);
 
-        const { selected, modalVisible, videoModalVisible, questionModal } = this.state;
+        const { selected, modalVisible, videoModalVisible, questionModal, confirmationCompleteModal } = this.state;
         
         const passedData = this.props.props.route.params.item;
         return (
@@ -128,6 +156,26 @@ constructor(props) {
                             this.deleteItem(this.state.selectedFile);
                         })
                     }} label="Delete" />
+                    </Dialog.Container>
+                </View>
+                <View>
+                    <Dialog.Container visible={confirmationCompleteModal}>
+                    <Dialog.Title>Are you sure you'd like to mark this project as complete?</Dialog.Title>
+                    <Dialog.Description>
+                        Once you mark this project as complete, it will be registered and validated permanently... Would you like to continue?
+                    </Dialog.Description>
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            confirmationCompleteModal: false
+                        })
+                    }} label="Cancel" />
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            confirmationCompleteModal: false
+                        }, () => {
+                            this.markJobAsComplete();
+                        })
+                    }} label="Mark Complete" />
                     </Dialog.Container>
                 </View>
                 {selected !== null ? <Modal isVisible={modalVisible}>
@@ -265,6 +313,13 @@ constructor(props) {
                         <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
                             this.paymentsRef.current.open();
                         }} stretch={true}>View payments from client</AwesomeButtonCartman>
+                        <View style={styles.greyHr} />
+                        <Text style={styles.direction}>If both parties (freelancer and client alike) agree the job is completed and the work submitted is sufficient, you should mark the job complete by clicking the button below. Once both users have confirmed the job is complete, <Text style={{ color: "darkred", fontWeight: "bold" }}>funds with be fully released from pending state</Text>..</Text>
+                        <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
+                            this.setState({
+                                confirmationCompleteModal: true
+                            })
+                        }} stretch={true}>Mark project as complete</AwesomeButtonCartman>
                     </View>
                     </View>
                 </ScrollView>

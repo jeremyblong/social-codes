@@ -9,6 +9,9 @@ export default StyleSheet.create({
         backgroundColor: "white",
         zIndex: -1
     },
+    goldText: {
+        color: "#ffd530"
+    },
     hr: {
         width: "100%",
         borderBottomColor: "lightgrey",
@@ -29,6 +32,10 @@ export default StyleSheet.create({
     avatar: {
         minWidth: 55,
         minHeight: 55,
+        maxWidth: 55,
+        maxHeight: 55,
+        height: 55,
+        width: 55,
         borderRadius: 30,
         marginRight: 15
     },
@@ -114,7 +121,7 @@ export default StyleSheet.create({
         textAlign: "left",
         fontSize: 16,
         marginBottom: 5,
-        color: "blue",
+        color: "darkred",
         fontWeight: "bold"
     },
     positionTouchable: {

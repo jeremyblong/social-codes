@@ -321,7 +321,7 @@ constructor(props) {
                                     /> : <Image source={{ uri: user !== null && typeof user !== "undefined" &&  typeof user.profilePics !== "undefined" && user.profilePics.length > 0 ? `${Config.wasabi_url}/${user.profilePics[user.profilePics.length - 1].picture}` : user !== null && typeof user !== "undefined" && typeof user.photo !== "undefined" && user.photo.length > 0 ? user.photo : `${Config.no_image_avaliable}` }} style={styles.profilePic} />}
                                 </View>
                                 <TouchableOpacity onPress={() => {
-                                    this.props.props.navigation.push("public-profile-main");
+                                    this.props.props.navigation.push("individual-profile-public", { item: { unique_id: this.props.unique_id }});
                                 }} style={styles.largeColumn}>
                                     <Text style={styles.title}>{this.props.fullName}</Text>
                                     <Text style={styles.greyText}>See your profile</Text>
@@ -335,7 +335,9 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/onboarding.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Onboarding & Payment Set-up</Text>
                                     </TouchableOpacity> : null}
-                                    <TouchableOpacity onPress={() => {}} style={styles.tallView}>
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("public-profile-main");
+                                    }} style={styles.tallView}>
                                         <View style={styles.halfHeight}>
                                             {user !== null && typeof user !== "undefined" && typeof user.profilePics !== "undefined" && user.profilePics.length > 0 && user.profilePics[user.profilePics.length - 1].type === "video" ? <Video source={{uri: `${Config.wasabi_url}/${user.profilePics[user.profilePics.length - 1].picture}` }} 
                                             ref={(ref) => {

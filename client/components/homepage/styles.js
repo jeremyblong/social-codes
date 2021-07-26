@@ -13,6 +13,15 @@ export default StyleSheet.create({
         alignItems: 'center',
         alignContent: "center"
     },
+    backgroundVideo: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        top: 0,
+        right: 0,
+        width,
+        height
+    },
     whiteMedium: {
         fontSize: 22,
         color: "white",

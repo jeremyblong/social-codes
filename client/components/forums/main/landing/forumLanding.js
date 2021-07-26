@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button } from 'native-base';
 import styles from './styles.js';
-import HoempageAllPostsHelper from "./helpers/allPosts.js";
+import HomepageAllPostsHelper from "./helpers/allPosts.js";
 import LottieView from 'lottie-react-native';
 
 class ForumLandingHomepageConditionalHelper extends Component {
@@ -17,7 +17,7 @@ constructor(props) {
         const { finished } = this.state;
 
         if (finished === false) {
-            return <HoempageAllPostsHelper props={this.props.props} />
+            return <HomepageAllPostsHelper props={this.props.props} />
         } else {
 
         }

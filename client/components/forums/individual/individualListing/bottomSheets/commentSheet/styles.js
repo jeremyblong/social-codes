@@ -15,7 +15,15 @@ export default StyleSheet.create({
     topLeftExit: {
         position: "absolute",
         top: 20,
-        left: 20
+        left: 20,
+        minWidth: 45,
+        minHeight: 45,
+        width: 45,
+        height: 45,
+        zIndex: 45
+    },
+    goldText: {
+        color: "#ffd530"
     },
     label: {
         fontSize: 18, //

@@ -69,7 +69,8 @@ constructor(props) {
             interview,
             firstName: this.props.firstName,
             lastName: this.props.lastName,
-            username: this.props.username
+            username: this.props.username,
+            interviewID: interview.id
         }).then((res) => {
             if (res.data.message === "Hired user!") {
                 console.log(res.data);
