@@ -113,10 +113,32 @@ constructor(props) {
                         this.props.props.navigation.push("manage-all-active-proposal-related");
                     } else if (notification.link === "video-conference") {
                         this.props.props.navigation.push("video-interview-calls-homepage");
+                    } else if (notification.link === "files-pending-project") {
+                        this.lookupNotificationFile(notification);
                     }
                 })
             } else {
                 console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    lookupNotificationFile = (notification) => {
+        axios.get(`${Config.ngrok_url}/locate/specific/active/job`, {
+            params: {
+                withWho: notification.data.data.with,
+                jobID: notification.data.data.jobID,
+                id: this.props.unique_id
+            }
+        }).then((res) => {
+            if (res.data.message === "Successfully gathered more info!") {
+
+                const { item } = res.data;
+
+                this.props.props.navigation.push("individual-active-gig-manage", { item });
+            } else {
+                console.log("Err", res.data);
             }
         }).catch((err) => {
             console.log(err);

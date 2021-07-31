@@ -188,7 +188,7 @@ constructor(props) {
         const { allTags, activeJobs } = this.state;
         return (
             <Fragment>
-                <View style={styles.row}>
+                <View style={[styles.row, { paddingBottom: 15 }]}>
                     <View style={styles.largeColumn}>
                         <SearchBar 
                             textColor={"#303030"}

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import styles from './styles.js';
 import { Dimensions, View, Text, Platform, Image, TouchableOpacity, ScrollView } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { Header, Left, Body, Right, Button, Icon, Title, Text as NativeText, Subtitle, List, ListItem, Thumbnail } from 'native-base';
+import { Header, Left, Body, Right, Button, Icon, Title, Text as NativeText, Subtitle, List, ListItem, Thumbnail, Item, Input, Label, Form, Textarea } from 'native-base';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import DocumentPicker from 'react-native-document-picker';
 import RNFetchBlob from "rn-fetch-blob";
@@ -18,6 +18,7 @@ import * as Progress from 'react-native-progress';
 import { saveFilesPane } from "../../../../../../actions/work/index.js";
 import Spinner from 'react-native-loading-spinner-overlay';
 import _ from "lodash";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,6 +30,9 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
     const [ fileViewerModal, setFileViewerModal ] = useState(false); 
     const [ progress, setProgress ] = useState(0);
     const [ spinner, setSpinner ] = useState(false);
+    const [ note, setNote ] = useState("");
+    const [ link, setLink ] = useState("");
+    const [ links, setLinks ] = useState([]);
 
     const handleSubmissionFilesFinal = () => {
         console.log("handleSubmissionFilesFinal clicked...");
@@ -42,6 +46,9 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
         formData.append("passedID", passedData.id); 
         formData.append("activeHiredID", passedData.id);
         formData.append("fullName", fullName);
+        formData.append("jobID", passedData.jobID);
+        formData.append("links", JSON.stringify(links));
+        formData.append("note", note);
 
         const config = {
             onUploadProgress: (progressEvent) => {
@@ -53,45 +60,84 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
             headers: { "Content-Type": "multipart/form-data" }
         }
 
-        for (let index = 0; index < uploaded.length; index++) {
-            const file = uploaded[index];
-            
-            formData.append("files", { uri: file.link, name: file.name, type: file.type });
-
-            if ((uploaded.length - 1) === index) {
-                axios.post(`${Config.ngrok_url}/post/files/upload/client`, formData, config).then((res) => {
-                    if (res.data.message === "Uploaded Files!") {
-                        console.log(res.data);
-
-                        const { files } = res.data;
-                        
-                        saveFilesPane([...previousFiles, files]);
-                        setUploaded([]);
-
+        if (typeof uploaded !== "undefined" && uploaded.length > 0) {
+            for (let index = 0; index < uploaded.length; index++) {
+                const file = uploaded[index];
+                
+                formData.append("files", { uri: file.link, name: file.name, type: file.type });
+    
+                if ((uploaded.length - 1) === index) {
+                    axios.post(`${Config.ngrok_url}/post/files/upload/client`, formData, config).then((res) => {
+                        if (res.data.message === "Uploaded Files!") {
+                            console.log(res.data);
+    
+                            const { files } = res.data;
+                            
+                            saveFilesPane([...previousFiles, ...files]);
+                            setUploaded([]);
+                            setLinks([]);
+                            setNote("");
+    
+                            setSpinner(false);
+    
+                            Toast.show({
+                                text1: "Successfully uploaded content!",
+                                text2: "Successfully uploaded content/data, your information is now public to the client!",
+                                type: "success",
+                                visibilityTime: 4500,
+                                position: "top"
+                            })
+    
+                            setTimeout(() => {
+                                submitWorkRef.current.close();
+                            }, 2500)
+                        } else {
+                            console.log("Err", res.data);
+    
+                            setSpinner(false);
+                        }
+                    }).catch((err) => {
+                        console.log(err.message);
+    
                         setSpinner(false);
+                    })       
+                }
+            }
+        } else {
+            axios.post(`${Config.ngrok_url}/post/files/upload/client`, formData, config).then((res) => {
+                if (res.data.message === "Uploaded Files!") {
+                    console.log(res.data);
 
-                        Toast.show({
-                            text1: "Successfully uploaded content!",
-                            text2: "Successfully uploaded content/data, your information is now public to the client!",
-                            type: "success",
-                            visibilityTime: 4500,
-                            position: "top"
-                        })
-
-                        setTimeout(() => {
-                            submitWorkRef.current.close();
-                        }, 2500)
-                    } else {
-                        console.log("Err", res.data);
-
-                        setSpinner(false);
-                    }
-                }).catch((err) => {
-                    console.log(err.message);
+                    const { files } = res.data;
+                    
+                    saveFilesPane([...previousFiles, ...files]);
+                    setUploaded([]);
+                    setLinks([]);
+                    setNote("");
 
                     setSpinner(false);
-                })       
-            }
+
+                    Toast.show({
+                        text1: "Successfully uploaded content!",
+                        text2: "Successfully uploaded content/data, your information is now public to the client!",
+                        type: "success",
+                        visibilityTime: 4500,
+                        position: "top"
+                    })
+
+                    setTimeout(() => {
+                        submitWorkRef.current.close();
+                    }, 2500)
+                } else {
+                    console.log("Err", res.data);
+
+                    setSpinner(false);
+                }
+            }).catch((err) => {
+                console.log(err.message);
+
+                setSpinner(false);
+            }) 
         }
     }
 
@@ -202,7 +248,7 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
         setUploaded([]);
     }, []);
     console.log("passed:", passedData);
-    console.log("uploaded", uploaded);
+    console.log("links", links);
     return (
         <Fragment>
             <Spinner
@@ -273,10 +319,11 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
                         }} stretch={true}>Close Preview</AwesomeButtonCartman>
                     </Modal> : null}
                     <ScrollView contentContainerStyle={{ paddingBottom: 150 }} >
+                    <KeyboardAwareScrollView extraScrollHeight={400} enableOnAndroid={true}>
                     <View style={styles.margin}>
-                        {typeof uploaded !== "undefined" && uploaded.length > 0 ? <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} backgroundColor={"#ffd530"} type={"anchor"} textColor={"black"} onPress={() => {
+                        {typeof uploaded !== "undefined" && uploaded.length > 0 || (typeof note !== "undefined" && note.length > 0 || typeof links !== "undefined" && links.length > 0) ? <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} backgroundColor={"#ffd530"} type={"anchor"} textColor={"black"} onPress={() => {
                             handleSubmissionFilesFinal();
-                        }} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} type={"disabled"} textColor={"white"} stretch={true}>Submit Selected File(s)</AwesomeButtonCartman>}
+                        }} stretch={true}>Submit Selected Change(s)</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15, marginBottom: 15 }} type={"disabled"} textColor={"white"} stretch={true}>Submit Selected Change(s)</AwesomeButtonCartman>}
                         <Text style={styles.mainText}>Submit your work only AFTER confirming the client has deposited funds. Submit appropriate amounts of work or if paid in full, complete and send over the files or code in whole. <Text style={{ color: "darkred" }}>Only select LOCAL files as other files (cloud) will close the program... </Text></Text>
                         <AwesomeButtonCartman style={{ marginTop: 15 }} type={"anchor"} textColor={"white"} onPress={findFilesAndSelect} stretch={true}>Select File(s)</AwesomeButtonCartman>
                         
@@ -353,7 +400,56 @@ const SubmitWorkRefPane = ({ submitWorkRef, unique_id, passedData, fullName, sav
                                     );
                                 })}
                             </List>
+                            
+                            <Form>
+                                <Text style={[styles.label, { marginTop: 20 }]}>Enter a description for your uploaded content</Text>
+                                <Textarea onChangeText={(value) => {
+                                    setNote(value);
+                                }} value={note} rowSpan={5} bordered placeholder="Enter whatever you'd like to relay to the client here..." />
+                                <Item stackedLabel>
+                                    <Label>Enter a link/url if applicable (e.g. github repo)</Label>
+                                    <Input onBlur={() => {
+                                        if (typeof link !== "undefined" && link.length > 0) {
+                                            setLinks([...links, {
+                                                link,
+                                                id: uuid.v4()
+                                            }]);
+
+                                            setLink("");
+                                        }
+                                    }} onChangeText={(value) => {
+                                        setLink(value);
+                                    }} placeholder={"https://www.github.com/repo"} value={link} />
+                                </Item>
+                            </Form>
+                            <View style={{ marginTop: 15 }} />
+                            <List>
+                                {links.map((link, index) => {
+                                    return (
+                                        <Fragment key={index}>
+                                            <ListItem>
+                                                <Left>
+                                                    <Text>{link.link}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <Button onPress={() => {
+                                                        setLinks(links.filter((linkkkkkk) => {
+                                                            if (linkkkkkk.id !== link.id) {
+                                                                return linkkkkkk;
+                                                            }
+                                                        }))
+                                                    }} transparent>
+                                                        <Icon name="close" />
+                                                    </Button>
+                                                </Right>
+                                            </ListItem>
+                                        </Fragment>
+                                    );
+                                })}
+                            </List>
+                            
                     </View>
+                    </KeyboardAwareScrollView>
                     </ScrollView>
                 </View>
             </RBSheet>

@@ -214,6 +214,9 @@ app.use("/post/files/upload/client", require("./routes/activeGigs/files/uploadFi
 app.use("/delete/file/from/application", require("./routes/activeGigs/files/deleteRemoveFile.js"));
 app.use("/gather/uploaded/files", require("./routes/activeGigs/files/gather/gatherFiles.js"));
 app.use("/complete/freelance/gig/half/freelancer", require("./routes/activeGigs/completion/freelancer/markCompleteHalf.js"));
+app.use("/locate/specific/active/job", require("./routes/notifications/gatherJob.js"));
+app.use("/gather/application/data", require("./routes/activeGigs/files/gather/gatherApplicationData.js"));
+app.use("/delete/link/url", require("./routes/activeGigs/links/deleteLink.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

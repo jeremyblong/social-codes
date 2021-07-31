@@ -24,6 +24,7 @@ import Video from 'react-native-video';
 import { saveFilesPane } from "../../../../actions/work/index.js";
 import axios from "axios";
 import Dialog from "react-native-dialog";
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 class ViewJobActiveClientFreelancerHelper extends Component {
 constructor(props) {
@@ -35,7 +36,12 @@ constructor(props) {
         videoModalVisible: false,
         confirmationCompleteModal: false,
         questionModal: false,
-        selectedFile: null
+        selectedFile: null,
+        selectedItem: null,
+        application: {
+            links: [],
+            note: ""
+        }
     }
     this.paymentsRef = React.createRef(null);
     this.submitWorkRef = React.createRef(null);
@@ -55,6 +61,28 @@ constructor(props) {
                 const { files } = res.data;
 
                 this.props.saveFilesPane([...files]);
+            } else {
+                console.log("Err" , res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+
+        axios.get(`${Config.ngrok_url}/gather/application/data`, {
+            params: {
+                id: this.props.unique_id,
+                passedID: passedData.id
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered data!") {
+
+                const { application } = res.data;
+
+                console.log(res.data);
+
+                this.setState({
+                    application
+                })
             } else {
                 console.log("Err" , res.data);
             }
@@ -114,11 +142,45 @@ constructor(props) {
             console.log(err);
         })
     }
+    deleteLinkUrl = (linkID) => {
+        const passedData = this.props.props.route.params.item;
+
+        axios.put(`${Config.ngrok_url}/delete/link/url`, {
+            linkID,
+            activeID: passedData.id,
+            id: this.props.unique_id,
+            otherUserID: passedData.with,
+            fullName: this.props.fullName,
+            jobID: passedData.jobID
+        }).then((res) => {
+            if (res.data.message === "Deleted!") {
+
+                const { links } = res.data;
+
+                this.setState({
+                    application: {
+                        ...this.state.application,
+                        links
+                    }
+                })
+                console.log(res.data);
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
         // console.log(this.props.props.route.params.item);
         console.log("this.state freelancer index.js", this.state);
 
-        const { selected, modalVisible, videoModalVisible, questionModal, confirmationCompleteModal } = this.state;
+        const { selected, modalVisible, videoModalVisible, questionModal, confirmationCompleteModal, application, selectedItem } = this.state;
+
+        const configSwipe = {
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 80
+        };
         
         const passedData = this.props.props.route.params.item;
         return (
@@ -298,6 +360,44 @@ constructor(props) {
                                 );
                             }) : null}
                             </List>
+                            <View style={{ marginTop: 20 }} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note for client</Text>
+                            <Text style={styles.note}>{application.note.length === 0 ? "No note entered..." : application.note}</Text>
+                            <View style={styles.greyHr} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted for client</Text>
+                            {application.links.length !== 0 ? application.links.map((link, index) => {
+                                return (
+                                    <GestureRecognizer
+                                        onSwipeLeft={(state) => {
+                                            console.log("Swipped left");
+
+                                            this.setState({
+                                                selectedItem: link
+                                            })
+                                        }}
+                                        config={configSwipe}
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: this.state.backgroundColor
+                                        }}
+                                        >
+                                        <ListItem selected>
+                                            <Left>
+                                                <Text>{link.link}</Text>
+                                            </Left>
+                                            {selectedItem !== null && selectedItem.id === link.id ? <Right>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.deleteLinkUrl(link.id);
+                                                }}>
+                                                    <Icon style={{ color: "red" }} type="FontAwesome" name="trash" />
+                                                </TouchableOpacity>
+                                            </Right> : <Right>
+                                                <Icon type="FontAwesome" name="arrow-left" />
+                                            </Right>}
+                                        </ListItem>
+                                    </GestureRecognizer>
+                                );
+                            }) : <Text>No links entered or found...</Text>}
                         </View>
                         <Text style={styles.with}>With...</Text>
                         <View style={styles.profile}>
@@ -330,7 +430,8 @@ constructor(props) {
 const mapStateToProps = (state) => {
     return {
         files: state.savedFiles.filesSaved,
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`
     }
 }
 export default connect(mapStateToProps, { saveFilesPane })(ViewJobActiveClientFreelancerHelper);

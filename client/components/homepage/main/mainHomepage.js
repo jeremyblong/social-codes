@@ -383,7 +383,7 @@ constructor () {
                     data: results
                 })
             } else {
-                
+
             }
         }).catch((err) => {
             console.log(err);
@@ -1611,7 +1611,7 @@ constructor () {
                                                                             [`visible-${index}`]: true
                                                                         })
                                                                     }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
                                                                         <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
                                                                     </Button>
                                                                 )}>

@@ -83,6 +83,7 @@ constructor(props) {
                                 style={{ minHeight: height }}
                                 data={this.state.activeJobs}
                                 renderItem={({item}) => {
+                                    console.log("item", item);
                                     return (
                                         <ListItem button={true} onPress={() => {
                                             this.props.props.navigation.push("individual-active-gig-manage", { item });

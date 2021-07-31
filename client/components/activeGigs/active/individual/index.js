@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions, PermissionsAndroid, Linking } from 'react-native';
 import styles from './styles.js';
 import axios from "axios";
 import Config from "react-native-config";
-import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText, Thumbnail, List, ListItem, Footer, FooterTab, Badge } from 'native-base';
+import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText, Thumbnail, List, ListItem, Footer, FooterTab, Badge, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -13,6 +13,11 @@ import Video from 'react-native-video';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import _ from "lodash";
 import PayHourlyDepositPaneHelper from "./panes/hourly/payHourlyDeposit.js";
+import { saveFilesPane } from "../../../../actions/work/index.js";
+import RNFetchBlob from 'rn-fetch-blob';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import Toast from 'react-native-toast-message';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -34,16 +39,19 @@ constructor(props) {
             params: {
                 id: this.props.unique_id,
                 jobID: passedData.jobID,
-                applicant: passedData.with
+                applicant: passedData.with,
+                hiredID: passedData.id
             }
         }).then((res) => {
             if (res.data.message === "Located specific job!") {
                 console.log(res.data);
 
-                const { job } = res.data;
+                const { job, files } = res.data;
 
                 this.setState({
                     job
+                }, () => {
+                    this.props.saveFilesPane([...files]);
                 })
             } else {
                 console.log("Err", res.data);
@@ -298,6 +306,59 @@ constructor(props) {
 
         this.sheetRefHourly.current.open();
     }
+    handleDownloadFile = async (url, fileName, type) => {
+
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+              title: "We would like to download this file to your device",
+              message:
+                "We'd like to download this file to your device " +
+                "please accept this permission to continue downloading this work...",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "Grant!"
+            }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You may now download!");
+
+            const { config, fs } = RNFetchBlob;
+
+            const downloads = fs.dirs.DownloadDir;
+
+            return config({
+            fileCache : true,
+            addAndroidDownloads : {
+                useDownloadManager : true,
+                notification : true,
+                path:  downloads + '/' + fileName,
+            }
+            })
+            .fetch('GET', url);
+        } else {
+            console.log("Download denied");
+        }
+    }
+    openURLLink = (url) => {
+        console.log("openURLLink clicked...");
+
+        Linking.canOpenURL(url).then(supported => {
+            if (supported) {
+              Linking.openURL(url);
+            } else {
+              console.log("Don't know how to open URI: " + url);
+
+              Toast.show({
+                  text1: "Cannot open URL, invalid URL.",
+                  text2: "We cannot open the provided URL, please check to make sure it is correct.",
+                  type: "error",
+                  position: "top",
+                  visibilityTime: 4000
+              })
+            }
+        });
+    }
     renderPayHourlyOrNot = () => {
 
         const passedData = this.props.props.route.params.item;
@@ -326,6 +387,49 @@ constructor(props) {
                                 <Text style={styles.detailsTitle}>Details</Text>
                             </View>
                         </View>
+                        {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
+                            return (
+                                <Fragment key={index}>
+                                    <ListItem style={{ maxHeight: 65 }}>
+                                        <Left>
+                                            <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
+                                        </Left>
+                                        <Right>
+                                            <TouchableOpacity onPress={() => {
+                                                this.handleDownloadFile(file.fullUri, file.fileName, file.type);
+                                            }}>
+                                                <Icon name="download" />
+                                            </TouchableOpacity>
+                                        </Right>
+                                    </ListItem>
+                                </Fragment>
+                            );
+                        }) : null}
+                        <View style={{ margin: 15 }}>
+                            <View style={{ marginTop: 20 }} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
+                            <Text style={styles.note}>{passedData.note.length === 0 ? "No note entered..." : passedData.note}</Text>
+                            <View style={styles.greyHr} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
+                            {passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                                return (
+                                    <View>
+                                        <ListItem selected>
+                                            <Left>
+                                                <Text>{link.link}</Text>
+                                            </Left>
+                                            <Right>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.openURLLink(link.link);
+                                                }}>
+                                                    <Icon type="FontAwesome" name="mouse-pointer" />
+                                                </TouchableOpacity>
+                                            </Right>
+                                        </ListItem>
+                                    </View>
+                                );
+                            }) : <Text>No links entered or found...</Text>}
+                        </View>
                         <List>
                             <ListItem thumbnail>
                                 <Left>
@@ -333,6 +437,8 @@ constructor(props) {
                                     ref={(ref) => {
                                         this.player = ref
                                     }}
+                                    muted
+                                    loop
                                     style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: passedData.photo }} />}
                                 </Left>
                                 <Body>
@@ -356,6 +462,11 @@ constructor(props) {
                             <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.customPaymentCompleted.completed === true && this.props.customPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Custom payment has been completed for pending completion!" : "Custom payment has NOT been received."}</Text></Text>
                             {this.renderQuestions(job)}
                         </View>
+                        <View style={{ marginTop: 10 }} />
+                        <View style={{ margin: 10 }}>
+                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {}} stretch={true}>Mark job as complete & finish...</AwesomeButtonCartman>
+                            <View style={{ marginTop: 10 }} />
+                        </View>
                     </Fragment>
                 ); 
             } else {
@@ -378,6 +489,49 @@ constructor(props) {
                             <View style={styles.margin}>
                                 <Text style={styles.detailsTitle}>Details</Text>
                             </View>
+                        </View>
+                        {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
+                            return (
+                                <Fragment key={index}>
+                                    <ListItem style={{ maxHeight: 65 }}>
+                                        <Left>
+                                            <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
+                                        </Left>
+                                        <Right>
+                                            <TouchableOpacity onPress={() => {
+                                                this.handleDownloadFile(file.fullUri, file.fileName, file.type);
+                                            }}>
+                                                <Icon name="download" />
+                                            </TouchableOpacity>
+                                        </Right>
+                                    </ListItem>
+                                </Fragment>
+                            );
+                        }) : null}
+                        <View style={{ margin: 15 }}>
+                            <View style={{ marginTop: 20 }} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
+                            <Text style={styles.note}>{passedData.note.length === 0 ? "No note entered..." : passedData.note}</Text>
+                            <View style={styles.greyHr} />
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
+                            {passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                                return (
+                                    <View>
+                                        <ListItem selected>
+                                            <Left>
+                                                <Text>{link.link}</Text>
+                                            </Left>
+                                            <Right>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.openURLLink(link.link);
+                                                }}>
+                                                    <Icon type="FontAwesome" name="mouse-pointer" />
+                                                </TouchableOpacity>
+                                            </Right>
+                                        </ListItem>
+                                    </View>
+                                );
+                            }) : <Text>No links entered or found...</Text>}
                         </View>
                         <List>
                             <ListItem thumbnail>
@@ -409,7 +563,11 @@ constructor(props) {
                             <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
                             {this.renderQuestions(job)}
                         </View>
-                        
+                        <View style={{ marginTop: 10 }} />
+                        <View style={{ margin: 10 }}>
+                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {}} stretch={true}>Mark job as complete & finish...</AwesomeButtonCartman>
+                            <View style={{ marginTop: 10 }} />
+                        </View>
                     </Fragment>
                 );
             }
@@ -512,14 +670,14 @@ constructor(props) {
     render() {
         const { job } = this.state;
 
-        console.log(this.props.props.route.params.item);
+        console.log("i", this.props.props.route.params.item);
 
         const passedData = this.props.props.route.params.item;
 
         console.log("this.state activeGigs individual index.js state", this.state);
         return (
             <Fragment>
-                
+                <Toast ref={(ref) => Toast.setRef(ref)} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={styles.container}>
                     {job !== null ? <SlideUpPaymentHelper job={job} withID={passedData.with} rate={job.ratePerProjectCompletion} props={this.props} sheetRef={this.sheetRef} /> : null}
                     {job !== null ? <PayHourlyDepositPaneHelper job={job} withID={passedData.with} rate={job.hourlyRate} props={this.props} sheetRefHourly={this.sheetRefHourly} /> : null}
@@ -573,7 +731,8 @@ const mapStateToProps = (state) => {
         customPaymentCompleted: _.has(state.payments, "customPaymentCompleted") ? state.payments.customPaymentCompleted : {
             completed: false,
             jobID: null
-        }
+        },
+        files: state.savedFiles.filesSaved
     }
 }
-export default connect(mapStateToProps, { })(IndividualActiveJobHelper);
+export default connect(mapStateToProps, { saveFilesPane })(IndividualActiveJobHelper);

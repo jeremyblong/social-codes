@@ -39,7 +39,9 @@ var upload = multer({
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", upload.array("files"), (req, resppppppppp) => {
 
-        const { id, otherUser, passedID, activeHiredID, fullName } = req.body;
+        const { id, otherUser, passedID, activeHiredID, fullName, jobID, note } = req.body;
+
+        const links = JSON.parse(req.body.links);
 
         console.log(req.files);
 
@@ -57,19 +59,23 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 })
             } else {
 
+                console.log("else ran...")
+
                 let fileArray = [];
                 
-                const { files } = req;
+                if (typeof req.files !== "undefined" && req.files.length > 0) {
+                    const { files } = req;
 
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
 
-                    fileArray.push({
-                        fullUri: file.location,
-                        fileName: file.originalname,
-                        type: file.mimetype,
-                        id: uuidv4()
-                    })
+                        fileArray.push({
+                            fullUri: file.location,
+                            fileName: file.originalname,
+                            type: file.mimetype,
+                            id: uuidv4()
+                        })
+                    }
                 }
 
                 const promise = new Promise((resolve, reject) => {
@@ -86,9 +92,25 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     } else {
                                         applicant["uploadedWork"] = fileArray;
                                     }
+
+                                    if (typeof note !== "undefined" && note.length > 0) {
+                                        if (_.has(applicant, "note")) {
+                                            applicant.note = note;
+                                        } else {
+                                            applicant["note"] = note;
+                                        }
+                                    }
+                                    if (typeof links !== "undefined" && links.length > 0) {
+                                        if (_.has(applicant, "links")) {
+                                            applicant.links = [...applicant.links, ...links];
+                                        } else {
+                                            applicant["links"] = links;
+                                        }
+                                    }
                                 }
 
                                 if ((user.activeHiredApplicants.length - 1) === index) {
+                                    console.log("last...")
                                     collection.save(user, (err, result) => {
                                         if (err) {
                                             console.log(err);
@@ -97,6 +119,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                                 message: "ERROR occurred while saving user information."
                                             })
                                         } else {
+                                            console.log("Resolve....");
                                             resolve(user);
                                         }
                                     })
@@ -120,6 +143,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     } else {
                                         applicant["uploadedWork"] = fileArray;
                                     }
+
+                                    if (typeof note !== "undefined" && note.length > 0) {
+                                        if (_.has(applicant, "note")) {
+                                            applicant.note = note;
+                                        } else {
+                                            applicant["note"] = note;
+                                        }
+                                    }
+                                    if (typeof links !== "undefined" && links.length > 0) {
+                                        if (_.has(applicant, "links")) {
+                                            applicant.links = [...applicant.links, ...links];
+                                        } else {
+                                            applicant["links"] = links;
+                                        }
+                                    }
                                 }
                             }
                             const configgg = {
@@ -135,10 +173,16 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
                                 data: {
                                     title: `${fullName} has submitted project files for an active pending job...!`,
-                                    body: `${fullName} has submitted a file(s) for your active project pending completion, check out the uploaded work from your freelancer now!`
+                                    body: `${fullName} has submitted a file(s) for your active project pending completion, check out the uploaded work from your freelancer now!`,
+                                    data: {
+                                        jobID,
+                                        with: id,
+                                        id: activeHiredID
+                                    }
                                 },
                                 from: user.unique_id,
-                                link: "notifications"
+                                link: "files-pending-project",
+
                             };
             
                             axios.post("https://fcm.googleapis.com/fcm/send", {

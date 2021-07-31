@@ -185,7 +185,7 @@ constructor () {
                     <View style={styles.bottom}>
                         <AwesomeButton onPress={() => {
                             this.props.props.navigation.navigate("auth-main");
-                        }} stretch={true} backgroundColor={"black"} textColor={"white"} backgroundShadow={"black"} borderRadius={10} borderColor={"black"} borderWidth={2}>Continue with email/username</AwesomeButton>
+                        }} stretch={true} backgroundColor={"black"} textColor={"white"} backgroundShadow={"black"} borderRadius={10} borderColor={"#ffd530"} backgroundShadow={"#ffd530"} borderWidth={1}>Continue with email/username</AwesomeButton>
                         <View style={styles.hr} />
                         <GoogleSigninButton
                             style={{ width: "75%", minWidth: "75%", minHeight: 48, height: 48 }}

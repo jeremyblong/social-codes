@@ -32,10 +32,6 @@ constructor(props) {
         menuOpen: false,
         user: null,
         sections: [
-            // {
-            //     title: 'See More...',
-            //     content: this.renderContentOne(),
-            // },
             {
                 title: 'Help & Support',
                 content: this.renderContentTwo(),
@@ -164,6 +160,7 @@ constructor(props) {
     }
     
     _updateSections = activeSections => {
+        console.log("activeSections", activeSections);
         this.setState({ activeSections });
     };
     componentDidMount() {
