@@ -8,7 +8,7 @@ import axios from 'axios';
 import moment from 'moment';
 import Config from "react-native-config";
 import ReadMore from 'react-native-read-more-text';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import MapView, { Marker } from 'react-native-maps';
 import RBSheet from "react-native-raw-bottom-sheet";
 import RNPickerSelect from 'react-native-picker-select';
@@ -3715,13 +3715,13 @@ constructor(props) {
         if (job.pricing.fixedOrHourly === "fixed") {
             return (
                 <Fragment>
-                    {this.calculateReadiness() ? <AwesomeButtonBlue style={{ marginTop: 15 }} type={"primary"} onPress={this.handleApplicationSubmit} stretch={true}>Submit Proposal</AwesomeButtonBlue> : <AwesomeButtonBlue style={{ marginTop: 15 }} type={"disabled"} stretch={true}>Submit Proposal</AwesomeButtonBlue>}
+                    {this.calculateReadiness() ? <AwesomeButtonCartman style={{ marginTop: 15 }} type={"anchor"} textColor={"white"} onPress={this.handleApplicationSubmit} stretch={true}>Submit Proposal</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} stretch={true}>Submit Proposal</AwesomeButtonCartman>}
                 </Fragment>
             );
         } else {
             return (
                 <Fragment>
-                    {this.calculateReadinessTwo() ? <AwesomeButtonBlue style={{ marginTop: 15 }} type={"primary"} onPress={this.handleApplicationSubmitHourly} stretch={true}>Submit Proposal</AwesomeButtonBlue> : <AwesomeButtonBlue style={{ marginTop: 15 }} type={"disabled"} stretch={true}>Submit Proposal</AwesomeButtonBlue>}
+                    {this.calculateReadinessTwo() ? <AwesomeButtonCartman style={{ marginTop: 15 }} type={"anchor"} textColor={"white"} onPress={this.handleApplicationSubmitHourly} stretch={true}>Submit Proposal</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} stretch={true}>Submit Proposal</AwesomeButtonCartman>}
                 </Fragment>
             );
         }
@@ -4038,7 +4038,7 @@ constructor(props) {
                         <View style={{ margin: 20 }}>
                             <Text style={{ fontWeight: "bold", fontSize: 18, textAlign: "center" }}>You do NOT have enough tokens/credits to apply for this job, please purchase more if you'd like to keep applying...</Text>
                             <View style={{ marginTop: 15 }} />
-                            <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                                 this.setState({
                                     showToast: false,
                                     milestoneCount: [],
@@ -4063,7 +4063,7 @@ constructor(props) {
                                 }, () => {
                                     this.props.props.navigation.push("purchase-tokens-homepage");
                                 })
-                        }} stretch={true}>Purchase more tokens/credits</AwesomeButtonBlue>
+                        }} stretch={true}>Purchase more tokens/credits</AwesomeButtonCartman>
                         </View>
                     </View>
                 </Modal>
@@ -4183,9 +4183,9 @@ constructor(props) {
                                 
                             </MapView>
                         <View style={styles.hr} />
-                        <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                             this.RBSheetApply.open();
-                        }} stretch={true}>Apply for this position</AwesomeButtonBlue>
+                        }} stretch={true}>Apply for this position</AwesomeButtonCartman>
                     </View>
                 </ScrollView>
             </SideMenu>

@@ -64,6 +64,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         description: 'Pre-Complete payment for project completion.',
                                         application_fee_amount: Math.round(Number(Math.round(rate * 100) * 0.20)),
                                         on_behalf_of: otherUserData.stripeConnectAccount.id,
+                                        capture_method: 'manual',
+                                        confirm: true,
                                         transfer_data: {
                                             destination: otherUserData.stripeConnectAccount.id
                                         }

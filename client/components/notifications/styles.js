@@ -50,7 +50,7 @@ export default StyleSheet.create({
       shadowRadius: 16.00,
       elevation: 24,
       backgroundColor: "white", 
-      maxWidth: width * 0.85, 
+      maxWidth: "100%", 
       justifyContent: "center",
       alignItems: "center",
       alignContent: "center",

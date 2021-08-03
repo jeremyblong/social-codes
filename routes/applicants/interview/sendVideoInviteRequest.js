@@ -102,8 +102,11 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     system_date: Date.now(),
                                     date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
                                     data: {
-                                        title: `${user.username} started a video call with you!`,
-                                        body: `${user.firstName} ${user.lastName} inititated a video call with you, please join the meeting now as they are waiting for you to join.`,
+                                        title: `${user.username} wants to schedule a video call with you!`,
+                                        body: `${user.firstName} ${user.lastName} scheduled a video call with you, please join the meeting now as they are waiting for you to join.`,
+                                        data: {
+                                            interviewID: generatedID
+                                        }
                                     },
                                     from: id,
                                     link: "video-conference",
@@ -135,8 +138,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 axios.post("https://fcm.googleapis.com/fcm/send", {
                                     "to": user.firebasePushNotificationToken,
                                     "notification": {
-                                        'title': `${user.username} started a video call with you!`,
-                                        'body': `${user.firstName} ${user.lastName} inititated a video call with you, please join the meeting now as they are waiting for you to join.`,
+                                        'title': `${user.username} wants to schedule a video call with you!`,
+                                        'body': `${user.firstName} ${user.lastName} scheduled a video call with you, please join the meeting now as they are waiting for you to join.`,
                                         "mutable_content": true,
                                         "sound": "Tri-tone"
                                     },

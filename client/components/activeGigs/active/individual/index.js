@@ -17,7 +17,9 @@ import { saveFilesPane } from "../../../../actions/work/index.js";
 import RNFetchBlob from 'rn-fetch-blob';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Toast from 'react-native-toast-message';
-
+import Dialog from "react-native-dialog";
+import SheetHelperPaymentsDisplayRef from "../../freelancer/individualGig/sheets/payments/payments.js";
+import SlideUpPanePayMilestones from "./panes/milestones/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,10 +28,19 @@ constructor(props) {
     super(props);
 
     this.state = {
-        job: null
+        job: null,
+        confirmationCompleteModal: false,
+        loading: false,
+        completedClient: null,
+        price: null,
+        application: {
+            payments: []
+        }
     }
     this.sheetRef = React.createRef();
     this.sheetRefHourly = React.createRef();
+    this.paymentRefSheet = React.createRef();
+    this.sheetRefMilestone = React.createRef();
 }
     componentDidMount() {
 
@@ -49,7 +60,9 @@ constructor(props) {
                 const { job, files } = res.data;
 
                 this.setState({
-                    job
+                    job,
+                    loading: true,
+                    completedClient: passedData.completedClient
                 }, () => {
                     this.props.saveFilesPane([...files]);
                 })
@@ -359,11 +372,570 @@ constructor(props) {
             }
         });
     }
+    gatherJobAndOpenPane = () => {
+
+        const passedData = this.props.props.route.params.item;
+
+        axios.get(`${Config.ngrok_url}/gather/application/data`, {
+            params: {
+                id: this.props.unique_id,
+                passedID: passedData.id
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered data!") {
+                console.log(res.data);
+
+                const { application } = res.data;
+
+                this.setState({
+                    application
+                }, () => {
+                    setTimeout(() => {
+                        this.paymentRefSheet.current.open();
+                    }, 2500)
+                })
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    calculateTotalOfMilestones = (prices) => {
+        if (typeof prices !== "undefined" && prices.length > 0) {
+            let sum = 0;
+            for (let index = 0; index < prices.length; index++) {
+                const price = prices[index];
+                sum += price;
+            }
+            return sum.toFixed(2);
+        }
+    }
+    handleMilestonePayment = (price) => {
+        this.setState({
+            price
+        }, () => {
+            this.sheetRefMilestone.current.open();
+        })
+    }
+    calculateMilestonesPrice = (job) => {
+        const passedData = this.props.props.route.params.item;
+        
+        if (job.milestone8 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone4.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 4 of ${job.milestone4.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone5.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 5 of ${job.milestone5.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone6.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 6 of ${job.milestone6.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone7.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 7 of ${job.milestone7.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone8.price, job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone8.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 8 of ${job.milestone8.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone7 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone4.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 4 of ${job.milestone4.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone5.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 5 of ${job.milestone5.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone6.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 6 of ${job.milestone6.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone7.price, job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone7.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 7 of ${job.milestone7.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone6 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone4.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 4 of ${job.milestone4.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone5.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 5 of ${job.milestone5.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone6.price, job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone6.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 6 of ${job.milestone6.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone5 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone4.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 4 of ${job.milestone4.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone5.price, job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone5.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 5 of ${job.milestone5.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone4 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone4.price, job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone4.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 4 of ${job.milestone4.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone3 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone3.price, job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone3.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 3 of ${job.milestone3.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone2 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone2.price, job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone2.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 2 of ${job.milestone2.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        } else if (job.milestone1 !== null) {
+            return (
+                <ScrollView horizontal={true}>
+                    <View style={[styles.centeredPriceBox, { margin: 15 }]}>
+                            <View style={styles.margin}>
+                                <Text style={styles.priceText}>Total due is $<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{this.calculateTotalOfMilestones([job.milestone1.price])}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                <View style={styles.hr} />
+                                <View style={styles.centered}>
+                                    <Button onPress={() => {
+                                        this.handleMilestonePayment(job.milestone1.price);
+                                    }} style={styles.greyButton} info>
+                                        <Text style={{ color: "#ffd530" }}>Milestone payment 1 of ${job.milestone1.price.toFixed(2)}</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                </ScrollView>
+            );
+        }
+    }
     renderPayHourlyOrNot = () => {
 
         const passedData = this.props.props.route.params.item;
 
-        const { job } = this.state;
+        const { job, loading, completedClient } = this.state;
 
         if (job !== null) {
             if (job.hourly === true) {
@@ -386,6 +958,10 @@ constructor(props) {
                             <View style={styles.margin}>
                                 <Text style={styles.detailsTitle}>Details</Text>
                             </View>
+                            <AwesomeButtonCartman style={{ marginTop: 20, marginBottom: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
+                                this.gatherJobAndOpenPane();
+                            }} stretch={true}>View Previous Payments</AwesomeButtonCartman>
+
                         </View>
                         {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
                             return (
@@ -408,10 +984,10 @@ constructor(props) {
                         <View style={{ margin: 15 }}>
                             <View style={{ marginTop: 20 }} />
                             <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
-                            <Text style={styles.note}>{passedData.note.length === 0 ? "No note entered..." : passedData.note}</Text>
+                            <Text style={styles.note}>{_.has(passedData, "note") && passedData.note.length !== 0 ? passedData.note : "No note entered..."}</Text>
                             <View style={styles.greyHr} />
                             <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
-                            {passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                            {_.has(passedData, "links") && passedData.links.length !== 0 ? passedData.links.map((link, index) => {
                                 return (
                                     <View>
                                         <ListItem selected>
@@ -464,112 +1040,219 @@ constructor(props) {
                         </View>
                         <View style={{ marginTop: 10 }} />
                         <View style={{ margin: 10 }}>
-                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {}} stretch={true}>Mark job as complete & finish...</AwesomeButtonCartman>
+                            {(passedData.completedClient === false || completedClient === false) && loading === true ? <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
+                                this.setState({
+                                    confirmationCompleteModal: true
+                                })
+                            }} stretch={true}>Mark project as completed</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 20 }} type={"disabled"} stretch={true}>Job ALREADY marked as complete!</AwesomeButtonCartman>}
                             <View style={{ marginTop: 10 }} />
                         </View>
                     </Fragment>
                 ); 
             } else {
-                return (
-                    <Fragment>
-                        <View style={[styles.centered, { marginTop: 25 }]}>
-                            <Text style={styles.mainText}>Make a payment so your client can get started!</Text>
-                            <View style={styles.centeredPriceBox}>
+                // return milestone logic
+                if (job.payByMilestone === true) {
+                    return (
+                        <Fragment>
+                            <View style={[styles.centered, { marginTop: 25 }]}>
+                                <Text style={styles.mainText}>Make a payment so your client can get started!</Text>
+                                {this.calculateMilestonesPrice(job)}
+                                <View style={styles.blackHr} />
                                 <View style={styles.margin}>
-                                    <Text style={styles.priceText}>$<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{job.ratePerProjectCompletion}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
-                                    <View style={styles.hr} />
-                                    <View style={styles.centered}>
-                                        <Button onPress={this.onButtonPress} style={styles.greyButton} info>
-                                            <Text style={{ color: "#ffd530" }}>Make a payment</Text>
-                                        </Button>
-                                    </View>
+                                    <Text style={styles.detailsTitle}>Details</Text>
                                 </View>
                             </View>
-                            <View style={styles.blackHr} />
-                            <View style={styles.margin}>
-                                <Text style={styles.detailsTitle}>Details</Text>
-                            </View>
-                        </View>
-                        {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
-                            return (
-                                <Fragment key={index}>
-                                    <ListItem style={{ maxHeight: 65 }}>
-                                        <Left>
-                                            <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
-                                        </Left>
-                                        <Right>
-                                            <TouchableOpacity onPress={() => {
-                                                this.handleDownloadFile(file.fullUri, file.fileName, file.type);
-                                            }}>
-                                                <Icon name="download" />
-                                            </TouchableOpacity>
-                                        </Right>
-                                    </ListItem>
-                                </Fragment>
-                            );
-                        }) : null}
-                        <View style={{ margin: 15 }}>
-                            <View style={{ marginTop: 20 }} />
-                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
-                            <Text style={styles.note}>{passedData.note.length === 0 ? "No note entered..." : passedData.note}</Text>
-                            <View style={styles.greyHr} />
-                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
-                            {passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                            {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
                                 return (
-                                    <View>
-                                        <ListItem selected>
+                                    <Fragment key={index}>
+                                        <ListItem style={{ maxHeight: 65 }}>
                                             <Left>
-                                                <Text>{link.link}</Text>
+                                                <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
                                             </Left>
                                             <Right>
                                                 <TouchableOpacity onPress={() => {
-                                                    this.openURLLink(link.link);
+                                                    this.handleDownloadFile(file.fullUri, file.fileName, file.type);
                                                 }}>
-                                                    <Icon type="FontAwesome" name="mouse-pointer" />
+                                                    <Icon name="download" />
                                                 </TouchableOpacity>
                                             </Right>
                                         </ListItem>
-                                    </View>
+                                    </Fragment>
                                 );
-                            }) : <Text>No links entered or found...</Text>}
-                        </View>
-                        <List>
-                            <ListItem thumbnail>
-                                <Left>
-                                    {passedData.type === "video" ? <Video source={{uri: passedData.photo }} 
-                                    ref={(ref) => {
-                                        this.player = ref
-                                    }}
-                                    style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: passedData.photo }} />}
-                                </Left>
-                                <Body>
-                                    <NativeText>Payment will go to {passedData.otherUserFirstName} {passedData.otherUserLastName}</NativeText>
-                                    <NativeText note numberOfLines={1}>also known as {passedData.otherUserUsername}</NativeText>
-                                </Body>
-                                <Right>
-                                    <Button onPress={() => {
-                                        this.props.props.navigation.push("individual-profile-public", { item: { unique_id: passedData.with }});
-                                    }} transparent>
-                                        <NativeText>View</NativeText>
-                                    </Button>
-                                </Right>
-                            </ListItem>
-                        </List>
-                        <View style={styles.margin}>
-                            <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
-                            <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
-                            <View style={styles.hrCustom} />
-                            <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
-                            {this.renderQuestions(job)}
-                        </View>
-                        <View style={{ marginTop: 10 }} />
-                        <View style={{ margin: 10 }}>
-                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {}} stretch={true}>Mark job as complete & finish...</AwesomeButtonCartman>
+                            }) : null}
+                            <View style={{ margin: 15 }}>
+                                <View style={{ marginTop: 20 }} />
+                                <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
+                                <Text style={styles.note}>{_.has(passedData, "note") && passedData.note.length !== 0 ? passedData.note : "No note entered..."}</Text>
+                                <View style={styles.greyHr} />
+                                <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
+                                {_.has(passedData, "links") && passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                                    return (
+                                        <View>
+                                            <ListItem selected>
+                                                <Left>
+                                                    <Text>{link.link}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <TouchableOpacity onPress={() => {
+                                                        this.openURLLink(link.link);
+                                                    }}>
+                                                        <Icon type="FontAwesome" name="mouse-pointer" />
+                                                    </TouchableOpacity>
+                                                </Right>
+                                            </ListItem>
+                                        </View>
+                                    );
+                                }) : <Text>No links entered or found...</Text>}
+                            </View>
+                            <List>
+                                <ListItem thumbnail>
+                                    <Left>
+                                        {passedData.type === "video" ? <Video source={{uri: passedData.photo }} 
+                                        ref={(ref) => {
+                                            this.player = ref
+                                        }}
+                                        style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: passedData.photo }} />}
+                                    </Left>
+                                    <Body>
+                                        <NativeText>Payment will go to {passedData.otherUserFirstName} {passedData.otherUserLastName}</NativeText>
+                                        <NativeText note numberOfLines={1}>also known as {passedData.otherUserUsername}</NativeText>
+                                    </Body>
+                                    <Right>
+                                        <Button onPress={() => {
+                                            this.props.props.navigation.push("individual-profile-public", { item: { unique_id: passedData.with }});
+                                        }} transparent>
+                                            <NativeText>View</NativeText>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            </List>
+                            <View style={styles.margin}>
+                                <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
+                                <View style={styles.hrCustom} />
+                                <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
+                                <View style={styles.hrCustom} />
+                                <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
+                                {this.renderQuestions(job)}
+                            </View>
                             <View style={{ marginTop: 10 }} />
-                        </View>
-                    </Fragment>
-                );
+                            <View style={{ margin: 10 }}>
+                            {(passedData.completedClient === false || completedClient === false) && loading === true ? <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
+                                this.setState({
+                                    confirmationCompleteModal: true
+                                })
+                            }} stretch={true}>Mark project as completed</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 20 }} type={"disabled"} stretch={true}>Job ALREADY marked as complete!</AwesomeButtonCartman>}
+                                <View style={{ marginTop: 10 }} />
+                            </View>
+                        </Fragment>
+                    );
+                } else {
+                    // non milestone non hourly data
+                    return (
+                        <Fragment>
+                            <View style={[styles.centered, { marginTop: 25 }]}>
+                                <Text style={styles.mainText}>Make a payment so your client can get started!</Text>
+                                <View style={styles.centeredPriceBox}>
+                                    <View style={styles.margin}>
+                                        <Text style={styles.priceText}>$<Text style={{ color: "#ffd530", textDecorationLine: "underline" }}>{job.ratePerProjectCompletion}</Text>{this.calculateLength(job.duration, passedData.systemDate)}</Text>
+                                        <View style={styles.hr} />
+                                        <View style={styles.centered}>
+                                            <Button onPress={this.onButtonPress} style={styles.greyButton} info>
+                                                <Text style={{ color: "#ffd530" }}>Make a payment</Text>
+                                            </Button>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={styles.blackHr} />
+                                <View style={styles.margin}>
+                                    <Text style={styles.detailsTitle}>Details</Text>
+                                </View>
+                            </View>
+                            {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
+                                return (
+                                    <Fragment key={index}>
+                                        <ListItem style={{ maxHeight: 65 }}>
+                                            <Left>
+                                                <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
+                                            </Left>
+                                            <Right>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.handleDownloadFile(file.fullUri, file.fileName, file.type);
+                                                }}>
+                                                    <Icon name="download" />
+                                                </TouchableOpacity>
+                                            </Right>
+                                        </ListItem>
+                                    </Fragment>
+                                );
+                            }) : null}
+                            <View style={{ margin: 15 }}>
+                                <View style={{ marginTop: 20 }} />
+                                <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note from freelancer</Text>
+                                <Text style={styles.note}>{_.has(passedData, "note") && passedData.note.length === 0 ? "No note entered..." : passedData.note}</Text>
+                                <View style={styles.greyHr} />
+                                <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted by freelancer</Text>
+                                {_.has(passedData, "links") && passedData.links.length !== 0 ? passedData.links.map((link, index) => {
+                                    return (
+                                        <View>
+                                            <ListItem selected>
+                                                <Left>
+                                                    <Text>{link.link}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <TouchableOpacity onPress={() => {
+                                                        this.openURLLink(link.link);
+                                                    }}>
+                                                        <Icon type="FontAwesome" name="mouse-pointer" />
+                                                    </TouchableOpacity>
+                                                </Right>
+                                            </ListItem>
+                                        </View>
+                                    );
+                                }) : <Text>No links entered or found...</Text>}
+                            </View>
+                            <List>
+                                <ListItem thumbnail>
+                                    <Left>
+                                        {passedData.type === "video" ? <Video source={{uri: passedData.photo }} 
+                                        ref={(ref) => {
+                                            this.player = ref
+                                        }}
+                                        style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: passedData.photo }} />}
+                                    </Left>
+                                    <Body>
+                                        <NativeText>Payment will go to {passedData.otherUserFirstName} {passedData.otherUserLastName}</NativeText>
+                                        <NativeText note numberOfLines={1}>also known as {passedData.otherUserUsername}</NativeText>
+                                    </Body>
+                                    <Right>
+                                        <Button onPress={() => {
+                                            this.props.props.navigation.push("individual-profile-public", { item: { unique_id: passedData.with }});
+                                        }} transparent>
+                                            <NativeText>View</NativeText>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            </List>
+                            <View style={styles.margin}>
+                                <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
+                                <View style={styles.hrCustom} />
+                                <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
+                                <View style={styles.hrCustom} />
+                                <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
+                                {this.renderQuestions(job)}
+                            </View>
+                            <View style={{ marginTop: 10 }} />
+                            <View style={{ margin: 10 }}>
+                            {(passedData.completedClient === false || completedClient === false) && loading === true ? <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
+                                this.setState({
+                                    confirmationCompleteModal: true
+                                })
+                            }} stretch={true}>Mark project as completed</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 20 }} type={"disabled"} stretch={true}>Job ALREADY marked as complete!</AwesomeButtonCartman>}
+                                <View style={{ marginTop: 10 }} />
+                            </View>
+                        </Fragment>
+                    );
+                }
             }
         } else {
             return (
@@ -667,8 +1350,54 @@ constructor(props) {
             </View>
         );
     }
+    markJobAsComplete = () => {
+        console.log("markJobAsComplete clicked...");
+
+        const passedData = this.props.props.route.params.item;
+
+        axios.post(`${Config.ngrok_url}/complete/client/gig/half/client`, {
+            id: this.props.unique_id,
+            activeID: passedData.id,
+            otherUserID: passedData.with
+        }).then((res) => {
+            if (res.data.message === "Successfully updated users accounts and posted notification!") {
+                console.log(res.data);
+
+                this.setState({
+                    completedClient: true
+                }, () => {
+                    Toast.show({
+                        text1: 'You have successfully marked your half of this job complete!',
+                        text2: 'Please wait for the other user to confirm before funds will be released...',
+                        type: "success",
+                        visibilityTime: 4500,
+                        position: "top"
+                    });
+                })
+            } else if (res.data.message === "Successfully updated users accounts and posted notification && finished/completed job!") {
+
+                console.log("finished...:", res.data);
+
+                Toast.show({
+                    text1: 'You have successfully marked your half of this job complete!',
+                    text2: 'Please wait for the other user to confirm before funds will be released...',
+                    type: "success",
+                    visibilityTime: 3000,
+                    position: "top"
+                });
+
+                setTimeout(() => {
+                    this.props.props.navigation.replace("navigation-menu-main");
+                }, 3000);
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
-        const { job } = this.state;
+        const { job, loading, confirmationCompleteModal, application } = this.state;
 
         console.log("i", this.props.props.route.params.item);
 
@@ -678,9 +1407,31 @@ constructor(props) {
         return (
             <Fragment>
                 <Toast ref={(ref) => Toast.setRef(ref)} />
+                <View>
+                    <Dialog.Container visible={confirmationCompleteModal}>
+                    <Dialog.Title>Are you sure you'd like to mark this project as complete?</Dialog.Title>
+                    <Dialog.Description>
+                        Once you mark this project as complete, it will be registered and validated permanently... Would you like to continue?
+                    </Dialog.Description>
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            confirmationCompleteModal: false
+                        })
+                    }} label="Cancel" />
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            confirmationCompleteModal: false
+                        }, () => {
+                            this.markJobAsComplete();
+                        })
+                    }} label="Mark Complete" />
+                    </Dialog.Container>
+                </View>
+                <SheetHelperPaymentsDisplayRef payments={application.payments} paymentsRef={this.paymentRefSheet} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={styles.container}>
+                    {job !== null ? <SlideUpPanePayMilestones job={job} withID={passedData.with} rate={this.state.price} props={this.props} sheetRefMilestone={this.sheetRefMilestone} /> : null}
                     {job !== null ? <SlideUpPaymentHelper job={job} withID={passedData.with} rate={job.ratePerProjectCompletion} props={this.props} sheetRef={this.sheetRef} /> : null}
-                    {job !== null ? <PayHourlyDepositPaneHelper job={job} withID={passedData.with} rate={job.hourlyRate} props={this.props} sheetRefHourly={this.sheetRefHourly} /> : null}
+                    {job !== null && job.hourly === true ? <PayHourlyDepositPaneHelper job={job} withID={passedData.with} rate={job.hourlyRate} props={this.props} sheetRefHourly={this.sheetRefHourly} /> : null}
                     {this.renderPayHourlyOrNot()}
                 </ScrollView>
                 <Footer style={{ borderColor: "transparent", backgroundColor: "#303030" }}>

@@ -37,6 +37,8 @@ constructor(props) {
         confirmationCompleteModal: false,
         questionModal: false,
         selectedFile: null,
+        completedFreelancer: null,
+        loading: false,
         selectedItem: null,
         application: {
             links: [],
@@ -81,7 +83,9 @@ constructor(props) {
                 console.log(res.data);
 
                 this.setState({
-                    application
+                    application,
+                    loading: true,
+                    completedFreelancer: passedData.completedFreelancer
                 })
             } else {
                 console.log("Err" , res.data);
@@ -128,13 +132,32 @@ constructor(props) {
             if (res.data.message === "Successfully updated users accounts and posted notification!") {
                 console.log(res.data);
 
+                this.setState({
+                    completedFreelancer: true
+                }, () => {
+                    Toast.show({
+                        text1: 'You have successfully marked your half of this job complete!',
+                        text2: 'Please wait for the other user to confirm before funds will be released...',
+                        type: "success",
+                        visibilityTime: 4500,
+                        position: "top"
+                    });
+                })
+            } else if (res.data.message === "Successfully updated users accounts and posted notification && finished/completed job!") {
+
+                console.log("finished...:", res.data);
+
                 Toast.show({
                     text1: 'You have successfully marked your half of this job complete!',
                     text2: 'Please wait for the other user to confirm before funds will be released...',
                     type: "success",
-                    visibilityTime: 4500,
+                    visibilityTime: 3000,
                     position: "top"
                 });
+
+                setTimeout(() => {
+                    this.props.props.navigation.replace("navigation-menu-main");
+                }, 3000);
             } else {
                 console.log("Err", res.data);
             }
@@ -175,7 +198,7 @@ constructor(props) {
         // console.log(this.props.props.route.params.item);
         console.log("this.state freelancer index.js", this.state);
 
-        const { selected, modalVisible, videoModalVisible, questionModal, confirmationCompleteModal, application, selectedItem } = this.state;
+        const { selected, modalVisible, videoModalVisible, questionModal, confirmationCompleteModal, application, selectedItem, completedFreelancer, loading } = this.state;
 
         const configSwipe = {
             velocityThreshold: 0.3,
@@ -415,11 +438,11 @@ constructor(props) {
                         }} stretch={true}>View payments from client</AwesomeButtonCartman>
                         <View style={styles.greyHr} />
                         <Text style={styles.direction}>If both parties (freelancer and client alike) agree the job is completed and the work submitted is sufficient, you should mark the job complete by clicking the button below. Once both users have confirmed the job is complete, <Text style={{ color: "darkred", fontWeight: "bold" }}>funds with be fully released from pending state</Text>..</Text>
-                        <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
+                        {(passedData.completedFreelancer === false || completedFreelancer === false) && loading === true ? <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
                             this.setState({
                                 confirmationCompleteModal: true
                             })
-                        }} stretch={true}>Mark project as complete</AwesomeButtonCartman>
+                        }} stretch={true}>Mark project as complete</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 20 }} type={"disabled"} stretch={true}>Job ALREADY marked as complete!</AwesomeButtonCartman>}
                     </View>
                     </View>
                 </ScrollView>

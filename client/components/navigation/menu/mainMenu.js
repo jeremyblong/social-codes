@@ -384,9 +384,13 @@ constructor(props) {
                                             <Text style={styles.sub}>Manage active, pending and submitted proposals</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <View style={styles.shortView}>
-                                        
-                                    </View>
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("completed-gigs");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/completed-two.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
+                                        <Text style={styles.largeSized}>Completed Jobs</Text>
+                                        <Text style={styles.sub}>View your already completed jobs/gigs</Text>
+                                    </TouchableOpacity>
                                     {/* <View style={styles.shortView}>
                                         
                                     </View> */}

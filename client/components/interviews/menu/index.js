@@ -143,7 +143,7 @@ constructor(props) {
                                             <Text style={[styles.description, { marginTop: 10, marginBottom: 10 }]}>On {months[interview.day.month]} {this.calculateDay(interview.day.day)}, {interview.day.year}</Text>
                                             <Text style={[styles.date, { marginBottom: 20 }]}>Scheduled for {interview.fullTime}</Text>
                                             <View style={{ margin: 7.5 }}>
-                                                <AwesomeButtonCartman backgroundColor={"#303030"} backgroundShadow={"grey"} type={"anchor"} textColor={"white"} onPress={() => {
+                                                <AwesomeButtonCartman style={{ paddingBottom: 30, top: -15 }} backgroundColor={"#303030"} backgroundShadow={"grey"} type={"anchor"} textColor={"white"} onPress={() => {
                                                     this.props.props.navigation.push("activate-video-call-prescreen", { interview })
                                                 }} stretch={true}>View Meeting</AwesomeButtonCartman>
                                             </View>

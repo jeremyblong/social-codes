@@ -65,6 +65,7 @@ constructor(props) {
         })
     }
     renderPhotoOrVideo = (notification) => {
+        console.log("notification", notification);
         if (notification.profilePics !== null && typeof notification.profilePics !== 'undefined' && notification.profilePics.length > 0) {
             if (notification.profilePics[notification.profilePics.length - 1].type === "video") {
                 const picture = notification.profilePics[notification.profilePics.length - 1].picture;
@@ -92,6 +93,30 @@ constructor(props) {
             return <Image source={{ uri: Config.no_image_avaliable }} style={styles.avatar} />;
         }
     }
+    lookupNotificationVideoCall = (notification) => {
+
+        const interviewID = notification.data.data.interviewID;
+
+        axios.get(`${Config.ngrok_url}/get/interview/fetch/single/notifications`, {
+            params: {
+                interviewID,
+                id: this.props.unique_id
+            }
+        }).then((res) => {
+            if (res.data.message === "Located interview!") {
+
+                console.log(res.data);
+
+                const { interview } = res.data;
+
+                this.props.props.navigation.push("activate-video-call-prescreen", { interview })
+            } else {
+                console.log("err locating interview", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     clickedNotification = (notification) => {
         axios.post(`${Config.ngrok_url}/mark/notification/read`, {
             notification,
@@ -112,10 +137,10 @@ constructor(props) {
                     } else if (notification.link === "interview") {
                         this.props.props.navigation.push("manage-all-active-proposal-related");
                     } else if (notification.link === "video-conference") {
-                        this.props.props.navigation.push("video-interview-calls-homepage");
+                        this.lookupNotificationVideoCall(notification);
                     } else if (notification.link === "files-pending-project") {
                         this.lookupNotificationFile(notification);
-                    }
+                    } 
                 })
             } else {
                 console.log("err", res.data);

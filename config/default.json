@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://jeremyablong:Jeremy123abc@db.ylrlj.mongodb.net/db?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://jeremyablong:Jer$8246355abc123@db.f9uc0.mongodb.net/db?retryWrites=true&w=majority",
     "secretKey": "TdD05nIpdfX31K7Q3vTKTGBPC69aHMz3SfjJaKhk",
     "twilioServiceSID": "VAde2a43130b7d039c3f8826dc3bfb3dc9",
     "twilioAccountSID": "AC040d645a172bbf0953e5edcaae04c2b3",
@@ -11,7 +11,7 @@
     "wasabiBucket": "fairwage-freelancing-uk/fairwage-freelancing",
     "wasabiRegion": "eu-central-1",
     "wasabiEndpoint": "s3.eu-central-1.wasabisys.com",
-    "ngrok_url": "https://freelancing.eu.ngrok.io",
+    "ngrok_url": "https://socialcodes.ngrok.io",
     "googleCloudAPIKeyAI": "ya29.c.Kp8B9gccoB4t47w_VoAGtvbc8IiRpAkkvtevnyGrt7G5nNgrE2Z-Tdd9UhMBXuaF8x89lYURhYFkhq8zn-dZcmBk-iEbO43PDgEPQhsTayjRN7TQpF9wkMc6cMr_hiPfXVH3L4G9uoG5WxpWUu2-1ZRBnIGRh8SIqRsA6l7YEHccAZwSU59UlIPLpeZBBUKDYeAEZwG_8F0H59QoidWE9t7_",
     "commetChatAppId": "31125d3cd06d1c1",
     "commetChatAuthKey": "04dfcf3f74110f2cdfb223784531d7a2214dc04a",

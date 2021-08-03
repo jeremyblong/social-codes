@@ -31,7 +31,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     res.json({
                                         message: "Located specific job!",
                                         job,
-                                        files: applicantttt.uploadedWork
+                                        files: typeof applicantttt.uploadedWork !== "undefined" && applicantttt.uploadedWork.length > 0 ? applicantttt.uploadedWork : []
                                     })       
                                 }
                             }

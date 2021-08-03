@@ -217,6 +217,9 @@ app.use("/complete/freelance/gig/half/freelancer", require("./routes/activeGigs/
 app.use("/locate/specific/active/job", require("./routes/notifications/gatherJob.js"));
 app.use("/gather/application/data", require("./routes/activeGigs/files/gather/gatherApplicationData.js"));
 app.use("/delete/link/url", require("./routes/activeGigs/links/deleteLink.js"));
+app.use("/complete/client/gig/half/client", require("./routes/activeGigs/completion/client/markCompleteHalf.js"));
+app.use("/get/interview/fetch/single/notifications", require("./routes/notifications/interviews/findInterviewById.js"));
+app.use("/make/milestone/payment/specific", require("./routes/activeGigs/individual/payments/milestones/makeMilestonePaymentIndividual.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

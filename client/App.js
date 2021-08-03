@@ -103,6 +103,7 @@ import IndividualActiveJobPage from "./pages/activeGigs/active/individual/index.
 import { Notifications } from 'react-native-notifications';
 import StripeOnboardingRegisterPage from "./pages/auth/onboarding/stripeOnboarding.js";
 import ViewJobActiveClientFreelancerHelper from "./pages/activeGigs/freelancer/individualGig/index.js";
+import * as Sentry from "@sentry/react-native";
 
 const { width, height } = Dimensions.get("window");
 

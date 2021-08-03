@@ -46,6 +46,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                     }
                 }
                 console.log("otherUserData", otherUserData);
+
                 const promise = new Promise(async (resolve, reject) => {
                     for (let index = 0; index < users.length; index++) {
                         const user = users[index];
@@ -132,8 +133,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         system_date: Date.now(),
                                         date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
                                         data: {
-                                            title: `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
-                                            body: `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of ${Math.round(Number(Math.round(rate) * 0.80)).toFixed(2)} to be paid upon project completion!`
+                                            title: `${passedData.user.firstName} ${passedData.user.lastName} has made a 'milestone' payment transaction...`,
+                                            body: `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of ${Math.round(Number(Math.round(rate) * 0.80)).toFixed(2)} to be paid upon milestone completion!`
                                         },
                                         from: user.unique_id,
                                         link: "notifications"
@@ -142,8 +143,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     axios.post("https://fcm.googleapis.com/fcm/send", {
                                         "to": user.firebasePushNotificationToken,
                                         "notification": {
-                                            "title": `${passedData.user.firstName} ${passedData.user.lastName} has made a payment to your account!`,
-                                            "body": `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of $${Math.round(Number(Math.round(Number(rate)) * 0.80)).toFixed(2)} to be paid upon project completion!`,
+                                            "title": `${passedData.user.firstName} ${passedData.user.lastName} has made a 'milestone' payment transaction...`,
+                                            "body": `${passedData.user.firstName} ${passedData.user.lastName} paid you a pre-payment of $${Math.round(Number(Math.round(rate) * 0.80)).toFixed(2)} to be paid upon milestone completion!`,
                                             "mutable_content": true,
                                             "sound": "Tri-tone"
                                         },
@@ -179,7 +180,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                                 console.log("err occurred while saving db info", err);
                                             } else {
                                                 respppppppp.json({
-                                                    message: "Made COMPLETE payment!"
+                                                    message: "Made milestone payment!"
                                                 })
                                             }
                                         });

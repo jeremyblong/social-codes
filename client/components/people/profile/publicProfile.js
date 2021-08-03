@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions, ScrollView, FlatList, Platform } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Textarea, Card, CardItem, Thumbnail, List, ListItem, FooterTab, Footer } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import Config from 'react-native-config';
 import axios from "axios";
 import _ from "lodash";
@@ -824,15 +824,15 @@ constructor (props) {
                             </Fragment> : null}
                             <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
                             <View style={{ marginTop: 10, margin: 20 }}>
-                                {user !== null ? <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                {user !== null ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                                     this.RBSheet.open();
-                                }} stretch={true}>Send Private Message</AwesomeButtonBlue> : null}
+                                }} stretch={true}>Send Private Message</AwesomeButtonCartman> : null}
                                 <View style={{ marginTop: 20 }} />
-                                {user !== null && alreadyFriends === false ? <AwesomeButtonBlue type={"primary"} onPress={() => {
+                                {user !== null && alreadyFriends === false ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                                     this.setState({
                                         isVisible: true
                                     })
-                                }} stretch={true}>Send Friend Request</AwesomeButtonBlue> : null}
+                                }} stretch={true}>Send Friend Request</AwesomeButtonCartman> : null}
                             </View>
                             {user !== null && _.has(user, "introductionVideo") ? <View style={styles.margin10}>
                                 <Text style={[styles.headerText, { textDecorationLine: "underline" }]}>Introductory video</Text>
@@ -963,13 +963,13 @@ constructor (props) {
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
                                                                     <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                        <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                        <AwesomeButtonCartman backgroundColor={"#303030"} textColor={"#ffd530"} onPress={() => {
                                                                         this.setState({
                                                                             [`visible-${index}`]: !`visible-${index}`
                                                                         }, () => {
                                                                             this.revokeSharedLikeResponse(post);
                                                                         })
-                                                                    }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                    }} stretch={true}>Remove/Revoke Response</AwesomeButtonCartman>
                                                                     </View>
                                                                 </View>
                                                             </Popover> : <Popover  
@@ -1203,13 +1203,13 @@ constructor (props) {
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
                                                                     <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                        <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                        <AwesomeButtonCartman backgroundColor={"#303030"} textColor={"#ffd530"} onPress={() => {
                                                                         this.setState({
                                                                             [`visible-${index}`]: !`visible-${index}`
                                                                         }, () => {
                                                                             this.removeLikeResponse(post);
                                                                         })
-                                                                    }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                    }} stretch={true}>Remove/Revoke Response</AwesomeButtonCartman>
                                                                     </View>
                                                                 </View>
                                                             </Popover> : <Popover  
@@ -1429,13 +1429,13 @@ constructor (props) {
                                                                             )}>
                                                                             <View style={styles.popoverTwo}>
                                                                                 <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                                    <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                                    <AwesomeButtonCartman backgroundColor={"#303030"} textColor={"#ffd530"} onPress={() => {
                                                                                     this.setState({
                                                                                         [`visible-${index}`]: !`visible-${index}`
                                                                                     }, () => {
                                                                                         this.removeLikeResponse(post);
                                                                                     })
-                                                                                }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                                }} stretch={true}>Remove/Revoke Response</AwesomeButtonCartman>
                                                                                 </View>
                                                                             </View>
                                                                         </Popover> : <Popover  
@@ -1805,9 +1805,9 @@ constructor (props) {
                     </ScrollView>
                 </CardItem>
                 <CardItem>
-                    <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                    <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
                         this.props.props.navigation.push("view-job-individual", { item });
-                    }} stretch={true}>Visit Listing</AwesomeButtonBlue>
+                    }} stretch={true}>Visit Listing</AwesomeButtonCartman>
                 </CardItem>
             </Card>
         );
@@ -1893,16 +1893,16 @@ constructor (props) {
                         }
                     }}
                 >
-                    <Header>
+                    <Header style={{ backgroundColor: "#303030" }}>
                         <Left>
                             <Button onPress={() => {
                                 this.RBSheet.close();
                             }} transparent>
-                                <Image source={require("../../../assets/icons/close.png")} style={styles.headerIcon} />
+                                <Image source={require("../../../assets/icons/close.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
                             </Button>
                         </Left>
                         <Body style={{ width: 250, minWidth: 250 }}>
-                            <Title style={Platform.OS === "android" ? { textAlign: "left", marginLeft: 30 } : { textAlign: "left" }}>Message {`${user.firstName} ${user.lastName}`}</Title>
+                            <Title style={Platform.OS === "android" ? { textAlign: "left", marginLeft: 30, color: "#ffd530" } : { textAlign: "left", color: "#ffd530" }}>Message {`${user.firstName} ${user.lastName}`}</Title>
                         </Body>
                         <Right />
                     </Header>

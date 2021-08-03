@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, Dimensions } from "react-native";
+import { View, Text, Image, Dimensions, Platform } from "react-native";
 import styles from "./styles.js";
 import { Header, Left, Body, Right, Button, Icon, Title, Subtitle } from 'native-base';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -30,7 +30,7 @@ constructor(props) {
         const options = {
             mediaType: "video",
             durationLimit: 320,
-            videoQuality: "high"
+            videoQuality: Platform.OS === "ios" ? "medium" : "high"
         };
         launchImageLibrary(options, this.uploadVideo);
     }
@@ -73,8 +73,7 @@ constructor(props) {
                     })
                     console.log("total size in MB ==> ", totalSizeInMB);
                     console.log("uploaded size in MB ==> ", loadedSizeInMB);
-                },
-                encType: "multipart/form-data"
+                }
             }).then((res) => {
                 if (res.data.message === "Uploaded video!") {
                     console.log(res.data);

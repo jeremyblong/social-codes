@@ -147,12 +147,12 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     shortView: {
-        height: 120,
+        height: 130,
         borderColor: "grey",
         backgroundColor: "white",
         borderWidth: 1,
         minWidth: "90%",
-        minHeight: 120,
+        minHeight: 130,
         borderRadius: 25,
         margin: 5,
         padding: 8,

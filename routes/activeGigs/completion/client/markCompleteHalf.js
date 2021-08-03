@@ -8,6 +8,7 @@ const axios = require("axios");
 const moment = require("moment");
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(config.get("stripeSecretKey"));
+const _ = require("lodash");
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, resppppppppp) => {
@@ -45,7 +46,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 const applicant = user.activeHiredApplicants[iiii];
                                 
                                 if (applicant.id === activeID) {
-                                    applicant.completedFreelancer = true;
+
+                                    applicant.completedClient = true;
 
                                     if (applicant.completedFreelancer === true && applicant.completedClient === true) {
 
@@ -63,7 +65,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             } else {
                                                 resolve({
                                                     user,
-                                                    bool: applicant.completedClient
+                                                    bool: applicant.completedFreelancer
                                                 });
                                             }
                                         })
@@ -74,7 +76,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             } else {
                                                 resolve({
                                                     user,
-                                                    bool: applicant.completedClient
+                                                    bool: applicant.completedFreelancer
                                                 });
                                             }
                                         })
@@ -96,12 +98,14 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 
                                 if (applicant.id === activeID) {
                                     // mark as complete for both users
-                                    applicant.completedFreelancer = true;
+                                    applicant.completedClient = true;
                                     // save data/changes
                                     
                                     // check to make sure all parties have marked as complete and capture payment
-                                    if (values.bool === true && applicant.completedFreelancer === true) {
-                                        // add to completed jobs array
+                                    if (values.bool === true && applicant.completedClient === true) {
+
+                                        // take payment - capture previous received payment
+
                                         if (_.has(user, "completedProjects")) {
                                             user.completedProjects.push(applicant);
                                         } else {
@@ -109,8 +113,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         }
 
                                         const promises = [];
-                                        
-                                        // take payment - capture previous received payments
+
                                         for (let iiiiiii = 0; iiiiiii < applicant.payments.length; iiiiiii++) {
                                             const payment = applicant.payments[iiiiiii];
                                             
@@ -128,6 +131,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         }
 
                                         Promise.all(promises).then((finalValues) => {
+
                                             // send off notification
                                             const notificationAddition = {
                                                 id: uuidv4(),
