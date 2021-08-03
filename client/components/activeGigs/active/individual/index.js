@@ -32,10 +32,13 @@ constructor(props) {
         confirmationCompleteModal: false,
         loading: false,
         completedClient: null,
+        payments: [],
+        showRemainderModal: false,
         price: null,
         application: {
             payments: []
-        }
+        },
+        total: 0
     }
     this.sheetRef = React.createRef();
     this.sheetRefHourly = React.createRef();
@@ -59,12 +62,56 @@ constructor(props) {
 
                 const { job, files } = res.data;
 
+                let total = 0;
+
+                if (job.milestone8 !== null) {
+                    total = (job.milestone8.price + job.milestone7.price + job.milestone6.price + job.milestone5.price + job.milestone4.price + job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone7 !== null) {
+                    total = (job.milestone7.price + job.milestone6.price + job.milestone5.price + job.milestone4.price + job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone6 !== null) {
+                    total = (job.milestone6.price + job.milestone5.price + job.milestone4.price + job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone5 !== null) {
+                    total = (job.milestone5.price + job.milestone4.price + job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone4 !== null) {
+                    total = (job.milestone4.price + job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone3 !== null) {
+                    total = (job.milestone3.price + job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone2 !== null) {
+                    total = (job.milestone2.price + job.milestone1.price);
+                } else if (job.milestone1 !== null) {
+                    total = (job.milestone1.price);
+                } else {
+                    total = 0;
+                }
+
                 this.setState({
                     job,
                     loading: true,
+                    total,
                     completedClient: passedData.completedClient
                 }, () => {
                     this.props.saveFilesPane([...files]);
+                })
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+
+        axios.get(`${Config.ngrok_url}/gather/application/data`, {
+            params: {
+                id: this.props.unique_id,
+                passedID: passedData.id
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered data!") {
+                console.log(res.data);
+
+                const { application } = res.data;
+
+                this.setState({
+                    application
                 })
             } else {
                 console.log("Err", res.data);
@@ -931,11 +978,68 @@ constructor(props) {
             );
         }
     }
+    calculateRemainingTotal = (payments) => {
+        let sum = 0;
+
+        if (typeof payments !== "undefined" && payments.length > 0) {
+            for (let index = 0; index < payments.length; index++) {
+                const payment = payments[index];
+                sum += (payment.amount / 100);
+            }
+            console.log(this.state.total, sum);
+            return (this.state.total - sum).toFixed(2);
+        } else {
+            return sum;
+        }
+    }
+    makeRemainderPayment = (payments) => {
+        console.log("remainder payment...");
+
+        this.setState({
+            showRemainderModal: true,
+            payments
+        })
+    }
+    makeFinalRemainderPaymentAPI = () => {
+        const { application, payments, job } = this.state;
+
+        const passedData = this.props.props.route.params.item;
+
+        // update payments array in 'application' state after response successful
+        axios.post(`${Config.ngrok_url}/make/remainder/payment/milestones`, {
+            rate: this.calculateRemainingTotal(payments),
+            id: this.props.unique_id,
+            application,
+            date: job.date,
+            jobID: job.jobID,
+            otherUserID: passedData.with
+        }).then((res) => {
+            if (res.data.message === "Paid remainder total!") {
+                console.log(res.data);
+
+                this.setState({
+                    application: res.data.application
+                }, () => {
+                    Toast.show({
+                        text1: 'You have successfully made a final payment for this project/gig.',
+                        text2: 'You have made all required payments for this freelancer!',
+                        type: "success",
+                        visibilityTime: 4500,
+                        position: "top"
+                    });
+                })
+            } else {
+                console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     renderPayHourlyOrNot = () => {
 
         const passedData = this.props.props.route.params.item;
 
-        const { job, loading, completedClient } = this.state;
+        const { job, loading, completedClient, application } = this.state;
 
         if (job !== null) {
             if (job.hourly === true) {
@@ -1060,7 +1164,18 @@ constructor(props) {
                                 <View style={styles.blackHr} />
                                 <View style={styles.margin}>
                                     <Text style={styles.detailsTitle}>Details</Text>
+                                    <View style={styles.thinBlackHr} />
+                                    <Text style={styles.totalLeft}>You OWE a <Text style={{ fontWeight: "bold" }}>remaining</Text> total of ${this.calculateRemainingTotal(application.payments)} left on this project...</Text>
+                                    <View style={styles.thinBlackHr} />
+                                    <TouchableOpacity onPress={() => {
+                                        this.makeRemainderPayment(application.payments);
+                                    }} style={styles.containerBoxed}>
+                                        <Text style={{ fontWeight: "bold", fontSize: 24 }}>Pay the remainder of your ${this.calculateRemainingTotal(application.payments)} balance by clicking here...</Text>
+                                    </TouchableOpacity>
                                 </View>
+                                    <AwesomeButtonCartman style={{ marginTop: 20, marginBottom: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
+                                    this.gatherJobAndOpenPane();
+                                }} stretch={true}>View Previous Payments</AwesomeButtonCartman>
                             </View>
                             {typeof this.props.files !== "undefined" && this.props.files.length > 0 ? this.props.files.map((file, index) => {
                                 return (
@@ -1130,9 +1245,6 @@ constructor(props) {
                             <View style={styles.margin}>
                                 <Text style={styles.milestoneText}>Paying by milestone? {job.payByMilestone === false ? "Nope" : "Yes!"}</Text>
                                 <View style={styles.hrCustom} />
-                                <Text style={styles.milestoneText}>Client has paid freelancer in-full? <Text style={{ color: "blue" }}>{(this.props.fullPaymentCompleted.completed === true && this.props.fullPaymentCompleted.jobID === passedData.jobID) || passedData.paidFull === true ? "Full payment completed for pending completion." : "Full payment has NOT been received."}</Text></Text>
-                                <View style={styles.hrCustom} />
-                                <Text style={styles.milestoneText}>Client has made a partial payment to the freelancer(s)? <Text style={{ color: "blue" }}>{(this.props.partialPaymentCompleted.completed === true && this.props.partialPaymentCompleted.jobID === passedData.jobID) || passedData.paidPartial === true ? "Partial payment has been completed for pending completion!" : "Partial payment has NOT been received."}</Text></Text>
                                 {this.renderQuestions(job)}
                             </View>
                             <View style={{ marginTop: 10 }} />
@@ -1397,7 +1509,7 @@ constructor(props) {
         })
     }
     render() {
-        const { job, loading, confirmationCompleteModal, application } = this.state;
+        const { job, loading, confirmationCompleteModal, application, showRemainderModal } = this.state;
 
         console.log("i", this.props.props.route.params.item);
 
@@ -1425,6 +1537,26 @@ constructor(props) {
                             this.markJobAsComplete();
                         })
                     }} label="Mark Complete" />
+                    </Dialog.Container>
+                </View>
+                <View>
+                    <Dialog.Container visible={showRemainderModal}>
+                    <Dialog.Title>Are you sure you'd like to make this 'remainder' payment and completely pay off the amount due?</Dialog.Title>
+                    <Dialog.Description>
+                        Once you make this payment, it cannot be reversed and will be collected upon payment verification. You cannot undo this action.
+                    </Dialog.Description>
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            showRemainderModal: false
+                        })
+                    }} label="Cancel" />
+                    <Dialog.Button onPress={() => {
+                        this.setState({
+                            showRemainderModal: false
+                        }, () => {
+                            this.makeFinalRemainderPaymentAPI();
+                        })
+                    }} label="Make Payment" />
                     </Dialog.Container>
                 </View>
                 <SheetHelperPaymentsDisplayRef payments={application.payments} paymentsRef={this.paymentRefSheet} />

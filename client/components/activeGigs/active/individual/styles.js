@@ -100,6 +100,15 @@ export default StyleSheet.create({
         alignItems: "center",
         alignContent: "center"
     },
+    containerBoxed: {
+        padding: 20,
+        margin: 0,
+        borderWidth: 2,
+        borderColor: "#303030"
+    },
+    totalLeft: {
+        fontSize: 20
+    },
     margin: {
         margin: 20
     },
