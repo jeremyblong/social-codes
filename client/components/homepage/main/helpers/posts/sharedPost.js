@@ -371,7 +371,7 @@ constructor(props) {
                 <CardItem>
                 <Body>
                     <View style={styles.textContainer}>
-                        {_.has(post.newData, "taggedUsers") ? <Highlighter 
+                        {_.has(post.newData, "taggedUsers") && post.newData.taggedUsers !== null ? <Highlighter 
                             onPressHighlightedText={(username) => {
                                 this.redirectBasedOnUsername(username);
                             }}
@@ -395,8 +395,8 @@ constructor(props) {
                             </CardItem>
                             <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.picturesBoxedTrue : styles.picturesBoxedElse}>
                                 {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
-                                {post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
-                                {post.pictures.length >= 4 && this.renderThreeLive(post.pictures)}
+                                {post.pictures !== null && post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
+                                {post.pictures !== null && post.pictures.length >= 4 && this.renderThreeLive(post.pictures)}
                             </View>
                             <View style={styles.noShadow}>
                                 <ReadMore
@@ -448,7 +448,7 @@ constructor(props) {
                                     renderTruncatedFooter={this._renderTruncatedFooter}
                                     renderRevealedFooter={this._renderRevealedFooter}
                                     onReady={this._handleTextReady}>
-                                        {_.has(post.newData, "taggedUsers") && post.newData.taggedUsers.length > 0 ? <Highlighter 
+                                        {_.has(post.newData, "taggedUsers") && post.newData.taggedUsers !== null && post.newData.taggedUsers.length > 0 ? <Highlighter 
                                             onPressHighlightedText={(username) => {
                                                 this.redirectBasedOnUsername(username);
                                             }}

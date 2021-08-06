@@ -19,7 +19,7 @@ export default StyleSheet.create({
         left: 0,
         top: 0,
         right: 0,
-        width,
+        width: "100%",
         height
     },
     whiteMedium: {

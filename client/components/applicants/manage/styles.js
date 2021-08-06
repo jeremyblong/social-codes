@@ -6,7 +6,7 @@ export default StyleSheet.create({
     // manageApplicants styles
     container:{
         flex:1, 
-        backgroundColor: 'white',
+        backgroundColor: '#141414',
         width,
         height,
         zIndex: -1
@@ -20,7 +20,8 @@ export default StyleSheet.create({
     headText: {
         fontSize: 34,
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
+        color: "#ffffff"
     },
     myImage: {
         maxWidth: "100%", 
@@ -28,16 +29,16 @@ export default StyleSheet.create({
     },
     maxedIconSmall: {
         maxHeight: 35,
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxWidth: 35
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },  
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     centered: {
         justifyContent: "center",

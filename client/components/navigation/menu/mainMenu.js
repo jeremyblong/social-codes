@@ -357,7 +357,7 @@ constructor(props) {
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("friends-menu");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/user-group.png")} style={[styles.shortViewIconTwo, { tintColor: "purple" }]} />
+                                        <Image source={require("../../../assets/icons/user-group.png")} style={[styles.shortViewIconTwo, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Friends</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
@@ -369,7 +369,7 @@ constructor(props) {
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("purchase-tokens-homepage");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/coin.png")} style={[styles.shortViewIcon, { tintColor: "purple" }]} />
+                                        <Image source={require("../../../assets/icons/coin.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Purchase Credits/Tokens</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
@@ -385,9 +385,9 @@ constructor(props) {
                                         </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("completed-gigs");
+                                        this.props.props.navigation.push("completed-gigs-list-homepage");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/completed-two.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
+                                        <Image source={require("../../../assets/icons/completed-two.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Completed Jobs</Text>
                                         <Text style={styles.sub}>View your already completed jobs/gigs</Text>
                                     </TouchableOpacity>
@@ -405,7 +405,7 @@ constructor(props) {
                                     {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("active-live-gigs-in-progress");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/seeker.png")} style={[styles.shortViewIcon, { tintColor: "purple" }]} />
+                                        <Image source={require("../../../assets/icons/seeker.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Active Gigs/Jobs</Text>
                                         <Text>Current *active* accepted jobs</Text>
                                     </TouchableOpacity> : null}
@@ -418,7 +418,7 @@ constructor(props) {
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("payments-main");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "blue" }]} />
+                                        <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Payment Methods</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
@@ -443,7 +443,7 @@ constructor(props) {
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("previously-submitted-proposals");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/apply-2.png")} style={[styles.shortViewIcon, {   tintColor: "blue" }]} />
+                                        <Image source={require("../../../assets/icons/apply-2.png")} style={[styles.shortViewIcon, {   tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>View Previous Proposals</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {

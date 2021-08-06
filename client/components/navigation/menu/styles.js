@@ -7,7 +7,7 @@ export default StyleSheet.create({
     maxedIconSmall: {
         maxHeight: 35,
         maxWidth: 35,
-        tintColor: "#fdd530"
+        tintColor: "#ffffff"
     },
     centered: {
         justifyContent: "center",
@@ -15,7 +15,7 @@ export default StyleSheet.create({
         alignContent: "center"
     },
     container: {
-        backgroundColor: "#303030"
+        backgroundColor: "#141414"
     },
     greyButton: {
         backgroundColor: "#303030"
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     },
     tallView: {
         height: 240,
-        backgroundColor: "white",
+        backgroundColor: "#d4d4d4",
         borderColor: "grey",
         borderWidth: 1,
         minWidth: "90%",
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     profileIcon: {
         maxWidth: 40,
         maxHeight: 40,
-        tintColor: "blue",
+        tintColor: "#ffffff",
         borderWidth: 2,
         borderRadius: 25,
         position: "absolute",
@@ -100,6 +100,7 @@ export default StyleSheet.create({
     },
     profileIconTwo: {
         maxWidth: 40,
+        tintColor: "#ffffff",
         maxHeight: 40,
         position: "absolute",
         position: 'absolute',
@@ -149,7 +150,7 @@ export default StyleSheet.create({
     shortView: {
         height: 130,
         borderColor: "grey",
-        backgroundColor: "white",
+        backgroundColor: "#d4d4d4",
         borderWidth: 1,
         minWidth: "90%",
         minHeight: 130,
@@ -168,7 +169,7 @@ export default StyleSheet.create({
     menuText: {
         fontSize: 25,
         fontWeight: "bold",
-        color: "#fdd530"
+        color: "#ffffff"
     },
     halfed: {
         width: "45%",
@@ -181,7 +182,7 @@ export default StyleSheet.create({
     title: {
         fontWeight: "bold",
         fontSize: 18,
-        color: "#fdd530"
+        color: "#ffffff"
     },
     circledButton: {
         borderRadius: 50,

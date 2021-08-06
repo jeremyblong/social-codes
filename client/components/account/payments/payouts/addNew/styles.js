@@ -7,10 +7,10 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 40,
         maxHeight: 40,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     container: {
         backgroundColor: "white",
@@ -25,7 +25,7 @@ export default StyleSheet.create({
     headerText: {
         fontSize: 18, 
         fontWeight: "bold", 
-        color: "blue"
+        color: "#0057ff"
     },
     margin: {
         margin: 20

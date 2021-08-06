@@ -104,6 +104,8 @@ import { Notifications } from 'react-native-notifications';
 import StripeOnboardingRegisterPage from "./pages/auth/onboarding/stripeOnboarding.js";
 import ViewJobActiveClientFreelancerHelper from "./pages/activeGigs/freelancer/individualGig/index.js";
 import * as Sentry from "@sentry/react-native";
+import CompletedGigsListPage from "./pages/completedGigs/main/index.js";
+import SplashScreen from 'react-native-splash-screen';
 
 const { width, height } = Dimensions.get("window");
 
@@ -322,6 +324,8 @@ constructor(props) {
     console.log('[motionchange] -', event.isMoving, event.location);
   }
   async componentDidMount () {
+
+    SplashScreen.hide();
 
     const appID = Config.cometchat_app_id;
     console.log(appID);
@@ -568,6 +572,7 @@ constructor(props) {
               <Stack.Screen name="active-job-individual-full-listing" component={IndividualActiveJobPage} />
               <Stack.Screen name="stripe-onboarding-authentication" component={StripeOnboardingRegisterPage} />
               <Stack.Screen name="client-freelancer-view-job-active" component={ViewJobActiveClientFreelancerHelper} />
+              <Stack.Screen name="completed-gigs-list-homepage" component={CompletedGigsListPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />

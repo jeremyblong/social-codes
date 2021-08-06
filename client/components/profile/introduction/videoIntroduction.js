@@ -122,8 +122,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Introduction</Title>
-                        <Subtitle style={styles.goldText}>Video Introduction</Subtitle>
+                        <Title style={styles.whiteText}>Introduction</Title>
+                        <Subtitle style={styles.whiteText}>Video Introduction</Subtitle>
                     </Body>
                     <Right />
                 </Header>

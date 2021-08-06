@@ -11,9 +11,11 @@ const client = require('twilio')(config.get("twilioAccountSID"), config.get("twi
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, res) => {
 
-        const { phoneNumber, formatted, email, countryCode } = req.body;
+        const { phoneNumber, formatted, countryCode } = req.body;
 
-        console.log(phoneNumber, formatted, email, countryCode);
+        console.log(phoneNumber, formatted, countryCode);
+
+        const email = req.body.email.trim();
 
         if (countryCode === "US") {
 

@@ -15,8 +15,8 @@ export default StyleSheet.create({
         maxWidth: 35,
         maxHeight: 35
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     header:{
         backgroundColor: "#303030",

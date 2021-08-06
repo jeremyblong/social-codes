@@ -7,7 +7,7 @@ export default StyleSheet.create({
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     headerIcon: {
         maxWidth: 35,
@@ -33,6 +33,7 @@ export default StyleSheet.create({
     },
     headerText: {
         fontSize: 18,
+        color: "#ffffff",
         fontWeight: "bold",
     },
     viewer: {
@@ -41,7 +42,7 @@ export default StyleSheet.create({
     selected: {
         minHeight: 100,
         maxHeight: 100,
-        borderColor: "blue",
+        borderColor: "#0057ff",
         borderWidth: 3,
         justifyContent: "center",
         alignItems: "center",
@@ -54,6 +55,7 @@ export default StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         marginTop: 7.5,
+        color: "#ffffff",
         marginLeft: 10
     }
 });

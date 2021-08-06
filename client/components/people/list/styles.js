@@ -5,9 +5,11 @@ export default StyleSheet.create({
     container:{
         flex:1,
         marginTop:20,
+        backgroundColor: "#141414"
     },
     containerAndroid: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#141414"
     },
     list: {
         paddingHorizontal: 5,
@@ -96,7 +98,7 @@ export default StyleSheet.create({
         fontSize:18,
         flex:1,
         alignSelf:'center',
-        color:"#008080",
+        color: "#141414",
         fontWeight:'bold'
     },
     position:{

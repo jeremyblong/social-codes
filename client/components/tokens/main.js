@@ -177,12 +177,12 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#fdd530" }}>Tokens/Credits</Title>
-                        <Subtitle style={{ color: "#fdd530" }}>Purchase tokens</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Tokens/Credits</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>Purchase tokens</Subtitle>
                     </Body>
                     <Right />
                 </Header> 
@@ -191,7 +191,7 @@ constructor (props) {
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>Select an amount of tokens to purchase</Text>
                         <View style={styles.hr} />
-                        <Text style={{ marginBottom: 20 }}>Tokens can be used to apply for jobs, boost your profile, submit "super" apps and much more...</Text>
+                        <Text style={{ marginBottom: 20, color: "#ffffff" }}>Tokens can be used to apply for jobs, boost your profile, submit "super" apps and much more...</Text>
                         <TouchableOpacity onPress={() => {
                             this.setState({
                                 selected: 10,
@@ -202,7 +202,7 @@ constructor (props) {
                         }} style={selected === 10 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>10</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>10</Text> Tokens</Text>
                                 
                             </View>
                         </TouchableOpacity>
@@ -217,9 +217,9 @@ constructor (props) {
                         }} style={selected === 25 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>25</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>25</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>5%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>5%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -232,9 +232,9 @@ constructor (props) {
                         }} style={selected === 50 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>50</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>50</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>7.5%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>7.5%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -247,9 +247,9 @@ constructor (props) {
                         }} style={selected === 75 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>75</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>75</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>10%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>10%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -262,9 +262,9 @@ constructor (props) {
                         }} style={selected === 100 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>100</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>100</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>12.5%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>12.5%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -277,9 +277,9 @@ constructor (props) {
                         }} style={selected === 125 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>125</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>125</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>15%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>15%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -292,9 +292,9 @@ constructor (props) {
                         }} style={selected === 150 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>150</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>150</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>20%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>20%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -307,9 +307,9 @@ constructor (props) {
                         }} style={selected === 200 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>200</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>200</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>25%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>25%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                         <TouchableOpacity onPress={() => {
@@ -322,9 +322,9 @@ constructor (props) {
                         }} style={selected === 250 ? styles.selected : styles.boxed}>
                             <View style={styles.row}>
                                 <Image source={require("../../assets/icons/token.png")} style={{ maxWidth: 55, maxHeight: 55 }} />
-                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#fdd530", fontSize: 26 }}>250</Text> Tokens</Text>
+                                <Text style={styles.boxedText}>Purchase <Text style={{ fontWeight: "bold", color: "#0057ff", fontSize: 26 }}>250</Text> Tokens</Text>
                             </View>
-                            <Text style={{ fontWeight: "bold" }}>Save <Text style={{ color: "#fdd530" }}>30%</Text> when buying this quanitity</Text>
+                            <Text style={{ fontWeight: "bold", color: "#ffffff" }}>Save <Text style={{ color: "#0057ff" }}>30%</Text> when buying this quanitity</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }} />
                     </View>

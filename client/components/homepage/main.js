@@ -161,16 +161,16 @@ constructor () {
             <Fragment>
                 {/* <LinearGradient colors={['black', '#303030', 'blue']} style={styles.background}> */}
                 <Video
-                    source={require("../../assets/video/world.mp4")}
+                    source={require("../../assets/video/splash.mp4")}
                     style={styles.backgroundVideo}
                     muted={true}
+                    resizeMode={"stretch"}
                     repeat={true}
-                    resizeMode={"cover"}
                     rate={1.0}
                     ignoreSilentSwitch={"obey"}
                 />
                     <View style={[styles.centered, { maxHeight: 400, paddingTop: 25 }]}>
-                        <Image source={require("../../assets/images/social_code_long.png")} style={styles.logo} />
+                        <Image source={require("../../assets/images/banner_big_white.png")} style={styles.logo} />
                         <Text style={styles.whiteMedium}>{"Hire expert freelancers for your custom software job online!"}</Text>
                         {/* <LottieView
                             source={require("../../assets/animations/tech.json")}
@@ -185,7 +185,7 @@ constructor () {
                     <View style={styles.bottom}>
                         <AwesomeButton onPress={() => {
                             this.props.props.navigation.navigate("auth-main");
-                        }} stretch={true} backgroundColor={"black"} textColor={"white"} backgroundShadow={"black"} borderRadius={10} borderColor={"#ffd530"} backgroundShadow={"#ffd530"} borderWidth={1}>Continue with email/username</AwesomeButton>
+                        }} stretch={true} backgroundColor={"black"} textColor={"white"} backgroundShadow={"black"} borderRadius={10} borderColor={"#141414"} backgroundShadow={"#141414"} borderWidth={1}>Continue with email/username</AwesomeButton>
                         <View style={styles.hr} />
                         <GoogleSigninButton
                             style={{ width: "75%", minWidth: "75%", minHeight: 48, height: 48 }}

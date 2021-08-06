@@ -19,9 +19,9 @@ constructor () {
 		return (
 			<View style={{ justifyContent: 'center', alignItems: "center", alignContent: "center", backgroundColor: "#303030" }}>
 				<Video  
-					resizeMode="cover"
+					resizeMode="stretch"
 					repeat
-					source={require("./assets/video/loadingVideo.mp4")}
+					source={require("./assets/video/splash.mp4")}
 					autoplay={true}
 					ref={(ref) => {
 						this.player = ref

@@ -9,11 +9,15 @@ export default StyleSheet.create({
       backgroundColor: "#FFFFFF",
       maxHeight: height - 100
     },
+    blackBackground: {
+      backgroundColor: "#141414"
+    },
     container: {
       padding: 16,
       flexDirection: 'row',
       borderBottomWidth: 1,
       borderColor: "#FFFFFF",
+      backgroundColor: "#141414",
       alignItems: 'flex-start'
     },
     hintText: {
@@ -36,7 +40,7 @@ export default StyleSheet.create({
       borderBottomWidth: 1,
       borderColor: "#FFFFFF",
       alignItems: 'flex-start',
-      backgroundColor: "#ffd530"
+      backgroundColor: "#cecece"
     },
     customModalBody: {
       flex: 1, 
@@ -60,6 +64,12 @@ export default StyleSheet.create({
       maxWidth: 200,
       maxHeight: 200
     },
+    greyLightText: {
+      color: "#d4d4d4"
+    },
+    whiteText: {
+      color: "#ffffff"
+    },  
     avatar: {
       width:50,
       height:50,

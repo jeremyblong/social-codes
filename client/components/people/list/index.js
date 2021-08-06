@@ -268,12 +268,12 @@ class PeopleBrowseListHelper extends Component {
                     <Button onPress={() => {
                         this.props.props.navigation.goBack();
                     }} transparent>
-                        <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                        <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                     </Button>
                 </Left>
                 <Body>
-                    <Title style={Platform.OS === "android" ? { color: "#fdd530" } : {}}>Browse People</Title>
-                    <Subtitle style={Platform.OS === "android" ? { color: "#fdd530" } : {}}>Browse people & more...</Subtitle>
+                    <Title style={Platform.OS === "android" ? { color: "#ffffff" } : {}}>Browse People</Title>
+                    <Subtitle style={Platform.OS === "android" ? { color: "#ffffff" } : {}}>Browse people & more...</Subtitle>
                 </Body>
                 <Right />
             </Header>

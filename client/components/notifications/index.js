@@ -249,9 +249,9 @@ constructor(props) {
                                 <View style={styles.content}>
                                     <View style={mainContentStyle}>
                                         <View style={styles.text}>
-                                            <Text style={styles.name}>{`${Notification.firstName} ${Notification.lastName}`}</Text>
-                                            <Text>{Notification.data.title}</Text>
-                                            <Text style={{ color: "grey" }}>{Notification.data.body.slice(0, 125)} {typeof Notification.data.body !== "undefined" && Notification.data.body.length > 125 ? "..." : ""}</Text>
+                                            <Text style={[styles.name, { color: "#0057ff" }]}>{`${Notification.firstName} ${Notification.lastName}`}</Text>
+                                            <Text style={_.has(Notification, "read") && Notification.read === true ? { color: "black", fontWeight: "bold" } : styles.whiteText}>{Notification.data.title}</Text>
+                                            <Text style={_.has(Notification, "read") && Notification.read === true ? { color: "black", fontWeight: "bold" } : styles.greyLightText}>{Notification.data.body.slice(0, 125)} {typeof Notification.data.body !== "undefined" && Notification.data.body.length > 125 ? "..." : ""}</Text>
                                         </View>
                                         <Text style={styles.timeAgo}>
                                             {moment(Notification.system_date).fromNow()}
@@ -272,7 +272,7 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oh no! You don't have any new or pending notifications, interact with the community and get the ball rolling...!</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
+                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.props.props.navigation.push("jobs-homepage");
                         }} stretch={true}>Apply to jobs</AwesomeButtonBlue>
                         <View style={{ marginTop: 5 }} />
@@ -284,18 +284,18 @@ constructor(props) {
     render() {
         const { ready } = this.state;
         return (
-            <Fragment>
+            <View style={styles.blackBackground}>
                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#fdd530" }}>Notifications</Title>
-                        <Subtitle style={{ color: "#fdd530" }}>Changes & More...</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Notifications</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>Changes & More...</Subtitle>
                     </Body>
                     <Right>
                         <Button onPress={() => {
@@ -305,7 +305,7 @@ constructor(props) {
                                 isVisible: true
                             })
                         }} transparent>
-                            <Image source={require("../../assets/icons/help.png")} style={[styles.headerIconTwo, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../assets/icons/help.png")} style={[styles.headerIconTwo, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Right>
                 </Header> 
@@ -359,7 +359,7 @@ constructor(props) {
                     <View style={{ width: "100%", height: 125 }} />    
                 </SkeletonPlaceholder>
                 <View style={{ marginTop: 20 }} /></Fragment>}
-            </Fragment>
+            </View>
         )
     }
 }

@@ -85,7 +85,7 @@ constructor(props) {
                                             <Button onPress={() => {
                                                 this.props.props.navigation.push("client-freelancer-view-job-active", { item })
                                             }} style={styles.greyButton} info>
-                                                <Text style={{ color: "#ffd530" }}>Visit Job</Text>
+                                                <Text style={{ color: "#ffffff" }}>Visit Job</Text>
                                             </Button>
                                         </Body>
                                         <Right>
@@ -101,7 +101,7 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, it doesn't look like you have any active candiates working for you right now...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffffff"} onPress={() => {
                             this.props.props.navigation.push("homepage");
                         }} stretch={true}>Go to homepage</AwesomeButtonCartman>
                         <View style={{ marginTop: 5 }} />

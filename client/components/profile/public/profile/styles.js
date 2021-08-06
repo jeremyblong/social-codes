@@ -11,6 +11,9 @@ export default StyleSheet.create({
       minWidth: "90%",
       margin: 15
     },
+    whiteText: {
+      color: "#ffffff"
+    },
     greyButton: {
       backgroundColor: "#303030"
     },

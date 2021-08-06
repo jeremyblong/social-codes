@@ -8,7 +8,7 @@ export default StyleSheet.create({
         maxHeight: 35
     },
     container: {
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1,
         flex: 1
     },
@@ -74,6 +74,7 @@ export default StyleSheet.create({
     },
     headText: {
         fontSize: 34,
+        color: "#ffffff",
         fontWeight: "bold",
         textAlign: "center"
     },

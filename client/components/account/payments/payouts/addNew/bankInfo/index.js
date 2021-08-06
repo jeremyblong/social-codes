@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText, Form, Item, Input, Label } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
 import { Config } from "react-native-config";
@@ -18,7 +18,8 @@ constructor(props) {
         routingNumber: "",
         accountNumber: "",
         confirmAccountNumber: "",
-        finished: false
+        finished: false,
+        error: ""
     }
 }
     calculateReadiness = () => {
@@ -29,7 +30,7 @@ constructor(props) {
             return false;
         }
     }
-    processNewBankAccountAddittion = () => {
+    processNewBankAccountAddittion = (next) => {
         const { bankAccountType, accountHolder, routingNumber, accountNumber } = this.state;
         
         axios.post(`${Config.ngrok_url}/create/new/payout/bank/account/information`, {
@@ -42,10 +43,22 @@ constructor(props) {
             if (res.data.message === "Successfully added new bank account!") {
                 console.log(res.data);
 
+                next();
+
                 setTimeout(() => {
                     this.props.props.navigation.replace("payouts-main-homepage");
                 }, 1000);
+            } else if (res.data.err.code === "routing_number_invalid") {
+                console.log("Err", res.data);
+
+                next();
+
+                this.setState({
+                    error: "Routing number is invalid, please double check your entry and validate it is the right number..."
+                })
             } else {
+                next();
+
                 console.log("Err", res.data);
             }
         }).catch((err) => {
@@ -53,10 +66,11 @@ constructor(props) {
         })
     }
     render() {
-        const { routingNumber, finished } = this.state;
+        const { routingNumber, finished, error } = this.state;
         console.log("bankInfo state", this.state);
         return (
             <Fragment>
+                
                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button transparent onPress={() => {
@@ -66,8 +80,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Account Info</Title>
-                        <Subtitle style={styles.goldText}>Add account information</Subtitle>
+                        <Title style={styles.whiteText}>Account Info</Title>
+                        <Subtitle style={styles.whiteText}>Add account information</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -101,7 +115,8 @@ constructor(props) {
                                 })
                             }} value={this.state.routingNumber} onChangeText={(value) => {
                                 this.setState({
-                                    routingNumber: value
+                                    routingNumber: value,
+                                    error: ""
                                 })
                             }} />
                             </Item>
@@ -110,7 +125,8 @@ constructor(props) {
                             <Label>Account Number</Label>
                             <Input keyboardType={"number-pad"} value={this.state.accountNumber} onChangeText={(value) => {
                                 this.setState({
-                                    accountNumber: value
+                                    accountNumber: value,
+                                    error: ""
                                 })
                             }} />
                             </Item>
@@ -118,15 +134,18 @@ constructor(props) {
                             <Label>Confirm Account Number</Label>
                             <Input keyboardType={"number-pad"} value={this.state.confirmAccountNumber} onChangeText={(value) => {
                                 this.setState({
-                                    confirmAccountNumber: value
+                                    confirmAccountNumber: value,
+                                    error: ""
                                 })
                             }} />
                             </Item>
                         </Form>
-                        
+                        {typeof error !== "undefined" && error.length > 0 ? <Text style={{ color: "red", fontWeight: "bold", marginTop: 10 }}>{error}</Text> : null}
                     </View>
                     <View style={styles.bottom}>
-                        {this.calculateReadiness() ? <AwesomeButtonCartman textColor={"white"} style={{ marginTop: 15 }} type={"anchor"} onPress={this.processNewBankAccountAddittion} stretch={true}>Next/Continue</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ marginTop: 15 }} type={"disabled"} onPress={() => {}} stretch={true}>Next/Continue</AwesomeButtonCartman>}
+                        {this.calculateReadiness() ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 10 }} progress type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
+                            this.processNewBankAccountAddittion(next);
+                        }} stretch={true}>Next/Continue</AwesomeButtonBlue> : <AwesomeButtonBlue style={{ marginTop: 15 }} type={"disabled"} onPress={() => {}} stretch={true}>Next/Continue</AwesomeButtonBlue>}
                     </View>
                 </View>
                 </KeyboardAwareScrollView>

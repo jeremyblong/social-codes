@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 
 const { height, width } = Dimensions.get("window");
@@ -23,7 +22,7 @@ export default StyleSheet.create({
         maxHeight: 35
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     hr: {
         borderBottomColor: "grey",

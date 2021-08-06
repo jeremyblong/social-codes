@@ -21,10 +21,10 @@ export default StyleSheet.create({
         fontSize: 30,
         width: 100,
         marginLeft: 0,
-        color: "#fdd530"
+        color: "#ffffff"
     },
     goldText: {
-        color: "#fdd530",
+        color: "#ffffff",
         fontWeight: "bold"
     },
     greyButton: {

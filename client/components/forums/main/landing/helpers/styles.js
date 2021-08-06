@@ -82,7 +82,7 @@ export default StyleSheet.create({
     mainText: {
         fontSize: 15,
         fontWeight: "bold",
-        color: "darkred"
+        color: "#0057ff"
     },  
     largeColumn: {
         width: "80%",

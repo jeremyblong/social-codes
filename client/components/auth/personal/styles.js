@@ -12,28 +12,33 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         flex: 1
     },
+    whiteText: {
+        color: "#ffffff"
+    },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     margin: {
         margin: 20
     },
     header: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     greyText: {
-        color: "grey"
+        color: "#cccccc"
     },
     bottomContainer: {
         backgroundColor: "white"
     },
     title: {
         marginBottom: 10,
-        fontSize: 18
+        fontSize: 18,
+        color: "#ffffff"
     },
     redText: {
         color: "red",

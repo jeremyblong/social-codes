@@ -3885,11 +3885,11 @@ constructor(props) {
                         <Button onPress={() => {
                              this.RBSheetApply.close();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/close.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/close.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#ffd530" }}>Submit Proposal</Title>
+                        <Title style={{ color: "#ffffff" }}>Submit Proposal</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -4017,12 +4017,12 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#ffd530" }}>Individual Job</Title>
-                        <Subtitle style={{ color: "#ffd530" }}>{this.renderCategory(job.category)}</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Individual Job</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>{this.renderCategory(job.category)}</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -4183,7 +4183,7 @@ constructor(props) {
                                 
                             </MapView>
                         <View style={styles.hr} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                        <AwesomeButtonCartman type={"anchor"} backgroundColor={"#303030"} raiseLevel={3} backgroundDarker={"#cccccc"} textColor={"white"} onPress={() => {
                             this.RBSheetApply.open();
                         }} stretch={true}>Apply for this position</AwesomeButtonCartman>
                     </View>

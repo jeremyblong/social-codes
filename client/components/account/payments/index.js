@@ -35,11 +35,11 @@ const PaymentMainPageHelper =  (props) => {
                         <Button onPress={() => {
                             props.props.navigation.push("navigation-menu-main");
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, {  tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, {  tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ paddingTop: 5, color: "#ffd530" }}>Payments & Payouts</Title>
+                        <Title style={{ paddingTop: 5, color: "#ffffff" }}>Payments & Payouts</Title>
                     </Body>
                     <Right />
                 </Header>

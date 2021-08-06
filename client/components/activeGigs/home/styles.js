@@ -7,8 +7,8 @@ export default StyleSheet.create({
     container: {
         zIndex: -1,
         width,
-        height,
-        backgroundColor: "white",
+        height: "100%",
+        backgroundColor: "#141414",
         flex: 1
     },
     margin: {
@@ -17,10 +17,13 @@ export default StyleSheet.create({
     maxedIconSmall: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
+    },
+    whiteText: {
+        color: "#ffffff"
     },
     grayButton: {
         backgroundColor: "#303030"

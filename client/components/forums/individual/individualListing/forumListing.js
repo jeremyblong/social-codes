@@ -499,8 +499,8 @@ constructor(props) {
                                 photo: true
                             })}
                            <View style={{ flexDirection: "column", marginLeft: 15 }}>
-                                <Text style={styles.posterText}>Posted by <Text style={{ color: "darkred" }}>{forum.firstName} {forum.lastName}</Text></Text>
-                                <Text style={styles.posterText}>Also known as <Text style={{ color: "darkred" }}>{forum.username}</Text></Text>
+                                <Text style={styles.posterText}>Posted by <Text style={{ color: "#0057ff" }}>{forum.firstName} {forum.lastName}</Text></Text>
+                                <Text style={styles.posterText}>Also known as <Text style={{ color: "#0057ff" }}>{forum.username}</Text></Text>
                            </View>
                         </View>
                         <View>
@@ -510,8 +510,8 @@ constructor(props) {
                         <Card>
                             <CardItem style={{ width: width, marginLeft: -20 }}>
                                 <Body>
-                                <Footer style={{ width: width }}>
-                                    <FooterTab style={{ width: width }}>
+                                <Footer style={{ width: "100%" }}>
+                                    <FooterTab style={{ width: "100%" }}>
                                         {forum.emojiResponses.includes(selectedEmoji) ? <Popover  
                                             onRequestClose={() => {
                                                 this.setState({
@@ -525,7 +525,7 @@ constructor(props) {
                                                     this.setState({
                                                         isVisible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffd530" }}>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
                                                     <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
                                                     <Text style={{ color: "darkred", fontWeight: "bold" }}>Un-Like</Text>
                                                 </Button>
@@ -555,8 +555,8 @@ constructor(props) {
                                                         isVisible: true
                                                     })
                                                 }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                    <Text style={{ color: "#fdd530" }}>Like</Text>
+                                                    <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                    <Text style={{ color: "#ffffff" }}>Like</Text>
                                                 </Button>
                                             )}>
                                             <View style={styles.popoverTwo}>
@@ -636,8 +636,8 @@ constructor(props) {
                                         <Button onPress={() => {
                                             this.rawBottomSheet.current.open();
                                         }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                            <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                            <Text style={styles.goldText}>Comment</Text>
+                                            <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                            <Text style={styles.whiteText}>Comment</Text>
                                         </Button>
                                         
                                     </FooterTab>
@@ -645,6 +645,8 @@ constructor(props) {
                                 </Body>
                             </CardItem>
                         </Card>
+                    </View>
+                    <View style={{ backgroundColor: "#ededed", width: "100%", height: "100%", flex: 1, padding: 10 }}>
                         <Markdown onLinkPress={(link) => {
                             console.log("link", link); 
 
@@ -807,16 +809,16 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                            <Icon style={{ color: "#ffffff" }} name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>{forum !== null ? forum.username : "-------------"}</Title>
-                        <Subtitle style={styles.goldText}>Individual forum listing</Subtitle>
+                        <Title style={styles.whiteText}>{forum !== null ? forum.username : "-------------"}</Title>
+                        <Subtitle style={styles.whiteText}>Individual forum listing</Subtitle>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon style={{ color: "red" }} name='heart' />
+                            <Icon style={{ color: "#ffffff" }} name='heart' />
                         </Button>
                     </Right>
                 </Header>

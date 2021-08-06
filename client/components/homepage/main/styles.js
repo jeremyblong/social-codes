@@ -461,7 +461,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         width: 125,
         flexDirection: "row",
-        borderColor: "#fdd530",
+        borderColor: "#ffffff",
         justifyContent: "center",
         alignItems: "center", 
         alignContent: "center"
@@ -500,7 +500,7 @@ export default StyleSheet.create({
         width: 25,
         height: 25,
         marginLeft: 5,
-        tintColor: "#fdd530"
+        tintColor: "#ffffff"
     },
     fullName: {
         fontWeight: "bold",

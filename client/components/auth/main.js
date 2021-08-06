@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, Platform } from "react
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import styles from "./styles.js";
 import { Header, Left, Body, Right, Title, Subtitle, Button, Content, Input, Item } from 'native-base';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import axios from "axios";
 import Config from "react-native-config";
 import { addSignupData, userSignedIn, signedInUserData } from "../../actions/auth/signup.js";
@@ -178,7 +178,7 @@ const FirstRoute = (props) => {
             </View> */}
         </Content>
         <View style={styles.bottomed}>
-            {calculate() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Join & Continue To Next Page</AwesomeButtonCartman> : <AwesomeButtonCartman backgroundProgress={"black"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} type={"anchor"} onPress={handleSubmissionNextPage} stretch={true}>Join & Continue To Next Page</AwesomeButtonCartman>}
+            {calculate() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Join & Continue To Next Page</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} progress type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={handleSubmissionNextPage} stretch={true}>Join & Continue To Next Page</AwesomeButtonBlue>}
         </View>
     </View> 
     );
@@ -283,9 +283,9 @@ const SecondRoute = (props) => {
             </Content>
             
             <View style={styles.bottomed}>
-                {calculateLogin() ? <AwesomeButtonCartman style={{ zIndex: -1 }} type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonCartman> : <AwesomeButtonCartman style={{ zIndex: -1 }} progress type={"anchor"} backgroundColor={"#ffd530"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
+                {calculateLogin() ? <AwesomeButtonBlue style={{ zIndex: -1 }} type={"disabled"} onPress={() => {}} stretch={true}>Sign-in</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} progress type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={(next) => {
                     handleSubmission(next);
-                }} stretch={true}>Sign-in</AwesomeButtonCartman>}
+                }} stretch={true}>Sign-in</AwesomeButtonBlue>}
             </View>
             <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>
@@ -330,7 +330,7 @@ const AuthenticationPanelHelper = (props) => {
                     </Button>
                 </Left>
             <Body>
-                <Title style={Platform.OS === 'android' ? { color: '#fdd530'} : {}}>Signup/Signin</Title>
+                <Title style={Platform.OS === 'android' ? { color: '#ffffff'} : {}}>Signup/Signin</Title>
                 {Platform.OS === 'ios' ? <Subtitle>Signup or sign-in...</Subtitle> : null}
             </Body>
                 <Right />

@@ -19,7 +19,7 @@ export default StyleSheet.create({
         backgroundColor: "#303030"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     margin: {
         margin: 15

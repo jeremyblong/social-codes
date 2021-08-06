@@ -6,11 +6,11 @@ export default StyleSheet.create({
     container: {
         width,
         minHeight: height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     hr: {
         width: "100%",
@@ -50,10 +50,12 @@ export default StyleSheet.create({
         flexDirection: "row"
     },
     likes: {
-        fontSize: 30
+        fontSize: 30,
+        color: "#ffffff"
     },
     voteIcon: {
         maxWidth: 45,
+        tintColor: "#ffffff",
         maxHeight: 45
     },
     margin: {
@@ -63,7 +65,10 @@ export default StyleSheet.create({
         width: "100%",
         height: 225,
         borderWidth: 2,
-        borderColor: "grey"
+        borderColor: "#ffffff"
+    },
+    markdown: {
+        color: "#ffffff" 
     },
     popoverTwo: {
         width: width * 0.95,
@@ -73,7 +78,8 @@ export default StyleSheet.create({
     },
     date: {
         fontWeight: "bold",
-        marginTop: 10
+        marginTop: 10,
+        color: "#ffffff"
     },
     lottiContainer: {
         justifyContent: "center",
@@ -91,7 +97,7 @@ export default StyleSheet.create({
     },
     columnSmall: {
         borderRightWidth: 2,
-        borderRightColor: "black",
+        borderRightColor: "#ffffff",
         width: "20%",
         height: 220,
         justifyContent: "center",
@@ -115,13 +121,14 @@ export default StyleSheet.create({
     },
     posterText: {
         fontWeight: "bold",
+        color: "#ffffff",
         fontSize: 15
     },
     title: {
         textAlign: "left",
         fontSize: 16,
         marginBottom: 5,
-        color: "darkred",
+        color: "#0057ff",
         fontWeight: "bold"
     },
     positionTouchable: {
@@ -161,13 +168,17 @@ export default StyleSheet.create({
         maxHeight: 30
     },
     likesTwo: {
-        fontSize: 22
+        fontSize: 22,
+        color: "#141414"
     },
     contentHeader: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         marginBottom: 6
     },
+    comment: {
+ 
+    },  
     highlighter: {
         maxHeight: 550
     },

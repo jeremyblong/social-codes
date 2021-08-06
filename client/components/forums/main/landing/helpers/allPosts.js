@@ -138,7 +138,7 @@ constructor(props) {
                                         }) : null}
                                     </View>
                                     <View style={styles.largeRow}>
-                                        <Text style={{ color: "grey", fontSize: 13 }}>{moment(item.systemDate).fromNow()} by <Text style={{ fontWeight: "bold", color: "darkred" }}>{item.firstName} {item.lastName}</Text></Text>
+                                        <Text style={{ color: "grey", fontSize: 13 }}>{moment(item.systemDate).fromNow()} by <Text style={{ fontWeight: "bold", color: "#0057ff" }}>{item.firstName} {item.lastName}</Text></Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

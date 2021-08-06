@@ -53,7 +53,7 @@ constructor(props) {
                                 <Button onPress={() => {
                                     this.props.props.navigation.goBack();
                                 }} transparent>
-                                    <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                                    <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                                 </Button>
                             </Left>
                             <Body>
@@ -66,7 +66,7 @@ constructor(props) {
                                         menuOpen: !this.state.menuOpen
                                     })
                                 }} transparent>
-                                    <Icon style={{ color: "#ffd530" }} name='menu' />
+                                    <Icon style={{ color: "#ffffff" }} name='menu' />
                                 </Button>
                             </Right>
                         </Header>

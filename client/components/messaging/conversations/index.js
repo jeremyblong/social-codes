@@ -100,7 +100,7 @@ constructor (props) {
                                 <Button onPress={() => {
                                     this.props.props.navigation.push("homepage");
                                 }} transparent>
-                                    <Image source={require("../../../assets/icons/go-back.png")} style={[styles.smallerIcon, { tintColor: "#ffd530" }]} />
+                                    <Image source={require("../../../assets/icons/go-back.png")} style={[styles.smallerIcon, { tintColor: "#ffffff" }]} />
                                 </Button>
                             </Left>
                             <Left>

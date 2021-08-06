@@ -10,7 +10,7 @@ export default StyleSheet.create({
         backgroundColor: "white"
     },
     headerIcon: {
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxWidth: 35,
         maxHeight: 35
     },  
@@ -18,7 +18,7 @@ export default StyleSheet.create({
         margin: 15
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     thumbnailVideo: {
         minWidth: 55,
@@ -45,7 +45,7 @@ export default StyleSheet.create({
     greyButton: {
         backgroundColor: "#303030",
         width: 125,
-        borderColor: "#ffd530",
+        borderColor: "#ffffff",
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",

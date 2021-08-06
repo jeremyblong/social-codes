@@ -8,7 +8,7 @@ import styles from './styles.js';
 import DialogInput from 'react-native-dialog-input';
 import Modal from 'react-native-modal';
 import RNPickerSelect from 'react-native-picker-select';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import uuid from 'react-native-uuid';
 import axios from "axios";
 import Config from "react-native-config";
@@ -140,11 +140,11 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                                 <Textarea value={comment} onChangeText={(value) => {
                                     setComment(value);
                                 }} rowSpan={8} style={styles.bareTextArea} bordered placeholder="Enter your comment for this code snippet here.." placeholderTextColor={"grey"} />
-                                <AwesomeButtonCartman type={"anchor"} textColor={"white"} style={{ marginTop: 20 }} onPress={() => {
+                                <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                     setIsPopupVisible(false);
 
-                                    addToSnippets();
-                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonCartman>
+                                    addToSnippets();        
+                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonBlue>
                             </ScrollView>
                             </View>
                     </Modal>
@@ -183,12 +183,12 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                             <Button onPress={() => {
                                 rawBottomSheet.current.close();
                             }} transparent>
-                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                                <Icon style={{ color: "#ffffff" }} name='arrow-back' />
                             </Button>
                         </Left>
                         <Body>
-                            <Title style={styles.goldText}>Comment</Title>
-                            <Subtitle style={styles.goldText}>Leave a comment</Subtitle>
+                            <Title style={styles.whiteText}>Comment</Title>
+                            <Subtitle style={styles.whiteText}>Leave a comment</Subtitle>
                         </Body>
                         <Right>
                          
@@ -266,9 +266,9 @@ const LeaveACommentForumPostHelper = ({ rawBottomSheet, unique_id, forum, addFor
                                         </View>
                                     );
                                 }) : null}
-                                <AwesomeButtonCartman style={{ marginTop: 30 }} type={"anchor"} textColor={"white"} onPress={() => {
+                                <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 30 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                     handleCommentSubmission();
-                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonCartman>
+                                }} stretch={true}>Submit Code Snippet & Comment</AwesomeButtonBlue>
                         </View>
                     </ScrollView>
             </RBSheet>

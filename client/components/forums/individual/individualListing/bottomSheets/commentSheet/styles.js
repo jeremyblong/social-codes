@@ -22,8 +22,8 @@ export default StyleSheet.create({
         height: 45,
         zIndex: 45
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     label: {
         fontSize: 18, //
@@ -65,7 +65,7 @@ export default StyleSheet.create({
     },
     textarea: {
         borderWidth: 2,
-        borderColor: "blue"
+        borderColor: "#141414"
     },
     bareTextArea: {
         width: "95%",

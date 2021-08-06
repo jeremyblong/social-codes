@@ -10,7 +10,7 @@ export default StyleSheet.create({
     headerText: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#ffd530"
+        color: "#ffffff"
     },
     headerTextSub: {
         fontWeight: "bold", 

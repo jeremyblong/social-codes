@@ -7,7 +7,7 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         flex: 1
     },
     grayButton: {
@@ -19,22 +19,23 @@ export default StyleSheet.create({
     milestoneText: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "#ededed",
         textAlign: "left"
     },
     maxedIconSmall: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     headerIcon: {
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxWidth: 35,
         maxHeight: 35
     }, 
     blackHr: {
-        borderBottomWidth: 2,
-        borderBottomColor: "black",
-        width: "100%",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ededed",
+        width: "70%",
         marginTop: 35,
         marginBottom: 35
     },
@@ -42,13 +43,14 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         textAlign: "center",
+        color: "#ededed",
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 25
     },
     thinBlackHr: {
         borderBottomWidth: 2,
-        borderBottomColor: "black",
+        borderBottomColor: "#ededed",
         width: "100%",
         marginTop: 10,
         marginBottom: 10
@@ -60,23 +62,27 @@ export default StyleSheet.create({
     },  
     detailsTitle: {
         textDecorationLine: "underline",
-        textDecorationColor: "#ffd530",
+        textDecorationColor: "#ffffff",
+        color: "#ededed",
         textAlign: "center",
         fontSize: 25
     },  
+    note: {
+        color: "#ffffff"
+    },
     hr: {
-        borderBottomWidth: 2,
-        borderBottomColor: "white",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ededed",
         marginTop: 20,
         marginBottom: 20,
         width: 250
     }, 
     hrCustom: {
-        borderBottomWidth: 2,
-        borderBottomColor: "black",
+        borderBottomWidth: 1,
+        borderBottomColor: "#ededed",
         marginTop: 10,
         marginBottom: 10,
-        width: "100%"
+        width: 250
     },
     priceText: {
         color: "white",
@@ -94,7 +100,7 @@ export default StyleSheet.create({
         backgroundColor: "black",
         width: "100%",
         minWidth: "100%",
-        borderColor: "#ffd530",
+        borderColor: "#ffffff",
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -104,10 +110,12 @@ export default StyleSheet.create({
         padding: 20,
         margin: 0,
         borderWidth: 2,
-        borderColor: "#303030"
+        borderColor: "#303030",
+        backgroundColor: "#303030"
     },
     totalLeft: {
-        fontSize: 20
+        fontSize: 20,
+        color: "#ededed"
     },
     margin: {
         margin: 20
@@ -127,9 +135,9 @@ export default StyleSheet.create({
         alignItems: "center",
         alignContent: "center",
         borderWidth: 2,
-        borderColor: "#ffd530"
+        borderColor: "#ffffff"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     }
 })

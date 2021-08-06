@@ -6,7 +6,7 @@ import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 import axios from "axios";
 import Config from "react-native-config";
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 
 
 const { height, width } = Dimensions.get("window");
@@ -116,7 +116,7 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
@@ -159,8 +159,8 @@ constructor (props) {
                                                 }, () => {
                                                     this.checkUsername(suggestion);
                                                 })
-                                            }} style={{ padding: 10, margin: 5, backgroundColor: "#d6f5ff" }} bordered>
-                                                <Text style={{ color: "#007aff" }}>{suggestion}</Text>
+                                            }} style={{ padding: 10, margin: 5, backgroundColor: "#ededed" }} bordered light>
+                                                <Text style={{ color: "#141414" }}>{suggestion}</Text>
                                             </Button>
                                         </Fragment>
                                     );
@@ -174,8 +174,8 @@ constructor (props) {
                                                 }, () => {
                                                     this.checkUsername(suggestion);
                                                 })
-                                            }} style={{ padding: 10, margin: 5 }} bordered>
-                                                <Text style={{ color: "#007aff" }}>{suggestion}</Text>
+                                            }} style={{ padding: 10, margin: 5 }} bordered light>
+                                                <Text style={{ color: "#ffffff" }}>{suggestion}</Text>
                                             </Button>
                                         </Fragment>
                                     );
@@ -185,7 +185,7 @@ constructor (props) {
                     </View>
                     <View style={styles.bottomContainer}>
                         <View style={{ margin: 10 }}>
-                           {this.renderConditional() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman>:  <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
+                           {this.renderConditional() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue>:  <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleContinuation} stretch={true}>Join & Continue To Next Page</AwesomeButtonBlue>}
                         </View>
                     </View>
                 </View>

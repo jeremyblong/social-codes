@@ -31,7 +31,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
             const customer = await stripe.customers.create({
                 description: `Freelancer named ${firstName.toLowerCase()} ${lastName.toLowerCase()}`,
-                email: email ? email.toLowerCase() : loginEmail.toLowerCase(),
+                email: email ? email.trim().toLowerCase() : loginEmail.trim().toLowerCase(),
                 name: `${firstName.toLowerCase()} ${lastName.toLowerCase()}`,
                 phone: phoneNumber
             }).then((account) => {

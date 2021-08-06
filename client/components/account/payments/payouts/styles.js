@@ -7,10 +7,10 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 40,
         maxHeight: 40,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     icon: {
         maxWidth: 45,

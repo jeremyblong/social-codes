@@ -4,7 +4,7 @@ const { height, width } = Dimensions.get("window");
 
 export default StyleSheet.create({
     container:{
-        backgroundColor: '#303030',
+        backgroundColor: '#141414',
         width,
         minHeight: height,
         height,
@@ -13,7 +13,7 @@ export default StyleSheet.create({
     maxedIconSmall: {
         maxHeight: 35,
         maxWidth: 35,
-        tintColor: "#fdd530"
+        tintColor: "#ffffff"
     },
     absoluteBadge: {
         top: 20

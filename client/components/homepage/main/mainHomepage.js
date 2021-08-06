@@ -1230,7 +1230,7 @@ constructor () {
                                         <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030", paddingTop: 15, paddingBottom: 10, height: 100 }}>
                                             <Left>
                                                 <Button transparent>
-                                                    <Image source={require("../../../assets/images/social_code_long.png")} style={styles.maxedIconLogo} />
+                                                    <Image source={require("../../../assets/images/banner_big_white.png")} style={styles.maxedIconLogo} />
                                                 </Button>
                                             </Left>
                                             <Body>
@@ -1239,41 +1239,41 @@ constructor () {
                                             <Right style={{ position: "absolute", right: -15 }}>
                                                 
                                                 <Button transparent>
-                                                    <Icon style={{ color: "#fdd530" }} name='search' />
+                                                    <Icon style={{ color: "#ffffff" }} name='search' />
                                                 </Button>
                                                 <Button button={true} onPress={() => {
                                                     this.props.props.navigation.push("messaging-conversations");
                                                 }} transparent>
-                                                    <Image source={require("../../../assets/icons/chat.png")} style={[styles.maxedIcon, { tintColor: "#fdd530" }]} />
+                                                    <Image source={require("../../../assets/icons/chat.png")} style={[styles.maxedIcon, { tintColor: "#ffffff" }]} />
                                                 </Button>
                                             </Right>
                                         </Header>
                                         <Footer style={{ borderColor: "transparent", height: 65 }}>
                                             <FooterTab style={{ backgroundColor: "#303030" }}>
-                                                <Button style={{ backgroundColor: "#fdd530" }} active>
+                                                <Button style={{ backgroundColor: "#ffffff" }} active>
                                                     <Image source={require("../../../assets/icons/home.png")} style={[styles.maxedIconSmall, { tintColor: "#303030" }]} />
                                                 </Button>
                                                 <Button button={true} onPress={() => {
                                                     this.props.props.navigation.push("jobs-homepage");
                                                 }}>
-                                                    <Image source={require("../../../assets/icons/seeker.png")} style={[styles.maxedIconSmallCustom, { tintColor: "#fdd530" }]} />
+                                                    <Image source={require("../../../assets/icons/seeker.png")} style={[styles.maxedIconSmallCustom, { tintColor: "#ffffff" }]} />
                                                 </Button>
                                                 <Button button={true} onPress={() => {
                                                     this.props.props.navigation.push("people-list-all");
                                                 }}>
-                                                    <Image source={require("../../../assets/icons/people.png")} style={[styles.maxedIconSmall, { tintColor: "#fdd530" }]} />
+                                                    <Image source={require("../../../assets/icons/people.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
                                                 </Button>
                                                 <Button button={true} onPress={() => {
                                                     this.props.props.navigation.push("notifications");
                                                 }}>
-                                                    <Image source={require("../../../assets/icons/bell.png")} style={[styles.maxedIconSmall, { tintColor: "#fdd530" }]} />
+                                                    <Image source={require("../../../assets/icons/bell.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
                                                     {/* <LottieView source={require('../../../assets/icons/notify-gold.json')} autoPlay loop /> */}
                                                     <Badge style={styles.absoluteBadge}><Text style={{ color: "white", fontSize: 10 }}>51</Text></Badge>
                                                 </Button>
                                                 <Button onPress={() => {
                                                     this.props.props.navigation.push("navigation-menu-main");
                                                 }}>
-                                                    <Image source={require("../../../assets/icons/menu.png")} style={[styles.maxedIconSmall, { tintColor: "#fdd530" }]} />
+                                                    <Image source={require("../../../assets/icons/menu.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
                                                 </Button>
                                             </FooterTab>
                                         </Footer>
@@ -1282,19 +1282,19 @@ constructor () {
                                             <FooterTab>
                                                 <Button style={styles.greyButton}>
                                                     <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/video-on.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#fdd530" }]} />
+                                                        <Image source={require("../../../assets/icons/video-on.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
                                                         <Text style={styles.iconText}>Go Live</Text>
                                                     </View>
                                                 </Button>
                                                 <Button style={styles.greyButton}>
                                                     <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/gallery.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#fdd530" }]} />
+                                                        <Image source={require("../../../assets/icons/gallery.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
                                                         <Text style={styles.iconText}>Photo</Text>
                                                     </View>
                                                 </Button>
                                                 <Button style={styles.greyButton}>
                                                     <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/job.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#fdd530" }]} />
+                                                        <Image source={require("../../../assets/icons/job.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
                                                         <Text style={styles.iconText}>Active Jobs</Text>
                                                     </View>
                                                 </Button>
@@ -1310,7 +1310,7 @@ constructor () {
                                                 
                                                 this.RBSheet.open();
                                             }} style={styles.columnLarge}>
-                                                <View style={{ height: 45, borderColor: '#ffd530', borderWidth: 1, borderRadius: 5, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
+                                                <View style={{ height: 45, borderColor: '#ffffff', borderWidth: 1, borderRadius: 5, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
                                                     <Text style={{ marginTop: 12, fontSize: 15, color: "white" }}>What's got ya thinkin'...</Text>
                                                 </View>
                                             </TouchableOpacity>
@@ -1369,7 +1369,7 @@ constructor () {
                                                                     this.setState({
                                                                         [`visible-${index}`]: true
                                                                     })
-                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#fdd530" }}>
+                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
                                                                     <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
                                                                     <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
                                                                 </Button>
@@ -1399,8 +1399,8 @@ constructor () {
                                                                         [`visible-${index}`]: true
                                                                     })
                                                                 }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                    <Text style={{ color: "#fdd530" }}>Like</Text>
+                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                    <Text style={{ color: "#ffffff" }}>Like</Text>
                                                                 </Button>
                                                             )}>
                                                             <View style={styles.popoverTwo}>
@@ -1480,8 +1480,8 @@ constructor () {
                                                         <Button onPress={() => {
                                                             this.handleRedirectToIndividualPage(post);
                                                         }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                            <Text style={{ color: "#fdd530" }}>Comment</Text>
+                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                            <Text style={{ color: "#ffffff" }}>Comment</Text>
                                                         </Button>
                                                         <Button onPress={() => {
                                                             this.setState({
@@ -1492,8 +1492,8 @@ constructor () {
                                                                 }, 650)
                                                             })
                                                         }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                            <Text style={{ color: "#fdd530" }}>Share</Text>
+                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                            <Text style={{ color: "#ffffff" }}>Share</Text>
                                                         </Button>
                                                     </FooterTab>
                                                 </Footer>
@@ -1538,7 +1538,7 @@ constructor () {
                                                             onPressHighlightedText={(username) => {
                                                                 this.redirectBasedOnUsername(username);
                                                             }}
-                                                            highlightStyle={{backgroundColor: '#fdd530'}}
+                                                            highlightStyle={{backgroundColor: '#ffffff'}}
                                                             searchWords={post.taggedUsers}
                                                             textToHighlight={post.text}
                                                         /> : <Text style={styles.cardText}>
@@ -1596,7 +1596,7 @@ constructor () {
                                                 <CardItem style={{ width: width, marginLeft: -20 }}>
                                                     <Body>
                                                     <Footer style={{ width: width }}>
-                                                        <FooterTab style={{ width: width, backgroundColor: "#fdd530" }}>
+                                                        <FooterTab style={{ width: width, backgroundColor: "#ffffff" }}>
                                                             {post.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
                                                                 onRequestClose={() => {
                                                                     this.setState({
@@ -1640,8 +1640,8 @@ constructor () {
                                                                             [`visible-${index}`]: true
                                                                         })
                                                                     }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                        <Text style={{ color: "#fdd530" }}>Like</Text>
+                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                        <Text style={{ color: "#ffffff" }}>Like</Text>
                                                                     </Button>
                                                                 )}>
                                                                 <View style={styles.popoverTwo}>
@@ -1721,8 +1721,8 @@ constructor () {
                                                             <Button onPress={() => {
                                                                 this.handleRedirectToIndividualPage(post);
                                                             }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                <Text style={{ color: "#fdd530" }}>Comment</Text>
+                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                <Text style={{ color: "#ffffff" }}>Comment</Text>
                                                             </Button>
                                                             <Button onPress={() => {
                                                                 this.setState({
@@ -1733,8 +1733,8 @@ constructor () {
                                                                     }, 650)
                                                                 })
                                                             }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530"}} />
-                                                                <Text style={{ color: "#fdd530" }}>Share</Text>
+                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff"}} />
+                                                                <Text style={{ color: "#ffffff" }}>Share</Text>
                                                             </Button>
                                                         </FooterTab>
                                                     </Footer>
@@ -1773,7 +1773,7 @@ constructor () {
                                                             onPressHighlightedText={(username) => {
                                                                 this.redirectBasedOnUsername(username);
                                                             }}
-                                                            highlightStyle={{backgroundColor: '#fdd530'}}
+                                                            highlightStyle={{backgroundColor: '#ffffff'}}
                                                             searchWords={post.taggedUsers}
                                                             textToHighlight={post.text}
                                                         /> : <Text style={styles.cardText}>
@@ -1836,7 +1836,7 @@ constructor () {
                                                                                     this.setState({
                                                                                         [`visible-${index}`]: true
                                                                                     })
-                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#fdd530" }}>
+                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
                                                                                     <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
                                                                                     <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
                                                                                 </Button>
@@ -1866,8 +1866,8 @@ constructor () {
                                                                                         [`visible-${index}`]: true
                                                                                     })
                                                                                 }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                                    <Text style={{ color: "#fdd530" }}>Like</Text>
+                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                    <Text style={{ color: "#ffffff" }}>Like</Text>
                                                                                 </Button>
                                                                             )}>
                                                                             <View style={styles.popoverTwo}>
@@ -1947,8 +1947,8 @@ constructor () {
                                                                         <Button onPress={() => {
                                                                             this.handleRedirectToIndividualPage(post);
                                                                         }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                            <Text style={{ color: "#fdd530" }}>Comment</Text>
+                                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                            <Text style={{ color: "#ffffff" }}>Comment</Text>
                                                                         </Button>
                                                                         <Button onPress={() => {
                                                                             this.setState({
@@ -1959,8 +1959,8 @@ constructor () {
                                                                                 }, 650)
                                                                             })
                                                                         }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#fdd530" }} />
-                                                                            <Text style={{ color: "#fdd530" }}>Share</Text>
+                                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                            <Text style={{ color: "#ffffff" }}>Share</Text>
                                                                         </Button>
                                                                     </FooterTab>
                                                                 </Footer>
@@ -2080,7 +2080,7 @@ constructor () {
                                         </Button>
                                     </Left>
                                     <Body>
-                                        <Title style={{ color: "#ffd530" }}>Create Post</Title>
+                                        <Title style={{ color: "#ffffff" }}>Create Post</Title>
                                     </Body>
                                     <Right>
                                         <Button onPress={() => {
@@ -2406,9 +2406,9 @@ constructor () {
             return (
                 <Fragment>
                     <Video  
-                        resizeMode="cover"
+                        resizeMode="stretch"
                         repeat
-                        source={require("../../../assets/video/loadingVideo.mp4")}
+                        source={require("../../../assets/video/splash.mp4")}
                         autoplay={true}
                         ref={(ref) => {
                             this.player = ref

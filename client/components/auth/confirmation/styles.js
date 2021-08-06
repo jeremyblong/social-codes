@@ -7,16 +7,16 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     container: {
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         flex: 1
     },
     margin: {
@@ -24,10 +24,11 @@ export default StyleSheet.create({
     },
     header: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     greyText: {
-        color: "grey"
+        color: "#cccccc"
     },
     bottomContainer: {
         backgroundColor: "white"
@@ -40,9 +41,11 @@ export default StyleSheet.create({
     },
     emailIcon: {
         maxWidth: 125,
-        maxHeight: 125
+        maxHeight: 125,
+        tintColor: "#ffffff"
     },
     emailText: {
-        fontSize: 16
+        fontSize: 16,
+        color: "#ffffff"
     }
 })

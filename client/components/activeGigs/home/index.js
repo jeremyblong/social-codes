@@ -10,6 +10,7 @@ import Config from "react-native-config";
 import axios from "axios";
 import { connect } from "react-redux";
 import Video from "react-native-video";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,7 +20,8 @@ constructor(props) {
 
     this.state = {
         menuOpen: false,
-        user: null
+        user: null,
+        ready: false
     }
 }
     handleSearch = () => {
@@ -41,7 +43,8 @@ constructor(props) {
 
                 this.setState({
                     activeJobs: activeHiredJobs,
-                    user
+                    user,
+                    ready: true
                 })
             } else {
                 console.log("Err", res.data);
@@ -51,6 +54,8 @@ constructor(props) {
         })
     }
     render() {
+        const { ready } = this.state;
+
         const menu = <Side props={this.props} />;
         return (
            <Fragment>
@@ -60,7 +65,7 @@ constructor(props) {
                                 <Button onPress={() => {
                                     this.props.props.navigation.goBack();
                                 }} transparent>
-                                    <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                                    <Icon style={{ color: "#ffffff" }} name='arrow-back' />
                                 </Button>
                             </Left>
                             <Body>
@@ -73,58 +78,121 @@ constructor(props) {
                                         menuOpen: !this.state.menuOpen
                                     })
                                 }} transparent>
-                                    <Icon style={{ color: "#ffd530" }} name='menu' />
+                                    <Icon style={{ color: "#ffffff" }} name='menu' />
                                 </Button>
                             </Right>
                         </Header>
                         <View contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
-                            <List>
-                            <FlatList  
-                                style={{ minHeight: height }}
-                                data={this.state.activeJobs}
-                                renderItem={({item}) => {
-                                    console.log("item", item);
-                                    return (
-                                        <ListItem button={true} onPress={() => {
-                                            this.props.props.navigation.push("individual-active-gig-manage", { item });
-                                        }} thumbnail>
-                                            <Left>
-                                            {item.type === "video" ? <Video source={{uri: item.photo }} 
-                                            ref={(ref) => {
-                                                this.player = ref
-                                            }}
-                                            style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: item.photo }} />}
-                                            </Left>
-                                            <Body>
-                                                <Text>{item.otherUserFirstName} {item.otherUserLastName}</Text>
-                                                <Text note numberOfLines={1}>{item.date}</Text>
-                                            </Body>
-                                            <Right>
-                                                <Button onPress={() => {
-                                                    this.props.props.navigation.push("individual-active-gig-manage", { item });
-                                                }} transparent>
-                                                    <Text>View</Text>
-                                                </Button>
-                                            </Right>
-                                        </ListItem>
-                                    );
-                                }}
-                                keyExtractor={item => item.id}
-                                ListHeaderComponent={
-                                    <SearchBar
-                                        ref={(ref) => this.searchBar = ref}
-                                        placeholder="Search for job title's..."
-                                        onChangeText={(value) => {
-                                            this.setState({
-                                                searchValue: value
-                                            })
-                                        }}
-                                        onSearchButtonPress={this.handleSearch}
-                                        onCancelButtonPress={this.handleCancellation}
+                            {ready === true ? <List>
+                                <FlatList  
+                                    style={{ minHeight: height }}
+                                    data={this.state.activeJobs}
+                                    renderItem={({item}) => {
+                                        console.log("item", item);
+                                        return (
+                                            <ListItem button={true} onPress={() => {
+                                                this.props.props.navigation.push("individual-active-gig-manage", { item });
+                                            }} thumbnail>
+                                                <Left>
+                                                {item.type === "video" ? <Video source={{uri: item.photo }} 
+                                                ref={(ref) => {
+                                                    this.player = ref
+                                                }}
+                                                style={styles.thumbnailVideo} /> : <Thumbnail style={styles.thumbnailVideo} source={{uri: item.photo }} />}
+                                                </Left>
+                                                <Body>
+                                                    <Text style={styles.whiteText}>{item.otherUserFirstName} {item.otherUserLastName}</Text>
+                                                    <Text style={styles.whiteText} note numberOfLines={1}>{item.date}</Text>
+                                                </Body>
+                                                <Right>
+                                                    <Button onPress={() => {
+                                                        this.props.props.navigation.push("individual-active-gig-manage", { item });
+                                                    }} transparent>
+                                                        <Text style={styles.whiteText}>View</Text>
+                                                    </Button>
+                                                </Right>
+                                            </ListItem>
+                                        );
+                                    }}
+                                    keyExtractor={item => item.id}
+                                    ListHeaderComponent={
+                                        <View style={{ backgroundColor: "#ffffff" }}>
+                                            <SearchBar  
+                                                ref={(ref) => this.searchBar = ref}
+                                                placeholder="Search for job title's..."
+                                                onChangeText={(value) => {
+                                                    this.setState({
+                                                        searchValue: value
+                                                    })
+                                                }}
+                                                onSearchButtonPress={this.handleSearch}
+                                                onCancelButtonPress={this.handleCancellation}
+                                            />
+                                        </View>
+                                    }
+                                />   
+                            </List> : <View style={{ margin: 15 }}>
+                                <SkeletonPlaceholder>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                                    <View style={{ marginLeft: 20 }}>
+                                    <View style={{ width: width * 0.70, height: 20, borderRadius: 4 }} />
+                                    <View
+                                        style={{ marginTop: 6, width: width * 0.55, height: 20, borderRadius: 4 }}
                                     />
-                                }
-                            />   
-                        </List>     
+                                    </View>
+                                </View>
+                                </SkeletonPlaceholder>
+                                <View style={{ marginTop: 20 }} />
+                                <SkeletonPlaceholder>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                                    <View style={{ marginLeft: 20 }}>
+                                    <View style={{ width: width * 0.70, height: 20, borderRadius: 4 }} />
+                                    <View
+                                        style={{ marginTop: 6, width: width * 0.55, height: 20, borderRadius: 4 }}
+                                    />
+                                    </View>
+                                </View>
+                                </SkeletonPlaceholder>
+                                <View style={{ marginTop: 20 }} />
+                                <SkeletonPlaceholder>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                                    <View style={{ marginLeft: 20 }}>
+                                    <View style={{ width: width * 0.70, height: 20, borderRadius: 4 }} />
+                                    <View
+                                        style={{ marginTop: 6, width: width * 0.55, height: 20, borderRadius: 4 }}
+                                    />
+                                    </View>
+                                </View>
+                                </SkeletonPlaceholder>
+                                <View style={{ marginTop: 20 }} />
+                                <SkeletonPlaceholder>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                                    <View style={{ marginLeft: 20 }}>
+                                    <View style={{ width: width * 0.70, height: 20, borderRadius: 4 }} />
+                                    <View
+                                        style={{ marginTop: 6, width: width * 0.55, height: 20, borderRadius: 4 }}
+                                    />
+                                    </View>
+                                </View>
+                                </SkeletonPlaceholder>
+                                <View style={{ marginTop: 20 }} />
+                                <SkeletonPlaceholder>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                                    <View style={{ marginLeft: 20 }}>
+                                    <View style={{ width: width * 0.70, height: 20, borderRadius: 4 }} />
+                                    <View
+                                        style={{ marginTop: 6, width: width * 0.55, height: 20, borderRadius: 4 }}
+                                    />
+                                    </View>
+                                </View>
+                                </SkeletonPlaceholder>
+                                <View style={{ marginTop: 20 }} />
+                            </View>}   
                         </View>
                         <Footer style={{ borderColor: "transparent", backgroundColor: "#303030" }}>
                             <FooterTab>

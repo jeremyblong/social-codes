@@ -7,17 +7,26 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white"
+        backgroundColor: "#303030"
     },
     headerIcon: {
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxWidth: 35,
         maxHeight: 35
     },  
+    list: {
+        backgroundColor: "#303030"
+    },
     margin: {
         margin: 15
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
+    },
+    listitem: {
+        backgroundColor: "#303030"
+    },
+    whiteText: {
+        color: "#ffffff"
     }
 })

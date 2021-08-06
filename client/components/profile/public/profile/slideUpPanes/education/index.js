@@ -117,18 +117,18 @@ const EducationSlideUpPaneHelper = ({ educationPaneRef, unique_id }) => {
                 }}
             >
                 
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             educationPaneRef.current.close();
                         }} transparent>
-                            <Icon style={{ color: "black" }} name="arrow-back" />
-                            {Platform.OS === "ios" ? <NativeText style={{ color: "black" }}>Back</NativeText> : null}
+                            <Icon style={{ color: "#ffffff" }} name="arrow-back" />
+                            {Platform.OS === "ios" ? <NativeText style={{ color: "#ffffff" }}>Back</NativeText> : null}
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Education</Title>
-                        <Subtitle>Add Education & more</Subtitle>
+                        <Title style={styles.whiteText}>Education</Title>
+                        <Subtitle style={styles.whiteText}>Add Education & more</Subtitle>
                     </Body>
                     <Right>
                         

@@ -6,9 +6,15 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import Loading from "./loading.js";
 import { GoogleSignin } from '@react-native-community/google-signin';
 import * as Sentry from "@sentry/react-native";
-
+import { setCustomText } from 'react-native-global-props';
 
 GoogleSignin.configure({ iosClientId: '' });
+
+const customTextProps = { 
+	style: { 
+	  fontFamily: "ProximaNova-Regular"
+	}
+};
 
 class MainComponent extends Component {
 constructor(props) {
@@ -16,6 +22,8 @@ constructor(props) {
 
 }
 	componentDidMount() {
+		setCustomText(customTextProps);
+
 		Sentry.init({
 			dsn: "https://3bd0f2fdf3464716800ab7da6f5d2e9b@o939496.ingest.sentry.io/5889542",
 		});

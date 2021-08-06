@@ -221,7 +221,7 @@ app.use("/complete/client/gig/half/client", require("./routes/activeGigs/complet
 app.use("/get/interview/fetch/single/notifications", require("./routes/notifications/interviews/findInterviewById.js"));
 app.use("/make/milestone/payment/specific", require("./routes/activeGigs/individual/payments/milestones/makeMilestonePaymentIndividual.js"));
 app.use("/make/remainder/payment/milestones", require("./routes/activeGigs/individual/payments/milestones/makeRemainderPayment.js"));
-
+app.use("/gather/completed/jobs/logged/in/only", require("./routes/completedGigs/gather/gatherCompletedGigs.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

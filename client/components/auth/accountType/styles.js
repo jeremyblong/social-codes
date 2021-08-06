@@ -12,21 +12,22 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         flex: 1
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     margin: {
         margin: 20
     },
     header: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     greyText: {
-        color: "grey"
+        color: "#cccccc"
     },
     smallColumn: {
         width: "30%",
@@ -49,12 +50,12 @@ export default StyleSheet.create({
     greyTextTwo: {
         marginBottom: 20,
         textAlign: "center",
-        color: "grey"
+        color: "#cccccc"
     },
     selectedRow: {
         flexDirection: "row",
         borderWidth: 1,
-        borderColor: "#303030",
+        borderColor: "#0057ff",
         maxHeight: 250,
         width: "100%"    
     },
@@ -66,8 +67,11 @@ export default StyleSheet.create({
     blueText: {
         textAlign: "left",
         fontWeight: "bold",
-        color: "blue",
+        color: "#ffffff",
         fontSize: 18
+    },
+    innerText: {
+        color: "#cccccc"
     },
     image: {
         maxWidth: 100,

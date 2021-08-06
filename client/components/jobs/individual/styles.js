@@ -232,7 +232,7 @@ export default StyleSheet.create({
     },
     infoText: { 
         fontWeight: "bold", 
-        color: "#ffd530", 
+        color: "#ffffff", 
         marginLeft: 15 
     },
     coverletterbox: {
@@ -245,7 +245,7 @@ export default StyleSheet.create({
     clip: {
         maxWidth: 30, 
         maxHeight: 30,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     fee: {
         color: "grey", 

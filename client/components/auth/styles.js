@@ -9,7 +9,7 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#fdd530"
+        tintColor: "#ffffff"
     },
     hr: {
         marginTop: 25,

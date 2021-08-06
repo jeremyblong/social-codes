@@ -6,7 +6,7 @@ export default StyleSheet.create({
     container: {
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
     textarea: {
@@ -24,8 +24,8 @@ export default StyleSheet.create({
     markdown: {
 
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },      
     positionTouchable: {
         position: "relative",
@@ -120,7 +120,8 @@ export default StyleSheet.create({
     },  
     questionText: {
         fontWeight: "bold",
-        marginBottom: 5
+        marginBottom: 5,
+        color: "#ffffff"
     },
     bullet: {
         fontSize: 15,
@@ -133,11 +134,13 @@ export default StyleSheet.create({
     accordianTitleText: {
         fontSize: 18,
         fontWeight: "bold",
-        textAlign: "center",
+        textAlign: "left",
+        color: "#0057ff",
         paddingBottom: 10
     },
     accordianSubText: {
-        paddingBottom: 10
+        paddingBottom: 10,
+        color: "#ffffff"
     },
     rowCustom: {
         flexDirection: "row",

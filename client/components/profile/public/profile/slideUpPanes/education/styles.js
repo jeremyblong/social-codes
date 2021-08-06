@@ -12,6 +12,9 @@ export default StyleSheet.create({
     margin15: {
         margin: 15
     },
+    whiteText: {
+        color: "#ffffff"
+    },
     smallerText: {
         fontSize: 14,
         marginTop: 10

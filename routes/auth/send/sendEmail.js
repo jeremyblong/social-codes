@@ -29,7 +29,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         const mailOptions = {
             from: 'thatlaughdoeeee@gmail.com', // sender address
             to: email.toLowerCase(), // list of receivers
-            subject: `Your verification code for (Company Name) is attached...`, // Subject line
+            subject: `Your verification code for Social Codes is attached...`, // Subject line
             html: `<table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6">
             <tbody>
                 <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">

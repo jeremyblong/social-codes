@@ -5,6 +5,7 @@ const mongo = require("mongodb");
 const config = require("config");
 const cors = require('cors');
 const stripe = require('stripe')(config.get("stripeSecretKey"));
+const _ = require("lodash");
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, responseeeee) => {
@@ -64,10 +65,22 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 } else {
                                     console.log("account", account);
 
-                                    responseeeee.json({
-                                        message: "Successfully added new bank account!",
-                                        account
-                                    })
+                                    if (_.has(user, "payouts")) {
+                                        user.payouts.push(account);
+                                    } else {
+                                        user["payouts"] = [account];
+                                    }
+
+                                    collection.save(user, (err, result) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            responseeeee.json({
+                                                message: "Successfully added new bank account!",
+                                                account
+                                            })
+                                        }
+                                    });
                                 }
                             });
                         }

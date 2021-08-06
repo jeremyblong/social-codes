@@ -20,7 +20,8 @@ const SheetHelperPaymentsDisplayRef = ({ paymentsRef, payments }) => {
                 customStyles={{
                     container: {
                         borderTopLeftRadius: 40,
-                        borderTopRightRadius: 40
+                        borderTopRightRadius: 40,
+                        backgroundColor: "#303030"
                     },
                     draggableIcon: {
                         backgroundColor: "grey",
@@ -30,24 +31,24 @@ const SheetHelperPaymentsDisplayRef = ({ paymentsRef, payments }) => {
                 >
                 <View style={styles.container}>
                     <View style={{ margin: 20 }}>
-                        <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
+                        <AwesomeButtonCartman raiseLevel={3} borderColor={"#ffffff"} backgroundDarker={"#cccccc"} style={{ marginTop: 20 }} type={"anchor"} textColor={"white"} onPress={() => {
                             paymentsRef.current.close();
                         }} stretch={true}>Close/Exit</AwesomeButtonCartman>
                     </View>
-                    <List>
+                    <List style={styles.list}>
                         {payments.map((payment, index) => {
                             console.log(payment);
                             return (
-                                <ListItem key={index} avatar>
+                                <ListItem style={styles.listitem} key={index} avatar>
                                     <Left>
                                         <Thumbnail source={require("../../../../../../assets/icons/usdollar.png")} />
                                     </Left>
                                     <Body>
-                                        <Text>Amount paid: <Text style={{ fontWeight: "bold", color: "darkred" }}>${(payment.amount / 100).toFixed(2)}</Text></Text>
-                                        <Text note>Social Codes has taken an taxes and service fee of <Text style={{ fontWeight: "bold", color: "darkred" }}>${(payment.application_fee_amount / 100).toFixed(2)}</Text></Text>
+                                        <Text style={styles.whiteText}>Amount paid: <Text style={{ fontWeight: "bold", color: "#ffd530" }}>${(payment.amount / 100).toFixed(2)}</Text></Text>
+                                        <Text style={styles.whiteText} note>Social Codes has taken an taxes and service fee of <Text style={{ fontWeight: "bold", color: "#ffd530" }}>${(payment.application_fee_amount / 100).toFixed(2)}</Text></Text>
                                     </Body>
                                     <Right>
-                                        <Text note>{moment(payment.created * 1000).fromNow()}</Text>
+                                        <Text style={styles.whiteText} note>{moment(payment.created * 1000).fromNow()}</Text>
                                     </Right>
                                 </ListItem>
                             );

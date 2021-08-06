@@ -213,7 +213,7 @@ constructor(props) {
                         <TouchableOpacity onPress={() => {
                             this.RBSheet.open();
                         }} style={styles.searchContainer}>
-                            <Image source={require("../../../../../assets/icons/filter.png")} style={[styles.searchIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../../../assets/icons/filter.png")} style={[styles.searchIcon, { tintColor: "#ffffff" }]} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -262,7 +262,7 @@ constructor(props) {
                             <Button onPress={() => {
                                 this.RBSheet.close();
                             }} transparent>
-                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                                <Icon style={{ color: "#ffffff" }} name='arrow-back' />
                                 {Platform.OS === "ios" ? <NativeText style={{ color: "black" }}>Back</NativeText> : null}
                             </Button>
                         </Left>

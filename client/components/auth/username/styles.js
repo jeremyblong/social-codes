@@ -12,27 +12,29 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         flex: 1
     },
     goldText: {
-        color: "#ffd530"
+        color: "#ffffff"
     },
     margin: {
         margin: 20
     },
     header: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     greyedText: {
-        color: "grey"
+        color: "#ededed"
     },
     suggestionText: {
         marginTop: 10, 
         marginLeft: 10, 
         fontSize: 18, 
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     bottomContainer: {
         position: "absolute",
@@ -40,7 +42,7 @@ export default StyleSheet.create({
         width
     },
     greenText: {
-        color: "green",
+        color: "#66FF33",
         fontSize: 15,
         marginTop: 15
     },

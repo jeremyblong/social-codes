@@ -1111,7 +1111,7 @@ constructor(props) {
                                 borderTopRightRadius: 40
                             },
                             draggableIcon: {
-                                backgroundColor: "#ffd530",
+                                backgroundColor: "#ffffff",
                                 width: 100
                             }
                         }}
@@ -1214,12 +1214,12 @@ constructor(props) {
                                 <Button onPress={() => {
                                     this.RBSheetFour.close();
                                 }} transparent>
-                                    <Icon name="close" style={{ color: "#ffd530" }} />
+                                    <Icon name="close" style={{ color: "#ffffff" }} />
                                 </Button>
                             </Left>
                             <Body>
-                                <Title style={styles.goldText}>My Skills</Title>
-                                <Subtitle style={styles.goldText}>Skills & More...</Subtitle>
+                                <Title style={styles.whiteText}>My Skills</Title>
+                                <Subtitle style={styles.whiteText}>Skills & More...</Subtitle>
                             </Body>
                             <Right />
                         </Header>
@@ -1264,12 +1264,12 @@ constructor(props) {
                                 <Button style={styles.greyButton} onPress={() => {
                                     this.RBSheetFour.close();
                                 }} vertical>
-                                    <Icon style={{ color: "#ffd530" }} name="close" />
-                                    <Text style={styles.goldText}>Cancel</Text>
+                                    <Icon style={{ color: "#ffffff" }} name="close" />
+                                    <Text style={styles.whiteText}>Cancel</Text>
                                 </Button>
                                 <Button style={styles.greyButton} onPress={this.handleSavingTags} vertical>
-                                    <Icon style={{ color: "#ffd530" }} name="save" />
-                                    <Text style={styles.goldText}>Save</Text>
+                                    <Icon style={{ color: "#ffffff" }} name="save" />
+                                    <Text style={styles.whiteText}>Save</Text>
                                 </Button>
                             </FooterTab>
                         </Footer>

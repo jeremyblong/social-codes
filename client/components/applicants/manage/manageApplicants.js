@@ -54,8 +54,8 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find <Text style={{ textDecorationLine: "underline" }}>ACTIVE</Text> applicants right now...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
-                            // this.props.props.navigation.push("jobs-homepage");
+                        <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 20 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                            // this.props.props.navigation.push("jobs-homepage");    
                         }} stretch={true}>Redirect & boost listing(s)</AwesomeButtonBlue>
                     </View>
                 </View>
@@ -167,14 +167,14 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Jobs</Title>
-                        <Subtitle style={styles.goldText}>Listed Jobs</Subtitle>
+                        <Title style={styles.whiteText}>Jobs</Title>
+                        <Subtitle style={styles.whiteText}>Listed Jobs</Subtitle>
                     </Body>
                     <Right>
                         <Button onPress={() => {
                             this.props.props.navigation.push("homepage");
                         }} transparent>
-                            <Icon style={{ color: "#ffd530" }} name='home' />
+                            <Icon style={{ color: "#ffffff" }} name='home' />
                         </Button>
                     </Right>
                 </Header>

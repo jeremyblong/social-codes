@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Config from "react-native-config";
 import { CometChat } from "@cometchat-pro/react-native-chat";
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { WebView } from 'react-native-webview';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
@@ -148,7 +148,7 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
@@ -160,9 +160,9 @@ constructor(props) {
                 <View style={styles.container}>
                     {this.renderContent()}
                 </View>
-                <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                     this.testing();
-                }} stretch={true}>Complete onboarding later with LIMITED account privileges!</AwesomeButtonCartman>
+                }} stretch={true}>Complete onboarding later with LIMITED account privileges!</AwesomeButtonBlue>
             </Fragment>
         )
     }

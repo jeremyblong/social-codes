@@ -73,7 +73,7 @@ constructor(props) {
         if (section.title === "Second") {
             return (
                 <View style={styles.content}>
-                    <Text>Step 1. Draft your question</Text>
+                    <Text style={styles.whiteText}>Step 1. Draft your question</Text>
                 </View>
             );
         }
@@ -215,17 +215,17 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Icon style={{ color: "#ffd530" }} name='arrow-back' />
+                            <Icon style={{ color: "#ffffff" }} name='arrow-back' />
                                 {Platform.OS === "ios" ? <NativeText style={{ color: "black" }}>Back</NativeText> : null}
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Create Question</Title>
-                        <Subtitle style={styles.goldText}>Create a question</Subtitle>
+                        <Title style={styles.whiteText}>Create Question</Title>
+                        <Subtitle style={styles.whiteText}>Create a question</Subtitle>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon style={{ color: "#ffd530" }} name='menu' />
+                            <Icon style={{ color: "#ffffff" }} name='menu' />
                         </Button>
                     </Right>
                 </Header>
@@ -244,17 +244,17 @@ constructor(props) {
                         />
                         <View style={{ marginTop: 15 }} />
                         <Text style={styles.questionText}>Title/Question</Text>
-                        <Text style={{ color: "grey" }}>Be specific and imagine your asking a question to another person</Text>
+                        <Text style={{ color: "#cccccc" }}>Be specific and imagine your asking a question to another person</Text>
                         <Item stackedLabel>
-                            <Label style={{ fontWeight: "bold" }}>Question Title</Label>
-                            <Input onChangeText={(title) => {
+                            <Label style={{ fontWeight: "bold", color: "#ffffff" }}>Question Title</Label>
+                            <Input style={{ color: "#ffffff" }} onChangeText={(title) => {
                                 this.setState({
                                     title
                                 })
                             }} value={this.state.title} placeholderTextColor={"grey"} placeholder={"e.g. Is there an R function for finding the index of a circumfrence of a circle?"} />
                         </Item>
-                        <Text style={[styles.questionText, { marginTop: 25 }]}>Body</Text>
-                        <Text style={{ color: "grey" }}>Include all the information someone would need to answer your question</Text>
+                        <Text style={[styles.questionText, { marginTop: 25, color: "#0057ff" }]}>Body</Text>
+                        <Text style={{ color: "#cccccc" }}>Include all the information someone would need to answer your question</Text>
                         <View style={{ marginTop: 15 }} />
                         <View style={styles.rowCustom}>
                             <TouchableOpacity onPress={() => {
@@ -365,8 +365,8 @@ constructor(props) {
                             }) : null}
                         </View>
                         <View style={{ marginTop: 25 }} />
-                        <Text style={[styles.questionText, { marginTop: 25 }]}>Tags</Text>
-                        <Text style={{ color: "grey" }}>Add UP TO 5 tags to describe what your question is about</Text>
+                        <Text style={[styles.questionText, { marginTop: 25, color: "#0057ff" }]}>Tags</Text>
+                        <Text style={{ color: "#cccccc" }}>Add UP TO 5 tags to describe what your question is about</Text>
                         <View style={{ marginTop: 15 }} />
                         <Tags   
                             maxNumberOfTags={5}
@@ -406,7 +406,7 @@ constructor(props) {
                             }}
                         />
                         <View style={{ marginTop: 25 }} />
-                        {this.renderConditional() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Question & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true} backgroundColor={"blue"} textColor={"white"}>Submit Question & Continue</AwesomeButtonBlue>}
+                        {this.renderConditional() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Question & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 10 }} progress type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit Question & Continue</AwesomeButtonBlue>}
                     
                     </View>
                 </ScrollView>     

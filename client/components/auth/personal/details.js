@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions, Animated, Keyboard, Platform } from 'react-native';
 import styles from './styles.js';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input } from 'native-base';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 import DatePicker from "react-native-date-picker";
@@ -193,7 +193,7 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
@@ -211,20 +211,20 @@ constructor (props) {
                         <View style={{ marginTop: 10 }} />
                         <Text style={styles.title}>Enter your first name</Text>
                         <Item regular>
-                            <Input onChangeText={(value) => {
+                            <Input style={{ color: "#ffffff" }} onChangeText={(value) => {
                                 this.setState({
                                     firstName: value
                                 })
-                            }} value={this.state.firstName} placeholder='First Name' />
+                            }} value={this.state.firstName} placeholderTextColor={"#cccccc"} placeholder='First Name' />
                         </Item>
                         <View style={{ marginTop: 15 }} />
                         <Text style={styles.title}>Enter your last name</Text>
                         <Item regular>
-                            <Input onChangeText={(value) => {
+                            <Input style={{ color: "#ffffff" }} onChangeText={(value) => {
                                 this.setState({
                                     lastName: value
                                 })
-                            }} value={this.state.lastName} placeholder='Last Name' />
+                            }} value={this.state.lastName} placeholderTextColor={"#cccccc"} placeholder='Last Name' />
                         </Item>
                         <View style={{ marginTop: 15 }} />
                         <Text style={styles.title}>Enter your phone number</Text>
@@ -268,14 +268,14 @@ constructor (props) {
                             this.RBSheet.open();
                         }}>
                             <View style={styles.boxed}>
-                                <Text>Select your birthdate...</Text>
+                                <Text style={styles.whiteText}>Select your birthdate...</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
                 <View style={styles.bottomContainer}>
                     <View style={{ margin: 10 }}>
-                        {this.calculateReadiness() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
+                        {this.calculateReadiness() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
                     </View>
                 </View>
                 <RBSheet
@@ -308,9 +308,9 @@ constructor (props) {
                         </View>
                         <View style={{ marginTop: 10 }} />
                         <View style={{ margin: 15 }}>
-                            <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={() => {
+                            <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                 this.RBSheet.close();
-                            }} stretch={true}>Select Date & Continue</AwesomeButtonCartman>
+                            }} stretch={true}>Select Date & Continue</AwesomeButtonBlue>
                         </View>
                 </RBSheet>
                 <RBSheet
@@ -327,7 +327,7 @@ constructor (props) {
                     }}
                     >
                         <View style={{ flex: 1 }}>
-                            <View style={Platform.OS === "ios" ? { marginTop: 50, margin: 10 } : { marginTop: 25, margin: 10, marginBottom: 25 }}>
+                            <View style={Platform.OS === "ios" ? { marginTop: 50, padding: 10, backgroundColor: "#141414", width, height } : { marginTop: 0, padding: 10, marginBottom: 50, backgroundColor: "#141414", width, height }}>
                                 <Text style={styles.header}>Enter the code that was just sent to the number provided</Text>
                                 <View style={{ marginTop: 10 }} />
                                 <Text style={styles.greyText}>You have a limited amount of times you can attempt to properly validate your phone number with the code provided. Please pay attention to your entry and make sure it is correct.</Text>
@@ -354,11 +354,11 @@ constructor (props) {
                         <View style={styles.bottomContainer}>
                             <View style={{ margin: 10 }}>
                                 <View style={{ marginBottom: 20 }}>
-                                    <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={() => {
+                                    <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                         this.RBSheetTWO.close();
-                                    }}>Close/Exit</AwesomeButtonCartman>
+                                    }} stretch={true}>Close/Exit</AwesomeButtonBlue>
                                 </View>
-                                {this.calculateReadinessSheet() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"}  onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonCartman>}
+                                {this.calculateReadinessSheet() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue> : <AwesomeButtonBlue type={"anchor"} textColor={"white"}  onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue>}
                             </View>
                         </View>
                 </RBSheet>

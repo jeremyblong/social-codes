@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles.js';
 import { Header, Left, Body, Right, Title, Subtitle, Button } from 'native-base';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { addSignupData } from "../../../actions/auth/signup.js";
 import { connect } from "react-redux";
 
@@ -44,7 +44,7 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
@@ -91,7 +91,7 @@ constructor (props) {
                 <View style={styles.bottomContainer}>
                     <View style={{ margin: 10 }}>
                         <Text style={styles.greyTextTwo}>By signing up, I agree to "The Fair Market".com's {"\n"} <Text style={{ textDecorationLine: "underline" }}>Terms & Conditions</Text> & <Text style={{ textDecorationLine: "underline" }}>Privacy Policy</Text></Text>
-                        {this.calculateReadiness() ? <AwesomeButtonCartman type={"disabled"} stretch={true}>Next</AwesomeButtonCartman> : <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonCartman>}
+                        {this.calculateReadiness() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Next</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ zIndex: -1 }} type={"primary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleContinuation} stretch={true}>Next</AwesomeButtonBlue>}
                     </View>
                 </View>
            </Fragment>
