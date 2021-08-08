@@ -10,7 +10,7 @@ import TypeOfProjectAndScreeningSubComponent from "./helpers/screenAndDetails/in
 import SkillsAndMoreInformationSubComponent from "./helpers/keywordsAndTags/index.js";
 import VisibilityAndQuantitySubComponent from "./helpers/visibility/index.js";
 import PaymentsAndMoreSubComponent from "./helpers/budget/index.js";
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { Switch } from 'react-native-switch';
 import Config from 'react-native-config';
 import axios from "axios";
@@ -204,16 +204,16 @@ constructor(props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title style={styles.goldText}>Review</Title>
-                    <Subtitle style={styles.goldText}>Review Job</Subtitle>
+                    <Title style={styles.whiteText}>Review</Title>
+                    <Subtitle style={styles.whiteText}>Review Job</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text style={styles.goldText}>Restart Process</Text>
+                            <Text style={styles.whiteText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={1} width={width} />
+                <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={1} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                     <BasicInfoStartJobListingHelperSubComponent review={true} props={this.props} />
@@ -330,7 +330,7 @@ constructor(props) {
                         />
                     </View>
                     <View style={styles.margin}>
-                        {this.renderFinalButtons() ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleFinalSubmission} stretch={true}>Submit & Post Job</AwesomeButtonCartman> : <AwesomeButtonCartman type={"disabled"} stretch={true}>Submit & Post Job</AwesomeButtonCartman>}
+                        {this.renderFinalButtons() ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleFinalSubmission} stretch={true}>Submit & Post Job</AwesomeButtonBlue> : <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Post Job</AwesomeButtonBlue>}
                     </View>
                 </ScrollView>
             </Fragment>

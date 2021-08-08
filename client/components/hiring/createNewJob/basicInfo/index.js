@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, Keyboard, ScrollView }
 import { Header, Left, Body, Right, Title, Subtitle, Button, Input, Item, Icon, Form, Textarea } from 'native-base';
 import styles from './styles.js';
 import * as Progress from 'react-native-progress';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { addJobData } from "../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
@@ -152,20 +152,20 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
-                    <Title style={styles.goldText}>Post a job</Title>
-                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
+                    <Title style={styles.whiteText}>Post a job</Title>
+                    <Subtitle style={styles.whiteText}>Create a job listing</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text style={styles.goldText}>Restart Process</Text>
+                            <Text style={styles.whiteText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>}
-                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.15} width={width} />
+                <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={0.15} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>Great! Let's give your job more details</Text>
@@ -177,7 +177,7 @@ constructor (props) {
                     <KeyboardAwareScrollView>
                         <Text style={styles.label}>Enter a title</Text>
                         <Item success={this.renderSuccess()} error={this.renderErr()} regular>
-                            <Input value={title} onChangeText={(value) => {
+                            <Input style={{ color: "white" }} value={title} onChangeText={(value) => {
                                 this.setState({
                                     title: value
                                 })
@@ -188,16 +188,16 @@ constructor (props) {
                         <View style={{ marginTop: 20 }} />
                         
                         
-                        <Text style={{ fontWeight: "bold", marginBottom: 15 }}>A good description includes</Text>
-                        <Unorderedlist style={{}}><Text>What the deliverable is</Text></Unorderedlist>
-                        <Unorderedlist style={{}}><Text>Type of freelancer or agency you're looking for</Text></Unorderedlist>
-                        <Unorderedlist style={{ marginBottom: 30 }}><Text>Anything unique about the project, team, or your company</Text></Unorderedlist>
+                        <Text style={{ fontWeight: "bold", marginBottom: 15, color: "#cecece" }}>A good description includes</Text>
+                        <Unorderedlist><Text style={styles.whiteText}>What the deliverable is</Text></Unorderedlist>
+                        <Unorderedlist><Text style={styles.whiteText}>Type of freelancer or agency you're looking for</Text></Unorderedlist>
+                        <Unorderedlist style={{ marginBottom: 30 }}><Text style={styles.whiteText}>Anything unique about the project, team, or your company</Text></Unorderedlist>
                         <Text style={styles.label}>Enter a detailed description</Text>
                         {/* <Text style={styles.smallRed}>We will exactract the data from your description and provide relevant "key-words"/tags from the text you provide so please be as detailed as possible with your description.</Text> */}
                         <View style={styles.aboveRight}>
                             <Text style={description.length >= 100 ? styles.greenText : styles.redText}>{description.length}/5000</Text>
                         </View>
-                        <Textarea keyboardType="default" rowSpan={5} bordered value={description} onChangeText={(value) => {
+                        <Textarea style={styles.whiteText} keyboardType="default" rowSpan={5} bordered value={description} onChangeText={(value) => {
                             this.setState({
                                 description: value
                             })
@@ -210,14 +210,14 @@ constructor (props) {
 
                         <TouchableOpacity style={{ maxHeight: 20 }} onPress={() => {
                             Keyboard.dismiss();
-                        }} style={styles.dismissText}><Text style={{ textAlign: "center", marginTop: 10 }}>Dismiss Keyboard</Text></TouchableOpacity>
+                        }} style={styles.dismissText}><Text style={{ textAlign: "center", marginTop: 10, color: "#ffffff" }}>Dismiss Keyboard</Text></TouchableOpacity>
                     </KeyboardAwareScrollView>
                     </Form>
                     </View>
                     
                 </ScrollView>
                 <View style={styles.bottomView}>
-                    {this.renderContinuation() ? <AwesomeButtonCartman textColor={"white"} type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonCartman> : <AwesomeButtonCartman textColor={"white"} type={"anchor"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>}
+                    {this.renderContinuation() ? <AwesomeButtonBlue textColor={"white"} type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
                 </View>
            </Fragment>
         )

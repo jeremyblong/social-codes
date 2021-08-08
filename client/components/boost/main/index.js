@@ -249,7 +249,7 @@ constructor(props) {
         const { user } = this.state;
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left style={{ flexDirection: "row" }}>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -258,8 +258,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Tokens</Title>
-                        <Subtitle>Purchase Tokens</Subtitle>
+                        <Title style={styles.whiteText}>Tokens</Title>
+                        <Subtitle style={styles.whiteText}>Purchase Tokens</Subtitle>
                     </Body>
                     <Right>
                     

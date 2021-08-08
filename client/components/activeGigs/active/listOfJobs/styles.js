@@ -17,7 +17,7 @@ export default StyleSheet.create({
     margin: {
         margin: 15
     },
-    goldText: {
+    whiteText: {
         color: "#ffffff"
     },
     thumbnailVideo: {
@@ -34,12 +34,13 @@ export default StyleSheet.create({
     background: {
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         padding: 15
     },
     headText: {
         fontSize: 34,
         fontWeight: "bold",
+        color: "#ffffff",
         textAlign: "center"
     },
     greyButton: {

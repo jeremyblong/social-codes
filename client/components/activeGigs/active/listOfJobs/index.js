@@ -7,7 +7,7 @@ import Config from "react-native-config";
 import { connect } from "react-redux";
 import moment from 'moment';
 import Video from 'react-native-video';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 
 
 class ActiveJobsMainPageHelper extends Component {
@@ -53,8 +53,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Pending Jobs</Title>
-                        <Subtitle style={styles.goldText}>Live Active Jobs</Subtitle>
+                        <Title style={styles.whiteText}>Pending Jobs</Title>
+                        <Subtitle style={styles.whiteText}>Live Active Jobs</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -101,9 +101,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, it doesn't look like you have any active candiates working for you right now...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffffff"} onPress={() => {
-                            this.props.props.navigation.push("homepage");
-                        }} stretch={true}>Go to homepage</AwesomeButtonCartman>
+                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                            this.props.props.navigation.push("homepage");       
+                        }} stretch={true}>Go to homepage</AwesomeButtonBlue>
                         <View style={{ marginTop: 5 }} />
                     </ScrollView>} 
                 </View>

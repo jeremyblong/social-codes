@@ -370,7 +370,7 @@ constructor(props) {
       stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
       startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
       // HTTP / SQLite config
-      url: 'http://yourserver.com/locations',
+      url: 'https://socialcodes.ngrok.io',
       batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
       autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
       headers: {              // <-- Optional HTTP headers
@@ -383,11 +383,11 @@ constructor(props) {
       
       console.log("- BackgroundGeolocation is configured and ready: ", state.enabled);
 
-      if (!state.enabled) {
+      if (state.enabled) {
         ////
         // 3. Start tracking!
         //
-        BackgroundGeolocation.start(function() {
+        BackgroundGeolocation.start(() => {
           console.log("- Start success");
         });
       }

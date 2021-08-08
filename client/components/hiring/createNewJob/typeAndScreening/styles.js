@@ -7,13 +7,13 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     container: {
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     margin: {
         margin: 20
@@ -21,10 +21,14 @@ export default StyleSheet.create({
     headerText: {
         margin: 10,
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
+    },
+    lightGreyText: {
+        color: "#cccccc"
     },
     innerBox: {
         flexDirection: "row",
@@ -45,13 +49,14 @@ export default StyleSheet.create({
     },
     boxed: {
         borderWidth: 2,
-        borderColor: "lightgrey",
+        borderColor: "#cecece",
         marginTop: 15
     },
     switchText: {
         marginTop: 5,
         marginLeft: 30,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     specialRow: {
         marginTop: 10, 
@@ -60,7 +65,7 @@ export default StyleSheet.create({
     },
     selected: {
         borderWidth: 2,
-        borderColor: "darkred",
+        borderColor: "#0057ff",
         marginTop: 15
     },
     rightHalf: {
@@ -71,11 +76,12 @@ export default StyleSheet.create({
     },
     icon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffffff"
     },
     innerText: {
         textAlign: "center",
-        color: "darkred",
+        color: "#0057ff",
         marginBottom: 10,
         fontSize: 18
     },      
@@ -95,7 +101,7 @@ export default StyleSheet.create({
         borderBottomWidth: 10
     },
     blueText: {
-        color: "darkred"
+        color: "#0057ff"
     },
     row: {
         flexDirection: "row"
@@ -105,7 +111,7 @@ export default StyleSheet.create({
         marginTop: 4,
         marginLeft: 10,
         fontSize: 18,
-        color: "darkred"
+        color: "#0057ff"
     },
     touchable: {
         flexDirection: "row",
@@ -114,7 +120,7 @@ export default StyleSheet.create({
     },
     plus: {
         maxWidth: 30,
-        tintColor: "darkred",
+        tintColor: "#0057ff",
         maxHeight: 30
     }
 })

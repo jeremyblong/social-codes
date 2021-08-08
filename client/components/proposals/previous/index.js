@@ -7,7 +7,7 @@ import Config from "react-native-config";
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import ReadMore from 'react-native-read-more-text';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import Toast from 'react-native-toast-message';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
@@ -81,9 +81,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any "already submitted" proposals from your account right now...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} textColor={"white"} backgroundColor={"blue"} onPress={() => {
-                            this.props.props.navigation.push("jobs-homepage");
-                        }} stretch={true}>Apply to jobs</AwesomeButtonCartman>
+                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                            this.props.props.navigation.push("jobs-homepage");        
+                        }} stretch={true}>Apply to jobs</AwesomeButtonBlue>
                     </View>
                 </View>
             );
@@ -201,12 +201,12 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#fdd530" }}>Proposals</Title>
-                        <Subtitle style={{ color: "#fdd530" }}>Previously Submiited Proposals</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Proposals</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>Previously Submiited Proposals</Subtitle>
                     </Body>
                     <Right>
                         <Image source={{ uri: typeof profilePic !== "undefined" && profilePic.length > 0 ? profilePic : Config.no_image_avaliable }} style={styles.profile} />
@@ -261,9 +261,9 @@ constructor(props) {
                                             <NativeText style={{ color: "blue" }}>{proposal.date}</NativeText>
                                         </CardItem>
                                         <CardItem>
-                                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
-                                                this.searchForJobAndRedirect(proposal);
-                                            }} stretch={true}>View Listing</AwesomeButtonCartman>
+                                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                            this.searchForJobAndRedirect(proposal);       
+                                        }} stretch={true}>View Listing</AwesomeButtonBlue>
                                         </CardItem>
                                     </Card>
                                     <View style={styles.thickHr} />
@@ -311,15 +311,15 @@ constructor(props) {
                                             <NativeText style={{ color: "darkred" }}>{proposal.date}</NativeText>
                                         </CardItem>
                                         <CardItem>
-                                            <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                                            <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                                 Toast.show({
                                                     text1: "This job is no longer on our marketplace, sorry for any inconveniences.",
                                                     text2: "This job has been completed or was removed after your application...",
                                                     type: "error", 
                                                     visibilityTime: 3500,
                                                     position: "top"
-                                                })
-                                            }} stretch={true}>View Listing</AwesomeButtonCartman>
+                                                })       
+                                            }} stretch={true}>View Listing</AwesomeButtonBlue>
                                         </CardItem>
                                     </Card>
                                     <View style={styles.thickHr} />

@@ -12,7 +12,11 @@ export default StyleSheet.create({
     },
     headerIcon: {
         maxWidth: 35, 
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffffff"
+    },
+    whiteText: {
+        color: "#ffffff"
     },
     margin: {
         margin: 20

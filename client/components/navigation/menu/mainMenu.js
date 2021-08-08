@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import Dialog from "react-native-dialog";
 import { signedInUserData } from "../../../actions/auth/signup.js";
 import SideMenu from "react-native-side-menu";
@@ -122,12 +122,12 @@ constructor(props) {
         return (
             <View style={styles.margin}>        
                 <View style={[styles.margin, { minWidth: width * 0.85 }]}>
-                    <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
-                        this.setState({
-                            showDialog: true,
-                            activeSections: []
-                        })
-                    }} stretch={true}>Sign-out/Deauthenticate</AwesomeButtonCartman>
+                <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                    this.setState({
+                        showDialog: true,
+                        activeSections: []
+                    })
+                }} stretch={true}>Sign-out/Deauthenticate</AwesomeButtonBlue>
                 </View>
             </View>
         );

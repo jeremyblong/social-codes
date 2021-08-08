@@ -7,16 +7,16 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     margin: {
         margin: 20
@@ -24,7 +24,8 @@ export default StyleSheet.create({
     headerText: {
         margin: 10,
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     right: {
         position: "absolute",
@@ -33,7 +34,8 @@ export default StyleSheet.create({
     },
     icon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#0057ff"
     }, 
     errorText: {
         color: "red",
@@ -41,7 +43,8 @@ export default StyleSheet.create({
         margin: 10
     },  
     normalText: {
-        fontSize: 15
+        fontSize: 15,
+        color: "#ffffff"
     },
     thickHr: {
         borderBottomColor: "lightgrey",
@@ -66,13 +69,13 @@ export default StyleSheet.create({
     },
     boxed: {
         borderWidth: 2,
-        borderColor: "lightgrey",
+        borderColor: "#cccccc",
         marginTop: 15
     },
     selected: {
         borderWidth: 2,
-        borderColor: "darkred",
-        backgroundColor: "#ffd530",
+        borderColor: "#cccccc",
+        backgroundColor: "#ffffff",
         marginTop: 15
     },
     circle: {
@@ -93,7 +96,7 @@ export default StyleSheet.create({
         marginBottom: 10,
         textAlign: "left"
     },
-    icon: {
+    iconMain: {
         maxWidth: 25,
         padding: 5,
         maxHeight: 25

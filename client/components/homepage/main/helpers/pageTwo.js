@@ -52,6 +52,10 @@ constructor (props) {
             this.setState({
                 selected: "friends-timeline"
             })
+        } else {
+            this.setState({
+                selected: "Unknown"
+            })
         }
 
         axios.get(`${Config.ngrok_url}/gather/user`, {
@@ -153,6 +157,8 @@ constructor (props) {
     }
     render () {
         const { selected, user } = this.state;
+
+        console.log("this.state. pageTwo", this.state);
         return (
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} style={styles.container}>
                 <Animated.View style={{ opacity: this.animatedValue[30] }}>
@@ -199,12 +205,12 @@ constructor (props) {
                         </ListItem>
                     </List>
                     <View style={styles.centered}>
-                        <LottieView
+                        {/* <LottieView
                             source={require('../../../../assets/animations/social-media.json')}
                             autoPlay
                             loop
                             style={styles.animation}
-                        />
+                        /> */}
                     </View>
                 </Animated.View>
                 <View>

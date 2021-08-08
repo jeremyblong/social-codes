@@ -31,10 +31,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>AR/VR Development</Text>
+                            <Text style={styles.whiteText}>AR/VR Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -46,10 +46,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Automation Testing</Text>
+                            <Text style={styles.whiteText}>Automation Testing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -61,10 +61,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Back-End Development</Text>
+                            <Text style={styles.whiteText}>Back-End Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -76,10 +76,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>CMS Development</Text>
+                            <Text style={styles.whiteText}>CMS Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -91,10 +91,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Coding Tutoring</Text>
+                            <Text style={styles.whiteText}>Coding Tutoring</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -106,10 +106,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Database Development</Text>
+                            <Text style={styles.whiteText}>Database Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -121,10 +121,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Desktop Software Development</Text>
+                            <Text style={styles.whiteText}>Desktop Software Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -136,10 +136,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Ecommerce Development</Text>
+                            <Text style={styles.whiteText}>Ecommerce Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -151,10 +151,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Emerging Tech</Text>
+                            <Text style={styles.whiteText}>Emerging Tech</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -166,10 +166,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Firmware Development</Text>
+                            <Text style={styles.whiteText}>Firmware Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -181,10 +181,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Front-End Development</Text>
+                            <Text style={styles.whiteText}>Front-End Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -196,10 +196,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Full-Stack Development</Text>
+                            <Text style={styles.whiteText}>Full-Stack Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -211,10 +211,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Game Development</Text>
+                            <Text style={styles.whiteText}>Game Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -226,10 +226,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Manual Testing</Text>
+                            <Text style={styles.whiteText}>Manual Testing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -241,10 +241,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mobile App Development</Text>
+                            <Text style={styles.whiteText}>Mobile App Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -256,10 +256,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mobile Design</Text>
+                            <Text style={styles.whiteText}>Mobile Design</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -271,10 +271,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mobile Game Development</Text>
+                            <Text style={styles.whiteText}>Mobile Game Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -286,10 +286,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Product Management</Text>
+                            <Text style={styles.whiteText}>Product Management</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -301,10 +301,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Prototyping</Text>
+                            <Text style={styles.whiteText}>Prototyping</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -316,10 +316,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Scripting & Automation</Text>
+                            <Text style={styles.whiteText}>Scripting & Automation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -331,10 +331,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Scrum Master</Text>
+                            <Text style={styles.whiteText}>Scrum Master</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -346,10 +346,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>User Research</Text>
+                            <Text style={styles.whiteText}>User Research</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -361,10 +361,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Web Design</Text>
+                            <Text style={styles.whiteText}>Web Design</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -376,10 +376,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>UI/UX Design</Text>
+                            <Text style={styles.whiteText}>UI/UX Design</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -397,10 +397,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>iPhone/iPad App (iOS ONLY)</Text>
+                            <Text style={styles.whiteText}>iPhone/iPad App (iOS ONLY)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -412,10 +412,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Android App</Text>
+                            <Text style={styles.whiteText}>Android App</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -427,10 +427,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Responsive Website (Mobile & Desktop)</Text>
+                            <Text style={styles.whiteText}>Responsive Website (Mobile & Desktop)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -442,10 +442,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mobile Website (Mobile only)</Text>
+                            <Text style={styles.whiteText}>Mobile Website (Mobile only)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -457,10 +457,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>React Native (iOS & Android simultaniously)</Text>
+                            <Text style={styles.whiteText}>React Native (iOS & Android simultaniously)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -472,10 +472,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>I need an existing mobile app FIXED</Text>
+                            <Text style={styles.whiteText}>I need an existing mobile app FIXED</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -487,10 +487,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>I need an existing mobile app RE-DONE</Text>
+                            <Text style={styles.whiteText}>I need an existing mobile app RE-DONE</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -508,10 +508,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Write some articles/blogs</Text>
+                            <Text style={styles.whiteText}>Write some articles/blogs</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -523,10 +523,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Research writing</Text>
+                            <Text style={styles.whiteText}>Research writing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -538,10 +538,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Content writing</Text>
+                            <Text style={styles.whiteText}>Content writing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -553,10 +553,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Translate something</Text>
+                            <Text style={styles.whiteText}>Translate something</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -568,10 +568,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Write a report</Text>
+                            <Text style={styles.whiteText}>Write a report</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -583,10 +583,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Copywriting</Text>
+                            <Text style={styles.whiteText}>Copywriting</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -598,10 +598,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Career Coaching</Text>
+                            <Text style={styles.whiteText}>Career Coaching</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -613,10 +613,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Writing Tutoring</Text>
+                            <Text style={styles.whiteText}>Writing Tutoring</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -628,10 +628,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Editing & Proofreading</Text>
+                            <Text style={styles.whiteText}>Editing & Proofreading</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -643,10 +643,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Creative Writing</Text>
+                            <Text style={styles.whiteText}>Creative Writing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -658,10 +658,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Business Writing</Text>
+                            <Text style={styles.whiteText}>Business Writing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -673,10 +673,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Other or not sure</Text>
+                            <Text style={styles.whiteText}>Other or not sure</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -694,10 +694,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Reactive Machines</Text>
+                            <Text style={styles.whiteText}>Reactive Machines</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -709,10 +709,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Limited Memory</Text>
+                            <Text style={styles.whiteText}>Limited Memory</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -724,10 +724,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Theory of Mind</Text>
+                            <Text style={styles.whiteText}>Theory of Mind</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -739,10 +739,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Image Classification</Text>
+                            <Text style={styles.whiteText}>Image Classification</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -754,10 +754,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Theory of Mind</Text>
+                            <Text style={styles.whiteText}>Theory of Mind</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -769,10 +769,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Self-aware</Text>
+                            <Text style={styles.whiteText}>Self-aware</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -784,10 +784,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Artificial Narrow Intelligence (ANI)</Text>
+                            <Text style={styles.whiteText}>Artificial Narrow Intelligence (ANI)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -799,10 +799,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Artificial General Intelligence (AGI)</Text>
+                            <Text style={styles.whiteText}>Artificial General Intelligence (AGI)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -814,10 +814,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Artificial Superintelligence (ASI)</Text>
+                            <Text style={styles.whiteText}>Artificial Superintelligence (ASI)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -835,10 +835,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Design a video AD</Text>
+                            <Text style={styles.whiteText}>Design a video AD</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -850,10 +850,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Design a logo</Text>
+                            <Text style={styles.whiteText}>Design a logo</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -865,10 +865,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>3D Animations</Text>
+                            <Text style={styles.whiteText}>3D Animations</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -880,10 +880,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Animated GIF's</Text>
+                            <Text style={styles.whiteText}>Animated GIF's</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -895,10 +895,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Product Photography</Text>
+                            <Text style={styles.whiteText}>Product Photography</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -910,10 +910,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Short Video Ad's</Text>
+                            <Text style={styles.whiteText}>Short Video Ad's</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -925,10 +925,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Logo Animations</Text>
+                            <Text style={styles.whiteText}>Logo Animations</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -940,10 +940,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Charector Animation</Text>
+                            <Text style={styles.whiteText}>Charector Animation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -961,10 +961,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Hire a multi-media artist/animator</Text>
+                            <Text style={styles.whiteText}>Hire a multi-media artist/animator</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -976,10 +976,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Hire a video game tester</Text>
+                            <Text style={styles.whiteText}>Hire a video game tester</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -991,10 +991,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Hire a game developer (coder)</Text>
+                            <Text style={styles.whiteText}>Hire a game developer (coder)</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1006,10 +1006,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Hire First-party developers</Text>
+                            <Text style={styles.whiteText}>Hire First-party developers</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1021,10 +1021,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Second-party developers</Text>
+                            <Text style={styles.whiteText}>Second-party developers</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1036,10 +1036,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Third-party developers</Text>
+                            <Text style={styles.whiteText}>Third-party developers</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1051,10 +1051,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Indie game developers</Text>
+                            <Text style={styles.whiteText}>Indie game developers</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -1072,10 +1072,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Business Applications Development</Text>
+                            <Text style={styles.whiteText}>Business Applications Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1087,10 +1087,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Cloud Engineering</Text>
+                            <Text style={styles.whiteText}>Cloud Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1102,10 +1102,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Dev-Ops Engineering</Text>
+                            <Text style={styles.whiteText}>Dev-Ops Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1117,10 +1117,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Information Security</Text>
+                            <Text style={styles.whiteText}>Information Security</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1132,10 +1132,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>IT Compliance</Text>
+                            <Text style={styles.whiteText}>IT Compliance</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1147,10 +1147,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>IT Support</Text>
+                            <Text style={styles.whiteText}>IT Support</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1162,10 +1162,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Network Administration</Text>
+                            <Text style={styles.whiteText}>Network Administration</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1177,10 +1177,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Network Security</Text>
+                            <Text style={styles.whiteText}>Network Security</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1192,10 +1192,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Solutions Achitecture</Text>
+                            <Text style={styles.whiteText}>Solutions Achitecture</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1207,10 +1207,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Systems Administration</Text>
+                            <Text style={styles.whiteText}>Systems Administration</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1222,10 +1222,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>System Engineering</Text>
+                            <Text style={styles.whiteText}>System Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -1243,10 +1243,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Language Localization</Text>
+                            <Text style={styles.whiteText}>Language Localization</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1258,10 +1258,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Language Tutoring</Text>
+                            <Text style={styles.whiteText}>Language Tutoring</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1273,10 +1273,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Legal Translation</Text>
+                            <Text style={styles.whiteText}>Legal Translation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1288,10 +1288,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Medical Transportation</Text>
+                            <Text style={styles.whiteText}>Medical Transportation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1303,10 +1303,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Technical Translation</Text>
+                            <Text style={styles.whiteText}>Technical Translation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1318,10 +1318,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Translation</Text>
+                            <Text style={styles.whiteText}>Translation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         
@@ -1340,10 +1340,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Brand Strategy</Text>
+                            <Text style={styles.whiteText}>Brand Strategy</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1355,10 +1355,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Campaign Management</Text>
+                            <Text style={styles.whiteText}>Campaign Management</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1370,10 +1370,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Community Management</Text>
+                            <Text style={styles.whiteText}>Community Management</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1385,10 +1385,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Content Strategy</Text>
+                            <Text style={styles.whiteText}>Content Strategy</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1400,10 +1400,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Digital Marketing</Text>
+                            <Text style={styles.whiteText}>Digital Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1415,10 +1415,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Email Marketing</Text>
+                            <Text style={styles.whiteText}>Email Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                        
@@ -1431,10 +1431,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Lead Generation</Text>
+                            <Text style={styles.whiteText}>Lead Generation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1446,10 +1446,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Market Research</Text>
+                            <Text style={styles.whiteText}>Market Research</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1461,10 +1461,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Marketing Automation</Text>
+                            <Text style={styles.whiteText}>Marketing Automation</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1476,10 +1476,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Marketing Strategy</Text>
+                            <Text style={styles.whiteText}>Marketing Strategy</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1491,10 +1491,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Public Relations</Text>
+                            <Text style={styles.whiteText}>Public Relations</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1506,10 +1506,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Sales & Business Development</Text>
+                            <Text style={styles.whiteText}>Sales & Business Development</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1521,10 +1521,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Search Engine Marketing</Text>
+                            <Text style={styles.whiteText}>Search Engine Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1536,10 +1536,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Search Engine Optimization</Text>
+                            <Text style={styles.whiteText}>Search Engine Optimization</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1551,10 +1551,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Social Media Marketing</Text>
+                            <Text style={styles.whiteText}>Social Media Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1566,10 +1566,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Social Media Strategy</Text>
+                            <Text style={styles.whiteText}>Social Media Strategy</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1581,10 +1581,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Telemarketing</Text>
+                            <Text style={styles.whiteText}>Telemarketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -1602,10 +1602,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Business & Corperate Law</Text>
+                            <Text style={styles.whiteText}>Business & Corperate Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1617,10 +1617,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>General Counsel</Text>
+                            <Text style={styles.whiteText}>General Counsel</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1632,10 +1632,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Immigration Law</Text>
+                            <Text style={styles.whiteText}>Immigration Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1647,10 +1647,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Intellectual Property Law</Text>
+                            <Text style={styles.whiteText}>Intellectual Property Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1662,10 +1662,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>International Law</Text>
+                            <Text style={styles.whiteText}>International Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1677,10 +1677,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Labor & Employment Law</Text>
+                            <Text style={styles.whiteText}>Labor & Employment Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1692,10 +1692,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Paralegal</Text>
+                            <Text style={styles.whiteText}>Paralegal</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1707,10 +1707,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Regulatory Law</Text>
+                            <Text style={styles.whiteText}>Regulatory Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1722,10 +1722,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Securities & Finance Law</Text>
+                            <Text style={styles.whiteText}>Securities & Finance Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1737,10 +1737,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Taw Law</Text>
+                            <Text style={styles.whiteText}>Taw Law</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         
@@ -1759,10 +1759,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Social Media Marketing</Text>
+                            <Text style={styles.whiteText}>Social Media Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1774,10 +1774,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Social Media Advertising</Text>
+                            <Text style={styles.whiteText}>Social Media Advertising</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1789,10 +1789,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>SEO</Text>
+                            <Text style={styles.whiteText}>SEO</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1804,10 +1804,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Ecommerce Marketing</Text>
+                            <Text style={styles.whiteText}>Ecommerce Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1819,10 +1819,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Display Advertising</Text>
+                            <Text style={styles.whiteText}>Display Advertising</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1834,10 +1834,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Public Relations</Text>
+                            <Text style={styles.whiteText}>Public Relations</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1849,10 +1849,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Crowdfunding</Text>
+                            <Text style={styles.whiteText}>Crowdfunding</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1864,10 +1864,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Web Analytics</Text>
+                            <Text style={styles.whiteText}>Web Analytics</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1879,10 +1879,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Influencer Marketing</Text>
+                            <Text style={styles.whiteText}>Influencer Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1894,10 +1894,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Text Message Marketing</Text>
+                            <Text style={styles.whiteText}>Text Message Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1909,10 +1909,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>SEM</Text>
+                            <Text style={styles.whiteText}>SEM</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1924,10 +1924,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mobile App Marketing</Text>
+                            <Text style={styles.whiteText}>Mobile App Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1939,10 +1939,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Affiliate Marketing</Text>
+                            <Text style={styles.whiteText}>Affiliate Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1954,10 +1954,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Domain Research</Text>
+                            <Text style={styles.whiteText}>Domain Research</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1969,10 +1969,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Music Promotion</Text>
+                            <Text style={styles.whiteText}>Music Promotion</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1984,10 +1984,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Book & Ebook Marketing</Text>
+                            <Text style={styles.whiteText}>Book & Ebook Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -1999,10 +1999,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Podcast Marketing</Text>
+                            <Text style={styles.whiteText}>Podcast Marketing</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2014,10 +2014,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Surveys</Text>
+                            <Text style={styles.whiteText}>Surveys</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2029,10 +2029,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Local SEO</Text>
+                            <Text style={styles.whiteText}>Local SEO</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -2050,10 +2050,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>3-D Modeling & Rendering</Text>
+                            <Text style={styles.whiteText}>3-D Modeling & Rendering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2065,10 +2065,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Architecture</Text>
+                            <Text style={styles.whiteText}>Architecture</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2080,10 +2080,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Biology</Text>
+                            <Text style={styles.whiteText}>Biology</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2095,10 +2095,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Building Information Modeling</Text>
+                            <Text style={styles.whiteText}>Building Information Modeling</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2110,10 +2110,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>CAD</Text>
+                            <Text style={styles.whiteText}>CAD</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2125,10 +2125,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Chemical & Process Engineering</Text>
+                            <Text style={styles.whiteText}>Chemical & Process Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2140,10 +2140,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Chemistry</Text>
+                            <Text style={styles.whiteText}>Chemistry</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2155,10 +2155,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Civil Engineering</Text>
+                            <Text style={styles.whiteText}>Civil Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2170,10 +2170,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Electrical Engineering</Text>
+                            <Text style={styles.whiteText}>Electrical Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2185,10 +2185,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Electronic Engineering</Text>
+                            <Text style={styles.whiteText}>Electronic Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2200,10 +2200,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Energy Engineering</Text>
+                            <Text style={styles.whiteText}>Energy Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2215,10 +2215,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Interior Design</Text>
+                            <Text style={styles.whiteText}>Interior Design</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2230,10 +2230,10 @@ constructor (props) {
                             })
                         }}> 
                         <Left>
-                            <Text>Landscape Architecture</Text>
+                            <Text style={styles.whiteText}>Landscape Architecture</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2245,10 +2245,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Logistics & Supply Chain Management</Text>
+                            <Text style={styles.whiteText}>Logistics & Supply Chain Management</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2260,10 +2260,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mathematics</Text>
+                            <Text style={styles.whiteText}>Mathematics</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2275,10 +2275,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Mechanical Engineering</Text>
+                            <Text style={styles.whiteText}>Mechanical Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2290,10 +2290,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Physics</Text>
+                            <Text style={styles.whiteText}>Physics</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2305,10 +2305,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Sourcing & Procurment</Text>
+                            <Text style={styles.whiteText}>Sourcing & Procurment</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2320,10 +2320,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>STEM Tutoring</Text>
+                            <Text style={styles.whiteText}>STEM Tutoring</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2335,10 +2335,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Structural Engineering</Text>
+                            <Text style={styles.whiteText}>Structural Engineering</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                         <ListItem button={true} onPress={() => {
@@ -2350,10 +2350,10 @@ constructor (props) {
                             })
                         }}>
                         <Left>
-                            <Text>Trade Show Design</Text>
+                            <Text style={styles.whiteText}>Trade Show Design</Text>
                         </Left>
                         <Right>
-                            <Icon style={{ color: "darkred" }} name="arrow-forward" />
+                            <Icon style={{ color: "#0057ff" }} name="arrow-forward" />
                         </Right>
                         </ListItem>
                     </List>
@@ -2397,7 +2397,7 @@ constructor (props) {
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                 <Body>
@@ -2406,11 +2406,11 @@ constructor (props) {
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text style={styles.goldText}>Restart Process</Text>
+                            <Text style={styles.whiteText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.30} width={width} />
+                <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={0.30} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} style={styles.container}>
                     <Text style={styles.headerText}>Select which category best matches your interests</Text>
                     {this.renderMainContent()}

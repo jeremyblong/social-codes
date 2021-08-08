@@ -932,18 +932,18 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.navigation.push("manage-applicants-jobs");
                         }} transparent>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#ffd530" }}>Proposals</Title>
-                        <Subtitle style={{ color: "#ffd530" }}>View applicants</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Proposals</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>View applicants</Subtitle>
                     </Body>
                     <Right>
                         <Button onPress={() => {
                             this.props.navigation.push("homepage");
                         }} transparent>
-                            <Icon style={{ color: "#ffd530" }} name='home' />
+                            <Icon style={{ color: "#ffffff" }} name='home' />
                         </Button>
                     </Right>
                 </Header>

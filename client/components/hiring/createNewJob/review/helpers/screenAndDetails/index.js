@@ -140,14 +140,14 @@ constructor(props) {
                             </Button>
                         </Left>
                     <Body>
-                        <Title style={styles.goldText}>Post Job</Title>
-                        <Subtitle style={styles.goldText}>Timelines & Screening</Subtitle>
+                        <Title style={styles.whiteText}>Post Job</Title>
+                        <Subtitle style={styles.whiteText}>Timelines & Screening</Subtitle>
                     </Body>
                         <Right>
                         
                         </Right>
                     </Header>
-                    <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.43} width={width} />
+                    {/* <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={0.43} width={width} /> */}
                     <ScrollView contentContainerStyle={{ paddingBottom: 50, paddingTop: 10 }} style={styles.container}>
                         <View style={styles.margin}>
                             <Text style={styles.headerText}>What type of project do you have?</Text>
@@ -159,11 +159,11 @@ constructor(props) {
                             }} style={selected === "one-time-project" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/acc.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>One-Time Project</Text>
+                                        <Image source={require("../../../../../../assets/icons/acc.png")} style={styles.iconNumberTwo} />
+                                        <Text style={[styles.whiteText, { fontWeight: "bold", marginLeft: 10 }]}>One-Time Project</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "one-time-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "one-time-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconThree, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconNumberTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -174,11 +174,11 @@ constructor(props) {
                             }} style={selected === "ongoing-project" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/clip.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Ongoing Project</Text>
+                                        <Image source={require("../../../../../../assets/icons/clip.png")} style={styles.iconNumberTwo} />
+                                        <Text style={[styles.whiteText, { fontWeight: "bold", marginLeft: 10 }]}>Ongoing Project</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "ongoing-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "ongoing-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconThree, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconNumberTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -189,11 +189,11 @@ constructor(props) {
                             }} style={selected === "complex-project" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/square.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Complex Project</Text>
+                                        <Image source={require("../../../../../../assets/icons/square.png")} style={styles.iconNumberTwo} />
+                                        <Text style={[styles.whiteText, { fontWeight: "bold", marginLeft: 10 }]}>Complex Project</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "complex-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "complex-project" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconThree, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconNumberTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -202,7 +202,7 @@ constructor(props) {
                         <View style={styles.margin}>
                             <Text style={styles.headerText}>Screening Questions (Optional)</Text>
                             <View style={{ marginTop: 10 }} />
-                            <Text>Add screening questions to find better candiates and better your chances at the perfect match!</Text>
+                            <Text style={{ color: "#ffffff" }}>Add screening questions to find better candiates and better your chances at the perfect match!</Text>
                             <View style={{ margintop: 10 }} />
                             <View style={styles.row}>
                                 <TouchableOpacity onPress={() => {
@@ -231,7 +231,7 @@ constructor(props) {
                                                         questions: items
                                                     })
                                                     
-                                                }} style={{ width: "100%", height: "100%" }} rowSpan={3} bordered placeholder={question.title} value={question.title} placeholderTextColor={"grey"} />
+                                                }} style={{ width: "100%", height: "100%", color: "#ffffff" }} rowSpan={3} bordered placeholder={question.title} value={question.title} placeholderTextColor={"grey"} />
                                             </Item>
                                             <TouchableOpacity onPress={() => {
                                                 let items = [...questions];
@@ -244,7 +244,7 @@ constructor(props) {
                                                     count: this.state.count - 1,
                                                     error: ""
                                                 })
-                                            }} style={styles.rightHalf}><Image source={require("../../../../../../assets/icons/close.png")} style={{ maxWidth: 35, maxHeight: 35 }} /></TouchableOpacity>
+                                            }} style={styles.rightHalf}><Image source={require("../../../../../../assets/icons/close.png")} style={{ maxWidth: 35, maxHeight: 35, tintColor: "#ffffff" }} /></TouchableOpacity>
                                         </View>
                                     );
                                 }
@@ -255,7 +255,7 @@ constructor(props) {
                             <View style={styles.margin}>
                             <Text style={styles.headerText}>Cover letter</Text>
                             <View style={{ marginTop: 15 }} />
-                            <Text>Ask freelancers and agencies to write a cover letter introducing themselves</Text>
+                            <Text style={{ color: "#ffffff" }}>Ask freelancers and agencies to write a cover letter introducing themselves</Text>
                             <View style={styles.specialRow}>
                                 <Switch
                                     value={this.state.switched}
@@ -281,7 +281,7 @@ constructor(props) {
                         </View>
                         <View style={[styles.thickHr, { marginBottom: 35 }]} />
                         <View style={styles.margin}>
-                            {this.renderButtons() ? <AwesomeButtonBlue type={"secondary"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
+                            {this.renderButtons() ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue> : <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit & Continue</AwesomeButtonBlue>}
                         </View>
                     </ScrollView>
                 </RBSheet>

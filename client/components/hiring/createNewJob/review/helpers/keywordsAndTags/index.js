@@ -7,7 +7,7 @@ import * as Progress from 'react-native-progress';
 import { addJobData } from "../../../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
 import { TagSelect } from 'react-native-tag-select';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import languages from "../../../../../../data_sets/listOfAllProgrammingLanguages.json";
 import uuid from "react-native-uuid";
@@ -43,9 +43,9 @@ constructor (props) {
         const { selectedTags } = this.props;
 
         if ((typeof selected !== "undefined" && selected.length > 0) && (typeof languagesSelected !== "undefined" && languagesSelected.length > 0) && ((typeof selectedTags !== "undefined" && selectedTags.length > 0) || (typeof additionalTags !== "undefined" && additionalTags.length > 0))) {
-            return <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>
+            return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 5 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
         } else {
-            return <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonCartman>;
+            return <AwesomeButtonBlue type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
         }
     }
     componentDidMount() {
@@ -165,7 +165,7 @@ constructor (props) {
                         }
                     }}
                 >
-                     <ScrollView style={styles.container}>
+                     <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={styles.container}>
                         <Header style={{ backgroundColor: "#303030" }}>
                             <Left>
                                 <Button onPress={() => {
@@ -175,8 +175,8 @@ constructor (props) {
                                 </Button>
                             </Left>
                         <Body>
-                            <Title style={styles.goldText}>Post a job</Title>
-                            <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
+                            <Title style={styles.whiteText}>Post a job</Title>
+                            <Subtitle style={styles.whiteText}>Create a job listing</Subtitle>
                         </Body>
                             <Right>
                                 
@@ -203,15 +203,15 @@ constructor (props) {
                                     selectText="Pick Items"
                                     searchInputPlaceholderText="Search items..."
                                     onChangeInput={ (text)=> console.log(text)}
-                                    tagRemoveIconColor="darkred"
-                                    tagBorderColor="darkred"
-                                    tagTextColor="darkred"
-                                    selectedItemTextColor="darkred"
-                                    selectedItemIconColor="darkred"
+                                    tagRemoveIconColor="#ffffff"
+                                    tagBorderColor="#0057ff"
+                                    tagTextColor="#0057ff"
+                                    selectedItemTextColor="#0057ff"
+                                    selectedItemIconColor="#0057ff"
                                     itemTextColor="#000"
                                     displayKey="name"
-                                    searchInputStyle={{ color: 'darkred' }}
-                                    submitButtonColor="darkred"
+                                    searchInputStyle={{ color: '#0057ff' }}
+                                    submitButtonColor="#0057ff"
                                     submitButtonText="Submit"
                                 />
                                 <Text style={styles.headerText}>Soft Skills</Text>
@@ -225,15 +225,15 @@ constructor (props) {
                                     selectText="Pick Items"
                                     searchInputPlaceholderText="Search items..."
                                     onChangeInput={ (text)=> console.log(text)}
-                                    tagRemoveIconColor="darkred"
-                                    tagBorderColor="darkred"
-                                    tagTextColor="darkred"
-                                    selectedItemTextColor="darkred"
-                                    selectedItemIconColor="darkred"
+                                    tagRemoveIconColor="#ffffff"
+                                    tagBorderColor="#0057ff"
+                                    tagTextColor="#0057ff"
+                                    selectedItemTextColor="#0057ff"
+                                    selectedItemIconColor="#0057ff"
                                     itemTextColor="#000"
                                     displayKey="name"
-                                    searchInputStyle={{ color: 'darkred' }}
-                                    submitButtonColor="darkred"
+                                    searchInputStyle={{ color: '#0057ff' }}
+                                    submitButtonColor="#0057ff"
                                     submitButtonText="Submit"
                                 />
                             </View>
@@ -275,7 +275,7 @@ constructor (props) {
                         </View>
                         <View style={styles.thickHr} />
                             <Text style={styles.headerText}>What languages will be used? <Text style={{ color: "red" }}>(Required)</Text></Text>
-                            {ready === true ? <View style={{ margin: 10 }}><SectionedMultiSelect
+                            {ready === true ? <View style={{ margin: 10, backgroundColor: "#ffffff" }}><SectionedMultiSelect
                                 items={this.state.languages}
                                 IconRenderer={Icon}
                                 uniqueKey="id"
@@ -303,47 +303,47 @@ constructor (props) {
                             <Text style={styles.headerText}>What experience level should your freelancer have? <Text style={{ color: "red" }}>(Required)</Text></Text>
                             <View style={{ marginTop: 20 }} />
                             <TouchableOpacity onPress={() => {
-                            this.setState({
-                                selected: "entry-level"
-                            })
+                                this.setState({
+                                    selected: "entry-level"
+                                })
                             }} style={selected === "entry-level" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/beginner.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Entry-Level</Text>
+                                        <Image source={require("../../../../../../assets/icons/beginner.png")} style={styles.iconCustomTwo} />
+                                        <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Entry-Level</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "entry-level" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "entry-level" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconCustomTwo, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconCustomTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
                                 this.setState({
-                                selected: "intermediate"
-                            })
+                                    selected: "intermediate"
+                                })
                             }} style={selected === "intermediate" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/average.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Intermediate</Text>
+                                        <Image source={require("../../../../../../assets/icons/average.png")} style={styles.iconCustomTwo} />
+                                        <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Intermediate</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "intermediate" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "intermediate" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconCustomTwo, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconCustomTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
                                 this.setState({
-                                selected: "expert"
-                            })
+                                    selected: "expert"
+                                })
                             }} style={selected === "expert" ? styles.selected : styles.boxed}>
                                 <View style={styles.innerBox}>
                                     <View style={styles.left}>
-                                        <Image source={require("../../../../../../assets/icons/expert.png")} style={styles.icon} />
-                                        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Expert</Text>
+                                        <Image source={require("../../../../../../assets/icons/expert.png")} style={styles.iconCustomTwo} />
+                                        <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Expert</Text>
                                     </View>
                                     <View style={styles.right}>
-                                        {selected === "expert" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.icon} />}
+                                        {selected === "expert" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={[styles.iconCustomTwo, { marginLeft: 5 }]} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={styles.iconCustomTwo} />}
                                     </View>
                                 </View>
                             </TouchableOpacity>

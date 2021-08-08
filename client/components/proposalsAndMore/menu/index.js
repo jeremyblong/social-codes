@@ -139,7 +139,9 @@ constructor(props) {
                             initialNumToRender={3}
                         /> : null}
                         <View style={styles.margin}>
-                            <AwesomeButtonBlue type={"secondary"} onPress={() => {}} stretch={true}>Load more...</AwesomeButtonBlue>
+                            <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                   
+                            }} stretch={true}>Load More...</AwesomeButtonBlue>
                         </View>
                     </List>
                 </View>
@@ -180,7 +182,9 @@ constructor(props) {
                             initialNumToRender={3}
                         /> : null}
                         <View style={styles.margin}>
-                            <AwesomeButtonBlue type={"secondary"} onPress={() => {}} stretch={true}>Load more...</AwesomeButtonBlue>
+                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                   
+                        }} stretch={true}>Load More...</AwesomeButtonBlue>
                         </View>
                     </List>
                 </View>
@@ -279,12 +283,12 @@ constructor(props) {
                             <Button onPress={() => {
                                 this.props.props.navigation.goBack();
                             }} transparent>
-                                <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffd530" }]} />
+                                <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                             </Button>
                         </Left>
                         <Body>
-                            <Title style={styles.goldText}>Dashboard</Title>
-                            <Subtitle style={styles.goldText}>Manage proposals & more</Subtitle>
+                            <Title style={styles.whiteText}>Dashboard</Title>
+                            <Subtitle style={styles.whiteText}>Manage proposals & more</Subtitle>
                         </Body>
                         <Right />
                     </Header>

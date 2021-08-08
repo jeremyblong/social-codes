@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Icon, Picker } from 'native-base';
 import styles from './styles.js';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { connect } from 'react-redux';
 import { addJobData } from "../../../../../../actions/jobs/data.js";
 import LottieView from 'lottie-react-native';
@@ -16,7 +16,7 @@ import _ from "lodash";
 const { height, width } = Dimensions.get("window");
 
 const chartConfig = {
-    backgroundGradientFrom: "#ffd530",
+    backgroundGradientFrom: "#0057ff",
     backgroundGradientFromOpacity: 1,
     backgroundGradientTo: "black",
     backgroundGradientToOpacity: 1,
@@ -86,15 +86,15 @@ constructor(props) {
 
         if (fixed === false) {
             if ((typeof rate !== "undefined" && rate.length > 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (min !== 0 && max !== 0) && (typeof error !== "undefined" && error.length === 0) && (tokensRequired !== 0)) {
-                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
+                return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
             } else {
-                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
+                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
             }
         } else {
             if ((typeof rate !== "undefined" && rate.length > 0) && (fixedBudget !== 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (tokensRequired !== 0)) {
-                return <AwesomeButtonCartman type={"anchor"} textColor={"white"} stretch={true} onPress={this.handleSubmission}>Submit & Continue</AwesomeButtonCartman>;
+                return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
             } else {
-                return <AwesomeButtonCartman type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonCartman>;
+                return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
             } 
         }
     }
@@ -110,7 +110,7 @@ constructor(props) {
                             this.setState({
                                 fixedBudget: Number(value)
                             })
-                        }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10 }} placeholder='0.00' />
+                        }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10, color: "#ffffff" }} placeholder='0.00' />
                     </Item>
                 </Fragment>
             );
@@ -190,9 +190,9 @@ constructor(props) {
                                     </View>
                                     <View style={styles.largeColumn}>
                                         <Text style={rate === "hourly" ? styles.titleSelected : styles.title}>Pay by the hour</Text>
-                                        <Text>Pay hourly to easily scale up and down</Text>
+                                        <Text style={rate === "hourly" ? styles.blackText : styles.whiteText}>Pay hourly to easily scale up and down</Text>
                                         <View style={styles.topRight}>
-                                            {rate === "hourly" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "blue" }} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
+                                            {rate === "hourly" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "#0057ff" }} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -204,13 +204,13 @@ constructor(props) {
                                     })
                                 }} style={rate === "fixed-rate" ? styles.boxedSelected : styles.boxed}>
                                     <View style={styles.smallColumn}>
-                                        <Image source={require("../../../../../../assets/icons/price-tag.png")} style={styles.icon} />
+                                        <Image source={require("../../../../../../assets/icons/price-tag.png")} style={rate === "fixed-rate" ? styles.icon : styles.iconDark} />
                                     </View>
                                     <View style={styles.largeColumn}>
                                         <Text style={rate === "fixed-rate" ? styles.titleSelected : styles.title}>Pay a fixed price</Text>
-                                        <Text>Define a payment before work begins and pay only when the work is delivered</Text>
+                                        <Text style={rate === "fixed-rate" ? styles.blackText : styles.whiteText}>Define a payment before work begins and pay only when the work is delivered</Text>
                                         <View style={styles.topRight}>
-                                            {rate === "fixed-rate" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "blue" }} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
+                                            {rate === "fixed-rate" ? <Image source={require("../../../../../../assets/icons/selected.png")} style={{ maxWidth: 25, maxHeight: 25, tintColor: "#0057ff" }} /> : <Image source={require("../../../../../../assets/icons/un-selected.png")} style={{ maxWidth: 25, maxHeight: 25 }} />}
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -234,7 +234,7 @@ constructor(props) {
                             {fixed === false ? <View style={styles.margin}>
                                 <View style={styles.row}>
                                 <Item style={{ width: width * 0.35 }} regular>
-                                    <Icon name="attach-money" type="MaterialIcons" />
+                                    <Icon style={{ color: "#ffffff" }} name="attach-money" type="MaterialIcons" />
                                     <Input value={this.state.min} onChangeText={(value) => {
                                         if (value.length === 0) {
                                             this.setState({
@@ -245,13 +245,13 @@ constructor(props) {
                                                 min: Number(value)
                                             })
                                         }
-                                    }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10 }} placeholder='0.00' />
+                                    }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10, color: "white" }} placeholder='0.00' />
                                 </Item>
                                 <View style={styles.contain}>
-                                    <Text> /hr <Text style={{ fontWeight: "bold" }}>to </Text></Text>
+                                    <Text style={{ color: "#ffffff" }}> /hr <Text style={{ fontWeight: "bold" }}>to </Text></Text>
                                 </View>
                                 <Item style={{ width: width * 0.35 }} regular>
-                                    <Icon name="attach-money" type="MaterialIcons" />
+                                    <Icon style={{ color: "#ffffff" }} name="attach-money" type="MaterialIcons" />
                                     <Input value={this.state.max} onChangeText={(value) => {
                                         if (value.length === 0) {
                                             this.setState({
@@ -276,10 +276,10 @@ constructor(props) {
                                                 }
                                             })
                                         }
-                                    }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10 }} placeholder='0.00' />
+                                    }} keyboardType={"number-pad"} returnKeyType={'done'} style={{ textAlign: "right", paddingRight: 10, color: "#ffffff" }} placeholder='0.00' />
                                 </Item>
                                 <View style={styles.contain}>
-                                    <Text> /hr </Text>
+                                    <Text style={styles.whiteText}> /hr </Text>
                                 </View>
                                 </View>
                                 {typeof error !== "undefined" && error.length > 0 ? <Text style={styles.redText}>{error}</Text> : null}
@@ -292,13 +292,13 @@ constructor(props) {
                                     })
                                 }} style={lengthOfProject === "more-than-6-months" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar-6.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar-6.png")} style={lengthOfProject === "more-than-6-months" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>More than 6 months</Text>
+                                        <Text style={lengthOfProject === "more-than-6-months" ? styles.boldDark : styles.bold}>More than 6 months</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "more-than-6-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "more-than-6-months" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     this.setState({
@@ -306,13 +306,13 @@ constructor(props) {
                                     })
                                 }} style={lengthOfProject === "3-6-months" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={lengthOfProject === "3-6-months" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>3 to 6 months</Text>
+                                        <Text style={lengthOfProject === "3-6-months" ? styles.boldDark : styles.bold}>3 to 6 months</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "3-6-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "3-6-months" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     this.setState({
@@ -320,13 +320,13 @@ constructor(props) {
                                     })
                                 }} style={lengthOfProject === "1-3-months" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={lengthOfProject === "1-3-months" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>1 to 3 months</Text>
+                                        <Text style={lengthOfProject === "1-3-months" ? styles.boldDark : styles.bold}>1 to 3 months</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "1-3-months" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "1-3-months" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     this.setState({
@@ -334,13 +334,13 @@ constructor(props) {
                                     })
                                 }} style={lengthOfProject === "less-than-1-month" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar.png")} style={lengthOfProject === "less-than-1-month" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>Less than 1 month</Text>
+                                        <Text style={lengthOfProject === "less-than-1-month" ? styles.boldDark : styles.bold}>Less than 1 month</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "less-than-1-month" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={lengthOfProject === "less-than-1-month" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.margin}>
@@ -352,13 +352,13 @@ constructor(props) {
                                     })
                                 }} style={timeRequirement === "more-than-30-hours-week" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={timeRequirement === "more-than-30-hours-week" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>More than 30 hours a week</Text>
+                                        <Text style={timeRequirement === "more-than-30-hours-week" ? styles.boldDark : styles.bold}>More than 30 hours a week</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "more-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "more-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     this.setState({
@@ -366,13 +366,13 @@ constructor(props) {
                                     })
                                 }} style={timeRequirement === "less-than-30-hours-week" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar-3.png")} style={timeRequirement === "less-than-30-hours-week" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>Less than 30 hours a week</Text>
+                                        <Text style={timeRequirement === "less-than-30-hours-week" ? styles.boldDark : styles.bold}>Less than 30 hours a week</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "less-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "less-than-30-hours-week" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     this.setState({
@@ -380,24 +380,25 @@ constructor(props) {
                                     })
                                 }} style={timeRequirement === "unknown" ? styles.boxedContainerSelected : styles.boxedContainer}>
                                     <View style={styles.smallColumnCustom}>
-                                        <Image source={require("../../../../../../assets/icons/calendar.png")} style={{ maxWidth: "70%", maxHeight: "75%" }} />
+                                        <Image source={require("../../../../../../assets/icons/calendar.png")} style={timeRequirement === "unknown" ? styles.iconCustomDark : styles.iconCustom} />
                                     </View>
                                     <View style={styles.larger}>
-                                        <Text style={styles.bold}>I don't know yet</Text>
+                                        <Text style={timeRequirement === "unknown" ? styles.boldDark : styles.bold}>I don't know yet</Text>
                                     
                                     </View>
-                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "unknown" ? [styles.absoluteRight, { tintColor: "blue" }] : styles.absoluteRight} />
+                                    <Image source={require("../../../../../../assets/icons/un-selected.png")} style={timeRequirement === "unknown" ? [styles.absoluteRight, { tintColor: "#0057ff" }] : styles.absoluteRight} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.margin}>
                                 <Text style={styles.headerText}>Select how many "Tokens/Credits" are required to apply for your listing</Text>
+                                <View style={{ backgroundColor: "#ffffff" }}>
                                 <Picker
                                     mode="dropdown"
                                     iosIcon={<Icon name="arrow-down" />}
                                     style={{ width: "100%" }}
                                     placeholder="Select token amount..."
                                     placeholderStyle={{ color: "black" }}
-                                    placeholderIconColor="blue"
+                                    placeholderIconColor="darkred"
                                     selectedValue={this.state.tokensRequired}
                                     onValueChange={(value) => {
                                         this.setState({
@@ -411,6 +412,7 @@ constructor(props) {
                                     <Picker.Item label="5 Tokens" value={5} />
                                     <Picker.Item label="6 Tokens" value={6} />
                                 </Picker>
+                                </View>
                             </View>
                             <View style={styles.margin}>
                                 {this.renderButtons()}

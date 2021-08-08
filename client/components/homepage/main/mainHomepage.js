@@ -2175,7 +2175,7 @@ constructor () {
                                 />
                                 {this.props.selection !== null ? <View style={{ marginBottom: 35 }} /> : null}
                                 <View style={typeof pictures !== "undefined" && pictures.length > 0 ? styles.pictureContainer : styles.hideContainer}>
-                                    <View style={{ flex: 1, minHeight: 500, marginBottom: 50 }}>
+                                    <View style={{ minHeight: 500, marginBottom: 50 }}>
                                         {[1, 3, 4].includes(imagesToShow.length)  && this.renderOne()}
                                         {imagesToShow.length >= 2 && imagesToShow.length != 4 && this.renderTwo()}
                                         {imagesToShow.length >= 4 && this.renderThree()}

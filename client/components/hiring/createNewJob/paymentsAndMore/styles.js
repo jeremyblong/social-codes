@@ -7,16 +7,24 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
-    goldText: {
-        color: "#ffd530"
+    boldDark: {
+        color: "black"
+    }, 
+    iconCustomDark: {
+        tintColor: "#141414",
+        maxWidth: "70%", 
+        maxHeight: "75%"
+    },
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     margin: {
         margin: 20
@@ -24,7 +32,8 @@ export default StyleSheet.create({
     headerText: {
         margin: 10,
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     contain: {
         justifyContent: "center",
@@ -40,7 +49,8 @@ export default StyleSheet.create({
         maxHeight: 25
     },
     bold: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     larger: {
         maxWidth: "80%",
@@ -58,8 +68,8 @@ export default StyleSheet.create({
     boxedSelected: {
         flexDirection: "row",
         borderWidth: 2,
-        backgroundColor: "#ffd530",
-        borderColor: "darkred",
+        backgroundColor: "#ffffff",
+        borderColor: "#0057ff",
         height: 75
     },
     redText: {
@@ -68,49 +78,60 @@ export default StyleSheet.create({
     },
     boxedContainerSelected: {
         borderWidth: 1,
-        borderColor: "darkred",
-        backgroundColor: "#ffd530",
+        borderColor: "#0057ff",
+        backgroundColor: "#ffffff",
         flexDirection: "row",
         height: 50,
         marginTop: 15
     },
     boxedContainer: {
         borderWidth: 1,
-        borderColor: "lightgrey",
+        borderColor: "#cccccc",
         flexDirection: "row",
         height: 50,
         marginTop: 15
     },
+    blackText: {
+        color: "black"
+    },
     titleSelected: {
-        color: "darkred",
+        color: "#0057ff",
         fontSize: 15,
-        backgroundColor: "#ffd530",
+        backgroundColor: "#ffffff",
         fontWeight: "bold",
         textAlign: "left" 
     },
     boxed: {
         flexDirection: "row",
         borderWidth: 2,
-        borderColor: "lightgrey",
+        borderColor: "#cccccc",
         height: 75
     },
     graphStyle: {
           
+    },
+    iconCustom: {
+        maxWidth: "70%", 
+        maxHeight: "75%",
+        tintColor: "#ffffff"
     },
     row: {
         flexDirection: "row"
     },
     icon: {
         maxWidth: "75%",
-        maxHeight: "65%"
+        maxHeight: "65%",
+        tintColor: "#141414"
     },
     title: {
         fontSize: 15,
         fontWeight: "bold",
+        color: "#ffffff",
         textAlign: "left"
     },  
     animation: {
         minWidth: "100%",
+        backgroundColor: "#ffffff",
         minHeight: "100%"
     },
     largeColumn: {
@@ -122,8 +143,14 @@ export default StyleSheet.create({
         right: 20,
         top: 3
     },
+    iconDark: {
+        tintColor: "#ffffff",
+        maxWidth: "75%",
+        maxHeight: "65%"
+    },
     smallColumn: {
         width: "15%",
+        marginRight: 4,
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center"

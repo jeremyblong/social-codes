@@ -12,11 +12,11 @@ const PaymentCardAddNewHelper =  (props) => {
                         <Button onPress={() => {
                             props.props.navigation.push("payments-cards");
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                         
                     </Left>
-                    <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>New payment form</Title></Body>
+                    <Body><Title style={{ paddingTop: 5, color: "#ffffff" }}>New payment form</Title></Body>
                     <Right></Right>
                 </Header>
                 <List>

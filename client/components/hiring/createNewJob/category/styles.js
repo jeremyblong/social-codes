@@ -12,18 +12,18 @@ export default StyleSheet.create({
         width,
         height,
         zIndex: 999,
-        backgroundColor: "black"
+        backgroundColor: "#141414"
     },
     margin: {
         padding: 10,
         zIndex: 999,
-        backgroundColor: "#303030"
+        backgroundColor: "#141414"
     },
     largeText: {
         fontSize: 26,
         fontWeight: "bold",
         textDecorationLine: "underline",
-        color: "#ffd530"
+        color: "#ffffff"
     },
     boxedLong: {
         height: 150,
@@ -48,8 +48,8 @@ export default StyleSheet.create({
         alignItems: "center",
         alignContent: "center"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     boxedShort: {
         width: "48.5%",

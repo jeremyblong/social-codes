@@ -7,16 +7,16 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     margin: {
         margin: 20
@@ -24,7 +24,8 @@ export default StyleSheet.create({
     headerText: {
         margin: 10,
         fontSize: 16,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     thickHr: {
         borderBottomColor: "lightgrey",
@@ -46,13 +47,12 @@ export default StyleSheet.create({
     },
     boxed: {
         borderWidth: 2,
-        borderColor: "lightgrey",
+        borderColor: "#cccccc",
         marginTop: 15
     },
     selected: {
         borderWidth: 2,
-        borderColor: "darkred",
-        backgroundColor: "#ffd530",
+        borderColor: "#0057ff",
         marginTop: 15
     },
     tagger: {
@@ -61,6 +61,11 @@ export default StyleSheet.create({
         margin: 5,
         borderWidth: 1,
         borderColor: "lightgrey"
+    },
+    iconCustomTwo: {
+        tintColor: "#ffffff",
+        maxWidth: 35,
+        maxHeight: 35 
     },
     right: {
         position: "absolute",

@@ -167,7 +167,7 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     pictureContainer: {
-        height: "50%",
+        height: "100%",
         minHeight: 350
     },
     hideContainer: {
@@ -586,21 +586,20 @@ export default StyleSheet.create({
     imageContent:{
         borderWidth:1,
         borderColor:'black',
-        flex: 1,
-        height: 500, 
-        minHeight: 500
+        height: 325, 
+        minHeight: 325
     },
     imageContent1:{
         width: width * 1.05,
         marginLeft: -20,
-        flex: 1,
-        height: 500,
-        minHeight: 500
+        height: 325,
+        minHeight: 325
     },
     imageContentCustom: {
         width: width * 1.05,
         marginLeft: -20,
-        height: 350
+        height: 350,
+        minHeight: 350
     },
     imageContent2:{
         width: width * 0.535,

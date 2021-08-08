@@ -7,16 +7,16 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         width,
         height,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     circle: {
         borderWidth:1,
@@ -47,6 +47,7 @@ export default StyleSheet.create({
     largeText: {
         fontSize: 26,
         fontWeight: "bold",
+        color: "#ffffff",
         textDecorationLine: "underline"
     },
     boxedLong: {
@@ -62,7 +63,7 @@ export default StyleSheet.create({
         shadowRadius: 6.68,
 
         elevation: 11,
-        borderColor: "black"
+        borderColor: "#ffffff"
     },
     row: {
         flexDirection: "row"
@@ -72,7 +73,7 @@ export default StyleSheet.create({
         height: 157,
         margin: 5,
         borderWidth: 3,
-        borderColor: "black",
+        borderColor: "#ffffff",
         shadowColor: "black",
         shadowOffset: {
             width: 0,

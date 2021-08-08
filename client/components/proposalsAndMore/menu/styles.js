@@ -22,8 +22,8 @@ export default StyleSheet.create({
         margin: 14,
         color: "black"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     margin: {
         margin: 20,
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     container: {
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
     innerBoxed: {

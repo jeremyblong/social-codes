@@ -95,11 +95,11 @@ constructor(props) {
                             <Button onPress={() => {
                                 this.props.props.navigation.goBack();
                             }} transparent>
-                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                             </Button>
                             
                         </Left>
-                        <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>Add card details</Title></Body>
+                        <Body><Title style={{ paddingTop: 10, color: "#ffffff" }}>Add card details</Title></Body>
                         <Right></Right>
                     </Header>
                     <View style={{ marginTop: 40 }}>

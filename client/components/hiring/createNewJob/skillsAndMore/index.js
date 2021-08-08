@@ -7,7 +7,7 @@ import * as Progress from 'react-native-progress';
 import { addJobData } from "../../../../actions/jobs/data.js";
 import { connect } from "react-redux";
 import { TagSelect } from 'react-native-tag-select';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import languages from "../../../../data_sets/listOfAllProgrammingLanguages.json";
 import uuid from "react-native-uuid";
@@ -53,9 +53,9 @@ constructor (props) {
         // const { selectedTags } = this.props;
 
         if ((typeof selected !== "undefined" && selected.length > 0) && (typeof languagesSelected !== "undefined" && languagesSelected.length > 0) && ((typeof softPreselected !== "undefined" && softPreselected.length > 0) || (typeof additionalTags !== "undefined" && additionalTags.length > 0))) {
-            return <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonCartman>
+            return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
         } else {
-            return <AwesomeButtonCartman type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonCartman>;
+            return <AwesomeButtonBlue type={"disabled"} onPress={() => {}} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
         }
     }
     componentDidMount() {
@@ -142,16 +142,16 @@ constructor (props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title style={styles.goldText}>Post a job</Title>
-                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
+                    <Title style={styles.whiteText}>Post a job</Title>
+                    <Subtitle style={styles.whiteText}>Create a job listing</Subtitle>
                 </Body>
                     <Right>
                         <Button transparent onPress={this.restart}>
-                            <Text style={styles.goldText}>Restart Process</Text>
+                            <Text style={styles.whiteText}>Restart Process</Text>
                         </Button>
                     </Right>
                 </Header>
-                <Progress.Bar color={"#ffd530"} unfilledColor={"lightgrey"} progress={0.55} width={width} />
+                <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={0.55} width={width} />
                 <ScrollView style={styles.container}>
                     <View style={styles.margin}>
                         <Text style={styles.headerText}>Please select any relevant tags for your job based on the cateogry of job you selected... <Text style={{ color: "red" }}>(Required)</Text></Text>
@@ -174,15 +174,15 @@ constructor (props) {
                                 selectText="Pick Items"
                                 searchInputPlaceholderText="Search items..."
                                 onChangeInput={ (text)=> console.log(text)}
-                                tagRemoveIconColor="blue"
-                                tagBorderColor="blue"
-                                tagTextColor="blue"
-                                selectedItemTextColor="blue"
-                                selectedItemIconColor="blue"
+                                tagRemoveIconColor="#ffffff"
+                                tagBorderColor="#ffffff"
+                                tagTextColor="#ffffff"
+                                selectedItemTextColor="#0057ff"
+                                selectedItemIconColor="#0057ff"
                                 itemTextColor="#000"
                                 displayKey="name"
-                                searchInputStyle={{ color: 'blue' }}
-                                submitButtonColor="blue"
+                                searchInputStyle={{ color: '#ffffff' }}
+                                submitButtonColor="#0057ff"
                                 submitButtonText="Submit"
                             />
                             <Text style={styles.headerText}>Soft Skills</Text>
@@ -196,20 +196,20 @@ constructor (props) {
                                 selectText="Pick Items"
                                 searchInputPlaceholderText="Search items..."
                                 onChangeInput={ (text)=> console.log(text)}
-                                tagRemoveIconColor="blue"
-                                tagBorderColor="blue"
-                                tagTextColor="blue"
-                                selectedItemTextColor="blue"
-                                selectedItemIconColor="blue"
+                                tagRemoveIconColor="#ffffff"
+                                tagBorderColor="#ffffff"
+                                tagTextColor="#ffffff"
+                                selectedItemTextColor="#0057ff"
+                                selectedItemIconColor="#0057ff"
                                 itemTextColor="#000"
                                 displayKey="name"
-                                searchInputStyle={{ color: 'blue' }}
-                                submitButtonColor="blue"
+                                searchInputStyle={{ color: '#ffffff' }}
+                                submitButtonColor="#0057ff"
                                 submitButtonText="Submit"
                             />
                         </View>
                         <View style={{ marginTop: 15, marginBottom: 15 }}>
-                            <Text style={{ color: "darkred" }}>If NO "Soft Skills" are shown - you MUST add custom skills in the box below before proceeding...</Text>
+                            <Text style={{ color: "red", fontWeight: "bold" }}>If NO "Soft Skills" are shown - you MUST add custom skills in the box below before proceeding...</Text>
                         </View>
                         <Text style={styles.headerText}>Enter any other tags you would like to include below</Text>
                         <Tags
@@ -249,7 +249,7 @@ constructor (props) {
                     </View>
                     <View style={styles.thickHr} />
                         <Text style={styles.headerText}>What languages will be used? <Text style={{ color: "red" }}>(Required)</Text></Text>
-                        {ready === true ? <View style={{ margin: 10 }}><SectionedMultiSelect
+                        {ready === true ? <View style={{ margin: 10, backgroundColor: "#ffffff" }}><SectionedMultiSelect
                             items={this.state.languages}
                             IconRenderer={Icon}
                             uniqueKey="id"
@@ -284,7 +284,7 @@ constructor (props) {
                             <View style={styles.innerBox}>
                                 <View style={styles.left}>
                                     <Image source={require("../../../../assets/icons/beginner.png")} style={styles.icon} />
-                                    <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Entry-Level</Text>
+                                    <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Entry-Level</Text>
                                 </View>
                                 <View style={styles.right}>
                                     {selected === "entry-level" ? <Image source={require("../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={styles.icon} />}
@@ -299,7 +299,7 @@ constructor (props) {
                             <View style={styles.innerBox}>
                                 <View style={styles.left}>
                                     <Image source={require("../../../../assets/icons/average.png")} style={styles.icon} />
-                                    <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Intermediate</Text>
+                                    <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Intermediate</Text>
                                 </View>
                                 <View style={styles.right}>
                                     {selected === "intermediate" ? <Image source={require("../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={styles.icon} />}
@@ -314,7 +314,7 @@ constructor (props) {
                             <View style={styles.innerBox}>
                                 <View style={styles.left}>
                                     <Image source={require("../../../../assets/icons/expert.png")} style={styles.icon} />
-                                    <Text style={{ fontWeight: "bold", marginLeft: 10 }}>Expert</Text>
+                                    <Text style={{ fontWeight: "bold", marginLeft: 10, color: "#ffffff" }}>Expert</Text>
                                 </View>
                                 <View style={styles.right}>
                                     {selected === "expert" ? <Image source={require("../../../../assets/icons/selected.png")} style={[styles.icon, { marginLeft: 5 }]} /> : <Image source={require("../../../../assets/icons/un-selected.png")} style={styles.icon} />}

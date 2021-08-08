@@ -12,10 +12,10 @@ export default StyleSheet.create({
         width,
         height: Platform.OS === "ios" ? height - 94 : height - 74,
         zIndex: -1,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
-    goldText: {
-        color: "#fdd530"
+    whiteText: {
+        color: "#ffffff"
     },
     margin: {
         margin: 20
@@ -25,7 +25,8 @@ export default StyleSheet.create({
         maxHeight: 25
     },
     label: {
-        fontSize: 18
+        fontSize: 18,
+        color: "#ffffff"
     },
     smallRed: {
         marginTop: 10,
@@ -37,19 +38,20 @@ export default StyleSheet.create({
     },  
     headerText: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     greenText: { 
         textAlign: "right", 
         marginBottom: 10, 
         fontSize: 15, 
-        color: "green" 
+        color: "#22e000" 
     },
     redText: { 
         textAlign: "right", 
         marginBottom: 10, 
         fontSize: 15, 
-        color: "red" 
+        color: "#ff0022" 
     },
     greenTextTwo: { 
         display: "none" 
@@ -59,7 +61,7 @@ export default StyleSheet.create({
         marginTop: 10,
         marginLeft: 5, 
         fontSize: 15, 
-        color: "red" 
+        color: "#ff0022" 
     },
     bottomView: {
         position: "absolute",

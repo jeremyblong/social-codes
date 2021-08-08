@@ -13,12 +13,12 @@ const FriendsListHomepageMenuHelper = (props) => {
                     <Button onPress={() => {
                         props.props.navigation.goBack();
                     }} transparent>
-                        <Image source={require("../../assets/icons/go-back.png")} style={[[styles.headerIcon, { tintColor: "#fdd530" }]]} />
+                        <Image source={require("../../assets/icons/go-back.png")} style={[[styles.headerIcon, { tintColor: "#ffffff" }]]} />
                     </Button>
                 </Left>
                 <Body>
-                    <Title style={styles.goldText}>Friends Menu</Title>
-                    <Subtitle style={styles.goldText}>Navigate friend options</Subtitle>
+                    <Title style={styles.whiteText}>Friends Menu</Title>
+                    <Subtitle style={styles.whiteText}>Navigate friend options</Subtitle>
                 </Body>
                 <Right />
             </Header>

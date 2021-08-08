@@ -10,7 +10,7 @@ export default StyleSheet.create({
     container: {
         width,
         height,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
     profile: {
@@ -56,6 +56,7 @@ export default StyleSheet.create({
     headText: {
         fontSize: 34,
         fontWeight: "bold",
+        color: "#ffffff",
         textAlign: "center"
     },
     myImage: {

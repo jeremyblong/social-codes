@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions, Scrol
 import { Header, Left, Body, Right, Title, Subtitle, Button, Item, Input, Textarea, Card, CardItem, Thumbnail, List, ListItem, FooterTab, Footer } from 'native-base';
 import styles from './styles.js';
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import Config from 'react-native-config';
 import axios from "axios";
 import _ from "lodash";
@@ -824,15 +825,15 @@ constructor (props) {
                             </Fragment> : null}
                             <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
                             <View style={{ marginTop: 10, margin: 20 }}>
-                                {user !== null ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
-                                    this.RBSheet.open();
-                                }} stretch={true}>Send Private Message</AwesomeButtonCartman> : null}
+                                {user !== null ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                   this.RBSheet.open();
+                                }} stretch={true}>Send Private Message</AwesomeButtonBlue> : null}
                                 <View style={{ marginTop: 20 }} />
-                                {user !== null && alreadyFriends === false ? <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
-                                    this.setState({
+                                {user !== null && alreadyFriends === false ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                   this.setState({
                                         isVisible: true
                                     })
-                                }} stretch={true}>Send Friend Request</AwesomeButtonCartman> : null}
+                                }} stretch={true}>Send Friend Request</AwesomeButtonBlue> : null}
                             </View>
                             {user !== null && _.has(user, "introductionVideo") ? <View style={styles.margin10}>
                                 <Text style={[styles.headerText, { textDecorationLine: "underline" }]}>Introductory video</Text>

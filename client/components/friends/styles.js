@@ -15,8 +15,8 @@ export default StyleSheet.create({
     header: {
         backgroundColor: "#303030"
     },  
-    goldText: {
-        color: "#fdd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         backgroundColor: "white"

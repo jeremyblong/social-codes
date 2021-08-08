@@ -36,7 +36,6 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
         // })
 
         axios.get(`https://api.tomtom.com/search/2/poiSearch/${searchValue}.JSON?key=6HvPX5DCMcnnPomyWgJOkTnbhSoCoGWX&countrySet=USA&limit=25&lat=${latitude}&lon=${longitude}`).then((res) => {
-            console.log("MAGIC:", res.data);
 
             const { results } = res.data;
 
@@ -645,6 +644,18 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
     }
     const handleFinalSearch = () => {
         console.log("handleFinalSearch");
+
+        const { latitude, longitude } = userCurrentLocation;
+
+        axios.get(`https://api.tomtom.com/search/2/poiSearch/${searchValue}.JSON?key=6HvPX5DCMcnnPomyWgJOkTnbhSoCoGWX&countrySet=USA&limit=25&lat=${latitude}&lon=${longitude}`).then((res) => {
+            console.log("MAGIC:", res.data);
+
+            const { results } = res.data;
+
+            setResults(results);
+        }).catch((err) => {
+            console.log(err);
+        })
     }
     return (
         <View style={styles.container}>
@@ -673,8 +684,8 @@ const ShareLocationSlideUpPaneHelper = ({ CheckinRBSheet, userCurrentLocation })
                     </Button>
                 </Left>
                 <Body>
-                    <Title style={styles.goldText}>Check-in</Title>
-                    <Subtitle style={styles.goldText}>Share a location!</Subtitle>
+                    <Title style={styles.whiteText}>Check-in</Title>
+                    <Subtitle style={styles.whiteText}>Share a location!</Subtitle>
                 </Body>
                 <Right>
                     {/* <Button onPress={() => {

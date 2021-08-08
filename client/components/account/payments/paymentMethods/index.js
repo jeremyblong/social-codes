@@ -111,11 +111,11 @@ constructor(props) {
                             <Button onPress={() => {
                                 this.props.props.navigation.navigate("payments-main");
                             }} transparent>
-                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                                <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                             </Button>
                             
                         </Left>
-                        <Body><Title style={{ paddingTop: 10, color: "#ffd530" }}>Edit your payment methods</Title></Body>
+                        <Body><Title style={{ paddingTop: 5, color: "#ffffff" }}>Edit your payment methods</Title></Body>
                         <Right></Right>
                     </Header>
                     <List>
