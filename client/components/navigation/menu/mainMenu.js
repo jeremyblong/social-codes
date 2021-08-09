@@ -384,13 +384,13 @@ constructor(props) {
                                             <Text style={styles.sub}>Manage active, pending and submitted proposals</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
+                                    {this.props.accountType === "hire" ? <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("completed-gigs-list-homepage");
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/completed-two.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
                                         <Text style={styles.largeSized}>Completed Jobs</Text>
                                         <Text style={styles.sub}>View your already completed jobs/gigs</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> : null}
                                     {/* <View style={styles.shortView}>
                                         
                                     </View> */}
@@ -452,15 +452,13 @@ constructor(props) {
                                         <Image source={require("../../../assets/icons/reel.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Active Interviews & Video calls</Text>
                                     </TouchableOpacity>
-                                    {this.props.accountType === "work" ? <Fragment><View style={styles.shortView}>
-                                        
-                                    </View>
-                                    <View style={styles.shortView}>
-                                        
-                                    </View>
-                                    <View style={styles.shortView}>
-                                        
-                                    </View></Fragment> : null}
+                                    {this.props.accountType === "work" ? <Fragment><TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("completed-gigs-list-homepage");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/completed-two.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
+                                        <Text style={styles.largeSized}>Completed Jobs</Text>
+                                        <Text style={styles.sub}>View your already completed jobs/gigs</Text>
+                                    </TouchableOpacity></Fragment> : null}
                                 </View>   
                             </View>
                             <List>

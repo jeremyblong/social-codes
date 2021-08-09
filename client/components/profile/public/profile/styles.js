@@ -4,7 +4,7 @@ const { height, width } = Dimensions.get("window");
 
 export default StyleSheet.create({
     header:{
-      backgroundColor: "#ffd530",
+      backgroundColor: "#141414",
       height:200,
       maxHeight: 200,
       minHeight: 200,

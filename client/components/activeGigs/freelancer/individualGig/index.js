@@ -25,6 +25,7 @@ import { saveFilesPane } from "../../../../actions/work/index.js";
 import axios from "axios";
 import Dialog from "react-native-dialog";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import _ from "lodash";
 
 class ViewJobActiveClientFreelancerHelper extends Component {
 constructor(props) {
@@ -217,8 +218,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Manage</Title>
-                        <Subtitle style={styles.goldText}>Manage your active gig</Subtitle>
+                        <Title style={styles.whiteText}>Manage</Title>
+                        <Subtitle style={styles.whiteText}>Manage your active gig</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -308,7 +309,7 @@ constructor(props) {
                         </Text>
                         <View style={styles.greyHr} />
                         <Text style={styles.postDescription}>
-                            Please use this page to upload completed work (zip files, code, images, etc...) and manage your job and much more... Click payments to see what payments the client has deposited prior to submitting any work. Make sure the client has deposited funds <Text style={{ textDecorationLine: "underline" }}>before</Text> so you know funds will be released upon both parties agreeing the work was completed or mediation from <Text style={{ color: "darkred", fontStyle: 'italic' }}>Social Codes</Text> but always try to work things out before contacting us.
+                            Please use this page to upload completed work (zip files, code, images, etc...) and manage your job and much more... Click payments to see what payments the client has deposited prior to submitting any work. Make sure the client has deposited funds <Text style={{ textDecorationLine: "underline" }}>before</Text> so you know funds will be released upon both parties agreeing the work was completed or mediation from <Text style={{ color: "#0057ff", fontStyle: 'italic' }}>Social Codes</Text> but always try to work things out before contacting us.
                         </Text>
 
                         <Text style={styles.date}>
@@ -384,11 +385,11 @@ constructor(props) {
                             }) : null}
                             </List>
                             <View style={{ marginTop: 20 }} />
-                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Note for client</Text>
-                            <Text style={styles.note}>{application.note.length === 0 ? "No note entered..." : application.note}</Text>
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "#0057ff" }}>Note for client</Text>
+                            <Text style={styles.note}>{typeof application.note !== "undefined" && application.note.length === 0 ? "No note entered..." : application.note}</Text>
                             <View style={styles.greyHr} />
-                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "darkred" }}>Links submitted for client</Text>
-                            {application.links.length !== 0 ? application.links.map((link, index) => {
+                            <Text style={{ fontWeight: 'bold', textAlign: 'left', color: "#0057ff" }}>Links submitted for client</Text>
+                            {_.has(application, "links") && application.links.length !== 0 ? application.links.map((link, index) => {
                                 return (
                                     <GestureRecognizer
                                         onSwipeLeft={(state) => {
@@ -437,7 +438,7 @@ constructor(props) {
                             this.paymentsRef.current.open();
                         }} stretch={true}>View payments from client</AwesomeButtonCartman>
                         <View style={styles.greyHr} />
-                        <Text style={styles.direction}>If both parties (freelancer and client alike) agree the job is completed and the work submitted is sufficient, you should mark the job complete by clicking the button below. Once both users have confirmed the job is complete, <Text style={{ color: "darkred", fontWeight: "bold" }}>funds with be fully released from pending state</Text>..</Text>
+                        <Text style={styles.direction}>If both parties (freelancer and client alike) agree the job is completed and the work submitted is sufficient, you should mark the job complete by clicking the button below. Once both users have confirmed the job is complete, <Text style={{ color: "#0057ff", fontWeight: "bold" }}>funds with be fully released from pending state</Text>..</Text>
                         {(passedData.completedFreelancer === false || completedFreelancer === false) && loading === true ? <AwesomeButtonCartman style={{ marginTop: 20 }} type={"anchor"} backgroundShadow={"#ffd530"} textColor={"white"} onPress={() => {
                             this.setState({
                                 confirmationCompleteModal: true

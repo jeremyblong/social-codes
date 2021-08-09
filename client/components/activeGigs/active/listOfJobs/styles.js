@@ -7,7 +7,7 @@ export default StyleSheet.create({
         zIndex: -1,
         width,
         height,
-        backgroundColor: "white"
+        backgroundColor: "#141414"
     },
     headerIcon: {
         tintColor: "#ffffff",

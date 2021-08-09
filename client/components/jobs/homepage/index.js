@@ -306,6 +306,7 @@ constructor(props) {
                             </View>
                     </SkeletonPlaceholder></View>}
                     <TabView 
+                        swipeEnabled={false}
                         navigationState={this.state}
                         renderTabBar={ this._renderTabBar}
                         onIndexChange={index => this.setState({ index })}

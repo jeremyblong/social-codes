@@ -7,21 +7,21 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     container:{
         flex:1,
-        marginTop:40,
-        backgroundColor:'#f6f6f6',
+        paddingTop:40,
+        backgroundColor:'#141414',
     },
     list: {
         paddingHorizontal: 5,
-        backgroundColor:"#f6f6f6",
+        backgroundColor:"#141414",
     },
     listContainer:{
         alignItems:'center'
     },
       /******** card **************/
     card:{
-        shadowColor: '#474747',
+        shadowColor: '#ffffff',
         shadowOffset: {
-          width: 0,
+          width: 2,
           height: 6,
         },
         shadowOpacity: 0.37,
@@ -69,6 +69,7 @@ export default StyleSheet.create({
         fontSize:18,
         flex:1,
         alignSelf:'center',
-        color:"#696969"
+        color:"#ffffff",
+        fontWeight: 'bold'
     }
 })

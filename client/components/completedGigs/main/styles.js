@@ -12,6 +12,23 @@ export default StyleSheet.create({
     margin: {
         margin: 20
     },
+    myImage: {
+        maxWidth: "100%", 
+        maxHeight: height * 0.40
+    },
+    greyHr: {
+        borderBottomColor: "lightgrey",
+        borderBottomWidth: 2,
+        marginTop: 10,
+        marginBottom: 10,
+        width: "100%"
+    },  
+    headText: {
+        color: "#ffffff",
+        textAlign: "center",
+        fontSize: 22,
+        fontWeight: "bold"
+    },  
     headerText: {
         fontSize: 20,
         fontWeight: "bold",

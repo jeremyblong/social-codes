@@ -222,6 +222,9 @@ app.use("/get/interview/fetch/single/notifications", require("./routes/notificat
 app.use("/make/milestone/payment/specific", require("./routes/activeGigs/individual/payments/milestones/makeMilestonePaymentIndividual.js"));
 app.use("/make/remainder/payment/milestones", require("./routes/activeGigs/individual/payments/milestones/makeRemainderPayment.js"));
 app.use("/gather/completed/jobs/logged/in/only", require("./routes/completedGigs/gather/gatherCompletedGigs.js"));
+app.use("/gather/remaining/tokens", require("./routes/tokens/gatherRemaining.js"));
+app.use("/post/review/as/employer", require("./routes/reviews/employer/leaveReview.js"));
+app.use("/post/review/as/worker", require("./routes/reviews/worker/leaveReview.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

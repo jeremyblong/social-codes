@@ -93,7 +93,8 @@ constructor(props) {
         },
         attachments: [],
         subject: "",
-        message: ""
+        message: "",
+        tokens: 0
     }
 }
     componentDidMount() {
@@ -111,6 +112,28 @@ constructor(props) {
                     googlePhoto,
                     profilePics
                 })
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+
+
+        axios.get(`${Config.ngrok_url}/gather/remaining/tokens`, {
+            params: {
+                id: this.props.unique_id
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered tokens!") {
+
+                const { tokens } = res.data;
+
+                this.setState({
+                    tokens
+                })
+
+                console.log(res.data);
             } else {
                 console.log("Err", res.data);
             }
@@ -4113,7 +4136,7 @@ constructor(props) {
                                 <Image source={require("../../../assets/icons/loc.png")} style={{ maxWidth: 20, maxHeight: 20, marginRight: 10 }} />
                                 <Text>{this.whoCanApply(job.whoCanApply)}</Text>
                             </View>
-                            <Text style={{ color: "grey", fontWeight: "bold", marginTop: 15 }}><Text style={{ color: "blue" }}>6</Text> Tokens required to apply (<Text style={{ color: "blue" }}>50</Text> avaliable)</Text>
+                            <Text style={{ color: "grey", fontWeight: "bold", marginTop: 15 }}><Text style={{ color: "blue" }}>6</Text> Tokens required to apply (<Text style={{ color: "blue" }}>{this.state.tokens.toString()}</Text> avaliable)</Text>
                             <Text style={{ marginTop: 10 }}>Min amount earned to apply - <Text style={{ color: "blue", fontWeight: "bold" }}>${job.minAmountEarnedToApply}</Text></Text>
                             <Text style={{ marginTop: 10 }}><Text style={{ color: "blue", fontWeight: "bold" }}>{job.coverLetterRequired === true ? "Cover letter required" : "NO cover letter required"}</Text></Text>
                             <Text style={{ marginTop: 10 }}>Skill level: <Text style={{ fontWeight: "bold" }}>{job.skillLevel}</Text></Text>

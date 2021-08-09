@@ -11,7 +11,7 @@ export default StyleSheet.create({
         flex: 1
     },
     headerIcon: {
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxWidth: 35,
         maxHeight: 35
     },  
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     with: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "darkred",
+        color: "#0057ff",
         marginTop: 15
     },
     icon: {
@@ -70,8 +70,8 @@ export default StyleSheet.create({
         marginTop: 15,
         marginBottom: 15
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     headText: {
         fontSize: 34,
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     greyButton: {
         backgroundColor: "#303030",
         width: 125,
-        borderColor: "#ffd530",
+        borderColor: "#141414",
         borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -90,11 +90,11 @@ export default StyleSheet.create({
     header:{
         padding:30,
         alignItems: 'center',
-        backgroundColor: "#ffd530",
+        backgroundColor: "#141414",
     },
     headerTitle:{
         fontSize:30,
-        color: "#303030",
+        color: "#ffffff",
         marginTop:10,
         textAlign: "center",
         fontWeight: "bold"
@@ -117,7 +117,7 @@ export default StyleSheet.create({
         marginTop:10,
     },
     tags:{
-        color: 'darkred',
+        color: '#0057ff',
         marginTop:10,
     },
     date:{
@@ -129,7 +129,7 @@ export default StyleSheet.create({
         height: 80,
         borderRadius: 35,
         borderWidth: 4,
-        borderColor: "#ffd530",
+        borderColor: "#0057ff",
     },
     profile:{
         flexDirection: 'row',
@@ -137,7 +137,7 @@ export default StyleSheet.create({
     },
     name:{
         fontSize:22,
-        color:"darkred",
+        color:"#0057ff",
         fontWeight:'600',
         alignSelf:'center',
         marginLeft:10
