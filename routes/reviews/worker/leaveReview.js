@@ -24,7 +24,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             receptiveFreelancerSkillsRating,
             gig,
             otherUser,
-            fullName
+            fullName,
+            comment
         } = req.body;
 
         const database = db.db("db");
@@ -54,7 +55,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             hadAdequateSkillSets: adequateFreelancerSkillRating,
             wasReceptive: receptiveFreelancerSkillsRating,
             gig,
-            leftBy: id
+            leftBy: id,
+            comment
         }, notifications: notification }}).then((success) => {
             if (success) {
                 console.log(success);

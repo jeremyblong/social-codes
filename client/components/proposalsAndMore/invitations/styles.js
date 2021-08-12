@@ -17,10 +17,10 @@ export default StyleSheet.create({
     header:{
         padding:30,
         alignItems: 'center',
-        backgroundColor: "#303030",
+        backgroundColor: "#141414",
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },  
     headerTitle:{
         fontSize:30,
@@ -52,7 +52,7 @@ export default StyleSheet.create({
         height: 80,
         borderRadius: 35,
         borderWidth: 4,
-        borderColor: "#ffd530",
+        borderColor: "#0057ff",
     },
     profile:{
         flexDirection: 'row',

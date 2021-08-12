@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import Dialog from "react-native-dialog";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Video from 'react-native-video';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 
 
 const { width, height } = Dimensions.get("window");
@@ -230,9 +230,9 @@ constructor(props) {
                         <View style={{ marginTop: 20 }} />
                         <Text style={styles.headText}>Oops, We couldn't find any pending friend requests at the current moment...</Text>
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                        <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.props.props.navigation.push("homepage");
-                        }} stretch={true}>Return to homepage</AwesomeButtonCartman>
+                        }} stretch={true}>Return to homepage</AwesomeButtonBlue>
                     </View>
                 );
             } else {
@@ -365,8 +365,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Friends Menu</Title>
-                        <Subtitle style={styles.goldText}>Navigate friend options</Subtitle>
+                        <Title style={styles.whiteText}>Friends Menu</Title>
+                        <Subtitle style={styles.whiteText}>Navigate friend options</Subtitle>
                     </Body>
                     <Right />
                 </Header>

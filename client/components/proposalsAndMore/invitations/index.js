@@ -132,12 +132,12 @@ constructor(props) {
                         <Button transparent onPress={() => {
                             this.props.props.navigation.goBack();
                         }}>
-                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                         <Body>
-                            <Title style={styles.goldText}>Invitation</Title>
-                            <Subtitle style={styles.goldText}>Manage Invitation</Subtitle>
+                            <Title style={styles.whiteText}>Invitation</Title>
+                            <Subtitle style={styles.whiteText}>Manage Invitation</Subtitle>
                         </Body>
                     <Right />
                 </Header>
@@ -146,7 +146,7 @@ constructor(props) {
                     <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.headerTitle}>
-                            Interview with <Text style={{ fontWeight: "bold", color: "#ffd530" }}>{passed.otherUserName}</Text>
+                            Interview with <Text style={{ fontWeight: "bold", color: "#ffffff" }}>{passed.otherUserName}</Text>
                         </Text>
                     </View>
 
@@ -189,11 +189,11 @@ constructor(props) {
                             </Text>
                         </View>
                         <View style={{ marginTop: 15 }} />
-                        <AwesomeButtonBlue backgroundColor={"#303030"} textColor={"#ffd530"} type={"primary"} onPress={() => {
+                        <AwesomeButtonBlue backgroundColor={"#141414"} textColor={"#ffffff"} type={"primary"} onPress={() => {
                             this.redirectToJob(passed.relatedJobID);
                         }} stretch={true}>View Job Listing</AwesomeButtonBlue>
                         <View style={{ marginTop: 15 }} />
-                        {hide === false && ready === true ? <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                        {hide === false && ready === true ? <AwesomeButtonBlue backgroundColor={"#141414"} textColor={"#ffffff"} type={"secondary"} onPress={() => {
 
                             this.props.saveVideoConferenceInfo({
                                 jobID: job.unique_id

@@ -21,7 +21,7 @@ import Config from "react-native-config";
 import Spinner from 'react-native-loading-spinner-overlay';
 import _ from 'lodash';
 import { Card, CardItem, Thumbnail, Text as NativeText, Button, Icon, Left, Body, Right, Header, Title, Subtitle, FooterTab, Footer } from 'native-base';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import ReadMore from 'react-native-read-more-text';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import Video from 'react-native-video';
@@ -35,6 +35,7 @@ import EducationSlideUpPaneHelper from "./slideUpPanes/education/index.js";
 import uuid from "react-native-uuid";
 import ImagePicker from 'react-native-image-crop-picker';
 import * as RNFS from "react-native-fs";
+import StarRating from 'react-native-star-rating';
 
 
 const { height, width } = Dimensions.get("window");
@@ -479,6 +480,26 @@ constructor(props) {
     redirectToUsersProfileWithoutPane = () => {
         this.props.props.navigation.push("individual-profile-public", { item: { unique_id: this.props.unique_id }});
     }
+    calculateRating = (review) => {
+
+        let arrayReviews = [];
+
+        if (this.props.accountType === "hire") {
+            arrayReviews = [review.communication, review.hadAdequateSkillSets, review.knowledgeable, review.meetOrExceedExpectations, review.overallExperience, review.spokeProperLanguage, review.wasReceptive, review.wouldHireAgain, review.wouldRecommend];
+        } else {
+            arrayReviews = [review.completedProjectSuccessfully, review.hadAdequateSkillSets, review.meetOrExceedExpectations, review.overallExperience, review.skillsOfFreelancer, review.spokeProperLanguage, review.wasReceptive, review.wouldHireAgain, review.wouldRecommend];
+        }
+
+        let sum = 0;
+
+        for (let i = 0; i < arrayReviews.length; i++) {
+            const element = arrayReviews[i];
+
+            sum += element;
+        }
+
+        return (sum / arrayReviews.length).toFixed(1);
+    }
     renderHeaderMainContent = () => {
         const { ready, portfolio, user, skills, friends } = this.state;
 
@@ -508,9 +529,9 @@ constructor(props) {
                     <Text style={styles.info}>$20 Minimum Hourly Charge</Text>
                     <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
                     <View style={{ marginTop: 10, width: "100%", margin: 20 }}>
-                        <AwesomeButtonCartman textColor={"white"} type={"anchor"} onPress={() => {
+                        <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.redirectToUsersProfileWithoutPane();
-                        }} stretch={true}>View public profile/live view</AwesomeButtonCartman>
+                        }} stretch={true}>View public profile/live view</AwesomeButtonBlue>
                     </View> 
                     <View style={styles.thickHr} />
                     <View style={styles.row}>
@@ -721,13 +742,54 @@ constructor(props) {
                         </View>
                     </View>
                     <View style={styles.thinHr} />
-                    <View style={styles.centeredMargin}>
-                        <View style={styles.testimonialsAnimationContainer}>
-                            <LottieView source={require('../../../../assets/animations/searching.json')} autoPlay loop style={styles.testimonialsAnimation}  />
+                    {_.has(user, "reviews") && user.reviews.length > 0 ? user.reviews.map((review, indexxxx) => {
+                        console.log("review", review);
+
+                        const { gig } = review;
+                        return (
+                            <Fragment key={indexxxx}>
+                                <Card>
+                                    <CardItem header bordered>
+                                    <Text>Review from {gig.otherUserFirstName} {gig.otherUserLastName}</Text>
+                                    </CardItem>
+                                    <CardItem bordered>
+                                    <Body>
+                                    <ReadMore
+                                        numberOfLines={3}
+                                        renderTruncatedFooter={this._renderTruncatedFooter}
+                                        renderRevealedFooter={this._renderRevealedFooter}
+                                        onReady={this._handleTextReady}>
+                                        <Text style={styles.cardText}>
+                                            {review.comment}
+                                        </Text>
+                                    </ReadMore>
+                                    </Body>
+                                    </CardItem>
+                                    <CardItem footer bordered>
+                                        <View style={styles.centered}>
+                                            <StarRating
+                                                disabled={true}
+                                                maxStars={5}
+                                                starSize={50}
+                                                halfStarEnabled={true}
+                                                halfStarColor={"#141414"}
+                                                rating={this.calculateRating(review)}
+                                                fullStarColor={'#f5cd05'}
+                                            />
+                                        </View>
+                                    </CardItem>
+                                </Card>
+                            </Fragment>
+                        );
+                    }) : <Fragment>
+                        <View style={styles.centeredMargin}>
+                            <View style={styles.testimonialsAnimationContainer}>
+                                <LottieView source={require('../../../../assets/animations/searching.json')} autoPlay loop style={styles.testimonialsAnimation}  />
+                            </View>
+                            <Text style={styles.showcaseText}>Showcase your skills with FairWage client testimonials</Text>
+                            <Text style={styles.request}>Request a testimonial</Text>
                         </View>
-                        <Text style={styles.showcaseText}>Showcase your skills with FairWage client testimonials</Text>
-                        <Text style={styles.request}>Request a testimonial</Text>
-                    </View>
+                    </Fragment>}
                     <View style={styles.thickHr} />
                     <View style={styles.row}>
                             <View style={styles.margin10}>
@@ -1318,6 +1380,7 @@ const mapStateToProps = (state) => {
         fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`,
         portfolioPage: _.has(state.portfolio, "portfolio") ? state.portfolio.portfolio.page : 1,
         portfolio: _.has(state.portfolio, "portfolio") ? state.portfolio.portfolio : {},
+        accountType: state.signupData.authData.accountType
     }
 }
 export default connect(mapStateToProps, {})(PublicProfileHelper);

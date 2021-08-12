@@ -107,6 +107,7 @@ import * as Sentry from "@sentry/react-native";
 import CompletedGigsListPage from "./pages/completedGigs/main/index.js";
 import SplashScreen from 'react-native-splash-screen';
 import MainLeaveAReviewPage from "./pages/reviews/main/index.js";
+import OnboardingPage from "./pages/onboarding/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -575,6 +576,7 @@ constructor(props) {
               <Stack.Screen name="client-freelancer-view-job-active" component={ViewJobActiveClientFreelancerHelper} />
               <Stack.Screen name="completed-gigs-list-homepage" component={CompletedGigsListPage} />
               <Stack.Screen name="leave-a-review" component={MainLeaveAReviewPage} />
+              <Stack.Screen name="onboarding-late" component={OnboardingPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />

@@ -14,19 +14,12 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         const collection = database.collection("users");
 
         collection.find({}, { fields : { 
-            loginPassword: 0,
-            cometChatAuthToken: 0,  
-            phoneNumber: 0,
-            loginEmail: 0,
-            loginUsername: 0,
-            userCurrentLocation: 0,
-            stripeCustomerAccount: 0,
-            skillsApiToken: 0,
-            firebasePushNotificationToken: 0,
-            twilioJWTAuthToken: 0,
-            sentFriendRequests: 0,
-            pendingInterviews: 0,
-            cardPaymentMethods: 0
+            firstName: 1,
+            lastName: 1,
+            profilePics: 1,
+            birthdate: 1,        
+            coverPhotos: 1,
+            unique_id: 1
         }}).limit(8).toArray((err, users) => {
             if (err) {
                 console.log(err);

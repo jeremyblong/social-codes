@@ -327,7 +327,7 @@ constructor(props) {
                             <View style={{ flexDirection: "row", margin: 15 }}>
                                 <View style={styles.halfed}>
                                     {this.props.accountType === "work" ? <TouchableOpacity onPress={() => {
-                                        this.props.props.navigation.push("payment-onboarding");
+                                        this.props.props.navigation.push("onboarding-late");
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/onboarding.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
                                         <Text style={styles.largeSized}>Onboarding & Payment Set-up</Text>
@@ -363,7 +363,7 @@ constructor(props) {
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("purchase-boost");
                                     }} style={styles.shortView}>
-                                        <Image source={require("../../../assets/icons/token.png")} style={styles.shortViewIcon} />
+                                        <Image source={require("../../../assets/icons/token-replacement.png")} style={styles.shortViewIcon} />
                                         <Text style={styles.largeSized}>Purchase/activate Boost(s)</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {

@@ -7,14 +7,14 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxHeight: 35
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         width,
         height,
         zIndex: -1
@@ -42,6 +42,7 @@ export default StyleSheet.create({
     headText: {
         fontSize: 34,
         fontWeight: "bold",
+        color: "#ffffff",
         textAlign: "center"
     },
     myImage: {

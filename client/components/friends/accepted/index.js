@@ -105,8 +105,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Accepted Friends</Title>
-                        <Subtitle style={styles.goldText}>View your friends!</Subtitle>
+                        <Title style={styles.whiteText}>Accepted Friends</Title>
+                        <Subtitle style={styles.whiteText}>View your friends!</Subtitle>
                     </Body>
                     <Right />
                 </Header>

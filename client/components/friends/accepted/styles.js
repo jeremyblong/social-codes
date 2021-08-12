@@ -7,11 +7,11 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff",
+        maxHeight: 35
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         backgroundColor: "white",
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     },
     list: {
         paddingHorizontal: 5,
-        backgroundColor:"white",
+        backgroundColor:"#141414",
     },
     listContainer:{
         alignItems:'center'

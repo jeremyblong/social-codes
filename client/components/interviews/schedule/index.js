@@ -49,8 +49,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Video Call</Title>
-                        <Subtitle style={styles.goldText}>Schedule a video call</Subtitle>
+                        <Title style={styles.whiteText}>Video Call</Title>
+                        <Subtitle style={styles.whiteText}>Schedule a video call</Subtitle>
                     </Body>
                     <Right />
                 </Header>

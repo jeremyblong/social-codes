@@ -59,7 +59,7 @@
     "react-native-fs": "^2.18.0",
     "react-native-global-props": "^1.1.5",
     "react-native-haptic-feedback": "^1.11.0",
-    "react-native-highlight-words": "^1.0.1",
+    "react-native-highlight-words": "github:FairWageFreelancing/react-native-highlight-words",
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-image-resizer": "^1.4.4",
     "react-native-image-slider": "^2.0.3",

@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styles from './styles.js';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { connect } from 'react-redux';
@@ -194,8 +194,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Initiate</Title>
-                        <Subtitle style={styles.goldText}>Interview with {interview.firstName} {interview.lastName}</Subtitle>
+                        <Title style={styles.whiteText}>Initiate</Title>
+                        <Subtitle style={styles.whiteText}>Interview with {interview.firstName} {interview.lastName}</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -234,13 +234,13 @@ constructor(props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.bottom}>
-                        {hide === true && ready === true ? <AwesomeButtonCartman type={"anchor"} textColor={"black"} backgroundColor={"#ffd530"} onPress={() => {
+                        {hide === true && ready === true ? <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.checkIfCardsRegistered();
-                        }} stretch={true}>Hire Applicant</AwesomeButtonCartman> : null}
+                        }} stretch={true}>Hire Applicant</AwesomeButtonBlue> : null}
                         <View style={{ marginTop: 30 }} />
-                        <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                        <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.props.props.navigation.push("video-call-live-active-peer-to-peer-interview", { interview });
-                        }} stretch={true}>Initiate Video Call</AwesomeButtonCartman>
+                        }} stretch={true}>Initiate Video Call</AwesomeButtonBlue>
                     </View>
                 </View>
                 

@@ -5,7 +5,8 @@ export default StyleSheet.create({
     container:{
         flex:1,
         marginTop:20,
-        backgroundColor: "#141414"
+        backgroundColor: "#141414",
+        zIndex: -1
     },
     containerAndroid: {
         flex: 1,
@@ -17,6 +18,13 @@ export default StyleSheet.create({
     },
     listContainer:{
         alignItems:'center'
+    },
+    avatar: {
+        borderRadius: 40,
+        minWidth: 45,
+        minHeight: 45,
+        maxHeight: 45,
+        maxWidth: 45
     },
     /******** card **************/
     card:{
@@ -136,8 +144,25 @@ export default StyleSheet.create({
         width: 35,
         height: 35
     },
+    buttonCustom: {
+        padding: 7.5, 
+        width: 100, 
+        justifyContent: "center",
+        alignItems: "center", 
+        alignContent: "center"
+    },
+    customText: {
+        fontWeight: "bold" 
+    },
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35
+    },
+    headerIconRight: {
+        maxWidth: 35,
+        maxHeight: 35,
+        width: 35,
+        height: 35,
+        alignSelf: 'flex-end'
     }
 }); 

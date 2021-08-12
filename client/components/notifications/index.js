@@ -201,6 +201,7 @@ constructor(props) {
         if (typeof this.state.notifications !== "undefined" && this.state.notifications.length > 0) {
             return (
                 <FlatList
+                    inverted={true}
                     style={styles.root}
                     data={this.state.notifications}
                     extraData={this.state}
@@ -299,8 +300,6 @@ constructor(props) {
                     </Body>
                     <Right>
                         <Button onPress={() => {
-                            console.log("TELL USER THAT THEY CAN SWIPE TO DELETE MESSAGES/NOTIFICATIONS!!!");
-
                             this.setState({
                                 isVisible: true
                             })

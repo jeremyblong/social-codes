@@ -6,7 +6,7 @@ import { saveVideoConferenceInfo } from "../../../../actions/skype/index.js";
 import { connect } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import moment from 'moment';
 import axios from 'axios';
 import Config from 'react-native-config';
@@ -96,8 +96,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Video Call</Title>
-                        <Subtitle style={styles.goldText}>Time & Confirmation</Subtitle>
+                        <Title style={styles.whiteText}>Video Call</Title>
+                        <Subtitle style={styles.whiteText}>Time & Confirmation</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -109,11 +109,11 @@ constructor(props) {
                                 <Text style={styles.headerText}>Please select a date and time to schedule your video call...</Text>
                                 <Text style={{ marginTop: 10 }}>We will send a link to the other to join at the desired time - the link will only expire after a successful meet</Text>
                                 <View style={{ marginTop: 20 }} />
-                                <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                                <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                     this.setState({
                                         isTimePickerVisible: true
                                     })
-                                }} stretch={true}>Select Time</AwesomeButtonCartman>
+                                }} stretch={true}>Select Time</AwesomeButtonBlue>
                             </View>
                             <View style={styles.margin}>
                                 {this.renderTime()}
@@ -123,9 +123,9 @@ constructor(props) {
                     </View>
                     {time !== null ? <View style={styles.footer}>
                         <View style={styles.margin}>
-                            <AwesomeButtonCartman backgroundColor={"#ffd530"} textColor={"black"} type={"anchor"} onPress={() => {
-                                this.handleContinuation();
-                            }} stretch={true}>SEND INVITATION</AwesomeButtonCartman>
+                            <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                                this.handleContinuation(); 
+                            }} stretch={true}>SEND INVITATION</AwesomeButtonBlue>
                         </View>
                     </View> : null}
                 </View>

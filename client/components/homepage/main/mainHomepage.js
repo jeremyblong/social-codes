@@ -1164,6 +1164,8 @@ constructor () {
     }
     redirectBasedOnUsername = (username) => {
 
+        console.log("clicked", username);
+
         axios.get(`${Config.ngrok_url}/locate/unique_id/by/username`, {
             params: {
                 username
@@ -1538,7 +1540,7 @@ constructor () {
                                                             onPressHighlightedText={(username) => {
                                                                 this.redirectBasedOnUsername(username);
                                                             }}
-                                                            highlightStyle={{backgroundColor: '#ffffff'}}
+                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
                                                             searchWords={post.taggedUsers}
                                                             textToHighlight={post.text}
                                                         /> : <Text style={styles.cardText}>
@@ -1773,7 +1775,7 @@ constructor () {
                                                             onPressHighlightedText={(username) => {
                                                                 this.redirectBasedOnUsername(username);
                                                             }}
-                                                            highlightStyle={{backgroundColor: '#ffffff'}}
+                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
                                                             searchWords={post.taggedUsers}
                                                             textToHighlight={post.text}
                                                         /> : <Text style={styles.cardText}>

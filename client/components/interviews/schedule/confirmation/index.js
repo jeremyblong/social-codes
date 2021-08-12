@@ -4,7 +4,7 @@ import { View, Text, Image } from 'react-native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { Header, Left, Body, Right, Title, Subtitle, Button, Text as NativeText } from 'native-base';
 import LottieView from 'lottie-react-native';
-import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 
 
 const ConfirmationPageHelper = (props) => {
@@ -22,8 +22,8 @@ const ConfirmationPageHelper = (props) => {
                     </Button>
                 </Left>
                 <Body>
-                    <Title style={styles.goldText}>Confirmed Appt</Title>
-                    <Subtitle style={styles.goldText}>Video Appt. Confirmed</Subtitle>
+                    <Title style={styles.whiteText}>Confirmed Appt</Title>
+                    <Subtitle style={styles.whiteText}>Video Appt. Confirmed</Subtitle>
                 </Body>
                 <Right />
             </Header>
@@ -38,9 +38,9 @@ const ConfirmationPageHelper = (props) => {
                 </View>
             </View>
             <View style={styles.bottom}>
-                <AwesomeButtonCartman type={"anchor"} textColor={"white"} onPress={() => {
+                <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                     props.props.navigation.replace("homepage");
-                }} stretch={true}>Return to menu</AwesomeButtonCartman>
+                }} stretch={true}>Return to menu</AwesomeButtonBlue>
             </View>
         </Fragment>
     );

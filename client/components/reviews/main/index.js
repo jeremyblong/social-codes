@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { View, Text, Image, ScrollView } from 'react-native';
-import { Header, Left, Body, Right, Button, Title, Subtitle } from 'native-base';
+import { Header, Left, Body, Right, Button, Title, Subtitle, Textarea } from 'native-base';
 import styles from './styles.js';
 import StarRating from 'react-native-star-rating';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
@@ -33,7 +33,8 @@ constructor(props) {
         wouldFreelanceAgainRating: 0,
         colleagueRecommendFreelancerStarSkill: 0,
         adequateFreelancerSkillRating: 0,
-        receptiveFreelancerSkillsRating: 0
+        receptiveFreelancerSkillsRating: 0,
+        comment: ""
     }
 }
     onStarRatingPress = (rating) => {
@@ -200,6 +201,13 @@ constructor(props) {
                             fullStarColor={'#f5cd05'}
                         />
                     </View>
+                    <View style={styles.starContainer}>
+                        <Textarea placeholderTextColor={"lightgrey"} style={{ color: "#ffffff" }} onChangeText={(value) => {
+                            this.setState({
+                                comment: value
+                            })
+                        }} value={this.state.comment} rowSpan={5} bordered placeholder="Write a public review about your experience..." />
+                    </View>
                 </Fragment>
             );
         // this is the hiring review account
@@ -359,6 +367,13 @@ constructor(props) {
                             fullStarColor={'#f5cd05'}
                         />
                     </View>
+                    <View style={styles.starContainer}>
+                        <Textarea placeholderTextColor={"lightgrey"} style={{ color: "#ffffff" }} onChangeText={(value) => {
+                            this.setState({
+                                comment: value
+                            })
+                        }} value={this.state.comment} rowSpan={5} bordered placeholder="Write a public review about your experience..." />
+                    </View>
                 </Fragment>
             );
         }
@@ -377,7 +392,8 @@ constructor(props) {
             wouldFreelanceAgainRating,
             colleagueRecommendFreelancerStarSkill,
             adequateFreelancerSkillRating,
-            receptiveFreelancerSkillsRating 
+            receptiveFreelancerSkillsRating,
+            comment
         } = this.state;
 
 
@@ -394,7 +410,8 @@ constructor(props) {
             id: this.props.unique_id,
             otherUser: gig.with,
             fullName: this.props.fullName,
-            gig
+            gig,
+            comment
         }).then((res) => {
             if (res.data.message === "Left review!") {
                 console.log(res.data);
@@ -422,6 +439,7 @@ constructor(props) {
             colleagueRecommendStarSkill,
             adequateSkillRating,
             receptiveSkillsRating,
+            comment
         } = this.state;
 
         axios.post(`${Config.ngrok_url}/post/review/as/employer`, {
@@ -437,7 +455,8 @@ constructor(props) {
             adequateSkillRating,
             receptiveSkillsRating,
             fullName: this.props.fullName,
-            gig
+            gig,
+            comment
         }).then((res) => {
             if (res.data.message === "Left review!") {
                 console.log(res.data);
@@ -471,18 +490,19 @@ constructor(props) {
             wouldFreelanceAgainRating,
             colleagueRecommendFreelancerStarSkill,
             adequateFreelancerSkillRating,
-            receptiveFreelancerSkillsRating 
+            receptiveFreelancerSkillsRating,
+            comment
         } = this.state;
 
 
         if (this.props.accountType === "hire") {
-            if ((typeof freelancerSkillStar !== "undefined" && freelancerSkillStar !== 0) && (typeof overallReviewStar !== "undefined" && overallReviewStar !== 0) && (typeof expectationSkillStar !== "undefined" && expectationSkillStar !== 0) && (typeof completedProjectSuccessfullyStar !== "undefined" && completedProjectSuccessfullyStar !== 0) && (typeof languageSkillStar !== "undefined" && languageSkillStar !== 0) && (typeof hireAgainSkillStar !== "undefined" && hireAgainSkillStar !== 0) && (typeof colleagueRecommendStarSkill !== "undefined" && colleagueRecommendStarSkill !== 0) && (typeof adequateSkillRating !== "undefined" && adequateSkillRating !== 0) && (typeof receptiveSkillsRating !== "undefined" && receptiveSkillsRating !== 0)) {
+            if ((typeof freelancerSkillStar !== "undefined" && freelancerSkillStar !== 0) && (typeof overallReviewStar !== "undefined" && overallReviewStar !== 0) && (typeof expectationSkillStar !== "undefined" && expectationSkillStar !== 0) && (typeof completedProjectSuccessfullyStar !== "undefined" && completedProjectSuccessfullyStar !== 0) && (typeof languageSkillStar !== "undefined" && languageSkillStar !== 0) && (typeof hireAgainSkillStar !== "undefined" && hireAgainSkillStar !== 0) && (typeof colleagueRecommendStarSkill !== "undefined" && colleagueRecommendStarSkill !== 0) && (typeof adequateSkillRating !== "undefined" && adequateSkillRating !== 0) && (typeof receptiveSkillsRating !== "undefined" && receptiveSkillsRating !== 0) && (typeof comment !== "undefined" && comment.length > 0)) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            if ((typeof overallExperienceAsFreelancer !== "undefined" && overallExperienceAsFreelancer !== 0) && (typeof communicationFromEmployerRating !== "undefined" && communicationFromEmployerRating !== 0) && (typeof meetOrExceedEmployerRating !== "undefined" && meetOrExceedEmployerRating !== 0) && (typeof knowledgableFreelancerRating !== "undefined" && knowledgableFreelancerRating !== 0) && (typeof clearLanguageFreelancerRating !== "undefined" && clearLanguageFreelancerRating !== 0) && (typeof wouldFreelanceAgainRating !== "undefined" && wouldFreelanceAgainRating !== 0) && (typeof colleagueRecommendFreelancerStarSkill !== "undefined" && colleagueRecommendFreelancerStarSkill !== 0) && (typeof adequateFreelancerSkillRating !== "undefined" && adequateFreelancerSkillRating !== 0) && (typeof receptiveFreelancerSkillsRating !== "undefined" && receptiveFreelancerSkillsRating !== 0)) {
+            if ((typeof overallExperienceAsFreelancer !== "undefined" && overallExperienceAsFreelancer !== 0) && (typeof communicationFromEmployerRating !== "undefined" && communicationFromEmployerRating !== 0) && (typeof meetOrExceedEmployerRating !== "undefined" && meetOrExceedEmployerRating !== 0) && (typeof knowledgableFreelancerRating !== "undefined" && knowledgableFreelancerRating !== 0) && (typeof clearLanguageFreelancerRating !== "undefined" && clearLanguageFreelancerRating !== 0) && (typeof wouldFreelanceAgainRating !== "undefined" && wouldFreelanceAgainRating !== 0) && (typeof colleagueRecommendFreelancerStarSkill !== "undefined" && colleagueRecommendFreelancerStarSkill !== 0) && (typeof adequateFreelancerSkillRating !== "undefined" && adequateFreelancerSkillRating !== 0) && (typeof receptiveFreelancerSkillsRating !== "undefined" && receptiveFreelancerSkillsRating !== 0) && (typeof comment !== "undefined" && comment.length > 0)) {
                 return true;
             } else {
                 return false;

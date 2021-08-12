@@ -1941,7 +1941,6 @@ constructor (props) {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         unique_id: state.signupData.authData.unique_id,
         fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`,
