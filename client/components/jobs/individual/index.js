@@ -4027,7 +4027,13 @@ constructor(props) {
                 </KeyboardAwareScrollView>
                 </ScrollView>
             </RBSheet>
-            <SideMenu openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
+            <SideMenu onChange={(value) => {
+                if (value === false) {
+                    this.setState({
+                        menuOpen: false
+                    })
+                }
+            }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
                 <TouchableOpacity onPress={() => {
                     this.setState({
                         menuOpen: !this.state.menuOpen
@@ -4136,7 +4142,7 @@ constructor(props) {
                                 <Image source={require("../../../assets/icons/loc.png")} style={{ maxWidth: 20, maxHeight: 20, marginRight: 10 }} />
                                 <Text>{this.whoCanApply(job.whoCanApply)}</Text>
                             </View>
-                            <Text style={{ color: "grey", fontWeight: "bold", marginTop: 15 }}><Text style={{ color: "blue" }}>6</Text> Tokens required to apply (<Text style={{ color: "blue" }}>{this.state.tokens.toString()}</Text> avaliable)</Text>
+                            <Text style={{ color: "grey", fontWeight: "bold", marginTop: 15 }}><Text style={{ color: "blue" }}>6</Text> Tokens required to apply (<Text style={{ color: "blue" }}>{this.state.tokens}</Text> available)</Text>
                             <Text style={{ marginTop: 10 }}>Min amount earned to apply - <Text style={{ color: "blue", fontWeight: "bold" }}>${job.minAmountEarnedToApply}</Text></Text>
                             <Text style={{ marginTop: 10 }}><Text style={{ color: "blue", fontWeight: "bold" }}>{job.coverLetterRequired === true ? "Cover letter required" : "NO cover letter required"}</Text></Text>
                             <Text style={{ marginTop: 10 }}>Skill level: <Text style={{ fontWeight: "bold" }}>{job.skillLevel}</Text></Text>

@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react'
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { Button, ListItem, Text as NativeText, Icon, Left, Body, Right, List } from 'native-base';
 import styles from './styles.js';
 
 const SheetInnerOptions = (props) => {
     return (
-        <Fragment>
+        <ScrollView contentContainerStyle={{ paddingBottom: 25 }} style={styles.container}>
            <List>
                 <ListItem thumbnail>
                     <Left>
@@ -74,7 +74,7 @@ const SheetInnerOptions = (props) => {
                     </Body>
                 </ListItem>
            </List>
-        </Fragment>
+        </ScrollView>
     );
 }
 export default SheetInnerOptions;

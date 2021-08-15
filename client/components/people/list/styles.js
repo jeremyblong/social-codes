@@ -110,9 +110,10 @@ export default StyleSheet.create({
         fontWeight:'bold'
     },
     position:{
-        fontSize:14,
+        fontSize:16,
         flex:1,
         alignSelf:'center',
+        fontWeight:'bold',
         color:"#696969"
     },
     followButton: {

@@ -217,7 +217,13 @@ constructor(props) {
         const menu = <Side props={this.props} />;
         return (
             <Fragment>
-            <SideMenu openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
+            <SideMenu onChange={(value) => {
+                if (value === false) {
+                    this.setState({
+                        menuOpen: false
+                    })
+                }
+            }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
                 <View style={styles.container}>
                 <TouchableOpacity onPress={() => {
                     this.setState({

@@ -10,6 +10,7 @@ import Popover from 'react-native-popover-view';
 import Video from 'react-native-video';
 import _ from 'lodash';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 
 const { height, width } = Dimensions.get("window");
@@ -22,7 +23,9 @@ constructor(props) {
     this.state = {
         innerLikeVisible: false,
         removeLikeVisible: false,
-        like: ""
+        like: "",
+        selectedPost: null,
+        post: null
     }
 }
     redirectToUsersProfile = (user) => {
@@ -56,6 +59,13 @@ constructor(props) {
                 return <Image source={require("../../../../../assets/icons/starstruck.png")} style={{ maxWidth: 25, maxHeight: 25, minWidth: 25, minHeight: 25 }} />;
             }
         });
+    }
+    componentDidMount () {
+        const { selectedPost } = this.props;
+
+        this.setState({
+            selectedPost
+        })
     }
     gatherAdditionalInfo = (post) => {
         
@@ -108,25 +118,9 @@ constructor(props) {
     
                 const { post, alteredID } = res.data;
     
-                const checkIndex = this.state.posts.findIndex(({ id }) => {
-                    if (id === alteredID) {
-                        return id;
-                    }
-                });
-
-                console.log("checkIndex ADDED LIKE: ", checkIndex);
-    
-                if (checkIndex !== -1) {
-                    
-                    const copy = [...this.state.posts];
-    
-                    copy[checkIndex] = post;
-    
-                    this.setState({
-                        posts: copy,
-                        selectedPost: post
-                    })
-                }
+                this.setState({
+                    post
+                })
             } else {
                 console.log("Err", res.data);
             }
@@ -174,17 +168,19 @@ constructor(props) {
     }
     render() {
         const { responses } = this.state;
-        const { selectedPost } = this.props;
+        const { selectedPost } = this.state;
+
+        console.log("this.state RAW_BOTTOM_SHEET custom", this.state, this.props);
         return (
             <Fragment>
-                <View>
+                {selectedPost !== null ? <View>
                     <View style={[styles.topRow, { paddingTop: 0 }]}>
                         <View style={{ flexDirection: "row" }}>
-                            {this.renderEmojis(this.props.selectedPost)}
+                            {this.renderEmojis(selectedPost)}
                             <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => {
-                                this.gatherAdditionalInfo(this.props.selectedPost);
+                                this.gatherAdditionalInfo(selectedPost);
                             }}>
-                                <Text style={styles.peopleText}>{this.calculateLikeCount(this.props.selectedPost)}</Text>
+                                <Text style={styles.peopleText}>{this.calculateLikeCount(selectedPost)}</Text>
                                 <Image source={require("../../../../../assets/icons/right.png")} style={{ maxWidth: 35, maxHeight: 35, minWidth: 35, minHeight: 35, marginTop: -2.5 }} />
                             </TouchableOpacity>
 
@@ -240,7 +236,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "screaming"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -250,7 +246,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "exploding"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -260,7 +256,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "tearsOfJoy"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
@@ -270,7 +266,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "clapping"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -280,7 +276,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "angry"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -290,7 +286,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "love"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -300,7 +296,7 @@ constructor(props) {
                                                 innerLikeVisible: !this.state.innerLikeVisible,
                                                 like: "wow"
                                             }, () => {
-                                                this.likeReactPost(this.props.selectedPost);
+                                                this.likeReactPost(selectedPost);
                                             });
                                         }} style={styles.lottiContainer}>
                                             <LottieView source={require('../../../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
@@ -414,7 +410,104 @@ constructor(props) {
                             
                         </List>
                     </ScrollView>
-                </View>
+                </View> : <Fragment>
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                    <SkeletonPlaceholder>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                            <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: width * 0.65, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: width * 0.45, height: 20, borderRadius: 4 }}
+                            />
+                            </View>
+                        </View>
+                    </SkeletonPlaceholder>
+                    <View style={{ marginTop: 20 }} />
+                </Fragment>}
                 <SlidingUpPanel height={400} allowDragging={true} ref={c => this._panelCustom = c}>
                     <View style={{ width, height: height * 0.50, backgroundColor: "white", zIndex: 9999999999999999999999999999999999999 }}>
                         <ScrollView vertical={true} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 50 }}>

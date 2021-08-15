@@ -263,7 +263,13 @@ constructor(props) {
         console.log(this.state);
         return (
             <Fragment>
-             <SideMenu openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
+             <SideMenu onChange={(value) => {
+                if (value === false) {
+                    this.setState({
+                        menuOpen: false
+                    })
+                }
+            }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
                 <View style={{ backgroundColor: "white" }}>
                     <Footer style={{ borderColor: "transparent" }}>
                         <FooterTab>

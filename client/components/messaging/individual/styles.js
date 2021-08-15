@@ -38,7 +38,7 @@ export default StyleSheet.create({
     },  
     smallerIcon: {
         maxWidth: 35,
-        tintColor: "#ffd530",
+        tintColor: "#ffffff",
         maxHeight: 35
     },
     bottomButton: {
@@ -73,6 +73,7 @@ export default StyleSheet.create({
     },
     icon: {
         maxWidth: 25, 
+        tintColor: "#ffffff",
         maxHeight: 25
     }
 })

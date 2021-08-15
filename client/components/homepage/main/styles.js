@@ -178,7 +178,7 @@ export default StyleSheet.create({
         alignItems: "center", 
         alignContent: "center",
         maxHeight: 70,
-        maxWidth: 55
+        maxWidth: 47.5
     },
     spinnerTextStyle: {
         fontSize: 18,

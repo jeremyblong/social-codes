@@ -225,6 +225,9 @@ app.use("/gather/completed/jobs/logged/in/only", require("./routes/completedGigs
 app.use("/gather/remaining/tokens", require("./routes/tokens/gatherRemaining.js"));
 app.use("/post/review/as/employer", require("./routes/reviews/employer/leaveReview.js"));
 app.use("/post/review/as/worker", require("./routes/reviews/worker/leaveReview.js"));
+app.use("/post/comment/wall/posting/sub", require("./routes/wall/comments/subComments/postCommentIndividualWall.js"));
+app.use("/gather/brief/info/name/and/pictures", require("./routes/photoAndNameOnly.js"));
+app.use("/gather/post/comments", require("./routes/wall/comments/gatherCommentsById.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

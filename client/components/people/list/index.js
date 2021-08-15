@@ -532,7 +532,7 @@ class PeopleBrowseListHelper extends Component {
                                     <View style={styles.cardFooter}>
                                     <View style={{alignItems:"center", justifyContent:"center"}}>
                                         <Text style={styles.name}>{item.firstName} {item.lastName}</Text>
-                                        <Text style={styles.position}>{item.position}</Text>
+                                        <Text style={styles.position}>{item.accountType}</Text>
                                         <TouchableOpacity style={styles.followButton} onPress={()=> {
                                             this.handleClick(item);
                                         }}>

@@ -19,7 +19,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             profilePics: 1,
             birthdate: 1,        
             coverPhotos: 1,
-            unique_id: 1
+            unique_id: 1,
+            accountType: 1
         }}).limit(8).toArray((err, users) => {
             if (err) {
                 console.log(err);

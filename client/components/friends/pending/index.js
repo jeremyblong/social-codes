@@ -197,15 +197,15 @@ constructor(props) {
                                 {this.renderProfilePictureVideo(friend)}
                             </Left>
                             <Body>
-                                <Text>{`${friend.firstName} ${friend.lastName}`}</Text>
-                                <Text note numberOfLines={1}>User is looking to <Text style={{ fontWeight: "bold", color: "blue" }}>{friend.accountType}</Text></Text>
+                                <Text style={{ color: "#ffffff" }} >{`${friend.firstName} ${friend.lastName}`}</Text>
+                                <Text style={{ color: "#ffffff" }} note numberOfLines={1}>User is looking to <Text style={{ fontWeight: "bold", color: "blue" }}>{friend.accountType}</Text></Text>
                                 <View style={{ flexDirection: "row", marginTop: 5 }}>
                                     <Button onPress={() => {
                                         this.setState({
                                             addVisible: true,
                                             friend
                                         })
-                                    }} style={[styles.buttonCustom, { marginRight: 15 }]} dark>
+                                    }} style={[styles.buttonCustom, { marginRight: 15, borderWidth: 1, borderColor: "#ffffff" }]} dark>
                                         <Text style={[styles.customText, { color: "white" }]}>Confirm</Text>
                                     </Button>
                                     <Button onPress={() => {

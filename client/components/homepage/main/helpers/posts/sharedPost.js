@@ -375,7 +375,7 @@ constructor(props) {
                             onPressHighlightedText={(username) => {
                                 this.redirectBasedOnUsername(username);
                             }}
-                            highlightStyle={{backgroundColor: '#fdd530'}}
+                            highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
                             searchWords={post.newData.taggedUsers}
                             textToHighlight={post.newData.text}
                         /> : <Text style={styles.reshareText}>
@@ -452,7 +452,7 @@ constructor(props) {
                                             onPressHighlightedText={(username) => {
                                                 this.redirectBasedOnUsername(username);
                                             }}
-                                            highlightStyle={{backgroundColor: '#fdd530'}}
+                                            highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
                                             searchWords={post.newData.taggedUsers}
                                             textToHighlight={post.newData.text}
                                         /> : <Text style={styles.cardText}>

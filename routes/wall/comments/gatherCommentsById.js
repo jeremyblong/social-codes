@@ -4,10 +4,10 @@ const app = express();
 const mongo = require("mongodb");
 const config = require("config");
 const cors = require('cors');
-const _ = require("lodash");
+
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
-    router.get("/", (req, res) => {
+    router.get("/", (req, resppppppp) => {
 
         const { id } = req.query;
 
@@ -15,16 +15,22 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         const collection = database.collection("users");
 
-        collection.findOne({ unique_id: id }, { fields: { tokenCurrency: 1 }}).then((user) => {
+        collection.findOne({ "wallPosts.id": id }).then((user) => {
             if (user) {
                 console.log(user);
 
-                res.json({
-                    message: "Gathered tokens!",
-                    tokens: _.has(user, "tokenCurrency") ? user.tokenCurrency : 0
-                })
+                for (let index = 0; index < user.wallPosts.length; index++) {
+                    const post = user.wallPosts[index];
+                    
+                    if (post.id === id) {
+                        resppppppp.json({
+                            message: "Found comments!",
+                            comments: post.comments
+                        })
+                    }
+                }
             } else {
-                res.json({
+                resppppppp.json({
                     message: "User could NOT be found."
                 })
             }
