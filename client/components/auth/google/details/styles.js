@@ -6,7 +6,8 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
-        maxHeight: 35
+        maxHeight: 35,
+        tintColor: "#ffffff"
     },
     container: {
         zIndex: -1,
@@ -14,6 +15,9 @@ export default StyleSheet.create({
         height: "100%",
         backgroundColor: "white",
         flex: 1
+    },
+    whiteText: {
+        color: "#ffffff"
     },
     margin: {
         margin: 20

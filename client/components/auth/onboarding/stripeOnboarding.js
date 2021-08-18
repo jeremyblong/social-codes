@@ -152,8 +152,8 @@ constructor(props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title style={styles.goldText}>Stripe Onboarding</Title>
-                    <Subtitle style={styles.goldText}>Complete your onboarding...</Subtitle>
+                    <Title style={styles.whiteText}>Stripe Onboarding</Title>
+                    <Subtitle style={styles.whiteText}>Complete your onboarding...</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -169,8 +169,8 @@ constructor(props) {
 }
 const mapStateToProps = (state) => {
     return {
-        stripeConnectAccountID: state.signupData.data.stripeConnectAccount.id,
-        signupData: state.signupData.data
+        stripeConnectAccountID: state.signupData.authData.stripeConnectAccount.id,
+        signupData: state.signupData.authData
     }
 }
 export default connect(mapStateToProps, { addSignupData, userSignedIn, signedInUserData })(StripeOnboardingRegisterHelper);

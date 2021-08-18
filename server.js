@@ -228,6 +228,8 @@ app.use("/post/review/as/worker", require("./routes/reviews/worker/leaveReview.j
 app.use("/post/comment/wall/posting/sub", require("./routes/wall/comments/subComments/postCommentIndividualWall.js"));
 app.use("/gather/brief/info/name/and/pictures", require("./routes/photoAndNameOnly.js"));
 app.use("/gather/post/comments", require("./routes/wall/comments/gatherCommentsById.js"));
+app.use("/post/comment/wall/posting/sub/reply/sub", require("./routes/wall/comments/subComments/sub/postSubComment.js"));
+app.use("/update/bio", require("./routes/profile/bio/updateBio.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

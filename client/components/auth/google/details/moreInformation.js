@@ -147,52 +147,125 @@ constructor (props) {
 		 console.log("Failed", "No token received");
 		}
 	}
+    getFcmTokenOnboarding = async (user) => {
+        const fcmToken = await messaging().getToken();
+		if (fcmToken) {
+			console.log(fcmToken);
+
+			console.log("Your Firebase Token is:", fcmToken);
+			
+			axios.post(`${Config.ngrok_url}/save/firebase/token`, {
+				token: fcmToken,
+				unique_id: user.unique_id
+			}).then((res) => {
+				if (res.data.message === "Saved firebase token!") {
+					console.log(res.data);
+
+                    setTimeout(() => {
+                        this.props.props.navigation.push("stripe-onboarding-authentication");
+                    }, 750)
+				} else {
+					console.log("err", res.data);
+				}
+			}).catch((err) => {
+				console.log(err);
+			})
+		} else {
+		 console.log("Failed", "No token received");
+		}
+    }
     handleContinuation = () => {
         const { firstName, lastName, email, googleID, fullName, photo } = this.props;
 
         const { formattedPhoneNumber, phoneNumber, selected, birthdate, username } = this.state;
 
-        axios.post(`${Config.ngrok_url}/update/google/account/information`, {
-            firstName,
-            lastName,
-            email,
-            id: this.props.googleID,
-            fullName,
-            photo,
-            phoneNumber,
-            formattedPhoneNumber,
-            accountType: selected,
-            birthdate,
-            username
-        }).then((res) => {
-            if (res.data.message === "Successfully updated account information!") {
-                console.log(res.data);
+        if (selected === "work") {
+            // stripe - connect --- must go through stripe onboarding
 
-                const { user } = res.data;
-
-                const authToken = user.cometChatAuthToken;
-
-                CometChat.login(authToken).then(
-                    (User) => {
-                        console.log("Login successfully:", User);
-                        // User loged in successfully.
-
-                        this.props.userSignedIn(true);
-
-                        this.props.signedInUserData(user);
-
-                        this.getFcmToken(user);
-                    }, (error) => {
-                        console.log("Login failed with exception:", error);
-                        // User login failed, check error and take appropriate action.
-                    }
-                );
-            } else {
-                console.log("Err", res.data);
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+            axios.post(`${Config.ngrok_url}/update/google/account/information`, {
+                firstName,
+                lastName,
+                email,
+                id: this.props.googleID,
+                fullName,
+                photo,
+                phoneNumber,
+                formattedPhoneNumber,
+                accountType: selected,
+                birthdate,
+                username
+            }).then((res) => {
+                if (res.data.message === "Successfully updated account information!") {
+                    console.log(res.data);
+    
+                    const { user } = res.data;
+    
+                    const authToken = user.cometChatAuthToken;
+    
+                    CometChat.login(authToken).then(
+                        (User) => {
+                            console.log("Login successfully:", User);
+                            // User loged in successfully.
+    
+                            this.props.userSignedIn(true);
+    
+                            this.props.signedInUserData(user);
+    
+                            this.getFcmTokenOnboarding(user);
+                        }, (error) => {
+                            console.log("Login failed with exception:", error);
+                            // User login failed, check error and take appropriate action.
+                        }
+                    );
+                } else {
+                    console.log("Err", res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        } else {
+            axios.post(`${Config.ngrok_url}/update/google/account/information`, {
+                firstName,
+                lastName,
+                email,
+                id: this.props.googleID,
+                fullName,
+                photo,
+                phoneNumber,
+                formattedPhoneNumber,
+                accountType: selected,
+                birthdate,
+                username
+            }).then((res) => {
+                if (res.data.message === "Successfully updated account information!") {
+                    console.log(res.data);
+    
+                    const { user } = res.data;
+    
+                    const authToken = user.cometChatAuthToken;
+    
+                    CometChat.login(authToken).then(
+                        (User) => {
+                            console.log("Login successfully:", User);
+                            // User loged in successfully.
+    
+                            this.props.userSignedIn(true);
+    
+                            this.props.signedInUserData(user);
+    
+                            this.getFcmToken(user);
+                        }, (error) => {
+                            console.log("Login failed with exception:", error);
+                            // User login failed, check error and take appropriate action.
+                        }
+                    );
+                } else {
+                    console.log("Err", res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
     calculateSuccess = () => {
         if (this.state.usernameValid === true) {
@@ -239,7 +312,7 @@ constructor (props) {
         const { error, verifcationError, message, suggestions, editable } = this.state;
         return (
            <Fragment>
-               <Header>
+               <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -248,8 +321,8 @@ constructor (props) {
                         </Button>
                     </Left>
                 <Body>
-                    <Title>General Information</Title>
-                    <Subtitle>Choose your account type</Subtitle>
+                    <Title style={styles.whiteText}>General Information</Title>
+                    <Subtitle style={styles.whiteText}>Choose your account type</Subtitle>
                 </Body>
                     <Right />
                 </Header>
@@ -382,7 +455,7 @@ constructor (props) {
                                         birthdate: date
                                     })
                                 }}
-                                date={this.state.birthdate}
+                                date={this.state.birthdate !== null ? this.state.birthdate : new Date()}
                                 textColor={"#3E000C"}
                                 maximumDate={new Date()}
                                 mode="date"
@@ -390,7 +463,7 @@ constructor (props) {
                         </View>
                         <View style={{ marginTop: 10 }} />
                         <View style={{ margin: 15 }}>
-                            <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                            <AwesomeButtonBlue textColor={"white"} backgroundColor={"#141414"} type={"secondary"} onPress={() => {
                                 this.RBSheet.close();
                             }} stretch={true}>Select Date & Continue</AwesomeButtonBlue>
                         </View>
@@ -435,11 +508,11 @@ constructor (props) {
                         <View style={styles.bottomContainer}>
                             <View style={{ margin: 10 }}>
                                 <View style={{ marginBottom: 20 }}>
-                                    <AwesomeButtonBlue type={"primary"} stretch={true} onPress={() => {
+                                    <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"#141414"} stretch={true} onPress={() => {
                                         this.RBSheetTWO.close();
                                     }}>Close/Exit</AwesomeButtonBlue>
                                 </View>
-                                {this.calculateReadinessSheet() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue>}
+                                {this.calculateReadinessSheet() ? <AwesomeButtonBlue type={"disabled"} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} textColor={"white"} backgroundColor={"#141414"} onPress={this.submitPhoneVerifcationAttempt} stretch={true}>Submit Verifcation Code</AwesomeButtonBlue>}
                             </View>
                         </View>
                 </RBSheet>

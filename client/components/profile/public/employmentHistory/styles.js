@@ -10,8 +10,8 @@ export default StyleSheet.create({
     header: {
         backgroundColor: "#303030"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         zIndex: -1,

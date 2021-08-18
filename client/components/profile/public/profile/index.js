@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import Config from "react-native-config";
 import Spinner from 'react-native-loading-spinner-overlay';
 import _ from 'lodash';
-import { Card, CardItem, Thumbnail, Text as NativeText, Button, Icon, Left, Body, Right, Header, Title, Subtitle, FooterTab, Footer } from 'native-base';
+import { Card, CardItem, Thumbnail, Text as NativeText, Button, Icon, Left, Body, Right, Header, Title, Subtitle, FooterTab, Footer, Textarea } from 'native-base';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import ReadMore from 'react-native-read-more-text';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
@@ -55,6 +55,7 @@ constructor(props) {
         profilePic: null,
         showDialog: false,
         skills: [],
+        bio: "",
         ready: false,
         uploadPercentage: 0,
         menuOpen: false,
@@ -500,8 +501,28 @@ constructor(props) {
 
         return (sum / arrayReviews.length).toFixed(1);
     }
+    saveBioText = () => {
+        axios.post(`${Config.ngrok_url}/update/bio`, {
+            bio: this.state.bio,
+            id: this.props.unique_id
+        }).then((res) => {
+            if (res.data.message === "Updated bio!") {
+                console.log(res.data);
+
+                const { bio } = res.data;
+
+                this.setState({
+                    bio
+                })
+            } else {
+                console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     renderHeaderMainContent = () => {
-        const { ready, portfolio, user, skills, friends } = this.state;
+        const { ready, portfolio, user, skills, friends, bio } = this.state;
 
         if (ready === true) {
             return (
@@ -527,7 +548,11 @@ constructor(props) {
                     </TouchableOpacity>
                     <Text style={styles.name}>{this.props.fullName}</Text>
                     <Text style={styles.info}>$20 Minimum Hourly Charge</Text>
-                    <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
+                    <Textarea rowSpan={5} onBlur={this.saveBioText} value={bio} style={styles.description} onChangeText={(text) => {
+                        this.setState({
+                            bio: text
+                        })
+                    }} bordered placeholderTextColor={"grey"} placeholder={(typeof user.bio !== "undefined" && user.bio.length > 0) ? user.bio : bio !== "undefined" && bio.length > 0 ? bio : "Please enter a value..."} />
                     <View style={{ marginTop: 10, width: "100%", margin: 20 }}>
                         <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 7.5 }} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                             this.redirectToUsersProfileWithoutPane();

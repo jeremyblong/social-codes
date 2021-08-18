@@ -215,12 +215,12 @@ constructor(props) {
                         <Button onPress={() => {
                             this.props.props.navigation.push("public-profile-main");
                         }} transparent>
-                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#fdd530" }]} />
+                            <Image source={require("../../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={styles.goldText}>Employment</Title>
-                        <Subtitle style={styles.goldText}>Employment History</Subtitle>
+                        <Title style={styles.whiteText}>Employment</Title>
+                        <Subtitle style={styles.whiteText}>Employment History</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -338,12 +338,12 @@ constructor(props) {
                 <Footer>
                     <FooterTab>
                         <Button style={{ backgroundColor: "#303030" }} onPress={this.clearInputs} vertical>
-                            <Icon style={{ color: "#ffd530" }} name="close" />
-                            <Text style={styles.goldText}>Clear Inputs</Text>
+                            <Icon style={{ color: "#ffffff" }} name="close" />
+                            <Text style={styles.whiteText}>Clear Inputs</Text>
                         </Button>
                         <Button style={{ backgroundColor: "#303030" }} onPress={this.saveInformation} vertical>
-                            <Icon style={{ color: "#ffd530" }} name="save" />
-                            <Text style={{ color: "#ffd530" }}>Save Job</Text>
+                            <Icon style={{ color: "#ffffff" }} name="save" />
+                            <Text style={{ color: "#ffffff" }}>Save Job</Text>
                         </Button>
                     </FooterTab>
                 </Footer>

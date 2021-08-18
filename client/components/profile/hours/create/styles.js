@@ -5,18 +5,23 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35,
+        tintColor: "#ffffff",
         maxHeight: 35
+    },
+    whiteText: {
+        color: "#ffffff"
     },
     container: {
         width,
         height, //
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
     switchText: {
         marginBottom: 20,
         fontWeight: "bold",
-        fontSize: 18
+        fontSize: 18,
+        color: "#ffffff"
     },
     columnCustom: {
         width: "50%",
@@ -41,7 +46,8 @@ export default StyleSheet.create({
     headerText: {
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: 18
+        fontSize: 18,
+        color: "#ffffff"
     },
     absoluteBottom: {
         padding: 20,

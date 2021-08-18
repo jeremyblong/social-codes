@@ -320,6 +320,7 @@ export default StyleSheet.create({
       fontSize:16,
       color: "#696969",
       marginTop:10,
+      width: "100%",
       textAlign: 'left'
     },
     buttonContainer: {

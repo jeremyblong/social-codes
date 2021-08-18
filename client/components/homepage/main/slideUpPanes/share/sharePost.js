@@ -272,12 +272,12 @@ const BottomSheetCustomHelper = ({ sheetRef, pickedOutPost, unique_id, fullName,
                                     setPageOne(false);
                                     setPageTwo(false);
                                 }} transparent>
-                                    <Image source={require("../../../../../assets/icons/go-back.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                    <Image source={require("../../../../../assets/icons/go-back.png")} style={{ maxWidth: 30, maxHeight: 30, tintColor: "#141414" }} />
                                 </Button>
                             </Left>
                             <Body>
-                                <Title>Audience</Title>
-                                <Subtitle>Post filters & more...</Subtitle>
+                                <Title style={{ color: "#141414" }}>Audience</Title>
+                                <Subtitle style={{ color: "#141414" }}>Post filters & more...</Subtitle>
                             </Body>
                             <Right />
                         </Header>
@@ -295,12 +295,12 @@ const BottomSheetCustomHelper = ({ sheetRef, pickedOutPost, unique_id, fullName,
                                     setPageOne(false);
                                     setPageTwo(false);
                                 }} transparent>
-                                    <Image source={require("../../../../../assets/icons/go-back.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                    <Image source={require("../../../../../assets/icons/go-back.png")} style={{ maxWidth: 30, maxHeight: 30, tintColor: "#141414" }} />
                                 </Button>
                             </Left>
                             <Body>
-                                <Title>Destination</Title>
-                                <Subtitle>Post destination</Subtitle>
+                                <Title style={{ color: "#141414" }}>Destination</Title>
+                                <Subtitle style={{ color: "#141414" }}>Post destination</Subtitle>
                             </Body>
                             <Right />
                         </Header>

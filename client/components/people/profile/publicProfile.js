@@ -39,6 +39,7 @@ constructor (props) {
         coverPhoto: "",
         profilePic: "",
         allImages: [],
+        friends: [],
         index: 0,
         postLoaded: false,
         countFrom: 5,
@@ -210,13 +211,36 @@ constructor (props) {
         }
     }
     componentDidMount() {
+        const passedDataCustom = this.props.props.route.params.item;
+
         const url = `${Config.ngrok_url}/gather/user/wall/posts/individual`;
 
-        const passed = this.props.props.route.params.item;
+        axios.get(`${Config.ngrok_url}/gather/pics/friends`, {
+            params: {
+                id: passedDataCustom.unique_id
+            }
+        }).then((res) => {
+            if (res.data.message === "Could NOT locate any information...") {
+                console.log("ERR:", res.data);
+            } else if (res.data.message === "Gathered profile pics!") {
+
+                const { passed } = res.data;
+
+                console.log("Success!:", res.data, passed);
+
+                this.setState({
+                    friends: passed
+                })
+            } else {
+                console.log("Unknown err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
         
         axios.get(url, {
             params: {
-                id: passed.unique_id
+                id: passedDataCustom.unique_id
             }
         }).then((res) => {
             console.log(res.data);
@@ -301,7 +325,7 @@ constructor (props) {
                 for (let index = 0; index < user.sentFriendRequests.length; index++) {
                     const friend = user.sentFriendRequests[index];
                     
-                    if (friend.otherUser === passed.unique_id) {
+                    if (friend.otherUser === passedDataCustom.unique_id) {
                         this.setState({
                             alreadyFriends: true
                         })
@@ -312,7 +336,7 @@ constructor (props) {
                 for (let index = 0; index < user.acceptedFriendRequests.length; index++) {
                     const friend = user.acceptedFriendRequests[index];
                     
-                    if (friend.acquaintanceID === passed.unique_id) {
+                    if (friend.acquaintanceID === passedDataCustom.unique_id) {
                         this.setState({
                             alreadyFriends: true
                         })
@@ -411,6 +435,11 @@ constructor (props) {
     }
     errored = (err) => {
         console.log("err", err);
+    }
+    redirectToUsersProfile = (user) => {
+        console.log("user", user);
+
+        this.props.props.navigation.push("individual-profile-public", { item: { unique_id: user.acquaintanceID }});
     }
     renderPhotoOrVideo = (post, maxDimension) => {
         if (post.profilePics !== null && typeof post.profilePics !== 'undefined' && post.profilePics.length > 0) {
@@ -784,7 +813,7 @@ constructor (props) {
         })
     }
     renderContent = () => {
-        const { user, alreadyFriends, posts } = this.state;
+        const { user, alreadyFriends, posts, friends } = this.state;
 
         if (user !== null) {
             return (
@@ -823,7 +852,59 @@ constructor (props) {
                                     </View>
                                 </View>
                             </Fragment> : null}
-                            <Text style={styles.description}>Bio - Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
+                            <Text style={styles.description}>{typeof user.bio !== "undefined" && user.bio.length > 0 ? user.bio : "User hasn't entered a bio yet..."}</Text>
+                            <View style={styles.friendsListContainer}>
+                            <View style={{ flexDirection: "row", width: "100%", margin: 15 }}>
+                                <View style={styles.friendsTextContainer}>
+                                    <Text style={styles.headerText}>Friends</Text>
+                                    <Text style={{ color: "grey" }}>788 friends</Text>
+                                </View>
+                                <View style={{ position: "absolute", right: 20, top: 0 }}>
+                                    <Text style={{ color: "blue" }}>Find Friends</Text>
+                                </View>
+                            </View>
+                            <FlatList 
+                                style={styles.list}
+                                contentContainerStyle={styles.listContainer}
+                                data={friends}
+                                horizontal={false}
+                                numColumns={3}
+                                keyExtractor= {(item) => {
+                                    return item.id;
+                                }}
+                                ItemSeparatorComponent={() => {
+                                    return (
+                                        <View style={styles.separator}/>
+                                    )
+                                }}
+                                renderItem={(post) => {
+                                    const item = post.item;
+
+                                    console.log("POST", item);
+                                    return (
+                                        <TouchableOpacity onPress={() => {
+                                            this.redirectToUsersProfile(item);
+                                        }} style={styles.card}>
+                                            <View style={styles.imageContainer}>
+                                                {item.type === "video" ? <Video  
+                                                    resizeMode="cover"
+                                                    repeat
+                                                    source={{uri: item.photo }}   // Can be a URL or a local file.
+                                                    autoplay={true}
+                                                    ref={(ref) => {
+                                                        this.player = ref
+                                                    }}
+                                                    muted={true}
+                                                    style={styles.cardImage}
+                                                /> : <Image style={styles.cardImage} source={{uri: item.photo }}/>}
+                                            </View>
+                                            <View style={styles.cardContent}>
+                                                <Text style={styles.title}>{item.acquaintance}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                }}/>
+                        </View>
                             <View style={{ marginTop: 10, margin: 20 }}>
                                 {user !== null ? <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
                                    this.RBSheet.open();

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions, Platform, TextInput, InteractionManager, Keyboard } from 'react-native';
-import { Header, Left, Body, Right, Button, Icon, Footer, FooterTab, Badge, Title, Text as NativeText, Subtitle , Card, CardItem, Thumbnail, List, ListItem } from 'native-base';
+import { Header, Left, Body, Right, Button, Icon, Footer, FooterTab, Badge, Title, Text as NativeText, Subtitle , Card, CardItem, Thumbnail, List, ListItem, Textarea } from 'native-base';
 import Config from 'react-native-config';
 import styles from './styles.js';
 import _ from 'lodash';
@@ -18,6 +18,7 @@ import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blu
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { connect } from "react-redux";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const { height, width } = Dimensions.get("window");
 
@@ -28,13 +29,21 @@ constructor(props) {
     this.state = {
         post: null,
         postLoaded: false,
+        additionalComment: "",
+        selectedComment: null,
+        spinnerLoading: false,
         visible: false,
         comment: "",
+        selection: {
+            start: 0,
+            end: 0
+        },
         comments: [],
         base64: null,
         picture: null
     };
     this.myTextInput = React.createRef();
+    this.myTextInputPersonAdd = React.createRef();
 }
     redirectToUsersProfileWithoutPane = () => {
         const passedPost = this.props.props.route.params.post;
@@ -48,6 +57,15 @@ constructor(props) {
     focusInputWithKeyboard = () => {
         InteractionManager.runAfterInteractions(() => {
             this.myTextInput.current.focus()
+        });
+    }
+    focusInputAddPerson = () => {
+        InteractionManager.runAfterInteractions(() => {
+            this.myTextInputPersonAdd.current.focus();
+
+            setTimeout(() => {
+                this.myTextInputPersonAdd.current.setNativeProps({ selection: this.state.selection })
+            }, 750)
         });
     }
     componentDidMount() {
@@ -71,10 +89,54 @@ constructor(props) {
                         console.log("comment: ", comment);
                         if (_.has(comment, "subComments") && comment.subComments.length > 0) {
                             console.log("first");
-                            for (let iiii = 0; iiii < comment.subComments.length; iiii++) {
-                                const subComment = comment.subComments[iiii];
-                                
-                            }
+
+                            promises.push(new Promise((resolve, reject) => {
+                                axios.get(`${Config.ngrok_url}/gather/brief/info/name/and/pictures`, {
+                                    params: {
+                                        id: comment.poster
+                                    }
+                                }).then((res) => {
+                                    if (res.data.message === "Located data!") {
+                                        console.log(res.data);
+                
+                                        const { photo, name, type } = res.data;
+                
+                                        comment.profilePic = photo;
+                                        comment.type = type;
+                                        comment.name = name;
+            
+                                        for (let iiii = 0; iiii < comment.subComments.length; iiii++) {
+                                            const subComment = comment.subComments[iiii];
+            
+                                            axios.get(`${Config.ngrok_url}/gather/brief/info/name/and/pictures`, {
+                                                params: {
+                                                    id: subComment.poster
+                                                }
+                                            }).then((res) => {
+                                                if (res.data.message === "Located data!") {
+                                                    console.log(res.data);
+                            
+                                                    const { photo, name, type } = res.data;
+                            
+                                                    subComment.profilePic = photo;
+                                                    subComment.type = type;
+                                                    subComment.name = name;
+                        
+                                                    resolve(comment);
+                                                } else {
+                                                    console.log("err", res.data);
+                                                }
+                                            }).catch((err) => {
+                                                console.log(err);
+                                            })
+                                        }
+                                    } else {
+                                        console.log("err", res.data);
+                                    }
+                                }).catch((err) => {
+                                    console.log(err);
+                                })
+                            }))
                         } else {
                             console.log("second");
                             promises.push(new Promise((resolve, reject) => {
@@ -686,10 +748,49 @@ constructor(props) {
                                             <View style={styles.underlay}>
                                                 <Text>2h ago</Text>
                                                 <TouchableOpacity onPress={() => {}} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey" }}>Like</Text></TouchableOpacity>
-                                                <TouchableOpacity onPress={() => {}} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey", marginRight: 10 }}>Reply</Text></TouchableOpacity>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.setState({
+                                                        selectedComment: each,
+                                                        additionalComment: `@${each.name} `,
+                                                        selection: {
+                                                            start: each.name.length + 2,
+                                                            end: each.name.length + 2
+                                                        }
+                                                    }, () => {
+                                                        this.RBSheetTagPerson.open();
+                                                        
+                                                        this.focusInputAddPerson();
+                                                    })
+                                                }} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey", marginRight: 10 }}>Reply</Text></TouchableOpacity>
                                                 <Image source={require("../../../../assets/icons/clapping.png")} style={{ maxWidth: 25, maxHeight: 25, minWidth: 25, minHeight: 25 }} />
                                             </View>
                                         </View>
+                                        {typeof each.subComments !== "undefined" && each.subComments.length > 0 ? each.subComments.map((sub, indexxx) => {
+                                            return (
+                                            <View key={indexxx} style={{ flexDirection: "row", marginLeft: 80 }}>
+                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
+                                                <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
+                                                    <View style={{ marginTop: 3.5, flexDirection: "row" }}>
+                                                        <View style={{ flexDirection: "row", marginTop: 7.5 }}>
+                                                            <Text style={styles.replyName}>{sub.name}</Text>
+                                                        </View>
+                                                    </View>
+                                                    <View style={{ marginTop: 10 }}>
+                                                        <Highlighter 
+                                                            onPressHighlightedText={(username) => {
+                                                                // this.redirectBasedOnUsername(username);
+
+                                                                console.log("username", username);
+                                                            }}
+                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
+                                                            searchWords={[sub.taggedUser.otherUserName]}
+                                                            textToHighlight={sub.comment}
+                                                        />
+                                                    </View>
+                                                </View>
+                                            </View>
+                                            );
+                                        }) : null}
                                     </Fragment>
                                 );
                             }) : null}
@@ -929,10 +1030,52 @@ constructor(props) {
                                                     <View style={styles.underlay}>
                                                         <Text>2h ago</Text>
                                                         <TouchableOpacity onPress={() => {}} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey" }}>Like</Text></TouchableOpacity>
-                                                        <TouchableOpacity onPress={() => {}} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey", marginRight: 10 }}>Reply</Text></TouchableOpacity>
+                                                        <TouchableOpacity onPress={() => {
+                                                            this.setState({
+                                                                selectedComment: each,
+                                                                additionalComment: `@${each.name} `,
+                                                                selection: {
+                                                                    start: each.name.length + 2,
+                                                                    end: each.name.length + 2
+                                                                }
+                                                            }, () => {
+                                                                this.RBSheetTagPerson.open();
+                                                                
+                                                                this.focusInputAddPerson();
+                                                            })
+                                                        }} style={styles.likeTouch}><Text style={{ fontWeight: "bold", color: "grey", marginRight: 10 }}>Reply</Text></TouchableOpacity>
                                                         <Image source={require("../../../../assets/icons/clapping.png")} style={{ maxWidth: 25, maxHeight: 25, minWidth: 25, minHeight: 25 }} />
                                                     </View>
                                                 </View>
+                                                {typeof each.subComments !== "undefined" && each.subComments.length > 0 ? each.subComments.map((sub, indexxx) => {
+                                                    return (
+                                                        <View key={indexxx} style={{ flexDirection: "row", marginLeft: 80 }}>
+                                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
+                                                                <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
+                                                                    <View style={{ marginTop: 3.5, flexDirection: "row" }}>
+                                                                        <View style={{ flexDirection: "row", marginTop: 7.5 }}>
+                                                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 30, maxHeight: 30, minWidth: 30, minHeight: 30 }} />}
+                                                                            <Text style={styles.replyName}>{sub.name}</Text>
+                                                                        </View>
+                                                                    </View>
+                                                                    <View style={{ marginTop: 10 }}>
+                                                                        <Highlighter 
+                                                                            onPressHighlightedText={(username) => {
+                                                                                // this.redirectBasedOnUsername(username);
+
+                                                                                console.log("username", username);
+                                                                            }}
+                                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
+                                                                            searchWords={[sub.taggedUser.otherUserName]}
+                                                                            textToHighlight={sub.comment}
+                                                                        />
+                                                                    </View>
+                                                                
+                                                                <Text style={{ marginTop: 5 }}>{sub.comment}</Text>
+                                                            </View>
+                                                        </View>
+                                                    );
+                                                }) : null}
                                             </Fragment>
                                         );
                                     }) : null}
@@ -946,46 +1089,103 @@ constructor(props) {
     sendComment = () => {
         const { comment, post, picture, base64 } = this.state;
 
-        axios.post(`${Config.ngrok_url}/post/comment/wall/posting/sub`, {
-            comment,
-            id: this.props.unique_id,
-            post,
-            picture,
-            base64
-        }).then((res) => {
-            if (res.data.message === "Posted comment!") {
-                console.log(res.data);
+        if (picture !== null) {
+            this.setState({
+                spinnerLoading: true
+            }, () => {
+                axios.post(`${Config.ngrok_url}/post/comment/wall/posting/sub`, {
+                    comment,
+                    id: this.props.unique_id,
+                    post,
+                    picture,
+                    base64
+                }).then((res) => {
+                    if (res.data.message === "Posted comment!") {
+                        console.log(res.data);
+        
+                        const { picture, comment, message } = res.data;
+        
+                        if (picture !== null) {
+        
+                            comment.attachedPhoto = `${Config.wasabi_url}/${picture}`;
+        
+                            this.setState({
+                                comment: "",
+                                comments: [...this.state.comments, comment],
+                                spinnerLoading: false
+                            }, () => {
+                                Keyboard.dismiss();
+            
+                                this.RBSheet.close();
+                            })
+                        } else {
+                            this.setState({
+                                comment: "",
+                                comments: [...this.state.comments, comment],
+                                spinnerLoading: false
+                            }, () => {
+                                Keyboard.dismiss();
+            
+                                this.RBSheet.close();
+                            })
+                        }
+                    } else {
+                        console.log("Err", res.data);
 
-                const { picture, comment, message } = res.data;
-
-                if (picture !== null) {
-
-                    comment.attachedPhoto = `${Config.wasabi_url}/${picture}`;
+                        this.setState({
+                            spinnerLoading: false
+                        })
+                    }
+                }).catch((err) => {
+                    console.log(err);
 
                     this.setState({
-                        comment: "",
-                        comments: [...this.state.comments, comment]
-                    }, () => {
-                        Keyboard.dismiss();
-    
-                        this.RBSheet.close();
+                        spinnerLoading: false
                     })
+                })
+            })
+        } else {
+            axios.post(`${Config.ngrok_url}/post/comment/wall/posting/sub`, {
+                comment,
+                id: this.props.unique_id,
+                post,
+                picture,
+                base64
+            }).then((res) => {
+                if (res.data.message === "Posted comment!") {
+                    console.log(res.data);
+    
+                    const { picture, comment, message } = res.data;
+    
+                    if (picture !== null) {
+    
+                        comment.attachedPhoto = `${Config.wasabi_url}/${picture}`;
+    
+                        this.setState({
+                            comment: "",
+                            comments: [...this.state.comments, comment]
+                        }, () => {
+                            Keyboard.dismiss();
+        
+                            this.RBSheet.close();
+                        })
+                    } else {
+                        this.setState({
+                            comment: "",
+                            comments: [...this.state.comments, comment]
+                        }, () => {
+                            Keyboard.dismiss();
+        
+                            this.RBSheet.close();
+                        })
+                    }
                 } else {
-                    this.setState({
-                        comment: "",
-                        comments: [...this.state.comments, comment]
-                    }, () => {
-                        Keyboard.dismiss();
-    
-                        this.RBSheet.close();
-                    })
+                    console.log("Err", res.data);
                 }
-            } else {
-                console.log("Err", res.data);
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
     redirectBasedOnUsername = (username) => {
 
@@ -1012,6 +1212,11 @@ constructor(props) {
             height
         });
     }
+    updateSizePerson = (height) => {
+        this.setState({
+            height
+        });
+    }
     pictureSelectedCallback = (data) => {
         console.log("Data", data);
 
@@ -1029,6 +1234,151 @@ constructor(props) {
         };
         launchImageLibrary(options, this.pictureSelectedCallback)
     }
+    sendCommentSubReply = (selected) => {
+        console.log("sendCommentSubReply clicked...");
+
+        const { additionalComment, post, picture, base64, selectedComment } = this.state;
+
+        if (picture !== null) {
+            this.setState({
+                spinnerLoading: true
+            }, () => {
+                axios.post(`${Config.ngrok_url}/post/comment/wall/posting/sub/reply/sub`, {
+                    comment: additionalComment,
+                    id: this.props.unique_id,
+                    post,
+                    picture,
+                    base64,
+                    commentID: selected.id,
+                    otherUserName: selected.name,
+                    selectedComment: selected.poster
+                }).then((res) => {
+                    if (res.data.message === "Posted comment!") {
+                        console.log(res.data);
+        
+                        const { picture, comment, message } = res.data;
+        
+                        if (picture !== null) {
+        
+                            comment.attachedPhoto = `${Config.wasabi_url}/${picture}`;
+
+                            for (let index = 0; index < this.state.comments.length; index++) {
+                                const existingComment = this.state.comments[index];
+                                // check if match
+                                if (existingComment.id === selectedComment.id) {
+                                    existingComment.subComments.push(comment);
+                                }
+                            }
+
+                            this.setState({
+                                additionalComment: "",
+                                comments: [...this.state.comments],
+                                spinnerLoading: false
+                            }, () => {
+                                Keyboard.dismiss();
+            
+                                this.RBSheetTagPerson.close();
+                            })
+                        } else {
+                            for (let index = 0; index < this.state.comments.length; index++) {
+                                const existingComment = this.state.comments[index];
+                                // check if match
+                                if (existingComment.id === selectedComment.id) {
+                                    existingComment.subComments.push(comment);
+                                }
+                            }
+
+                            this.setState({
+                                additionalComment: "",
+                                comments: [...this.state.comments],
+                                spinnerLoading: false
+                            }, () => {
+                                Keyboard.dismiss();
+            
+                                this.RBSheetTagPerson.close();
+                            })
+                        }
+                    } else {
+                        console.log("Err", res.data);
+
+                        this.setState({
+                            spinnerLoading: false
+                        })
+                    }
+                }).catch((err) => {
+                    console.log(err);
+
+                    this.setState({
+                        spinnerLoading: false
+                    })
+                })
+            })
+        } else {
+            axios.post(`${Config.ngrok_url}/post/comment/wall/posting/sub/reply/sub`, {
+                comment: additionalComment,
+                id: this.props.unique_id,
+                post,
+                picture,
+                base64,
+                commentID: selected.id,
+                otherUserName: selected.name,
+                selectedComment: selected.poster
+            }).then((res) => {
+                if (res.data.message === "Posted comment!") {
+                    console.log(res.data);
+    
+                    const { picture, comment, message } = res.data;
+    
+                    if (picture !== null) {
+    
+                        comment.attachedPhoto = `${Config.wasabi_url}/${picture}`;
+
+                        for (let index = 0; index < this.state.comments.length; index++) {
+                            const existingComment = this.state.comments[index];
+                            // check if match
+                            if (existingComment.id === selectedComment.id) {
+                                existingComment.subComments.push(comment);
+                            }
+                        }
+
+                        this.setState({
+                            additionalComment: "",
+                            comments: [...this.state.comments]
+                        }, () => {
+                            Keyboard.dismiss();
+        
+                            this.RBSheetTagPerson.close();
+                        })
+                    } else {
+
+                        for (let index = 0; index < this.state.comments.length; index++) {
+                            const existingComment = this.state.comments[index];
+                            // check if match
+                            if (existingComment.id === selectedComment.id) {
+                                existingComment.subComments.push(comment);
+                            }
+                        }
+
+                        this.setState({
+                            additionalComment: "",
+                            comments: [...this.state.comments]
+                        }, () => {
+                            Keyboard.dismiss();
+        
+                            this.RBSheetTagPerson.close();
+                        })
+                    }
+                } else {
+                    console.log("Err", res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    }
+    handleSelectionChange = ({ nativeEvent: { selection } }) => {
+        this.setState({ selection })
+    };
     render() {
         console.log("IndividualWallPostingHelper", this.props.props, this.state);
 
@@ -1058,6 +1408,12 @@ constructor(props) {
                         </Button>
                     </Right>
                 </Header>
+                <Spinner
+                    visible={this.state.spinnerLoading}
+                    textContent={'Uploading your content...'}
+                    overlayColor={"rgba(0, 0, 0, 0.75)"}
+                    textStyle={{ color: "#ffffff", fontWeight: "bold" }}
+                />
                 <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ paddingBottom: 100 }} style={styles.container}>
                     {this.renderContent()}
                 </ScrollView>
@@ -1092,7 +1448,6 @@ constructor(props) {
                                 <Image source={require("../../../../assets/icons/camera-custom.png")} style={styles.touchImage} />
                             </TouchableOpacity>
                             <TextInput
-                                placeholder="Your Placeholder"
                                 onChangeText={(comment) => {
                                     this.setState({
                                         comment
@@ -1108,6 +1463,59 @@ constructor(props) {
                             />
                             {typeof this.state.comment !== "undefined" && this.state.comment.length > 0 ? <TouchableOpacity onPress={() => {
                                 this.sendComment();
+                            }} style={styles.pictureTouchTwo}>
+                                <Image source={require("../../../../assets/icons/email-send.png")} style={styles.sendImage} />
+                            </TouchableOpacity> : null}
+                        </View>
+                    </View>
+                </RBSheet>
+                <RBSheet
+                    ref={ref => {
+                        this.RBSheetTagPerson = ref;
+                    }}
+                    closeOnDragDown={true}
+                    openDuration={250}
+                    customStyles={{
+                        container: {
+                           borderTopRightRadius: 30,
+                           borderTopLeftRadius: 30
+                        },
+                        draggableIcon: {
+                            backgroundColor: "grey",
+                            width: 250
+                        }
+                    }}
+                    >
+                    <View style={{ margin: 15 }}>
+                        {base64 !== null ? <View style={{ minWidth: 100, minHeight: 100 }}><Image style={styles.selectedImage} source={{ uri: picture.uri }} /><TouchableOpacity onPress={() => {
+                            this.setState({
+                                picture: null,
+                                base64: null
+                            })
+                        }} style={styles.touchable}>
+                            <Image style={{ maxWidth: 35, maxHeight: 35 }} source={require("../../../../assets/icons/close-window.png")} />
+                        </TouchableOpacity></View> : null}
+                        <View style={styles.inputBox}>
+                            <TouchableOpacity onPress={this.handlePictureSelection} style={styles.pictureTouch}>
+                                <Image source={require("../../../../assets/icons/camera-custom.png")} style={styles.touchImage} />
+                            </TouchableOpacity>
+                            <TextInput  
+                                onChangeText={(comment) => {
+                                    this.setState({
+                                        additionalComment: comment
+                                    })
+                                }} 
+                                onSelectionChange={this.handleSelectionChange}
+                                selection={this.state.selection}
+                                style={{ height: this.state.height, width: "78%", top: 0 }}
+                                multiline={true}
+                                value={this.state.additionalComment}
+                                placeholder={"Write a comment..."}
+                                ref={this.myTextInputPersonAdd}
+                                onContentSizeChange={(e) => this.updateSizePerson(e.nativeEvent.contentSize.height)}
+                            />
+                            {typeof this.state.additionalComment !== "undefined" && this.state.additionalComment.length > 0 ? <TouchableOpacity onPress={() => {
+                                this.sendCommentSubReply(this.state.selectedComment);
                             }} style={styles.pictureTouchTwo}>
                                 <Image source={require("../../../../assets/icons/email-send.png")} style={styles.sendImage} />
                             </TouchableOpacity> : null}

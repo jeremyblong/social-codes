@@ -189,13 +189,13 @@ const UploadVideoPaneHelper = ({ uploadVideoPaneRef, unique_id, fullName, userna
                             <Button onPress={() => {
                                 uploadVideoPaneRef.current.close();
                             }} transparent>
-                                <Icon style={{ color: "#ffd530" }} name='arrow-back' />
-                                {Platform.OS === "ios" ? <Text style={{ fontSize: 18 }}>Back</Text> : null}
+                                <Icon style={{ color: "#ffffff" }} name='arrow-back' />
+                                {Platform.OS === "ios" ? <Text style={{ fontSize: 18, color: "#ffffff" }}>Back</Text> : null}
                             </Button>
                         </Left>
                         <Body>
-                            <Title style={styles.goldText}>Upload Video</Title>
-                            <Subtitle style={styles.goldText}>Upload video to wall</Subtitle>
+                            <Title style={styles.whiteText}>Upload Video</Title>
+                            <Subtitle style={styles.whiteText}>Upload video to wall</Subtitle>
                         </Body>
                         <Right />
                     </Header>

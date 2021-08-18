@@ -11,6 +11,30 @@ export default StyleSheet.create({
         height,
         backgroundColor: "white"
     },
+    card:{
+        backgroundColor:"white",
+        flexBasis: '33.333%',
+        marginHorizontal: 4,
+    },
+    cardImage:{
+        flex: 1,
+        height: 125,
+        minHeight: 125,
+        width: "100%",
+        minWidth: "100%",
+        resizeMode: "cover",
+        borderRadius: 15
+    },
+    cardContent: {
+        paddingVertical: 17,
+        justifyContent: 'space-between',
+    },
+    listContainer:{
+        alignItems:'center'
+    },
+    list: {
+        paddingHorizontal: 10,
+    },
     headerIcon: {
         maxWidth: 35,
         maxHeight: 35

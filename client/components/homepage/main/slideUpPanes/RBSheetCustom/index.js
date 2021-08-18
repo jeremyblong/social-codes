@@ -11,7 +11,7 @@ import Video from 'react-native-video';
 import _ from 'lodash';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-
+import { connect } from "react-redux";
 
 const { height, width } = Dimensions.get("window");
 
@@ -553,4 +553,9 @@ constructor(props) {
         )
     }
 }
-export default RBSheetCustomHelper;
+const mapStateToProps = (state) => {
+    return {
+        unique_id: state.signupData.authData.unique_id
+    };
+}
+export default connect(mapStateToProps, { })(RBSheetCustomHelper);

@@ -52,8 +52,8 @@ const CategoryStartJobCreationSubComponentHelper = (props) => {
                         </Button>
                     </Left>
                 <Body>
-                    <Title style={styles.goldText}>Post a job</Title>
-                    <Subtitle style={styles.goldText}>Create a job listing</Subtitle>
+                    <Title style={styles.whiteText}>Post a job</Title>
+                    <Subtitle style={styles.whiteText}>Create a job listing</Subtitle>
                 </Body>
                     <Right />
                 </Header>

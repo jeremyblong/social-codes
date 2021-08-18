@@ -31,7 +31,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         console.log(req.body);
 
-        if (accountType === "hire") {
+        if (accountType === "work") {
 
             const account = await stripe.accounts.create({
                 type: 'custom',

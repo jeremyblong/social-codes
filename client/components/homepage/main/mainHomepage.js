@@ -1199,6 +1199,22 @@ constructor () {
             })
         }
     }
+    calculateCommentsLength = (comments) => {
+        let sum = 0;
+        if (typeof comments !== "undefined" && comments.length > 0) {
+            for (let index = 0; index < comments.length; index++) {
+                const comment = comments[index];
+                sum += 1;
+                if (typeof comment.subComments !== "undefined" && comment.subComments.length > 0) {
+                    for (let iiii = 0; iiii < comment.subComments.length; iiii++) {
+                        const subCom = comment.subComments[iiii];
+                        sum += 1;
+                    }
+                }
+            }
+        }
+        return `${sum} comments`;
+    }
     render() {
         const menu = <Side props={this.props} />;
 
@@ -1598,7 +1614,7 @@ constructor () {
                                                             this.RBSheetCustom.open();
                                                         })
                                                     }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
-                                                        <Text style={{ textAlign: "right", marginRight: 30 }}>5 Comments</Text>
+                                                        <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
                                                     </TouchableOpacity>
                                                 </CardItem>
                                                 <CardItem style={{ width: width, marginLeft: -20 }}>
@@ -1824,7 +1840,7 @@ constructor () {
                                                                         this.RBSheetCustom.open();
                                                                     })
                                                                 }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
-                                                                    <Text style={{ textAlign: "right", marginRight: 30 }}>5 Comments</Text>
+                                                                    <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
                                                                 </TouchableOpacity>
                                                             </CardItem>
                                                             <CardItem style={{ width: width, marginLeft: -20 }}>

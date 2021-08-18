@@ -23,8 +23,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{ color: "#ffffff" }}>Notifications</Title>
-                        <Subtitle style={{ color: "#ffffff" }}>Changes & More...</Subtitle>
+                        <Title style={{ color: "#ffffff" }}>Onboarding</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>Onboard your account</Subtitle>
                     </Body>
                     <Right>
                         <Button onPress={() => {

@@ -246,7 +246,7 @@ constructor(props) {
 
         return (
             <Fragment>
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.props.props.navigation.goBack();
@@ -255,8 +255,8 @@ constructor(props) {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Hours/Schedule</Title>
-                        <Subtitle>Hours, Schedule and more...</Subtitle>
+                        <Title style={styles.whiteText}>Hours/Schedule</Title>
+                        <Subtitle style={styles.whiteText}>Hours, Schedule and more...</Subtitle>
                     </Body>
                     <Right />
                 </Header>
@@ -288,7 +288,7 @@ constructor(props) {
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
                         <View style={styles.centered}>
-                        <Text style={styles.switchText}>Would you like to set dates to "all the same" for each day of the week?</Text>
+                        {/* <Text style={styles.switchText}>Would you like to set dates to "all the same" for each day of the week?</Text>
                         <Switch
                             value={this.state.switchValue}
                             onValueChange={(val) => {
@@ -312,15 +312,15 @@ constructor(props) {
                         {this.state.switchValue === true ? <View style={styles.row}>
                             <View style={styles.columnCustom}>
                                 <Item regular>
-                                    <Input placeholder='Start Time' />
+                                    <Input keyboardType={"number-pad"} style={{ color: "#ffffff" }} placeholder='Start Time' />
                                 </Item>
                             </View>
                             <View style={styles.columnCustom}>
                                 <Item regular>
-                                    <Input placeholder='End Time' />
+                                    <Input keyboardType={"number-pad"} style={{ color: "#ffffff" }} placeholder='End Time' />
                                 </Item>
                             </View>
-                        </View> : null}
+                        </View> : null} */}
                         <View style={{ marginTop: 15 }} />
                         </View>
                         <Text style={styles.headerText}>Sunday Hours</Text>
@@ -331,7 +331,7 @@ constructor(props) {
                                         selectedDay: "sunday",
                                         isVisible: true
                                     })
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} backgroundDarker={"brown"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} backgroundDarker={"brown"} onPress={() => {
                                     this.setState({
                                         selectedDay: "sunday",
                                         isVisible: true
@@ -344,7 +344,7 @@ constructor(props) {
                                         selectedDay: "sunday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "sunday",
                                         isVisibleEnd: true
@@ -360,7 +360,7 @@ constructor(props) {
                                         selectedDay: "monday",
                                         isVisible: true
                                     })  
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue backgroundDarker={"brown"} type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue backgroundDarker={"brown"} type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "monday",
                                         isVisible: true
@@ -373,7 +373,7 @@ constructor(props) {
                                         selectedDay: "monday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "monday",
                                         isVisibleEnd: true
@@ -389,7 +389,7 @@ constructor(props) {
                                         selectedDay: "tuesday",
                                         isVisible: true
                                     }) 
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "tuesday",
                                         isVisible: true
@@ -402,7 +402,7 @@ constructor(props) {
                                         selectedDay: "tuesday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "tuesday",
                                         isVisibleEnd: true
@@ -418,7 +418,7 @@ constructor(props) {
                                         selectedDay: "wednesday",
                                         isVisible: true
                                     }) 
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "wednesday",
                                         isVisible: true
@@ -431,7 +431,7 @@ constructor(props) {
                                         selectedDay: "wednesday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "wednesday",
                                         isVisibleEnd: true
@@ -447,7 +447,7 @@ constructor(props) {
                                         selectedDay: "thursday",
                                         isVisible: true
                                     }) 
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "thursday",
                                         isVisible: true
@@ -460,7 +460,7 @@ constructor(props) {
                                         selectedDay: "thursday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "thursday",
                                         isVisibleEnd: true
@@ -476,7 +476,7 @@ constructor(props) {
                                         selectedDay: "friday",
                                         isVisible: true
                                     }) 
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "friday",
                                         isVisible: true
@@ -489,7 +489,7 @@ constructor(props) {
                                         selectedDay: "friday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "friday",
                                         isVisibleEnd: true
@@ -505,7 +505,7 @@ constructor(props) {
                                         selectedDay: "saturday",
                                         isVisible: true
                                     }) 
-                                }} stretch={true} backgroundColor={"blue"} textColor={"white"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#ffffff"} textColor={"black"}>Start Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "saturday",
                                         isVisible: true
@@ -518,7 +518,7 @@ constructor(props) {
                                         selectedDay: "saturday",
                                         isVisibleEnd: true
                                     })
-                                }} stretch={true} backgroundColor={"lightblue"} textColor={"black"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
+                                }} stretch={true} backgroundColor={"#141414"} borderColor={"white"} borderWidth={2} textColor={"#ffffff"}>End Time</AwesomeButtonBlue> : <AwesomeButtonBlue type={"secondary"} onPress={() => {
                                     this.setState({
                                         selectedDay: "saturday",
                                         isVisibleEnd: true

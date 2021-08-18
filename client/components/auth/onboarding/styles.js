@@ -8,7 +8,7 @@ export default StyleSheet.create({
         maxHeight: 35,
         tintColor: "#ffffff"
     },
-    goldText: {
+    whiteText: {
         color: "#ffffff"
     },
     container: {
