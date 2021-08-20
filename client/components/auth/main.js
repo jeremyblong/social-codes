@@ -295,12 +295,16 @@ const SecondRoute = (props) => {
 const initialLayout = { width };
 
 const renderTabBar = props => (
-    <TabBar
+    <TabBar 
         renderLabel={({ route, focused, color }) => (
             <Text style={{ color: "#3E000C", margin: 8, fontWeight: "bold" }}>
                 {route.title}
             </Text>
         )}
+        onTabLongPress={(scene) => {
+            const { route } = scene
+            props.jumpTo(route.key)
+        }}
         {...props}
         indicatorStyle={{ backgroundColor: '#3E000C' }}
         style={{ backgroundColor: 'white' }}

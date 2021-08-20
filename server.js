@@ -230,6 +230,8 @@ app.use("/gather/brief/info/name/and/pictures", require("./routes/photoAndNameOn
 app.use("/gather/post/comments", require("./routes/wall/comments/gatherCommentsById.js"));
 app.use("/post/comment/wall/posting/sub/reply/sub", require("./routes/wall/comments/subComments/sub/postSubComment.js"));
 app.use("/update/bio", require("./routes/profile/bio/updateBio.js"));
+app.use("/delete/sub/comment/own", require("./routes/wall/comments/subComments/delete/deleteSubComment.js"));
+app.use("/delete/main/comment/own", require("./routes/wall/comments/mainComments/delete/deleteMainComment.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

@@ -130,6 +130,19 @@ export default StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 10
     },
+    optionsBtn: {
+        width: 35, 
+        height: 15, 
+        margin: 7.5, 
+        resizeMode: "contain"
+    },
+    touchableAction: {
+        width: "100%", 
+        height: "100%",
+        justifyContent: "center", 
+        alignItems: "center", 
+        alignContent: "center"
+    },
     underlay: {
         flexDirection: "row", 
         justifyContent: "center", 

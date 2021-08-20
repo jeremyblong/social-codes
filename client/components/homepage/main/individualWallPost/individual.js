@@ -19,6 +19,8 @@ import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { connect } from "react-redux";
 import Spinner from 'react-native-loading-spinner-overlay';
+import ActionSheet from 'react-native-actionsheet'
+import Clipboard from '@react-native-community/clipboard';
 
 const { height, width } = Dimensions.get("window");
 
@@ -30,6 +32,7 @@ constructor(props) {
         post: null,
         postLoaded: false,
         additionalComment: "",
+        selectedSubComment: {},
         selectedComment: null,
         spinnerLoading: false,
         visible: false,
@@ -70,6 +73,8 @@ constructor(props) {
     }
     componentDidMount() {
         const passedPost = this.props.props.route.params.post;
+
+        console.log("passedPost", passedPost);
 
         const promises = [];
 
@@ -348,6 +353,52 @@ constructor(props) {
     }
     submitComment = () => {
         console.log("submitComment clicked...");
+    }
+    deleteComment = (sub, comment) => {
+        console.log("Delete sub comment", sub, comment);
+
+        const passedPost = this.props.props.route.params.post;
+
+        axios.put(`${Config.ngrok_url}/delete/sub/comment/own`, {
+            id: this.props.unique_id,
+            subComment: sub,
+            comment,
+            postID: passedPost.id
+        }).then((res) => {
+            console.log(res.data);
+            if (res.data.message === "Deleted sub-comment!") {
+
+                const comments = this.state.comments.filter((item, index) => {
+                    if (item.id === comment.id) {
+
+                        if (typeof item.subComments !== "undefined" && item.subComments.length > 0) {
+                            for (let idxxxx = 0; idxxxx < item.subComments.length; idxxxx++) {
+                                const subcomment = item.subComments[idxxxx];
+                                if (subcomment.id === sub.id) {
+                                    console.log("match!");
+                                    item.subComments.splice(idxxxx, 1);
+                                }
+                            }
+                            return item;
+                        } else {
+                            return item;
+                        }
+                    } else {
+                        return item;
+                    }
+                });
+
+                this.setState({
+                    comments
+                }, () => {
+                    this.ActionSheet.hide();
+                })
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
     }
     renderContent = () => {
         const { post, postLoaded, comments } = this.state;
@@ -733,7 +784,16 @@ constructor(props) {
                                 return (
                                     <Fragment>
                                         <View key={index} style={styles.comment}>
-                                            <ListItem avatar>
+                                            <ListItem button={true} onPress={() => {
+                                                this.setState({
+                                                    selectedSubComment: {
+                                                        sub: null, 
+                                                        comment: each
+                                                    }
+                                                }, () => {
+                                                    this.ActionSheetTwo.show();
+                                                })
+                                            }} avatar>
                                                 <Left>
                                                     {each.type === "video" ? null : <Thumbnail style={styles.thumbnailImage} source={{ uri: each.profilePic }} />}
                                                 </Left>
@@ -767,28 +827,37 @@ constructor(props) {
                                         </View>
                                         {typeof each.subComments !== "undefined" && each.subComments.length > 0 ? each.subComments.map((sub, indexxx) => {
                                             return (
-                                            <View key={indexxx} style={{ flexDirection: "row", marginLeft: 80 }}>
-                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
-                                                <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
-                                                    <View style={{ marginTop: 3.5, flexDirection: "row" }}>
-                                                        <View style={{ flexDirection: "row", marginTop: 7.5 }}>
-                                                            <Text style={styles.replyName}>{sub.name}</Text>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.setState({
+                                                        selectedSubComment: {
+                                                            sub, 
+                                                            comment: each
+                                                        }
+                                                    }, () => {
+                                                        this.ActionSheet.show();
+                                                    })
+                                                }} key={indexxx} style={{ flexDirection: "row", marginLeft: 60, alignSelf: 'flex-end' }}>
+                                                {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
+                                                    <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
+                                                        <View style={{ marginTop: 3.5, flexDirection: "row" }}>
+                                                            <View style={{ flexDirection: "row", marginTop: 7.5, width: "100%" }}>
+                                                                <Text style={styles.replyName}>{sub.name}</Text>
+                                                            </View>
+                                                        </View>
+                                                        <View style={{ marginTop: 10 }}>
+                                                            <Highlighter 
+                                                                onPressHighlightedText={(username) => {
+                                                                    // this.redirectBasedOnUsername(username);
+
+                                                                    console.log("username", username);
+                                                                }}
+                                                                highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
+                                                                searchWords={[sub.taggedUser.otherUserName]}
+                                                                textToHighlight={sub.comment}
+                                                            />
                                                         </View>
                                                     </View>
-                                                    <View style={{ marginTop: 10 }}>
-                                                        <Highlighter 
-                                                            onPressHighlightedText={(username) => {
-                                                                // this.redirectBasedOnUsername(username);
-
-                                                                console.log("username", username);
-                                                            }}
-                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
-                                                            searchWords={[sub.taggedUser.otherUserName]}
-                                                            textToHighlight={sub.comment}
-                                                        />
-                                                    </View>
-                                                </View>
-                                            </View>
+                                                </TouchableOpacity>
                                             );
                                         }) : null}
                                     </Fragment>
@@ -1015,7 +1084,17 @@ constructor(props) {
                                         return (
                                             <Fragment>
                                                 <View key={index} style={styles.comment}>
-                                                    <ListItem avatar>
+                                                    <ListItem button={true} onPress={() => {
+
+                                                        this.setState({
+                                                            selectedSubComment: {
+                                                                sub: null, 
+                                                                comment: each
+                                                            }
+                                                        }, () => {
+                                                            this.ActionSheetTwo.show();
+                                                        })
+                                                    }} avatar>
                                                         <Left>
                                                             {each.type === "video" ? null : <Thumbnail style={styles.thumbnailImage} source={{ uri: each.profilePic }} />}
                                                         </Left>
@@ -1049,31 +1128,37 @@ constructor(props) {
                                                 </View>
                                                 {typeof each.subComments !== "undefined" && each.subComments.length > 0 ? each.subComments.map((sub, indexxx) => {
                                                     return (
-                                                        <View key={indexxx} style={{ flexDirection: "row", marginLeft: 80 }}>
-                                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
-                                                                <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
-                                                                    <View style={{ marginTop: 3.5, flexDirection: "row" }}>
-                                                                        <View style={{ flexDirection: "row", marginTop: 7.5 }}>
-                                                                            {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 30, maxHeight: 30, minWidth: 30, minHeight: 30 }} />}
-                                                                            <Text style={styles.replyName}>{sub.name}</Text>
-                                                                        </View>
+                                                        <TouchableOpacity onPress={() => {
+                                                            this.setState({
+                                                                selectedSubComment: {
+                                                                    sub, 
+                                                                    comment: each
+                                                                }
+                                                            }, () => {
+                                                                this.ActionSheet.show();
+                                                            })
+                                                        }} key={indexxx} style={{ flexDirection: "row", marginLeft: 60, alignSelf: 'flex-end' }}>
+                                                        {sub.type === "video" ? null : <Image source={{ uri: sub.profilePic }} style={{ borderRadius: 40, maxWidth: 45, maxHeight: 45, minWidth: 45, minHeight: 45, marginTop: 12, marginRight: 10 }} />}
+                                                            <View style={[styles.comment, { maxWidth: width - 125, backgroundColor: "#ededed", borderRadius: 25, padding: 10, marginRight: 10 }]}>
+                                                                <View style={{ marginTop: 3.5, flexDirection: "row" }}>
+                                                                    <View style={{ flexDirection: "row", marginTop: 7.5, width: "100%" }}>
+                                                                        <Text style={styles.replyName}>{sub.name}</Text>
                                                                     </View>
-                                                                    <View style={{ marginTop: 10 }}>
-                                                                        <Highlighter 
-                                                                            onPressHighlightedText={(username) => {
-                                                                                // this.redirectBasedOnUsername(username);
+                                                                </View>
+                                                                <View style={{ marginTop: 10 }}>
+                                                                    <Highlighter 
+                                                                        onPressHighlightedText={(username) => {
+                                                                            // this.redirectBasedOnUsername(username);
 
-                                                                                console.log("username", username);
-                                                                            }}
-                                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
-                                                                            searchWords={[sub.taggedUser.otherUserName]}
-                                                                            textToHighlight={sub.comment}
-                                                                        />
-                                                                    </View>
-                                                                
-                                                                <Text style={{ marginTop: 5 }}>{sub.comment}</Text>
+                                                                            console.log("username", username);
+                                                                        }}
+                                                                        highlightStyle={{backgroundColor: '#0057ff', color: "white", marginBottom: -2.5 }}
+                                                                        searchWords={[sub.taggedUser.otherUserName]}
+                                                                        textToHighlight={sub.comment}
+                                                                    />
+                                                                </View>
                                                             </View>
-                                                        </View>
+                                                        </TouchableOpacity>
                                                     );
                                                 }) : null}
                                             </Fragment>
@@ -1379,12 +1464,89 @@ constructor(props) {
     handleSelectionChange = ({ nativeEvent: { selection } }) => {
         this.setState({ selection })
     };
+    deleteCommentMainComment = (sub, comment) => {
+        console.log("deleteCommentMainComment", sub, comment);
+
+        const passedPost = this.props.props.route.params.post;
+
+        axios.put(`${Config.ngrok_url}/delete/main/comment/own`, {
+            id: this.props.unique_id,
+            subComment: sub,
+            comment,
+            postID: passedPost.id
+        }).then((res) => {
+            console.log(res.data);
+            if (res.data.message === "Deleted main-comment!") {
+
+                const comments = this.state.comments.filter((item, index) => {
+                    if (item.id !== comment.id) {
+                        return item;
+                    }
+                });
+
+                this.setState({
+                    comments
+                }, () => {
+                    this.ActionSheetTwo.hide();
+                })
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
         console.log("IndividualWallPostingHelper", this.props.props, this.state);
 
-        const { base64, picture } = this.state;
+        const { base64, picture, selectedSubComment } = this.state;
 
         const passedPost = this.props.props.route.params.post;
+
+        const options = [
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked one")
+            }}><Text style={{color: '#0057ff'}}>Reply</Text></TouchableOpacity>,
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked two.");
+
+                Clipboard.setString(selectedSubComment.sub.comment);
+
+                this.ActionSheet.hide();
+            }}><Text style={{color: '#0057ff'}}>Copy</Text></TouchableOpacity>, 
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked three.");
+
+                this.deleteComment(selectedSubComment.sub, selectedSubComment.comment);
+            }}><Text style={{color: 'red'}}>Delete</Text></TouchableOpacity>,
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked four");
+
+                this.ActionSheet.hide();
+            }}><Text style={{color: '#0057ff'}}>Cancel</Text></TouchableOpacity>
+        ]
+        const optionsTwo = [
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked one")
+            }}><Text style={{color: '#0057ff'}}>Reply</Text></TouchableOpacity>,
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked two.");
+
+                Clipboard.setString(selectedSubComment.comment.comment);
+
+                this.ActionSheetTwo.hide();
+            }}><Text style={{color: '#0057ff'}}>Copy</Text></TouchableOpacity>, 
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked three.");
+
+                this.deleteCommentMainComment(selectedSubComment.sub, selectedSubComment.comment);
+            }}><Text style={{color: 'red'}}>Delete</Text></TouchableOpacity>,
+            <TouchableOpacity style={styles.touchableAction} onPress={() => {
+                console.log("clicked four");
+
+                this.ActionSheetTwo.hide();
+            }}><Text style={{color: '#0057ff'}}>Cancel</Text></TouchableOpacity>
+        ]
         return (
             <Fragment>
                 <Header style={styles.header}>
@@ -1469,6 +1631,16 @@ constructor(props) {
                         </View>
                     </View>
                 </RBSheet>
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    title={'What would you like to do?'}
+                    options={options}
+                />
+                <ActionSheet
+                    ref={o => this.ActionSheetTwo = o}
+                    title={'What would you like to do?'}
+                    options={optionsTwo}
+                />
                 <RBSheet
                     ref={ref => {
                         this.RBSheetTagPerson = ref;
