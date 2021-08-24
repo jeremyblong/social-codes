@@ -7,7 +7,7 @@ buildscript {
         googlePlayServicesVersion = "+"
         minSdkVersion = 24
         compileSdkVersion = 29
-        targetSdkVersion = 28
+        targetSdkVersion = 30
         appCompatVersion = "1.1.0"
         playServicesVersion = "+"
         supportLibVersion = "28.0.0"

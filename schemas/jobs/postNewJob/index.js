@@ -78,6 +78,9 @@ const JobSchema =  new mongoose.Schema({
     },
     proposals: {
         type: Number
+    },
+    address: {
+        type: Object
     }
 });
 

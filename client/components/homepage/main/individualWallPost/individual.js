@@ -789,7 +789,9 @@ constructor(props) {
                                                     selectedSubComment: {
                                                         sub: null, 
                                                         comment: each
-                                                    }
+                                                    },
+                                                    selectedComment: each,
+                                                    additionalComment: `@${each.name} `
                                                 }, () => {
                                                     this.ActionSheetTwo.show();
                                                 })
@@ -1090,7 +1092,9 @@ constructor(props) {
                                                             selectedSubComment: {
                                                                 sub: null, 
                                                                 comment: each
-                                                            }
+                                                            },
+                                                            selectedComment: each,
+                                                            additionalComment: `@${each.name} `
                                                         }, () => {
                                                             this.ActionSheetTwo.show();
                                                         })
@@ -1504,9 +1508,17 @@ constructor(props) {
         const passedPost = this.props.props.route.params.post;
 
         const options = [
-            <TouchableOpacity style={styles.touchableAction} onPress={() => {
-                console.log("clicked one")
-            }}><Text style={{color: '#0057ff'}}>Reply</Text></TouchableOpacity>,
+            // <TouchableOpacity style={styles.touchableAction} onPress={() => {
+            //     console.log("clicked one");
+
+            //     this.ActionSheet.hide();
+
+            //     setTimeout(() => {
+            //         this.RBSheetTagPerson.open();
+
+            //         this.focusInputAddPerson();
+            //     }, 1500)
+            // }}><Text style={{color: '#0057ff'}}>Reply</Text></TouchableOpacity>,
             <TouchableOpacity style={styles.touchableAction} onPress={() => {
                 console.log("clicked two.");
 
@@ -1527,7 +1539,15 @@ constructor(props) {
         ]
         const optionsTwo = [
             <TouchableOpacity style={styles.touchableAction} onPress={() => {
-                console.log("clicked one")
+                console.log("clicked one");
+
+                this.ActionSheetTwo.hide();
+
+                setTimeout(() => {
+                    this.RBSheetTagPerson.open();
+
+                    this.focusInputWithKeyboard();
+                }, 1500)
             }}><Text style={{color: '#0057ff'}}>Reply</Text></TouchableOpacity>,
             <TouchableOpacity style={styles.touchableAction} onPress={() => {
                 console.log("clicked two.");

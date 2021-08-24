@@ -108,6 +108,7 @@ import CompletedGigsListPage from "./pages/completedGigs/main/index.js";
 import SplashScreen from 'react-native-splash-screen';
 import MainLeaveAReviewPage from "./pages/reviews/main/index.js";
 import OnboardingPage from "./pages/onboarding/index.js";
+import MapsMainPage from "./pages/maps/main/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -577,6 +578,7 @@ constructor(props) {
               <Stack.Screen name="completed-gigs-list-homepage" component={CompletedGigsListPage} />
               <Stack.Screen name="leave-a-review" component={MainLeaveAReviewPage} />
               <Stack.Screen name="onboarding-late" component={OnboardingPage} />
+              <Stack.Screen name="maps-locals-main" component={MapsMainPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />

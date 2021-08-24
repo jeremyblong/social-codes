@@ -7,7 +7,7 @@ export default StyleSheet.create({
         backgroundColor: '#141414',
         width,
         minHeight: height,
-        height,
+        height: "100%",
         flex: 0
     },
     maxedIconSmall: {

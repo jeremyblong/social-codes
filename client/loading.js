@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 		fontSize: 100
 	},
 	coverLoadingVideo: {
-        height,
+        height: "100%",
         width,
         position: "absolute",
         bottom: 0,

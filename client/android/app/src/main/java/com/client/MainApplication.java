@@ -1,4 +1,4 @@
-package com.client;
+package com.socialcodes;
 
 import android.app.Application;
 import android.content.Context;

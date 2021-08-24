@@ -12,6 +12,10 @@ export default StyleSheet.create({
     boldDark: {
         color: "black"
     }, 
+    touchable: {
+        width: "100%",
+        padding: 5
+    },
     iconCustomDark: {
         tintColor: "#141414",
         maxWidth: "70%", 
@@ -19,6 +23,14 @@ export default StyleSheet.create({
     },
     whiteText: {
         color: "#ffffff"
+    },
+    smallerText: {
+        fontSize: 14,
+        marginTop: 10
+    },
+    schoolName: {
+        fontWeight: "bold",
+        color: "blue"
     },
     container: {
         width,

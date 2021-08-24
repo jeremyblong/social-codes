@@ -11,6 +11,12 @@ export default StyleSheet.create({
         height,
         backgroundColor: "white"
     },
+    viewText: {
+        fontSize: 20, 
+        width: width * 0.80,
+        fontWeight: "bold", 
+        marginTop: 5
+    },
     card:{
         backgroundColor:"white",
         flexBasis: '33.333%',
@@ -228,6 +234,10 @@ export default StyleSheet.create({
         width: "100%",
         height: 50
     },
+    margin10: {
+        margin: 10,
+        width: width * 0.90
+    },
     main: {
         margin: 10
     },
@@ -248,6 +258,11 @@ export default StyleSheet.create({
     },
     rowCustom: {
         flexDirection: "row"
+    },
+    rowCustomTwo: {
+        flexDirection: "row",
+        width,
+        maxHeight: 75
     },
     seemoreBox: {
         borderWidth: 1,
@@ -429,11 +444,6 @@ export default StyleSheet.create({
         justifyContent: "flex-start",
         flexDirection: "row"
     },  
-    viewText: {
-        fontSize: 20, 
-        fontWeight: "bold", 
-        marginTop: 5
-    },
     viewTextTwo: {
         fontSize: 16, 
         fontWeight: "bold", 
@@ -457,6 +467,15 @@ export default StyleSheet.create({
         maxWidth: 20,
         maxHeight: 20
     },
+    absoluteRightCustom: {  
+        position: "absolute",
+        right: 10,
+        top: 10,
+        maxWidth: 35,
+        maxHeight: 35,
+        minWidth: 35, 
+        minHeight: 35
+    },
     thickHr: {
         borderBottomColor: "lightgrey",
         borderBottomWidth: 10,
@@ -464,6 +483,9 @@ export default StyleSheet.create({
         marginBottom: 15,
         width
     },  
+    columnCustom: {
+        width: width * 0.90
+    },
     largeColumnCustom: {
         width: width * 0.70
     },

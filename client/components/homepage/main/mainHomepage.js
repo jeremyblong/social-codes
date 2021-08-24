@@ -1304,18 +1304,20 @@ constructor () {
                                         
                                         <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50 }}>
                                             <FooterTab>
-                                                <Button style={styles.greyButton}>
+                                                <Button onPress={() => {
+                                                    this.props.props.navigation.push("maps-locals-main");
+                                                }} style={styles.greyButton}>
                                                     <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/video-on.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
-                                                        <Text style={styles.iconText}>Go Live</Text>
+                                                        <Image source={require("../../../assets/icons/map-two.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
+                                                        <Text style={styles.iconText}>View Map (local talent)</Text>
                                                     </View>
                                                 </Button>
-                                                <Button style={styles.greyButton}>
+                                                {/* <Button style={styles.greyButton}>
                                                     <View style={styles.row}>
                                                         <Image source={require("../../../assets/icons/gallery.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
                                                         <Text style={styles.iconText}>Photo</Text>
                                                     </View>
-                                                </Button>
+                                                </Button> */}
                                                 <Button style={styles.greyButton}>
                                                     <View style={styles.row}>
                                                         <Image source={require("../../../assets/icons/job.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />

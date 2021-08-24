@@ -10,7 +10,10 @@ import LottieView from 'lottie-react-native';
 import {
     BarChart
 } from "react-native-chart-kit";
-
+import RBSheet from "react-native-raw-bottom-sheet";
+import Autocomplete from "react-native-autocomplete-input";
+import axios from "axios";
+import Config from "react-native-config";
 
 const { height, width } = Dimensions.get("window");
 
@@ -37,11 +40,16 @@ constructor(props) {
         rate: "",
         fixed: false,
         min: 0,
+        results: [],
         max: 0,
         lengthOfProject: "",
         fixedBudget: 0,
         error: "",
-        tokensRequired: 0
+        tokensRequired: 0,
+        query: "",
+        address: null,
+        addressType: "",
+        hideOrNot: true
     }
 }
     restart = () => {
@@ -58,7 +66,7 @@ constructor(props) {
     handleSubmission = () => {
         console.log("handleSubmission clicked");
 
-        const { rate, fixed, timeRequirement, lengthOfProject, min, max, error, fixedBudget, tokensRequired } = this.state;
+        const { rate, fixed, timeRequirement, lengthOfProject, min, max, error, fixedBudget, tokensRequired, address } = this.state;
 
         if (fixed === false) {
             this.props.addJobData({
@@ -72,6 +80,7 @@ constructor(props) {
                     maxHourly: max
                 },
                 page: 7,
+                address,
                 tokensRequiredToApply: tokensRequired
             })
 
@@ -89,6 +98,7 @@ constructor(props) {
                     fixedBudgetPrice: fixedBudget
                 },
                 page: 7,
+                address,
                 tokensRequiredToApply: tokensRequired
             })
 
@@ -98,16 +108,16 @@ constructor(props) {
         }
     }
     renderButtons = () => {
-        const { rate, fixed, timeRequirement, lengthOfProject, min, max, error, fixedBudget, tokensRequired } = this.state;
+        const { rate, fixed, timeRequirement, lengthOfProject, min, max, error, fixedBudget, tokensRequired, address } = this.state;
 
         if (fixed === false) {
-            if ((typeof rate !== "undefined" && rate.length > 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (min !== 0 && max !== 0) && (typeof error !== "undefined" && error.length === 0) && tokensRequired !== 0) {
+            if ((typeof rate !== "undefined" && rate.length > 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && (min !== 0 && max !== 0) && (typeof error !== "undefined" && error.length === 0) && tokensRequired !== 0 && address !== null) {
                 return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
             } else {
                 return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
             }
         } else {
-            if ((typeof rate !== "undefined" && rate.length > 0) && (fixedBudget !== 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && tokensRequired !== 0) {
+            if ((typeof rate !== "undefined" && rate.length > 0) && (fixedBudget !== 0) && (typeof lengthOfProject !== "undefined" && lengthOfProject.length > 0) && (typeof timeRequirement !== "undefined" && timeRequirement.length > 0) && tokensRequired !== 0 && address !== null) {
                 return <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.handleSubmission} stretch={true}>Submit & Continue</AwesomeButtonBlue>;
             } else {
                 return <AwesomeButtonBlue type={"disabled"} stretch={true} onPress={() => {}}>Submit & Continue</AwesomeButtonBlue>;
@@ -132,6 +142,23 @@ constructor(props) {
             );
         }
     }
+    searchForAddress = () => {
+        console.log("search for address...");
+
+        const { query } = this.state;
+
+        axios.get(`https://api.tomtom.com/search/2/search/${query}.JSON?key=${Config.tomtom_api_key}&countrySet=US&limit=20`).then((res) => {
+            console.log(res.data);
+
+            const { results } = res.data;
+
+            this.setState({
+                results
+            })
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
         console.log(this.state);
 
@@ -144,7 +171,7 @@ constructor(props) {
             ]
         };
 
-        const { rate, lengthOfProject, timeRequirement, fixed, min, max, error } = this.state;
+        const { rate, lengthOfProject, timeRequirement, fixed, min, max, error, results, hideOrNot } = this.state;
         return (
             <Fragment>
                 <Header style={{ backgroundColor: "#303030" }}>
@@ -165,6 +192,78 @@ constructor(props) {
                         </Button>
                     </Right>
                 </Header>
+                <RBSheet
+                    ref={ref => {
+                        this.RBSheet = ref;
+                    }}
+                    height={height}
+                    closeOnDragDown={true}
+                    customStyles={{
+                        wrapper: {
+                            backgroundColor: "transparent"
+                        },
+                        container: {
+                            backgroundColor: "#303030",
+                            borderTopLeftRadius: 40,
+                            borderTopRightRadius: 40
+                        },
+                        draggableIcon: {
+                            backgroundColor: "white",
+                            width: 250
+                        }
+                    }}
+                >
+                    <Header style={{ backgroundColor: "#303030" }}>
+                        <Left>
+                            <Button onPress={() => {
+                                this.RBSheet.close();
+                            }} transparent>
+                                <Image source={require("../../../../assets/icons/close.png")} style={styles.headerIcon} />
+                            </Button>
+                        </Left>
+                    <Body>
+                        <Title style={styles.whiteText}>Location Services</Title>
+                        <Subtitle style={styles.whiteText}>Add job location</Subtitle>
+                    </Body>
+                        <Right/>
+                    </Header>
+                    <View style={styles.container}>
+                    <Autocomplete
+                        data={results}
+                        value={this.state.query}
+                        placeholder={"Search nearby locations..."}
+                        placeholderTextColor={"grey"}
+                        onChangeText={(text) => {
+                            this.setState({ 
+                                query: text,
+                                hideOrNot: false
+                            }, () => {
+                                this.searchForAddress();
+                            })
+                        }}
+                        hideResults={hideOrNot}
+                        flatListProps={{
+                            keyExtractor: (_, idx) => idx,
+                            renderItem: ({ item }) => {
+                                return (
+                                    <TouchableOpacity onPress={() => {
+                                        this.setState({
+                                            address: item,
+                                            addressType: item.type,
+                                            hideOrNot: true
+                                        }, () => {
+                                            this.RBSheet.close();
+                                        })
+                                    }} style={styles.touchable}>
+                                        <Text style={styles.schoolName}>Type - {item.type}</Text>
+                                        <Text style={styles.smallerText}>Address - {item.address.freeformAddress}</Text>
+                                    </TouchableOpacity>    
+                                );
+                            }
+                        }}
+                    />
+                    </View>
+                </RBSheet>
                 <Progress.Bar color={"#0057ff"} unfilledColor={"#ffffff"} progress={0.90} width={width} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
                     <View style={styles.margin}>
@@ -412,6 +511,12 @@ constructor(props) {
                             <Picker.Item label="6 Tokens" value={6} />
                         </Picker>
                         </View>
+                    </View>
+                    <View style={styles.margin}>
+                        <Text style={styles.headerText}>Please select the location of your job so people can find it via our maps feature</Text>
+                        <AwesomeButtonBlue borderColor={"#141414"} borderWidth={2} style={{ marginTop: 20 }} type={"secondary"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
+                            this.RBSheet.open();
+                        }} stretch={true}>Select Location</AwesomeButtonBlue>
                     </View>
                     <View style={styles.margin}>
                         {this.renderButtons()}

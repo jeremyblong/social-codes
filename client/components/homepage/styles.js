@@ -20,7 +20,7 @@ export default StyleSheet.create({
         top: 0,
         right: 0,
         width: "100%",
-        height
+        height: "100%"
     },
     whiteMedium: {
         fontSize: 22,

@@ -1,4 +1,4 @@
-package com.client; // ← Make sure that is your package name
+package com.socialcodes; // ← Make sure that is your package name
 
 import android.content.Intent;
 import android.os.Bundle;

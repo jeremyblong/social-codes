@@ -25,7 +25,7 @@ import LottieView from 'lottie-react-native';
 import InView from 'react-native-component-inview';
 import Highlighter from 'react-native-highlight-words';
 import MapView, { Marker } from 'react-native-maps';
-
+import StarRating from 'react-native-star-rating';
 
 const { width, height } = Dimensions.get("window");
 
@@ -812,6 +812,29 @@ constructor (props) {
             console.log(err);
         })
     }
+    calculateRating = (review) => {
+
+        let arrayReviews = [];
+
+        if (this.state.user.accountType === "hire") {
+            arrayReviews = [review.communication, review.hadAdequateSkillSets, review.knowledgeable, review.meetOrExceedExpectations, review.overallExperience, review.spokeProperLanguage, review.wasReceptive, review.wouldHireAgain, review.wouldRecommend];
+        } else {
+            arrayReviews = [review.completedProjectSuccessfully, review.hadAdequateSkillSets, review.meetOrExceedExpectations, review.overallExperience, review.skillsOfFreelancer, review.spokeProperLanguage, review.wasReceptive, review.wouldHireAgain, review.wouldRecommend];
+        }
+
+        let sum = 0;
+
+        for (let i = 0; i < arrayReviews.length; i++) {
+            const element = arrayReviews[i];
+
+            sum += element;
+        }
+
+        return (sum / arrayReviews.length).toFixed(1);
+    }
+    _handleTextReady = (ready) => {
+        console.log("ready", ready);
+    }
     renderContent = () => {
         const { user, alreadyFriends, posts, friends } = this.state;
 
@@ -977,7 +1000,70 @@ constructor (props) {
                                 </Fragment>
                             );
                         }) : null}
+                        
                     </View>
+                    <View style={styles.thickHr} />
+                    <View style={styles.rowCustomTwo}>
+                        <View style={styles.margin10}>
+                            <View style={styles.columnCustom}>
+                                <Text style={[styles.viewText, { marginBottom: 5 }]}>Testimonials/Reviews</Text>
+                                <Text style={{ width: width * 0.80 }}>Endorsements from past clients</Text>
+                            
+                            </View>
+                        </View>
+                        <TouchableOpacity onPress={() => {}} style={styles.absoluteRightCustom}>
+                            <Image source={require("../../../assets/icons/plus.png")} style={styles.absoluteRightCustom} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.thinHr} />
+                    {_.has(user, "reviews") && user.reviews.length > 0 ? user.reviews.map((review, indexxxx) => {
+                        console.log("review", review);
+
+                        const { gig } = review;
+                        return (
+                            <Fragment key={indexxxx}>
+                                <Card>
+                                    <CardItem header bordered>
+                                    <Text>Review from {gig.otherUserFirstName} {gig.otherUserLastName}</Text>
+                                    </CardItem>
+                                    <CardItem bordered>
+                                    <Body>
+                                    <ReadMore
+                                        numberOfLines={3}
+                                        renderTruncatedFooter={this._renderTruncatedFooter}
+                                        renderRevealedFooter={this._renderRevealedFooter}
+                                        onReady={this._handleTextReady}>
+                                        <Text style={styles.cardText}>
+                                            {review.comment}
+                                        </Text>
+                                    </ReadMore>
+                                    </Body>
+                                    </CardItem>
+                                    <CardItem footer bordered>
+                                        <View style={styles.centered}>
+                                            <StarRating
+                                                disabled={true}
+                                                maxStars={5}
+                                                starSize={50}
+                                                halfStarEnabled={true}
+                                                halfStarColor={"#141414"}
+                                                rating={this.calculateRating(review)}
+                                                fullStarColor={'#f5cd05'}
+                                            />
+                                        </View>
+                                    </CardItem>
+                                </Card>
+                            </Fragment>
+                        );
+                    }) : <Fragment>
+                        <View style={styles.centeredMargin}>
+                            <View style={styles.testimonialsAnimationContainer}>
+                                <LottieView source={require('../../../assets/animations/searching.json')} autoPlay loop style={styles.testimonialsAnimation}  />
+                            </View>
+                            <Text style={styles.showcaseText}>Showcase your skills with FairWage client testimonials</Text>
+                            <Text style={styles.request}>Request a testimonial</Text>
+                        </View>
+                    </Fragment>}
                     <View style={{ marginTop: 25 }} />
                     <View style={styles.nextContainer}>
                         <View style={{ margin: 10 }}>
@@ -2025,7 +2111,8 @@ const mapStateToProps = (state) => {
     return {
         unique_id: state.signupData.authData.unique_id,
         fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`,
-        username: state.signupData.authData.username
+        username: state.signupData.authData.username,
+        accountType: state.signupData.authData.accountType
     }
 }
 export default connect(mapStateToProps, { })(PublicProfileOtherUserHelper);

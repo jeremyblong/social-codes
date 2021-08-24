@@ -10,5 +10,9 @@ export default StyleSheet.create({
       width,
       zIndex: -1,
       backgroundColor: "#141414"
+    },
+    headerIcon: {
+      maxWidth: 35,
+      maxHeight: 35
     }
 }); 

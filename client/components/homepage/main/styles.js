@@ -14,7 +14,7 @@ export default StyleSheet.create({
         maxHeight: 35
     },
     coverLoadingVideo: {
-        height,
+        height: "100%",
         width,
         position: "absolute",
         bottom: 0,
@@ -319,14 +319,14 @@ export default StyleSheet.create({
         marginTop: -5,
         zIndex: -1,
         paddingBottom: 50,
-        height,
+        height: "100%",
         width,
         backgroundColor: "#303030"
     },
     containerAndroid: {
-        marginTop: -5,
+        marginTop: 0,
         zIndex: -1,
-        height,
+        height: "100%",
         width,
         backgroundColor: "#303030"
     },

@@ -15,6 +15,14 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         const generatedID = uuidv4();
 
+        const structuredAddressData = {
+            ...jobData.address,
+            loc: {
+                type: "Point", 
+                coordinates: [ jobData.address.position.lon, jobData.address.position.lat ] 
+            }
+        }
+
         const newJob = new JobSchema({
             category: jobData.category,
             page: jobData.page,
@@ -41,7 +49,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             unique_id: generatedID,
             poster: unique_id,
             tokensRequiredToApply: jobData.tokensRequiredToApply,
-            proposals: 0
+            proposals: 0,
+            address: structuredAddressData
         });
 
         const database = db.db("db");
