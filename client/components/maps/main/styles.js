@@ -11,7 +11,8 @@ export default StyleSheet.create({
     },
     map: {
         width,
-        height: "100%"
+        height: "100%",
+        zIndex: -2
     },
     headerIcon: {
         maxWidth: 35,
@@ -38,10 +39,22 @@ export default StyleSheet.create({
         maxWidth: 50,
         maxHeight: 50
     },
+    price: {
+        fontWeight: "bold",
+        fontSize: 26,
+        color: "#0057ff"
+    },
+    cardText: {
+        color: "grey"  
+    },
     slide: {
         width: "100%",
         height: 225,
         backgroundColor: "#ffffff"
+    },
+    headerCallout: {
+        fontWeight: "bold",
+        color: "#0057ff"
     },
     containerCustom: {
         position: "absolute",
@@ -55,9 +68,11 @@ export default StyleSheet.create({
         shadowOffset: {
             width: 2
         },
+        zIndex: -1,
         shadowOpacity: 0.5,
         shadowRadius: 4,
         marginVertical: 8,
+        minHeight: 250,
         backgroundColor:"white",
         flexBasis: '47%',
         marginHorizontal: 5,
@@ -73,6 +88,10 @@ export default StyleSheet.create({
     cardContent: {
         paddingVertical: 12.5,
         paddingHorizontal: 16,
+    },
+    spinnerTextStyle: {
+        fontWeight: "bold",
+        color: "white"
     },
     cardFooter:{
         flexDirection: 'row',
@@ -96,6 +115,7 @@ export default StyleSheet.create({
     },
     price:{
         fontSize:16,
+        marginLeft: 15,
         color: "#0057ff",
         marginTop: 5
     },
@@ -105,6 +125,9 @@ export default StyleSheet.create({
     icon: {
         width:25,
         height:25,
+    },
+    centered: {
+        flex: 1
     },
     /******** social bar ******************/
     socialBarContainer: {

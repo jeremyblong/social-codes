@@ -19,7 +19,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         collection.createIndex({
             "address.loc": "2dsphere"
         });
-
+        // change $maxDistance (meters) for production
         collection.find({ 
             "address.loc": { $near: { $geometry: { type: "Point" , coordinates: [current_location.coords.longitude, current_location.coords.latitude] }, $maxDistance: 10000000 }}
         }).toArray((err, jobs) => {

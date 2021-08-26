@@ -58,6 +58,8 @@ class JobIndividualHelper extends Component {
 constructor(props) {
     super(props);
 
+    const job = this.props.props.route.params.item;
+
     this.state = {
         profilePics: [],
         googlePhoto: null,
@@ -86,8 +88,8 @@ constructor(props) {
         showToast: false,
         isDatePickerVisible: false,
         region: {
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: job.address.position.lat,
+            longitude: job.address.position.lon,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
         },
@@ -4209,7 +4211,15 @@ constructor(props) {
                                 region={this.state.region}
                                 onRegionChangeComplete={this.onRegionChange}
                             >
-                                
+                                <Marker
+                                    key={1000}
+                                    coordinate={{
+                                        latitude: job.address.position.lat,
+                                        longitude: job.address.position.lon
+                                    }}
+                                    title={job.title}
+                                    description={job.task}
+                                />
                             </MapView>
                         <View style={styles.hr} />
                         <AwesomeButtonCartman type={"anchor"} backgroundColor={"#303030"} raiseLevel={3} backgroundDarker={"#cccccc"} textColor={"white"} onPress={() => {

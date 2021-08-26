@@ -49,6 +49,10 @@ constructor(props) {
                 this.setState({
                     notifications,
                     ready: true
+                }, () => {
+                    if (typeof notifications !== "undefined" && notifications.length > 0) {
+                        this.flatListRef.scrollToIndex({ animated: true, index: notifications.length - 1 });
+                    }
                 })
             } else {
                 console.log("Err", res.data);
@@ -194,16 +198,18 @@ constructor(props) {
         })
     }
     renderFlatList = () => {
+        const { notifications } = this.state;
         const config = {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80
         };
-        if (typeof this.state.notifications !== "undefined" && this.state.notifications.length > 0) {
+        if (typeof notifications !== "undefined" && notifications.length > 0) {
             return (
                 <FlatList
+                    ref={(ref) => { this.flatListRef = ref; }}
                     inverted={true}
                     style={styles.root}
-                    data={this.state.notifications}
+                    data={notifications}
                     extraData={this.state}
                     ItemSeparatorComponent={() => {
                         return (
@@ -212,6 +218,14 @@ constructor(props) {
                     }}
                     keyExtractor={(item)=>{
                         return item._id;
+                    }}
+                    onScrollToIndexFailed={info => {
+                        const wait = new Promise(resolve => setTimeout(resolve, 500));
+                        wait.then(() => {
+                            if (typeof notifications !== "undefined" && notifications.length > 0) {
+                                this.flatListRef.scrollToIndex({ animated: true, index: notifications.length - 1 });
+                            }
+                        });
                     }}
                     renderItem={(item) => {
                         const Notification = item.item;
