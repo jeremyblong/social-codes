@@ -278,7 +278,7 @@ constructor(props) {
                         <View style={[styles.margin, { flexDirection: "row", flexWrap: 'wrap' }]}>
                             {typeof allTags !== 'undefined' && allTags.length > 0 ? allTags.map((tag, index) => {
                                 return (
-                                    <Fragment>
+                                    <Fragment key={index}>
                                         <View style={styles.tagTop}>
                                             <Text style={{ color: "white", fontWeight: "bold" }}>{tag}</Text>
                                         </View>

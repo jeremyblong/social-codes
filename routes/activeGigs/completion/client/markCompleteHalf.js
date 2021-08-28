@@ -51,6 +51,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
                                     if (applicant.completedFreelancer === true && applicant.completedClient === true) {
 
+                                        let summmmm = 0;
+
+                                        for (let iiiiiiiii = 0; iiiiiiiii < applicant.payments.length; iiiiiiiii++) {
+                                            const paid = applicant.payments[iiiiiiiii].amount;
+                                            const calculatedTotal = Math.round((paid / 100));
+
+                                            summmmm += calculatedTotal.toFixed(0);
+                                        }
+
+                                        if (user.amountEarnedTotal) {
+                                            user.amountEarnedTotal += summmmm;
+                                        } else {
+                                            user["amountEarnedTotal"] = summmmm;
+                                        }
+
                                         if (_.has(user, "completedProjects")) {
                                             user.completedProjects.push(applicant);
                                         } else {

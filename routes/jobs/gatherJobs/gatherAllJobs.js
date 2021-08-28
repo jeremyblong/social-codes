@@ -19,15 +19,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         collection.aggregate(
             [
-                { $match: { unique_id: { $nin: alreadyPooled.filter(doc => {
-
-                    console.log("DOC", doc);
-
-                    if (!alreadyPooled.includes(doc.unique_id)) {
-                        return doc;    
-                    }
-                })}}},
-                { $sample: { size: 5 } } 
+                { "$match": { "unique_id": { "$nin": alreadyPooled }}},
+                { "$sample": { size: 5 } } 
             ]
         ).limit(5).toArray((err, jobs) => {
             if (err) {
@@ -38,7 +31,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                     err
                 })
             } else {
-                console.log("JOBSSSSSSSS:", jobs);
 
                 res.json({
                     message: "Successfully located jobs!",

@@ -12,6 +12,17 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: "#141414"
     },
+    directionText: {
+        color: "#ffffff",
+        marginBottom: 5,
+        marginTop: 5,
+        fontSize: 18,
+        marginLeft: 5
+    },
+    horizontalScroll: {
+        minHeight: 50, 
+        height: 50
+    },  
     list: {
         paddingHorizontal: 5,
         backgroundColor:"white",
@@ -53,6 +64,37 @@ export default StyleSheet.create({
         shadowRadius: 7.49,
         elevation: 12,
         backgroundColor:"white",
+    },
+    mainTextHeader: {
+        fontSize: 20,
+        color: "grey",
+        marginBottom: 20
+    },
+    containerWhite: {
+        backgroundColor: '#ffffff',
+        margin: 15
+    },
+    row: {
+        flexDirection: 'row',
+        maxHeight: 55
+    },
+    label: {
+        textAlign: "left",
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    maxedView: {
+        width: "100%",
+        height: "70%"
+    },  
+    maxedViewOutter: {
+        width: "90%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        borderLeftColor: "grey",
+        borderLeftWidth: 2
     },
     containerStyle: {
         flexDirection: 'row', 

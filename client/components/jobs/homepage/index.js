@@ -71,19 +71,30 @@ constructor(props) {
                 const { jobs } = res.data;
 
                 if (typeof jobs !== "undefined" && jobs.length > 0) {
-                    this.setState({
-                        activeJobs: [...this.state.activeJobs, jobs[0]],
-                        loadingMore: false
-                    }, () => {
-                        for (let index = 0; index < jobs.length; index++) {
-                            const job = jobs[index];
-                            
-                            this.setState({
-                                alreadyPooled: [...this.state.alreadyPooled, job.unique_id],
-                                scrolling: false,
-                                onEndReached: false
-                            })
-                        }
+                    const promiseeee = new Promise((resolve, reject) => {
+                        const arr = [];
+
+                        this.setState({
+                            activeJobs: [...this.state.activeJobs, ...jobs],
+                            loadingMore: false
+                        }, () => {
+                            for (let index = 0; index < jobs.length; index++) {
+                                const job = jobs[index];
+                                arr.push(job.unique_id);
+
+                                if ((jobs.length - 1) === index) {
+                                    resolve(arr);
+                                }
+                            }
+                        })
+                    })
+
+                    promiseeee.then((passedValues) => {
+                        this.setState({
+                            alreadyPooled: [...this.state.alreadyPooled, ...passedValues],
+                            scrolling: false,
+                            onEndReached: false
+                        })
                     })
                 } else {
                     this.setState({
@@ -105,19 +116,6 @@ constructor(props) {
             console.log(err);
         })
     }
-    _handleLoadMore = (data) => {
-        console.log("loaded...", data);
-
-        this.setState(
-          (prevState, nextProps) => ({
-            page: prevState.page + 1,
-            loadingMore: true
-          }),
-          () => {
-            this.fetchMore();
-          }
-        );
-    };
     changeTabs = (tab) => {
         console.log("tab", tab);
     }
@@ -182,15 +180,12 @@ constructor(props) {
                             }
                         }}
                         onEndReached={({ distanceFromEnd }) => {
-                            console.log(distanceFromEnd);
-
                             if (distanceFromEnd >= 0 && this.state.scrolling === true) {
-                                this._handleLoadMore();
+                                this.fetchMore();
                             }
                         }}
                         keyExtractor={(item) => item.unique_id}
                         onEndReachedThreshold={0.5}
-                        initialNumToRender={3}
                     />
                 </View>
             );

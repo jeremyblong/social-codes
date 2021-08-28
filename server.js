@@ -233,6 +233,10 @@ app.use("/update/bio", require("./routes/profile/bio/updateBio.js"));
 app.use("/delete/sub/comment/own", require("./routes/wall/comments/subComments/delete/deleteSubComment.js"));
 app.use("/delete/main/comment/own", require("./routes/wall/comments/mainComments/delete/deleteMainComment.js"));
 app.use("/gather/jobs/by/location/nearby", require("./routes/jobs/gatherJobs/location/gatherJobsByLocation.js"));
+app.use("/filter/people/specifics", require("./routes/people/listUsers/filter/filterByAll.js"));
+////////////////////////////////////////////////
+app.use("/gather/users/account/type", require("./routes/people/listUsers/filter/accountType/gatherByAccountType.js"));
+app.use("/gather/users/age/range", require("./routes/people/listUsers/filter/ageRange/gatherByAgeRange.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

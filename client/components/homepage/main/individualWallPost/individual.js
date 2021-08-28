@@ -31,6 +31,7 @@ constructor(props) {
     this.state = {
         post: null,
         postLoaded: false,
+        rbsheetHeight: 0,
         additionalComment: "",
         selectedSubComment: {},
         selectedComment: null,
@@ -459,7 +460,7 @@ constructor(props) {
                                                     this.setState({
                                                         visible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
                                                     <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                                     <Text style={{ color: "#ffffff" }}>Like</Text>
                                                 </Button>
@@ -540,7 +541,7 @@ constructor(props) {
                                         
                                         <Button onPress={() => {
                                             this.openComment();
-                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
                                             <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                             <Text style={{ color: "#ffffff" }}>Comment</Text>
                                         </Button>
@@ -686,7 +687,7 @@ constructor(props) {
                                                     this.setState({
                                                         visible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
                                                     <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                                     <Text style={{ color: "#ffffff" }}>Like</Text>
                                                 </Button>
@@ -767,7 +768,7 @@ constructor(props) {
                                         
                                         <Button onPress={() => {
                                             this.openComment();
-                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
                                             <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                             <Text style={{ color: "#ffffff" }}>Comment</Text>
                                         </Button>
@@ -1604,11 +1605,13 @@ constructor(props) {
                         this.RBSheet = ref;
                     }}
                     closeOnDragDown={true}
+                    height={this.state.rbsheetHeight}
                     openDuration={250}
                     customStyles={{
                         container: {
                            borderTopRightRadius: 30,
-                           borderTopLeftRadius: 30
+                           borderTopLeftRadius: 30,
+                           height: "35%"
                         },
                         draggableIcon: {
                             backgroundColor: "grey",
@@ -1635,7 +1638,7 @@ constructor(props) {
                                         comment
                                     })
                                 }} 
-                                style={{ height: this.state.height, width: "78%", top: 0 }}
+                                style={{ height: 50, minHeight: 50, width: "78%", top: 0 }}
                                 editable
                                 multiline
                                 value={this.state.comment}
@@ -1662,6 +1665,7 @@ constructor(props) {
                     options={optionsTwo}
                 />
                 <RBSheet
+                    height={this.state.rbsheetHeight}
                     ref={ref => {
                         this.RBSheetTagPerson = ref;
                     }}
@@ -1670,7 +1674,8 @@ constructor(props) {
                     customStyles={{
                         container: {
                            borderTopRightRadius: 30,
-                           borderTopLeftRadius: 30
+                           borderTopLeftRadius: 30,
+                           height: "35%"
                         },
                         draggableIcon: {
                             backgroundColor: "grey",
@@ -1699,7 +1704,7 @@ constructor(props) {
                                 }} 
                                 onSelectionChange={this.handleSelectionChange}
                                 selection={this.state.selection}
-                                style={{ height: this.state.height, width: "78%", top: 0 }}
+                                style={{ height: 50, minHeight: 50, width: "78%", top: 0 }}
                                 multiline={true}
                                 value={this.state.additionalComment}
                                 placeholder={"Write a comment..."}

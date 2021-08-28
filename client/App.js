@@ -204,6 +204,8 @@ constructor(props) {
         if (this.state.count >= 10) {
           this.setState({
             count: 0
+          }, () => {
+            this.handleDrivingLocationUpdate(location);
           })
         } else {
           if (location.coords.speed < 4) {

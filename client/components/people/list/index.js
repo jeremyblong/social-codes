@@ -22,6 +22,11 @@ import { Fragment } from 'react';
 import Dialog from "react-native-dialog";
 import { connect } from 'react-redux';
 import Toast from 'react-native-toast-message';
+import RBSheet from "react-native-raw-bottom-sheet";
+import CheckBox from 'react-native-check-box';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -38,7 +43,13 @@ class PeopleBrowseListHelper extends Component {
         friend: null,
         alreadyPooled: [],
         list: false,
-        showAddFriendDialog: false
+        savedUsersInitial: [],
+        showAddFriendDialog: false,
+        accountTypeArray: [],
+        jobsCompletedArray: [],
+        ageRangeArray: [],
+        allTags: [],
+        minAmountEarnedArray: []
     };
 }
 
@@ -115,6 +126,7 @@ class PeopleBrowseListHelper extends Component {
                         if ((users.length - 1) === index) {
                             this.setState({
                                 users: usersArrDisplay,
+                                savedUsersInitial: usersArrDisplay,
                                 alreadyPooled: pooled
                             }) 
                         }
@@ -173,7 +185,8 @@ class PeopleBrowseListHelper extends Component {
 
         axios.get(`${Config.ngrok_url}/gather/more/users/list`, { 
             params: {
-                alreadyPooled: this.state.alreadyPooled
+                alreadyPooled: this.state.alreadyPooled,
+                filtrationType: null
             }
         }).then((res) => {
             if (res.data.message === "Successfully located people!") {
@@ -183,6 +196,7 @@ class PeopleBrowseListHelper extends Component {
 
                 this.setState({
                     users: [...this.state.users, ...people],
+                    savedUsersInitial: [...this.state.savedUsersInitial, ...people],
                     alreadyPooled: [...this.state.alreadyPooled, ...persons]
                 })
             } else {
@@ -399,8 +413,105 @@ class PeopleBrowseListHelper extends Component {
             console.log(err);
         })
     }
+    gatherAccountTypes = (accountType) => {
+        axios.get(`${Config.ngrok_url}/gather/users/account/type`, { 
+            params: {
+                accountType: accountType
+            }
+        }).then((res) => {
+            if (res.data.message === "Successfully located specific users!") {
+                console.log(res.data);
+
+                const { users } = res.data;
+
+                const alreadyPooled = [];
+
+                for (let index = 0; index < users.length; index++) {
+                    const user = users[index];
+                    alreadyPooled.push(user.unique_id);
+                }
+
+                this.setState({
+                    users,
+                    alreadyPooled: [...this.state.alreadyPooled, ...alreadyPooled]
+                })
+            } else {
+                console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    checkAgeSelection = (start, end) => {
+
+        axios.get(`${Config.ngrok_url}/gather/users/age/range`, { 
+            params: {
+                start,
+                end
+            }
+        }).then((res) => {
+            if (res.data.message === "Successfully located specific users!") {
+                console.log(res.data);
+
+                const { users } = res.data;
+                
+                const alreadyPooled = [];
+
+                for (let index = 0; index < users.length; index++) {
+                    const user = users[index];
+                    alreadyPooled.push(user.unique_id);
+                }
+
+                this.setState({
+                    users,
+                    alreadyPooled: [...this.state.alreadyPooled, alreadyPooled]
+                })
+            } else {
+                console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    removeItem = (passed) => {
+        const index = this.state.allTags.indexOf(passed);
+
+        this.state.allTags.splice(index, 1);
+
+        return this.state.allTags;
+    }
+    handleFilterSearch = () => {
+        console.log("handleFilterSearch clicked....");
+
+        const { 
+            accountTypeArray,
+            jobsCompletedArray,
+            ageRangeArray,
+            allTags,
+            minAmountEarnedArray 
+        } = this.state;
+
+        axios.post(`${Config.ngrok_url}/filter/people/specifics`, { 
+            allTags,
+            id: this.props.unique_id,
+            accountTypeArray,
+            jobsCompletedArray,
+            ageRangeArray,
+            minAmountEarnedArray
+        }).then((res) => {
+            if (res.data.message === "") {
+                console.log(res.data);
+            } else {
+                console.log("Err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     render() {
         const { users, list, showAddFriendDialog, fullName, friend } = this.state;
+
+        const friendsAmount = ["Up to 100", "100-200 connections", "300-500 connections", "600-1k connections", "1k-2k and beyond"];
 
         console.log("this.state people list state", this.state);
         return (
@@ -420,7 +531,7 @@ class PeopleBrowseListHelper extends Component {
                 <Right>
                     <Button onPress={() => {
                         this.setState({
-                            list: true
+                            list: !this.state.list
                         })
                     }} transparent>
                         <Image source={require("../../../assets/icons/flip-vertical.png")} style={[styles.headerIconRight, { tintColor: "#ffffff" }]} />
@@ -428,6 +539,607 @@ class PeopleBrowseListHelper extends Component {
                 </Right>
             </Header>
             <Toast ref={(ref) => Toast.setRef(ref)} />
+            <RBSheet
+                ref={ref => {
+                    this.RBSheet = ref;
+                }}
+                height={height}
+                closeOnDragDown={false}
+                openDuration={250}
+                customStyles={{
+                    container: {
+                        borderTopRightRadius: 40,
+                        borderTopLeftRadius: 40
+                    }
+                }}
+            >
+                <Header style={{ backgroundColor: "#303030" }}>
+                    <Left>
+                        <Button onPress={() => {
+                            this.RBSheet.close();
+                        }} transparent>
+                            <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title style={{ color: "#ffffff" }}>Filter Options</Title>
+                        <Subtitle style={{ color: "#ffffff" }}>Filter users & more...</Subtitle>
+                    </Body>
+                    <Right />
+                </Header>
+                <ScrollView contentContainerStyle={{ paddingBottom: 50 }} showsVerticalScrollIndicator={false} style={styles.containerWhite}>
+                    <Text style={styles.mainTextHeader}>Please select your filter options - each selected options with be added to the other selected options...</Text>
+                    <Text style={styles.label}>Account Type</Text>
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.accountTypeArray.includes("hire")) {
+                                this.setState({
+                                    accountTypeArray: this.state.accountTypeArray.filter((item) => {
+                                        if (item !== "hire") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "accountType",
+                                        selected: "hire"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    accountTypeArray: [...this.state.accountTypeArray, "hire"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "accountType",
+                                        selected: "hire"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Hire"}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.accountTypeArray.includes("hire") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.accountTypeArray.includes("work")) {
+                                this.setState({
+                                    accountTypeArray: this.state.accountTypeArray.filter((item) => {
+                                        if (item !== "work") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "accountType",
+                                        selected: "work"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    accountTypeArray: [...this.state.accountTypeArray, "work"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "accountType",
+                                        selected: "work"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Work"}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.accountTypeArray.includes("work") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <Text style={styles.label}>Age Range</Text>
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.ageRangeArray.includes("18-25")) {
+                                this.setState({
+                                    ageRangeArray: this.state.ageRangeArray.filter((item) => {
+                                        if (item !== "18-25") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "ageRange",
+                                        selected: "18-25"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    ageRangeArray: [...this.state.ageRangeArray, "18-25"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "ageRange",
+                                        selected: "18-25"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Ages 18-25..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.ageRangeArray.includes("18-25") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.ageRangeArray.includes("26-35")) {
+                                this.setState({
+                                    ageRangeArray: this.state.ageRangeArray.filter((item) => {
+                                        if (item !== "26-35") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "ageRange",
+                                        selected: "26-35"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    ageRangeArray: [...this.state.ageRangeArray, "26-35"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "ageRange",
+                                        selected: "26-35"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Ages 26-35..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.ageRangeArray.includes("26-35") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.ageRangeArray.includes("36-45")) {
+                                this.setState({
+                                    ageRangeArray: this.state.ageRangeArray.filter((item) => {
+                                        if (item !== "36-45") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "ageRange",
+                                        selected: "36-45"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    ageRangeArray: [...this.state.ageRangeArray, "36-45"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "ageRange",
+                                        selected: "36-45"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Ages 36-45..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.ageRangeArray.includes("36-45") ? true : false}
+                    />
+                     <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.ageRangeArray.includes("46-55")) {
+                                this.setState({
+                                    ageRangeArray: this.state.ageRangeArray.filter((item) => {
+                                        if (item !== "46-55") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "ageRange",
+                                        selected: "46-55"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    ageRangeArray: [...this.state.ageRangeArray, "46-55"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "ageRange",
+                                        selected: "46-55"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Ages 46-55..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.ageRangeArray.includes("46-55") ? true : false}
+                    />
+                     <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.ageRangeArray.includes("56+")) {
+                                this.setState({
+                                    ageRangeArray: this.state.ageRangeArray.filter((item) => {
+                                        if (item !== "56+") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "ageRange",
+                                        selected: "56+"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    ageRangeArray: [...this.state.ageRangeArray, "56+"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "ageRange",
+                                        selected: "56+"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Ages 56+..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.ageRangeArray.includes("56+") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <Text style={styles.label}>Jobs Completed</Text>
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.jobsCompletedArray.includes("1-3")) {
+                                this.setState({
+                                    jobsCompletedArray: this.state.jobsCompletedArray.filter((item) => {
+                                        if (item !== "1-3") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "jobsCompleted",
+                                        selected: "1-3"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    jobsCompletedArray: [...this.state.jobsCompletedArray, "1-3"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "jobsCompleted",
+                                        selected: "1-3"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Worked 1-3 jobs previously"}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.jobsCompletedArray.includes("18-25") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.jobsCompletedArray.includes("4-6")) {
+                                this.setState({
+                                    jobsCompletedArray: this.state.jobsCompletedArray.filter((item) => {
+                                        if (item !== "4-6") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "jobsCompleted",
+                                        selected: "4-6"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    jobsCompletedArray: [...this.state.jobsCompletedArray, "4-6"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "jobsCompleted",
+                                        selected: "4-6"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Worked 4-6 jobs previously..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.jobsCompletedArray.includes("4-6") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.jobsCompletedArray.includes("7-10")) {
+                                this.setState({
+                                    jobsCompletedArray: this.state.jobsCompletedArray.filter((item) => {
+                                        if (item !== "7-10") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "jobsCompleted",
+                                        selected: "7-10"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    jobsCompletedArray: [...this.state.jobsCompletedArray, "7-10"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "jobsCompleted",
+                                        selected: "7-10"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Worked 7-10 jobs previously..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.jobsCompletedArray.includes("7-10") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.jobsCompletedArray.includes("10+")) {
+                                this.setState({
+                                    jobsCompletedArray: this.state.jobsCompletedArray.filter((item) => {
+                                        if (item !== "10+") {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "jobsCompleted",
+                                        selected: "10+"
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    jobsCompletedArray: [...this.state.jobsCompletedArray, "10+"],
+                                    allTags: [...this.state.allTags, {
+                                        type: "jobsCompleted",
+                                        selected: "10+"
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Worked 10+ jobs previously..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.jobsCompletedArray.includes("10+") ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <Text style={styles.label}>Min-Amount Earned</Text>
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(100)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 100) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 100
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 100],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 100
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $100 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(100) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(500)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 500) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 500
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 500],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 500
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $500 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(500) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(1000)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 1000) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 1000
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 1000],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 1000
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $1,000 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(1000) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(1500)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 1500) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 1500
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 1500],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 1500
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $1,500 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(1500) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(2500)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 2500) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 2500
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 2500],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 2500
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $2,500 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(2500) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(5000)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 5000) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 5000
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 5000],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 5000
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $5,000 or less..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(5000) ? true : false}
+                    />
+                    <View style={{ marginTop: 10 }} />
+                    <CheckBox
+                        style={{ flex: 1, padding: 10, width: "100%", height: 40 }}
+                        onClick={() => {
+                            if (this.state.minAmountEarnedArray.includes(100000)) {
+                                this.setState({
+                                    minAmountEarnedArray: this.state.minAmountEarnedArray.filter((item) => {
+                                        if (item !== 100000) {
+                                            return item;
+                                        }
+                                    }),
+                                    allTags: this.removeItem({
+                                        type: "minAmountEarned",
+                                        selected: 100000
+                                    })
+                                })
+                            } else {
+                                this.setState({
+                                    minAmountEarnedArray: [...this.state.minAmountEarnedArray, 100000],
+                                    allTags: [...this.state.allTags, {
+                                        type: "minAmountEarned",
+                                        selected: 100000
+                                    }]
+                                })
+                            }
+                        }}
+                        checkBoxColor={"blue"}
+                        rightText={"Earned $5,000 or more..."}
+                        uncheckedCheckBoxColor={"black"}
+                        isChecked={this.state.minAmountEarnedArray.includes(100000) ? true : false}
+                    />
+                    <View style={{ marginTop: 50 }} />
+                    <AwesomeButtonBlue type={"secondary"} backgroundColor={"#0057ff"} textColor={"#ffffff"} onPress={() => {
+                        this.handleFilterSearch();
+                    }} stretch={true}>Search with filter options</AwesomeButtonBlue>
+                </ScrollView>
+            </RBSheet>
             <View>
                 <Dialog.Container visible={showAddFriendDialog}>
                 <Dialog.Title>Are you sure you'd like to send {fullName} a friend request?</Dialog.Title>
@@ -450,20 +1162,29 @@ class PeopleBrowseListHelper extends Component {
                 }} label="SEND!" />
                 </Dialog.Container>
             </View>
-            <SearchBar
-                ref="searchBar"
-                placeholder="Search for people's names..."
-                onChangeText={(searchValue) => {
-                    this.setState({
-                        searchValue
-                    })
-                }}
-                barTintColor={"white"}
-                textFieldBackgroundColor={"#f0f0f0"}
-                onSearchButtonPress={this.handleSearch}
-                onCancelButtonPress={this.handleCancellation}
-            />
-            {/* <ScrollView contentContainerStyle={styles.containerStyle} style={styles.list}> */}
+            <View style={styles.row}>
+                <SearchBar
+                    style={{ width: width * 0.85, height: 55 }}
+                    ref="searchBar"
+                    placeholder="Search for people's names..."
+                    onChangeText={(searchValue) => {
+                        this.setState({
+                            searchValue
+                        })
+                    }}
+                    barTintColor={"white"}
+                    textFieldBackgroundColor={"#f0f0f0"}
+                    onSearchButtonPress={this.handleSearch}
+                    onCancelButtonPress={this.handleCancellation}
+                />
+                <View style={{ width: width * 0.15, backgroundColor: "white" }}>
+                    <TouchableOpacity onPress={() => {
+                        this.RBSheet.open();
+                    }} style={styles.maxedViewOutter}>
+                        <Image source={require("../../../assets/icons/filter.png")} style={styles.maxedView} />
+                    </TouchableOpacity>
+                </View>
+            </View>
                 {list === true ? <List>
                         <FlatList
                             data={users}
@@ -559,3 +1280,66 @@ const mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, { })(PeopleBrowseListHelper);
+
+
+// const now = new Date().getFullYear();
+
+// console.log("now", now);
+
+// let start, end;
+
+// switch (selectedItem) {
+//     case "18-25":
+//         this.setState({ 
+//             alreadyPooled: []
+//         }, () => {
+//             start = (now - 18);
+//             end = (now - 25);
+
+//             this.checkAgeSelection(start, end);
+//         });
+//         break;
+//     case "26-35":
+//         this.setState({ 
+//             alreadyPooled: []
+//         }, () => {
+//             start = (now - 26);
+//             end = (now - 35);
+
+//             this.checkAgeSelection(start, end);
+//         });
+        
+//         break;
+//     case "36-45":
+//         this.setState({ 
+//             alreadyPooled: []
+//         }, () => {
+//             start = (now - 36);
+//             end = (now - 45);
+
+//             this.checkAgeSelection(start, end);
+//         });
+//         break;
+//     case "46-55":
+//         this.setState({ 
+//             alreadyPooled: []
+//         }, () => {
+//             start = (now - 46);
+//             end = (now - 55);
+
+//             this.checkAgeSelection(start, end);
+//         });
+//         break;
+//     case "56+":
+//         this.setState({ 
+//             alreadyPooled: []
+//         }, () => {
+//             start = (now - 56);
+//             end = (now - 130);
+
+//             this.checkAgeSelection(start, end);
+//         });
+//         break;
+//     default: 
+//         return;
+// }
