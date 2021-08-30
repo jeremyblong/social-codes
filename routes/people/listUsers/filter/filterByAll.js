@@ -15,7 +15,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             ageRangeArray,
             accountTypeArray,
             minAmountEarnedArray,
-            jobsCompletedArray
+            jobsCompletedArray,
+            alreadyPooled
         } = req.body;
 
         const matchedUsers = [];
@@ -24,6 +25,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         const database = db.db("db");
 
         const now = new Date().getFullYear();
+        const finalUserArray = [];
 
         const collection = database.collection("users");
 
@@ -40,7 +42,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         start = (now - 18);
                         end = (now - 25);
 
-                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }}, { fields: {
+                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -51,6 +53,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -61,7 +65,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         start = (now - 26);
                         end = (now - 35);
                         
-                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }}, { fields: {
+                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -72,6 +76,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -82,7 +88,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         start = (now - 36);
                         end = (now - 45);
                         
-                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }}, { fields: {
+                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -93,6 +99,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -103,7 +111,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         start = (now - 46);
                         end = (now - 55);
                         
-                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }}, { fields: {
+                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -114,6 +122,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -124,7 +134,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         start = (now - 56);
                         end = (now - 200);
                         
-                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }}, { fields: {
+                        await collection.find({ birthdate: { $gte: new Date(`${end}-01-01`), $lt: new Date(`${start}-01-01`) }, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -135,6 +145,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -152,7 +164,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 switch (accountType) {
                     case "work":
 
-                        await collection.find({ accountType }, { fields: {
+                        await collection.find({ accountType, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -163,13 +175,15 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
                         break;
                     case "hire":
                         
-                        await collection.find({ accountType }, { fields: {
+                        await collection.find({ accountType, unique_id: { $nin: alreadyPooled }}, { fields: {
                             firstName: 1,
                             lastName: 1,
                             profilePics: 1,
@@ -180,6 +194,8 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         }}).forEach((user) => {
 
                             matchedUsers.push(user);
+
+                            finalUserArray.push(user.unique_id);
                 
                             alreadyAddedUsers.push(user.unique_id);
                         })
@@ -194,7 +210,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             for (let index = 0; index < minAmountEarnedArray.length; index++) {
                 const amount = minAmountEarnedArray[index];
                 
-                await collection.find({ amountEarnedTotal: { $lte: amount }}, { fields: {
+                await collection.find({ amountEarnedTotal: { $lte: amount }, unique_id: { $nin: alreadyPooled }}, { fields: {
                     firstName: 1,
                     lastName: 1,
                     profilePics: 1,
@@ -205,11 +221,46 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 }}).forEach((user) => {
 
                     matchedUsers.push(user);
+
+                    finalUserArray.push(user.unique_id);
         
                     alreadyAddedUsers.push(user.unique_id);
                 })
             }
         }
+        if (typeof jobsCompletedArray !== "undefined" && jobsCompletedArray.length > 0) {
+
+            for (let index = 0; index < jobsCompletedArray.length; index++) {
+                const completed = jobsCompletedArray[index];
+
+                const first = completed.split("-")[0];
+                const last = completed.split("-")[1];
+
+                // await collection.find({ amountEarnedTotal: { $lte: amount }, unique_id: { $nin: alreadyPooled }}, { fields: {
+                //     firstName: 1,
+                //     lastName: 1,
+                //     profilePics: 1,
+                //     birthdate: 1,        
+                //     coverPhotos: 1,
+                //     unique_id: 1,
+                //     accountType: 1
+                // }}).forEach((user) => {
+
+                //     matchedUsers.push(user);
+
+                //     finalUserArray.push(user.unique_id);
+        
+                //     alreadyAddedUsers.push(user.unique_id);
+                // })
+            }
+        }
+
+        resp.json({
+            message: "Successfully located queried jobs!",
+            result: matchedUsers,
+            alreadyPooled: finalUserArray
+        })
+
 
         console.log("alreadyAddedUsers", alreadyAddedUsers);
         // if (typeof jobType !== "undefined" && jobType.length > 0) {
@@ -269,11 +320,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         //         alreadyAddedUsers.push(job.unique_id);
         //     })
         // }
-
-        resp.json({
-            message: "Successfully located queried jobs!",
-            result: matchedUsers
-        })
     });
 });
 

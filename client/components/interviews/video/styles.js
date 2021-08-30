@@ -6,13 +6,13 @@ export default StyleSheet.create({
     headerIcon: {
         maxWidth: 35, 
         maxHeight: 35,
-        tintColor: "#ffd530"
+        tintColor: "#ffffff"
     },
     header: {
         backgroundColor: "#303030"
     },
-    goldText: {
-        color: "#ffd530"
+    whiteText: {
+        color: "#ffffff"
     },  
     container: {
         width,

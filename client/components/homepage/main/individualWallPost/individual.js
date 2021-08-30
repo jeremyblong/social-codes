@@ -21,6 +21,8 @@ import { connect } from "react-redux";
 import Spinner from 'react-native-loading-spinner-overlay';
 import ActionSheet from 'react-native-actionsheet'
 import Clipboard from '@react-native-community/clipboard';
+import ProgressiveImage from "../../../lazyLoadImage.js";
+
 
 const { height, width } = Dimensions.get("window");
 
@@ -32,9 +34,13 @@ constructor(props) {
         post: null,
         postLoaded: false,
         rbsheetHeight: 0,
+        countFrom: 5,
         additionalComment: "",
         selectedSubComment: {},
         selectedComment: null,
+        selectedImage: null,
+        allImages: [],
+        index: 0,
         spinnerLoading: false,
         visible: false,
         comment: "",
@@ -401,6 +407,129 @@ constructor(props) {
             console.log(err);
         })
     }
+    renderOneLive = (images) => {
+        const {countFrom} = this.state;
+
+        return(
+        <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity style={images.length === 3 ? [styles.imageContent, styles.imageContentCustom] : [styles.imageContent, styles.imageContent1]} onPress={() => {
+                this.setState({
+                    selectedImage: images[0],
+                    allImages: images,
+                    index: images.indexOf(images[0])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+                <ProgressiveImage style={styles.image} source={{uri: `${Config.wasabi_url}/${images[0]}` }}/>
+            </TouchableOpacity>
+        </View>
+        );
+    }
+    renderTwoLive = (images) => {
+        const {countFrom} = this.state;
+        const conditionalRender = [3, 4].includes(images.length) || images.length > +countFrom && [3, 4].includes(+countFrom);
+
+        return(
+        <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent2]} onPress={() => {
+                this.setState({
+                    selectedImage: (conditionalRender) ? images[1] : images[0],
+                    allImages: images,
+                    index: images.indexOf((conditionalRender) ? images[1] : images[0])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+            <ProgressiveImage style={styles.image} source={{uri: (conditionalRender) ? `${Config.wasabi_url}/${images[1]}` : `${Config.wasabi_url}/${images[0]}` }}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent2]} onPress={() => {
+                this.setState({
+                    selectedImage: (conditionalRender) ? images[2] : images[1],
+                    allImages: images,
+                    index: images.indexOf((conditionalRender) ? images[2] : images[1])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+            <ProgressiveImage style={styles.image} source={{uri: (conditionalRender) ? `${Config.wasabi_url}/${images[2]}` : `${Config.wasabi_url}/${images[1]}` }}/>
+            </TouchableOpacity>
+        </View>
+        );
+    }
+
+    renderThreeLive = (images) => {
+        const {countFrom} = this.state;
+        const overlay = !countFrom || countFrom > 5 || images.length > countFrom && [4, 5].includes(+countFrom) ? this.renderCountOverlayLive(images) : this.renderOverlayLive(images);
+        const conditionalRender = images.length == 4 || images.length > +countFrom && +countFrom == 4;
+        return(
+        <View style={styles.specialRow}>
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent3]} onPress={() => {
+                this.setState({
+                    selectedImage: (conditionalRender) ? images[1] : images[2],
+                    allImages: images,
+                    index: images.indexOf((conditionalRender) ? images[1] : images[2])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+            <ProgressiveImage style={styles.image} source={{uri: (conditionalRender) ? `${Config.wasabi_url}/${images[1]}` : `${Config.wasabi_url}/${images[2]}` }}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent3]} onPress={() => {
+                this.setState({
+                    selectedImage: (conditionalRender) ? images[2] : images[3],
+                    allImages: images,
+                    index: images.indexOf((conditionalRender) ? images[2] : images[3])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+            <ProgressiveImage style={styles.image} source={{uri: (conditionalRender) ? `${Config.wasabi_url}/${images[2]}` : `${Config.wasabi_url}/${images[3]}` }}/>
+            </TouchableOpacity>
+            {overlay}
+        </View>
+        );
+    }
+
+    renderOverlayLive = (images) => {
+        return(
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent3]} onPress={() => {
+                this.setState({
+                    selectedImage: images[images.length - 1],
+                    allImages: images,
+                    index: images.indexOf(images[images.length - 1])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+                <ProgressiveImage style={styles.image} source={{uri: `${Config.wasabi_url}/${images[images.length - 1]}` }}/>
+            </TouchableOpacity>
+        );
+    }
+
+    renderCountOverlayLive = (images) => {
+        const { countFrom } = this.state;
+        const extra = images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
+        const conditionalRender = images.length == 4 || images.length > +countFrom && +countFrom == 4;
+        return(
+            <TouchableOpacity style={[styles.imageContent, styles.imageContent3]} onPress={() => {
+                this.setState({
+                    selectedImage: (conditionalRender) ? images[3] : images[4],
+                    allImages: images,
+                    index: images.indexOf((conditionalRender) ? images[3] : images[4])
+                }, () => {
+                    this.RBSheetGallery.open();
+                })
+            }}>
+            <ProgressiveImage style={styles.image} source={{uri: (conditionalRender) ? `${Config.wasabi_url}/${images[3]}` : `${Config.wasabi_url}/${images[4]}` }}/>
+            <View style={styles.overlayContent}>
+                <View>
+                    <Text style={styles.count}>+{extra}</Text>
+                </View>
+            </View>
+            </TouchableOpacity>
+        );
+    }
     renderContent = () => {
         const { post, postLoaded, comments } = this.state;
 
@@ -571,7 +700,7 @@ constructor(props) {
                             </CardItem>
                             <CardItem>
                             <Body style={{  }}>
-                                {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
+                                {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{ marginBottom: 35 }}>
                                     <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
                                         {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
                                         {post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
@@ -687,7 +816,7 @@ constructor(props) {
                                                     this.setState({
                                                         visible: true
                                                     })
-                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
+                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#141414" }}>
                                                     <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                                     <Text style={{ color: "#ffffff" }}>Like</Text>
                                                 </Button>
@@ -768,7 +897,7 @@ constructor(props) {
                                         
                                         <Button onPress={() => {
                                             this.openComment();
-                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "grey" }}>
+                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#141414" }}>
                                             <Image source={require("../../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
                                             <Text style={{ color: "#ffffff" }}>Comment</Text>
                                         </Button>
@@ -858,6 +987,7 @@ constructor(props) {
                                                                 searchWords={[sub.taggedUser.otherUserName]}
                                                                 textToHighlight={sub.comment}
                                                             />
+                                                            {_.has(sub, "attachedPhoto") && sub.attachedPhoto !== null ? <Image source={{ uri: `${Config.wasabi_url}/${sub.attachedPhoto}` }} style={styles.commentImage} /> : null}
                                                         </View>
                                                     </View>
                                                 </TouchableOpacity>
@@ -882,7 +1012,7 @@ constructor(props) {
                             </CardItem>
                             <CardItem>
                             <Body style={{}}>
-                                {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
+                                {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{ marginBottom: 35 }}>
                                     <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
                                         {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
                                         {post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
@@ -1161,6 +1291,7 @@ constructor(props) {
                                                                         searchWords={[sub.taggedUser.otherUserName]}
                                                                         textToHighlight={sub.comment}
                                                                     />
+                                                                    {_.has(sub, "attachedPhoto") && sub.attachedPhoto !== null ? <Image source={{ uri: `${Config.wasabi_url}/${sub.attachedPhoto}` }} style={styles.commentImage} /> : null}
                                                                 </View>
                                                             </View>
                                                         </TouchableOpacity>

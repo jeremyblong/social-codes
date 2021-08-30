@@ -8,6 +8,7 @@ const axios = require("axios");
 const moment = require("moment");
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(config.get("stripeSecretKey"));
+const _ = require("lodash");
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, resppppppppp) => {
@@ -55,7 +56,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             const paid = applicant.payments[iiiiiiiii].amount;
                                             const calculatedTotal = Math.round((paid / 100));
 
-                                            summmmm += calculatedTotal.toFixed(0);
+                                            summmmm += calculatedTotal;
                                         }
 
                                         if (user.amountEarnedTotal) {
@@ -116,6 +117,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     
                                     // check to make sure all parties have marked as complete and capture payment
                                     if (values.bool === true && applicant.completedFreelancer === true) {
+
+                                        let summmmm = 0;
+
+                                        for (let iiiiiiiii = 0; iiiiiiiii < applicant.payments.length; iiiiiiiii++) {
+                                            const paid = applicant.payments[iiiiiiiii].amount;
+                                            const calculatedTotal = Math.round((paid / 100));
+
+                                            summmmm += calculatedTotal;
+                                        }
+
+                                        if (user.amountEarnedTotal) {
+                                            user.amountEarnedTotal += summmmm;
+                                        } else {
+                                            user["amountEarnedTotal"] = summmmm;
+                                        }
                                         // add to completed jobs array
                                         if (_.has(user, "completedProjects")) {
                                             user.completedProjects.push(applicant);

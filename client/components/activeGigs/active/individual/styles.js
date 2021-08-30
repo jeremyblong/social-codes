@@ -6,7 +6,7 @@ export default StyleSheet.create({
     container: {
         zIndex: -1,
         width,
-        height,
+        height: "100%",
         backgroundColor: "#141414",
         flex: 1
     },

@@ -42,6 +42,8 @@ class PeopleBrowseListHelper extends Component {
         fullName: "",
         friend: null,
         alreadyPooled: [],
+        pending: false,
+        filter: false,
         list: false,
         savedUsersInitial: [],
         showAddFriendDialog: false,
@@ -117,6 +119,8 @@ class PeopleBrowseListHelper extends Component {
 
                         if (passedValues.includes(user.unique_id)) {
                             pooled.push(user.unique_id);
+
+                            usersArrDisplay.push(user);
                         } else {
                             pooled.push(user.unique_id);
                             
@@ -183,28 +187,33 @@ class PeopleBrowseListHelper extends Component {
     loadMoreResults = (info) => {
         console.log("info", info);
 
-        axios.get(`${Config.ngrok_url}/gather/more/users/list`, { 
-            params: {
-                alreadyPooled: this.state.alreadyPooled,
-                filtrationType: null
-            }
-        }).then((res) => {
-            if (res.data.message === "Successfully located people!") {
-                console.log(res.data);
+        if (this.state.filter === true) {
 
-                const { people, persons } = res.data;
-
-                this.setState({
-                    users: [...this.state.users, ...people],
-                    savedUsersInitial: [...this.state.savedUsersInitial, ...people],
-                    alreadyPooled: [...this.state.alreadyPooled, ...persons]
-                })
-            } else {
-                console.log("err", res.data);
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+        } else {
+            axios.get(`${Config.ngrok_url}/gather/more/users/list`, { 
+                params: {
+                    alreadyPooled: this.state.alreadyPooled,
+                    filtrationType: null
+                }
+            }).then((res) => {
+                if (res.data.message === "Successfully located people!") {
+                    console.log(res.data);
+    
+                    const { people, persons } = res.data;
+    
+                    this.setState({
+                        users: [...this.state.users, ...people],
+                        savedUsersInitial: [...this.state.savedUsersInitial, ...people],
+                        alreadyPooled: [...this.state.alreadyPooled, ...persons],
+                        pending: false
+                    })
+                } else {
+                    console.log("err", res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
     renderLoadingContent = () => {
         const { users } = this.state;
@@ -497,10 +506,22 @@ class PeopleBrowseListHelper extends Component {
             accountTypeArray,
             jobsCompletedArray,
             ageRangeArray,
-            minAmountEarnedArray
+            minAmountEarnedArray,
+            alreadyPooled: this.state.alreadyPooled
         }).then((res) => {
-            if (res.data.message === "") {
+            if (res.data.message === "Successfully located queried jobs!") {
                 console.log(res.data);
+
+                const { result, alreadyPooled } = res.data;
+
+                this.setState({
+                    users: [...result],
+                    alreadyPooled: [...this.state.alreadyPooled, ...alreadyPooled],
+                    savedUsersInitial: [...this.state.savedUsersInitial, ...result],
+                    filter: false
+                }, () => {
+                    this.RBSheet.close();
+                })
             } else {
                 console.log("Err", res.data);
             }
@@ -1179,7 +1200,12 @@ class PeopleBrowseListHelper extends Component {
                 />
                 <View style={{ width: width * 0.15, backgroundColor: "white" }}>
                     <TouchableOpacity onPress={() => {
-                        this.RBSheet.open();
+                        this.setState({
+                            alreadyPooled: [],
+                            filter: true
+                        }, () => {
+                            this.RBSheet.open();
+                        })
                     }} style={styles.maxedViewOutter}>
                         <Image source={require("../../../assets/icons/filter.png")} style={styles.maxedView} />
                     </TouchableOpacity>
@@ -1189,9 +1215,15 @@ class PeopleBrowseListHelper extends Component {
                         <FlatList
                             data={users}
                             keyExtractor={(item) => item._id}
-                            onEndReachedThreshold={0.01}
+                            onEndReachedThreshold={0.1}
                             onEndReached={info => {
-                                this.loadMoreResults(info);
+                                if (info.distanceFromEnd >= 0 && this.state.pending === false) {
+                                    this.setState({
+                                        pending: true
+                                    }, () => {
+                                        this.loadMoreResults(info);
+                                    })
+                                }
                             }}
                             contentContainerStyle={{ paddingBottom: 100 }}
                             renderItem={({ item, index }) => {
@@ -1231,9 +1263,16 @@ class PeopleBrowseListHelper extends Component {
                     </List> : <FlatList
                     data={users}
                     keyExtractor={(item) => item._id}
-                    onEndReachedThreshold={0.01}
+                    onEndReachedThreshold={0.1}
                     onEndReached={info => {
-                        this.loadMoreResults(info);
+                    
+                        if (info.distanceFromEnd >= 0 && this.state.pending === false) {
+                            this.setState({
+                                pending: true
+                            }, () => {
+                                this.loadMoreResults(info);
+                            })
+                        }
                     }}
                     numColumns={2}
                     renderItem={({ item, index }) => {
@@ -1280,66 +1319,3 @@ const mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, { })(PeopleBrowseListHelper);
-
-
-// const now = new Date().getFullYear();
-
-// console.log("now", now);
-
-// let start, end;
-
-// switch (selectedItem) {
-//     case "18-25":
-//         this.setState({ 
-//             alreadyPooled: []
-//         }, () => {
-//             start = (now - 18);
-//             end = (now - 25);
-
-//             this.checkAgeSelection(start, end);
-//         });
-//         break;
-//     case "26-35":
-//         this.setState({ 
-//             alreadyPooled: []
-//         }, () => {
-//             start = (now - 26);
-//             end = (now - 35);
-
-//             this.checkAgeSelection(start, end);
-//         });
-        
-//         break;
-//     case "36-45":
-//         this.setState({ 
-//             alreadyPooled: []
-//         }, () => {
-//             start = (now - 36);
-//             end = (now - 45);
-
-//             this.checkAgeSelection(start, end);
-//         });
-//         break;
-//     case "46-55":
-//         this.setState({ 
-//             alreadyPooled: []
-//         }, () => {
-//             start = (now - 46);
-//             end = (now - 55);
-
-//             this.checkAgeSelection(start, end);
-//         });
-//         break;
-//     case "56+":
-//         this.setState({ 
-//             alreadyPooled: []
-//         }, () => {
-//             start = (now - 56);
-//             end = (now - 130);
-
-//             this.checkAgeSelection(start, end);
-//         });
-//         break;
-//     default: 
-//         return;
-// }

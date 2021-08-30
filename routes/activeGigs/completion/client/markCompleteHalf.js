@@ -57,7 +57,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             const paid = applicant.payments[iiiiiiiii].amount;
                                             const calculatedTotal = Math.round((paid / 100));
 
-                                            summmmm += calculatedTotal.toFixed(0);
+                                            summmmm += calculatedTotal;
                                         }
 
                                         if (user.amountEarnedTotal) {
@@ -85,6 +85,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                             }
                                         })
                                     } else {
+                                        
                                         collection.save(user, (err, result) => {
                                             if (err) {
                                                 console.log(err);
@@ -118,6 +119,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     
                                     // check to make sure all parties have marked as complete and capture payment
                                     if (values.bool === true && applicant.completedClient === true) {
+
+                                        let summmmm = 0;
+
+                                        for (let iiiiiiiii = 0; iiiiiiiii < applicant.payments.length; iiiiiiiii++) {
+                                            const paid = applicant.payments[iiiiiiiii].amount;
+                                            const calculatedTotal = Math.round((paid / 100));
+
+                                            summmmm += calculatedTotal;
+                                        }
+
+                                        if (user.amountEarnedTotal) {
+                                            user.amountEarnedTotal += summmmm;
+                                        } else {
+                                            user["amountEarnedTotal"] = summmmm;
+                                        }
 
                                         // take payment - capture previous received payment
 

@@ -302,7 +302,7 @@ constructor(props) {
                         <ScrollView contentContainerStyle={{ paddingBottom: 250 }} style={styles.scroller}>
                             <View style={styles.rowCustom}>
                                 <View style={styles.left}>
-                                    <Text style={styles.menuText}>Menu</Text>
+                                    <Text style={styles.menuText}>Menu - <Text style={{ color: "#0057ff" }}>{_.has(user, "tokenCurrency") ? user.tokenCurrency : "0"}</Text> Tokens</Text>
                                 </View>
                                 <View style={styles.right}>
                                     <TouchableOpacity style={styles.circledButton} onPress={() => {}}>

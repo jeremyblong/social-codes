@@ -17,6 +17,37 @@ export default StyleSheet.create({
         borderColor: "#cecece", 
         padding: 5
     },
+    imageContent:{
+        borderWidth:1,
+        borderColor:'black',
+        height: 325, 
+        minHeight: 325
+    },
+    imageContent1:{
+        width: width * 1.05,
+        marginLeft: -20,
+        height: 325,
+        minHeight: 325
+    },
+    imageContentCustom: {
+        width: width * 1.05,
+        marginLeft: -20,
+        height: 350,
+        minHeight: 350
+    },
+    imageContent2:{
+        width: width * 0.535,
+        marginLeft: -20,
+        height: 170
+    },
+    imageContent3:{
+        width: "34.35%",
+        height: 170
+    },
+    image:{
+        width:'100%',
+        height:'100%',
+    },
     maxedAnimationBoxHeader: {
         minWidth: 45, 
         minHeight: 45, 

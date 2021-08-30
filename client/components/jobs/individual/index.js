@@ -3833,16 +3833,16 @@ constructor(props) {
                     }
                 }}
             >
-                <Header>
+                <Header style={{ backgroundColor: "#303030" }}>
                     <Left>
                         <Button onPress={() => {
                             this.RBSheetApplyMessageUser.close();
                         }} transparent>
-                            <Image source={require("../../../assets/icons/close.png")} style={styles.headerIcon} />
+                            <Image source={require("../../../assets/icons/close.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                         </Button>
                     </Left>
-                    <Body style={{ width: 250, minWidth: 250 }}>
-                        <Title style={{ textAlign: "left" }}>Message the listing owner/poster</Title>
+                    <Body>
+                        <Title style={{ textAlign: "left", color: "#ffffff" }}>Message the owner/poster</Title>
                     </Body>
                     <Right />
                 </Header>

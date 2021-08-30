@@ -1072,7 +1072,7 @@ constructor(props) {
                                 <Fragment key={index}>
                                     <ListItem style={{ maxHeight: 65 }}>
                                         <Left>
-                                            <Text style={{ marginTop: 10 }}>{file.fileName}</Text>
+                                            <Text style={{ marginTop: 10, color: "#ffffff" }}>{file.fileName}</Text>
                                         </Left>
                                         <Right>
                                             <TouchableOpacity onPress={() => {
@@ -1096,7 +1096,7 @@ constructor(props) {
                                     <View>
                                         <ListItem selected>
                                             <Left>
-                                                <Text>{link.link}</Text>
+                                                <Text style={{ color: "#ffffff" }}>{link.link}</Text>
                                             </Left>
                                             <Right>
                                                 <TouchableOpacity onPress={() => {

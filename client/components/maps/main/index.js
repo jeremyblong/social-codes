@@ -74,6 +74,8 @@ constructor(props) {
             index: 7
         }]
     }
+
+    const mapRef = React.createRef();
 }
     onRegionChange(region) {
         this.setState({ region });
@@ -161,6 +163,20 @@ constructor(props) {
            </View>
         );
     }
+    handleMapRedirectViewOnChange = (job) => {
+        console.log("job passed... - :", job);
+
+        const { lat, lon } = job.address.position;
+
+        console.log("this.mapRef", this.mapRef);
+
+        this.mapRef.animateToRegion({
+            latitude: lat,
+            longitude: lon,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1
+        }, 2000);
+    }
     render() {
         const { hide, jobs } = this.state;
         return (
@@ -215,7 +231,11 @@ constructor(props) {
                         color={"#0057ff"}
                     />
                     <MapView
+                        ref={(ref) => this.mapRef = ref}
                         style={styles.map}
+                        showsCompass={true}
+                        showsBuildings={true}
+                        showsUserLocation={true}
                         initialRegion={{
                             latitude: 37.78825,
                             longitude: -122.4324,
@@ -247,6 +267,12 @@ constructor(props) {
                     </MapView>
                     
                     {hide === true ? <Carousel
+                        lockScrollWhileSnapping={true}
+                        onBeforeSnapToItem={(index) => {
+                            console.log("index", index);
+
+                            this.handleMapRedirectViewOnChange(jobs[index]);
+                        }}
                         containerCustomStyle={styles.containerCustom}
                         ref={(c) => { this._carousel = c; }}
                         data={jobs}

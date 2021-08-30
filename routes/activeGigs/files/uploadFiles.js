@@ -90,7 +90,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     if (_.has(applicant, "uploadedWork")) {
                                         applicant.uploadedWork.push(...fileArray);
                                     } else {
-                                        applicant["uploadedWork"] = fileArray;
+                                        applicant["uploadedWork"] = [...fileArray];
                                     }
 
                                     if (typeof note !== "undefined" && note.length > 0) {
@@ -104,12 +104,12 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         if (_.has(applicant, "links")) {
                                             applicant.links = [...applicant.links, ...links];
                                         } else {
-                                            applicant["links"] = links;
+                                            applicant["links"] = [...links];
                                         }
                                     }
                                 }
 
-                                if ((user.activeHiredApplicants.length - 1) === index) {
+                                if ((user.activeHiredApplicants.length - 1) === indexxxx) {
                                     console.log("last...")
                                     collection.save(user, (err, result) => {
                                         if (err) {
@@ -141,7 +141,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     if (_.has(applicant, "uploadedWork")) {
                                         applicant.uploadedWork.push(...fileArray);
                                     } else {
-                                        applicant["uploadedWork"] = fileArray;
+                                        applicant["uploadedWork"] = [...fileArray];
                                     }
 
                                     if (typeof note !== "undefined" && note.length > 0) {
@@ -155,7 +155,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         if (_.has(applicant, "links")) {
                                             applicant.links = [...applicant.links, ...links];
                                         } else {
-                                            applicant["links"] = links;
+                                            applicant["links"] = [...links];
                                         }
                                     }
                                 }

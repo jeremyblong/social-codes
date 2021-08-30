@@ -135,12 +135,12 @@ const LiveVideoPeerToPeerHelper = (props) => {
                     <Button onPress={() => {
                         props.props.navigation.goBack();
                     }} transparent>
-                        <Image source={require("../../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                        <Image source={require("../../../assets/icons/go-back.png")} style={[styles.headerIcon, { tintColor: "#ffffff" }]} />
                     </Button>
                 </Left>
                 <Body>
-                    <Title style={styles.goldText}>LIVE INTERVIEW</Title>
-                    <Subtitle style={styles.goldText}>LIVE VIDEO INTERVIEW CALL</Subtitle>
+                    <Title style={styles.whiteText}>LIVE INTERVIEW</Title>
+                    <Subtitle style={styles.whiteText}>LIVE VIDEO INTERVIEW CALL</Subtitle>
                 </Body>
                 <Right />
             </Header>

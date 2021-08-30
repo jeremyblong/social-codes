@@ -21,9 +21,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         if (typeof alreadyPooled !== "undefined" && alreadyPooled.length > 0) {
             collection.aggregate(
                 [
-                    { $match: { unique_id: { $nin: alreadyPooled.filter(doc => {
-                        return doc;
-                    })}}},
+                    { $match: { unique_id: { $nin: alreadyPooled }}},
                     { $sample: { size: 10 } },
                     { $project: {
                         "loginPassword": 0,
