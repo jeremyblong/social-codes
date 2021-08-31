@@ -46,6 +46,9 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:requestLegacyExternalStorage="true">
+      <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9779394432278063~8997353508"/>
       <activity
           android:name=".SplashActivity"
           android:theme="@style/SplashTheme"

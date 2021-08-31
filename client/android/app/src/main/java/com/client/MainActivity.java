@@ -7,6 +7,9 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import org.devio.rn.splashscreen.SplashScreen;
 import android.os.Bundle;
 import android.view.View;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends ReactActivity {
   @Override
@@ -14,6 +17,13 @@ public class MainActivity extends ReactActivity {
       SplashScreen.show(this, R.style.SplashStatusBarTheme);
       super.onCreate(savedInstanceState);
       hideNavigationBar();
+      // setContentView(R.layout.activity_main);
+
+      MobileAds.initialize(this, new OnInitializationCompleteListener() {
+          @Override
+          public void onInitializationComplete(InitializationStatus initializationStatus) {
+          }
+      });
   }
 
   @Override
