@@ -7,7 +7,7 @@ export default StyleSheet.create({
     container: {    
         height: "100%",
         width,
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         zIndex: -1
     },
     headerIcon: {
@@ -22,7 +22,7 @@ export default StyleSheet.create({
         margin: 20
     },
     box: {
-        backgroundColor: "white",
+        backgroundColor: "#141414",
         height: "100%",
         width: "100%",
         shadowColor: "#000",
@@ -42,7 +42,7 @@ export default StyleSheet.create({
         maxHeight: 175
     },
     hr: {
-        borderBottomColor: "black",
+        borderBottomColor: "#ffffff",
         borderBottomWidth: 2,
         marginTop: 15,
         marginBottom: 15
@@ -50,6 +50,7 @@ export default StyleSheet.create({
     mainText: {
         fontSize: 18, 
         fontWeight: "bold", 
+        color: "#ffffff",
         textAlign: "center"
     },
     header: {
@@ -71,13 +72,13 @@ export default StyleSheet.create({
     priceText: {
         textAlign: "center",
         marginTop: 25,
-        color: "darkblue",
+        color: "#ffffff",
         fontWeight: "bold",
         fontSize: 18
     },
     boostText: {
         textAlign: "center",
-        color: "blue", 
+        color: "#ffffff", 
         fontWeight: "bold",
         fontSize: 22
     },
@@ -117,7 +118,8 @@ export default StyleSheet.create({
     },
     noAccessText: {
         fontSize: 24,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff"
     },
     row: {
         flexDirection: "row",
@@ -127,11 +129,13 @@ export default StyleSheet.create({
     middleText: {
         textAlign: "center",
         fontSize: 24,
+        color: "#ffffff",
         fontWeight: "bold"
     },
     middleSmallerText: {
         textAlign: "center",
         fontSize: 18,
+        color: "#ffffff",
         fontWeight: "bold"
     }
 });

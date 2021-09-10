@@ -5,16 +5,7 @@ import styles from "./styles.js";
 import { connect } from "react-redux";
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { TabView, TabBar } from 'react-native-tab-view';
-import RNIap, {
-    Product,
-    ProductPurchase,
-    requestPurchase,
-    PurchaseError,
-    getProducts,
-    acknowledgePurchaseAndroid,
-    purchaseErrorListener,
-    purchaseUpdatedListener,
-} from 'react-native-iap';
+import * as RNIap from 'react-native-iap';
 import Toast from 'react-native-toast-message';
 import axios from "axios";
 import Config from "react-native-config";
@@ -24,17 +15,33 @@ import Dialog from "react-native-dialog";
 
 const { height, width } = Dimensions.get("window");
 
-const itemSkus = Platform.select({
+const employerBoost = Platform.select({
     ios: [
-     '203948092009029',
-     '234987282',
-     '2409583883888373',
-     '23435948383',
-     '28988892983838',
-     '11118234877373'
+        
     ],
-    android: []
+    android: [
+        "239487293874923658276",
+        "23948729356364566666235437",
+        "2384273472636263466255252"
+    ]
 });
+
+const freelancerBoosts = Platform.select({
+    ios: [
+     
+    ],
+    android: [
+        '203948092009029',
+        '234987282',
+        '2409583883888373'
+    ]
+});
+
+const itemSkus = Platform.OS === "ios" ? [] : [
+    "239487293874923658276",
+    "23948729356364566666235437",
+    "2384273472636263466255252"
+];
 
 class BoostHomepageHelper extends Component {
 constructor(props) {
@@ -46,9 +53,8 @@ constructor(props) {
         boostEmployerAccount: "",
         receipt: "",
         routes: [
-            { key: 'freelancer', title: 'Boost - FREELANCE Profile' },
-            { key: 'employer', title: 'Boost - JOB LISTING' },
-            { key: "clients", title: "Booost - Client Listing" }
+            { key: 'freelancer', title: 'Freelance Boost' },
+            { key: 'employer', title: 'Job Listing Boost' }
         ],
         index: 0,
         availableItemsMessage: "",
@@ -59,11 +65,16 @@ constructor(props) {
     }
 }
     async componentDidMount() {
-        console.log(itemSkus[0])
+
         try {
-          const result = await RNIap.initConnection();
+          const result = await RNIap.initConnection().then(async () => {
+            this.getItems();
+
+            const result = await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
+            console.log("ran...", result);
+          });
           console.log('connection is => ', result);
-          await RNIap.consumeAllItemsAndroid();
+          
         } catch (err) {
           console.log('error in cdm => ', err);
         }
@@ -91,6 +102,31 @@ constructor(props) {
     useExistingBoost = () => {
         
     }
+    purchaseConfirmed = () => {
+        console.log("successfully purchased item!");
+    };
+    requestPurchase = async (sku) => {
+        try {
+          const purchase = RNIap.requestPurchase(sku);
+
+          console.log("purchase", purchase);
+        } catch (err) {
+          console.log('requestPurchase error => ', err);
+        }
+    };
+    getItems = async () => {
+        try {
+            const products = await RNIap.getProducts(itemSkus);
+
+            console.log("products", products);
+
+            this.setState({
+                productList: products
+            }); 
+        } catch (err) {
+            console.log('getItems || purchase error => ', err);
+        }
+    };
     renderScene = ({ route }) => {
         const { boostEmployerAccount, boostFreelancer, user } = this.state;
 
@@ -120,33 +156,45 @@ constructor(props) {
                                             this.setState({
                                                 boostFreelancer: "1-boost"
                                             })
-                                        }} style={boostFreelancer === "1-boost" ? [styles.column, { borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
+                                        }} style={boostFreelancer === "1-boost" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>1 {"\n"} Boost</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$24.99/ea</Text>
+                                            <Text style={styles.priceText}>$14.99/ea</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
                                                 boostFreelancer: "3-boosts"
                                             })
-                                        }} style={boostFreelancer === "3-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
+                                        }} style={boostFreelancer === "3-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>3 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$22.49/ea</Text>
+                                            <Text style={styles.priceText}>$24.49/ea</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
                                                 boostFreelancer: "5-boosts"
                                             })
-                                        }} style={boostFreelancer === "5-boosts" ? [styles.column, { borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
+                                        }} style={boostFreelancer === "5-boosts" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>5 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$19.99/ea</Text>
+                                            <Text style={styles.priceText}>$49.99/ea</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                                 {typeof boostFreelancer !== "undefined" && boostFreelancer.length > 0 ? <Fragment><AwesomeButtonBlue style={{ marginTop: 25, marginBottom: 20 }} type={"secondary"} onPress={() => {
-                                  
+                                    switch (this.state.boostFreelancer) {
+                                        case "1-boost":
+                                            this.requestPurchase(freelancerBoosts[0]);
+                                            break;
+                                        case "3-boosts":
+                                            this.requestPurchase(freelancerBoosts[1]);
+                                            break;
+                                        case "5-boosts":
+                                            this.requestPurchase(freelancerBoosts[2]);
+                                            break;
+                                        default: 
+                                            break;
+                                    }
                                 }} stretch={true}>Boost My Profile!</AwesomeButtonBlue>
                                 <View style={[styles.hr, { marginBottom: -10 }]} /></Fragment> : null}
                             </View>
@@ -155,7 +203,7 @@ constructor(props) {
             } else {
                 return (
                     <View style={styles.margin}>
-                        <Text style={styles.noAccessText}>You do not have permission to view this page. Only <Text style={{ fontStyle: "italic", color: "darkblue" }}>freelancers</Text> have access to this page.</Text>
+                        <Text style={styles.noAccessText}>You do not have permission to view this page. Only <Text style={{ fontStyle: "italic", color: "#0057ff" }}>freelancers</Text> have access to this page.</Text>
                     </View>
                 );
             }
@@ -185,33 +233,45 @@ constructor(props) {
                                             this.setState({
                                                 boostEmployerAccount: "1-boost"
                                             })
-                                        }} style={boostEmployerAccount === "1-boost" ? [styles.column, { borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
+                                        }} style={boostEmployerAccount === "1-boost" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>1 {"\n"} Boost</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$34.99/ea</Text>
+                                            <Text style={styles.priceText}>$14.99/ea</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
                                                 boostEmployerAccount: "2-boosts"
                                             })
-                                        }} style={boostEmployerAccount === "2-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
+                                        }} style={boostEmployerAccount === "2-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>2 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$32.49/ea</Text>
+                                            <Text style={styles.priceText}>$24.49/ea</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
                                                 boostEmployerAccount: "3-boosts"
                                             })
-                                        }} style={boostEmployerAccount === "3-boosts" ? [styles.column, { borderTopColor: "black", borderTopWidth: 10, borderBottomColor: "black", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
+                                        }} style={boostEmployerAccount === "3-boosts" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>3 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$29.99/ea</Text>
+                                            <Text style={styles.priceText}>$49.99/ea</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                                 {typeof boostEmployerAccount !== "undefined" && boostEmployerAccount.length > 0 ? <Fragment><AwesomeButtonBlue style={{ marginTop: 25, marginBottom: 20 }} type={"secondary"} onPress={() => {
-                                    
+                                    switch (this.state.boostEmployerAccount) {
+                                        case "1-boost":
+                                            this.requestPurchase(employerBoost[0]);
+                                            break;
+                                        case "2-boosts":
+                                            this.requestPurchase(employerBoost[1]);
+                                            break;
+                                        case "3-boosts":
+                                            this.requestPurchase(employerBoost[2]);
+                                            break;
+                                        default: 
+                                            break;
+                                    }
                                 }} stretch={true}>Boost My Profile!</AwesomeButtonBlue>
                                 <View style={[styles.hr, { marginBottom: -10 }]} /></Fragment> : null}
                             </View>
@@ -220,7 +280,7 @@ constructor(props) {
             } else {
                 return (
                     <View style={styles.margin}>
-                        <Text style={styles.noAccessText}>You do not have permission to view this page. Only <Text style={{ fontStyle: "italic", color: "darkblue" }}>hiring employers</Text> have access to this section.</Text>
+                        <Text style={styles.noAccessText}>You do not have permission to view this page. Only <Text style={{ fontStyle: "italic", color: "#0057ff" }}>hiring employers</Text> have access to this section.</Text>
                     </View>
                 );
             }
@@ -234,9 +294,14 @@ constructor(props) {
     renderTabBar(props) {
         return (
             <TabBar
-                style={{backgroundColor: '#FFFFFF' }}
-                labelStyle={{color: 'black', fontSize: 16, fontWeight: 'bold'}}
+                style={{ backgroundColor: '#FFFFFF', color: "black" }}
+                labelStyle={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}
                 {...props}
+                renderLabel={({ route, focused, color }) => (
+                    <Text style={{ color: "black", margin: 8, fontWeight: "bold", textAlign: "center" }}>
+                        {route.title}
+                    </Text>
+                )}
                 indicatorStyle={{backgroundColor: 'blue', height: 2.5}}
             />
         );
@@ -344,7 +409,8 @@ constructor(props) {
 }
 const mapStateToProps = (state) => {
     return {
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        accountType: state.signupData.authData.accountType
     }
 }
 export default connect(mapStateToProps, { })(BoostHomepageHelper);

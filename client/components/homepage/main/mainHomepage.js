@@ -34,6 +34,7 @@ import Highlighter from 'react-native-highlight-words';
 import UploadVideoPaneHelper from "./slideUpPanes/uploadVideo/videoPane.js";
 import InView from 'react-native-component-inview';
 import AdvertisementComponent from "./advertisement/ad.js";
+import uuid from "react-native-uuid";
 
 const { width, height } = Dimensions.get("window");
 
@@ -1250,7 +1251,7 @@ constructor () {
                         {ready === true ? <FlatList   
                             ListHeaderComponent={() => {
                                 return (
-                                    <View style={{ height: 340, minHeight: 340 }}>
+                                    <View style={{ height: 340, minHeight: 340, marginBottom: 20 }}>
                                         <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030", paddingTop: 15, paddingBottom: 10, height: 100 }}>
                                             <Left>
                                                 <Button transparent>
@@ -1372,7 +1373,7 @@ constructor () {
                                 if (_.has(post, "newData") && post.shared === true) {
                                     return (
                                         <Fragment> 
-                                        {index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
+                                        {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
                                             <Card>
                                                 <SharedItemPostHelper 
                                                     postLoaded={this.state.postLoaded} 
@@ -1536,7 +1537,7 @@ constructor () {
                                         <Fragment key={index}>
                                         
                                         {_.has(post, "videoLinkIncluded") && post.videoLinkIncluded === true ? <Fragment>
-                                        {index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
+                                        {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
                                             <InView onChange={(viewport) => {
                                                 this.handlePlaying(viewport, index);
                                             }}>
@@ -1776,7 +1777,7 @@ constructor () {
                                                 <View style={styles.thickLine} />
                                                 </InView>
                                             </Fragment> : <Fragment>
-                                            {index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
+                                            {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
                                             <Card>
                                                 <CardItem>
                                                 <Left>
@@ -2018,7 +2019,7 @@ constructor () {
                                         })
                                 }
                             }}
-                            keyExtractor={(item) => _.has(item, "newData") ? item.newData.unique_id : item.unique_id}
+                            keyExtractor={(item) => _.has(item, "newData") ? (item.newData.unique_id || uuid.v4()) : (item.unique_id || uuid.v4())}
                             onEndReachedThreshold={0.25}
                             onEndReached={(info) => {
                                 if (!this.state.onEndReachedCalledDuringMomentum) {

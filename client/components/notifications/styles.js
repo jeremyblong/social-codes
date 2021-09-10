@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
     root: {
       backgroundColor: "#FFFFFF",
-      maxHeight: height - 100
+      height: "100%"
     },
     blackBackground: {
       backgroundColor: "#141414"

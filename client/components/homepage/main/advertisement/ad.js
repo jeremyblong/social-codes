@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { View, Text, Platform } from 'react-native';
-import NativeAdView, { AdBadge, HeadlineView, TaglineView, NativeMediaView } from "react-native-admob-native-ads";
+import NativeAdView, { AdBadge, HeadlineView, TaglineView, NativeMediaView, StarRatingView, StoreView, CallToActionView  } from "react-native-admob-native-ads";
 
 
 
@@ -48,7 +48,7 @@ constructor(props) {
     }
     render() {
         return (
-            <Fragment>
+            <View>
                 <NativeAdView
                     onAdFailedToLoad={this.failedToLoad}
                     ref={this.nativeAdViewRef}
@@ -56,18 +56,29 @@ constructor(props) {
                     style={{
                         width: "95%",
                         alignSelf: "center",
-                        height: 375, // Height should be provided.
+                        height: 425, // Height should be provided.
                     }}
-                    adUnitID={TEST_NATIVE_AD_ID}
+                    adUnitID={"ca-app-pub-3940256099942544/2247696110"}
                     >
                     <View
                         style={{
-                        height: "100%", // could be '100%' too.
-                        width: "100%",
-                        backgroundColor: "white",
+                            height: "100%",
+                            width: "100%",
+                            padding: 10,
+                            paddingTop: 35,
+                            backgroundColor: "white",
                         }}
                     >
-                       <AdBadge
+                        <View style={{ position: "absolute", right: 20, top: 15 }}>
+                            <StarRatingView />
+                            <StoreView
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: 10,
+                                }}
+                            />
+                        </View>
+                        <AdBadge
                             style={{
                                 width: 15,
                                 height: 15,
@@ -97,12 +108,25 @@ constructor(props) {
                         <NativeMediaView
                             style={{
                                 width: "100%",
-                                height: 250,
+                                height: 275,
                             }}
+                        />
+                        <CallToActionView
+                            style={{
+                                height: 45,
+                                width: "100%",
+                                paddingHorizontal: 12,
+                                backgroundColor: "purple",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 5,
+                                elevation: 10,
+                            }}
+                            textStyle={{ color: "white", fontSize: 14 }}
                         />
                     </View>
                     </NativeAdView>
-            </Fragment>
+            </View>
         );
     }
 }
