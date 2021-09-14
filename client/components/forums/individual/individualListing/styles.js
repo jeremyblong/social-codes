@@ -128,7 +128,7 @@ export default StyleSheet.create({
         textAlign: "left",
         fontSize: 16,
         marginBottom: 5,
-        color: "#0057ff",
+        color: "lightblue",
         fontWeight: "bold"
     },
     positionTouchable: {

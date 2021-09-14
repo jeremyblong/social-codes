@@ -109,6 +109,9 @@ import SplashScreen from 'react-native-splash-screen';
 import MainLeaveAReviewPage from "./pages/reviews/main/index.js";
 import OnboardingPage from "./pages/onboarding/index.js";
 import MapsMainPage from "./pages/maps/main/index.js";
+import TermsAndConditionsPage from "./pages/helpAndSupport/terms/index.js";
+import ConditionsPage from "./pages/helpAndSupport/terms/conditions/index.js";
+import PrivacyPolicyPage from "./pages/helpAndSupport/privacyPolicy/index.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -581,6 +584,9 @@ constructor(props) {
               <Stack.Screen name="leave-a-review" component={MainLeaveAReviewPage} />
               <Stack.Screen name="onboarding-late" component={OnboardingPage} />
               <Stack.Screen name="maps-locals-main" component={MapsMainPage} />
+              <Stack.Screen name="terms-and-conditions" component={TermsAndConditionsPage} />
+              <Stack.Screen name="conditions-document" component={ConditionsPage} />
+              <Stack.Screen name="privacy-policy" component={PrivacyPolicyPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />

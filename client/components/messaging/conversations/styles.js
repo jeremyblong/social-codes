@@ -7,15 +7,34 @@ const { height, width } = Dimensions.get("window");
 const screenHeight = Dimensions.get("screen").height;
 
 export default StyleSheet.create({
-    container:{
-        flex:1, 
-        backgroundColor: 'white',
-    },
     headerProfilePic: {
         maxWidth: 50, 
         borderRadius: 120,
         maxHeight: 50,
         marginRight: 10
+    },
+    outterContainer: {
+        flex: 1,
+        height,
+        width
+    }, 
+    whiteText: {
+        color: "white"
+    },
+    tabviewContainer: {
+        width,
+        height: "100%",
+        flex: 1  
+    },
+    rbContainer: {
+        width,
+        flex: 1,
+        height: "100%"
+    },
+    absoluteBottom: {
+        height: 48,
+        maxWidth: width,
+        backgroundColor: "black"
     },
     title: {
         fontSize: 30,
@@ -28,7 +47,11 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     greyButton: {
-        backgroundColor: "#303030"
+        backgroundColor: "#303030",
+        width: "50%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: "center"
     },
     columnLeft: {
         width: width * 0.20

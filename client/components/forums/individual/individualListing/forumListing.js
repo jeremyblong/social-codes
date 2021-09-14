@@ -499,8 +499,8 @@ constructor(props) {
                                 photo: true
                             })}
                            <View style={{ flexDirection: "column", marginLeft: 15 }}>
-                                <Text style={styles.posterText}>Posted by <Text style={{ color: "#0057ff" }}>{forum.firstName} {forum.lastName}</Text></Text>
-                                <Text style={styles.posterText}>Also known as <Text style={{ color: "#0057ff" }}>{forum.username}</Text></Text>
+                                <Text style={styles.posterText}>Posted by <Text style={{ color: "lightblue" }}>{forum.firstName} {forum.lastName}</Text></Text>
+                                <Text style={styles.posterText}>Also known as <Text style={{ color: "lightblue" }}>{forum.username}</Text></Text>
                            </View>
                         </View>
                         <View>
@@ -527,7 +527,7 @@ constructor(props) {
                                                     })
                                                 }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
                                                     <Image source={require("../../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
-                                                    <Text style={{ color: "darkred", fontWeight: "bold" }}>Un-Like</Text>
+                                                    <Text style={{ color: "black", fontWeight: "bold" }}>Un-Like</Text>
                                                 </Button>
                                             )}>
                                             <View style={styles.popoverTwo}>

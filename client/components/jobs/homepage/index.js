@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, ScrollView, Dimensions, TouchableOpacity, FlatList, Animated } from 'react-native';
+import { View, Text, Image, ScrollView, Dimensions, TouchableOpacity, FlatList, Animated, Platform } from 'react-native';
 import styles from './styles.js';
 import { Button, Icon, Footer, FooterTab, Badge } from 'native-base';
 import LottieView from 'lottie-react-native';
@@ -227,7 +227,7 @@ constructor(props) {
                 }} style={styles.bottomRightCorner}>
                     <Image source={require("../../../assets/icons/circle-menu.png")} style={styles.circleMenu} />
                 </TouchableOpacity>
-                <Footer style={{ borderColor: "transparent" }}>
+                <Footer style={Platform.OS === "ios" ? { borderColor: "transparent", backgroundColor: "black", marginTop: -7.5 } : { borderColor: "transparent" }}>
                     <FooterTab>
                         <Button style={styles.goldButton} button={true} onPress={() => {
                             this.props.props.navigation.push("homepage");

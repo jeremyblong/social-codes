@@ -316,10 +316,9 @@ export default StyleSheet.create({
         textAlign: "center"
     },
     containerIos: {
-        marginTop: -5,
+        marginTop: 0,
         zIndex: -1,
-        paddingBottom: 50,
-        height: "100%",
+        height: height,
         width,
         backgroundColor: "#303030"
     },

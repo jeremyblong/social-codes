@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, Platform } from "react-native";
 import { Button, Footer, FooterTab, Badge, List } from 'native-base';
 import styles from './styles.js';
 import LottieView from 'lottie-react-native';
@@ -72,10 +72,12 @@ constructor(props) {
                         <Text style={styles.innerBoxedText}>Report a Problem</Text>
                     </View>
                     <View style={styles.hr} />
-                    <View style={styles.innerBoxed}>
+                    <TouchableOpacity onPress={() => {
+                        this.props.props.navigation.push("terms-and-conditions");
+                    }} style={styles.innerBoxed}>
                         <Image source={require("../../../assets/icons/terms.png")} style={styles.listIcon} />
                         <Text style={styles.innerBoxedText}>Terms & Policies</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -271,7 +273,7 @@ constructor(props) {
                 }
             }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
                 <View style={{ backgroundColor: "white" }}>
-                    <Footer style={{ borderColor: "transparent" }}>
+                    <Footer style={Platform.OS === "ios" ? { borderColor: "transparent", backgroundColor: "black", marginTop: -7.5 } : { borderColor: "transparent" }}>
                         <FooterTab>
                             <Button style={styles.greyButton} onPress={() => {
                                 this.props.props.navigation.push("homepage");

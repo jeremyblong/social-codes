@@ -239,6 +239,7 @@ app.use("/gather/users/account/type", require("./routes/people/listUsers/filter/
 app.use("/gather/users/age/range", require("./routes/people/listUsers/filter/ageRange/gatherByAgeRange.js"));
 //////////////////////////////////////////////// ^^^^^^^^^^^^^^ get rid of these potentially ^^^^^^^^^^^^^^ ///////////////////////////////////////
 app.use("/stripe/webhook", require("./routes/webhooks/stripe/webhook.js"));
+app.use("/gather/friends/by/name", require("./routes/friends/query/findFriendsByName.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

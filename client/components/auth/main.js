@@ -330,7 +330,7 @@ const AuthenticationPanelHelper = (props) => {
                     <Button onPress={() => {
                         props.props.navigation.goBack();
                     }} transparent>
-                        <Image source={require("../../assets/icons/go-back.png")} style={styles.headerIcon} />
+                        <Image source={require("../../assets/icons/go-back.png")} style={Platform.OS === "ios" ? [styles.headerIcon, { tintColor: "black" }] : styles.headerIcon} />
                     </Button>
                 </Left>
             <Body>

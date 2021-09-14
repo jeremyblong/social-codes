@@ -1230,7 +1230,7 @@ constructor () {
         }
         if (hideVideo === true) {
             return (
-                <Fragment>
+                <View style={Platform.OS === "ios" ? { backgroundColor: "black", zIndex: -4, height: 1500, width, flex: 1 } : {  }}>
                 <SideMenu onChange={(value) => {
                     if (value === false) {
                         this.setState({
@@ -2110,8 +2110,8 @@ constructor () {
                                                 this.RBSheet.close();
                                             })
                                         }} transparent>
-                                                <Icon name='arrow-back' />
-                                                {Platform.OS === "ios" ? <Text style={{ fontSize: 18 }}>Back</Text> : null}
+                                                <Icon style={Platform.OS === "ios" ? { color: "white" } : {}} name='arrow-back' />
+                                                {Platform.OS === "ios" ? <Text style={Platform.OS === "ios" ? { fontSize: 18, color: "white" } : { fontSize: 18 }}>Back</Text> : null}
                                         </Button>
                                     </Left>
                                     <Body>
@@ -2435,7 +2435,7 @@ constructor () {
                             </SlidingUpPanel>
                     </RBSheet>
                     </SideMenu>
-                </Fragment>
+                </View>
             ) 
         } else {
             return (

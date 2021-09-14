@@ -1,4 +1,7 @@
 {
   "name": "client",
-  "displayName": "client"
+  "displayName": "client",
+  "androidStatusBar": {
+    "backgroundColor": "#000000"
+  }
 }

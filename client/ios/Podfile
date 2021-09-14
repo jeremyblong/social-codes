@@ -22,16 +22,17 @@ target 'client' do
   pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
   pod 'Firebase/AdMob'
-  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+  # pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
   pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone/Permission-Microphone.podspec"
   pod 'react-native-twilio-video-webrtc', path: '../node_modules/react-native-twilio-video-webrtc'
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications/Permission-Notifications.podspec"
   # pod 'RNFBAdMob', :path => '../node_modules/@react-native-firebase/admob'
-  # pod 'Google-Mobile-Ads-SDK'
-  
-  # pod 'react-native-admob-native-ads', :path => '../node_modules/react-native-admob-native-ads'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'GoogleMobileAdsMediationFacebook'
+
+
 
   pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
 
@@ -54,7 +55,7 @@ target 'client' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!({ 'Flipper-Folly' => '2.3.0' }) # update this part
+  use_flipper!({ 'Flipper-Folly' => '2.5.3', 'Flipper' => '0.87.0', 'Flipper-RSocket' => '1.3.1' })
   post_install do |installer|
     flipper_post_install(installer)
   end

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, ImageBackground, Dimensions } from "react-native";
+import { View, Text, Image, ImageBackground, Dimensions, Platform } from "react-native";
 import styles from "./styles.js";
 import LinearGradient from 'react-native-linear-gradient';
 import AwesomeButton from 'react-native-really-awesome-button';
@@ -16,6 +16,8 @@ import Config from "react-native-config";
 import { CometChat } from "@cometchat-pro/react-native-chat"
 import messaging from '@react-native-firebase/messaging';
 import Video from "react-native-video";
+
+
 const { height, width } = Dimensions.get("window");
 
 
@@ -169,7 +171,7 @@ constructor () {
                     rate={1.0}
                     ignoreSilentSwitch={"obey"}
                 />
-                    <View style={[styles.centered, { maxHeight: 400, paddingTop: 25 }]}>
+                    <View style={Platform.OS === "ios" ? [styles.centered, { maxHeight: 400, paddingTop: 75 }] : [styles.centered, { maxHeight: 400, paddingTop: 25 }]}>
                         <Image source={require("../../assets/images/banner_big_white.png")} style={styles.logo} />
                         <Text style={styles.whiteMedium}>{"Hire expert freelancers for your custom software job online!"}</Text>
                         {/* <LottieView

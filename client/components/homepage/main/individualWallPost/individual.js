@@ -19,7 +19,7 @@ import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { connect } from "react-redux";
 import Spinner from 'react-native-loading-spinner-overlay';
-import ActionSheet from 'react-native-actionsheet'
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 import Clipboard from '@react-native-community/clipboard';
 import ProgressiveImage from "../../../lazyLoadImage.js";
 

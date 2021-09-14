@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { Header, Left, Body, Right, Button, Icon, Title, Footer, FooterTab } from 'native-base';
+import { Header, Left, Body, Right, Button, Icon, Title, Footer, FooterTab, Subtitle, List, ListItem } from 'native-base';
 import styles from './styles.js';
 import SearchBar from 'react-native-search-bar';
 import Config from "react-native-config";
@@ -10,6 +10,10 @@ import SideMenu from "react-native-side-menu";
 import Side from "../../navigation/sidemenu/index.js";
 import { CometChat } from "@cometchat-pro/react-native-chat";
 import Video from 'react-native-video';
+import { TabBar, TabView, SceneMap } from 'react-native-tab-view';
+import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Autocomplete from "react-native-autocomplete-input";
 
 const { height, width } = Dimensions.get("window");
 
@@ -20,7 +24,14 @@ constructor (props) {
     this.state = {
         data: [],
         conversationList: [],
-        convos: []
+        selected: [],
+        convos: [],
+        hide: true,
+        index: 0,
+        routes: [
+            { key: 'first', title: 'Private' },
+            { key: 'second', title: 'Groups' },
+        ]
     }
 }
     handleCancellation = () => {
@@ -75,10 +86,296 @@ constructor (props) {
             console.log(err);
         });
     }
-    render () {
-        console.log("coverstaions state", this.state);
+    _renderTabBar = (props) => {  
+        console.log("props", props);  
+        return (
+            <Footer style={styles.absoluteBottom}>
+                {props.navigationState.routes.map((route, i) => {
+                    if (route.key === this.state.routes[this.state.index].key) {
+                        return (
+                            <Button key={i} onPress={() => {
+                                    this.setState({ 
+                                        index: i 
+                                    })
+                                }} style={styles.greyButton} active>
+                                    <Text style={styles.goldText}>{route.title}</Text>
+                            </Button>
+                        );
+                    } else {
+                        return (
+                            <Button key={i} onPress={() => {
+                                this.setState({ 
+                                    index: i 
+                                })
+                            }} style={styles.greyButton} active>
+                                <Text style={styles.goldText}>{route.title}</Text>
+                            </Button>
+                        );
+                    }
+                })}
+          </Footer>
+        );
+    };
+    renderScene = ({ route, jumpTo }) => {
+        const { convos, data } = this.state;
 
-        const { data, convos } = this.state;
+        switch (route.key) {
+          case 'first':
+            return (
+                <Fragment>
+                    <ScrollView style={styles.container}>
+                        <SearchBar
+                            ref="searchBar"
+                            placeholder="Search"
+                            onChangeText={(searchValue) => {
+                                this.setState({
+                                    searchValue
+                                })
+                            }}
+                            barTintColor={"white"}
+                            textFieldBackgroundColor={"#f0f0f0"}
+                            onSearchButtonPress={this.handleSearch}
+                            onCancelButtonPress={this.handleCancellation}
+                        />
+                        <View style={{ margin: 5 }}>
+                            <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
+                                <TouchableOpacity style={[styles.centered, { marginTop: 10 }]} onPress={() => {
+
+                                }}>
+                                    <View style={styles.circle}>
+                                        <Image source={require("../../../assets/icons/plus.png")} style={{ maxWidth: 30, maxHeight: 30 }} />    
+                                    </View>
+                                    <View style={{ marginTop: 0 }} />
+                                    <Text style={[styles.name, { marginTop: 10 }]}>Your Story</Text>
+                                </TouchableOpacity>
+                                {typeof data !== "undefined" && data.length > 0 ? data.map((person, index) => {
+                                    if (index % 3 === 0) {
+                                        return (
+                                            <TouchableOpacity key={index} style={styles.centered} onPress={() => {
+
+                                            }}>
+                                                <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                    <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                </View>
+                                                <Text style={styles.name}>{person.name.first}</Text>
+                                            </TouchableOpacity>
+                                        );
+                                    } else {
+                                        return (
+                                            <TouchableOpacity key={index} style={styles.centered} onPress={() => {
+
+                                            }}>
+                                                <View style={styles.circleTwo}>
+                                                    <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                </View>
+                                                <Text style={styles.name}>{person.name.first}</Text>
+                                            </TouchableOpacity>
+                                        );
+                                    }
+                                }) : null}
+                            </ScrollView>
+                            <ScrollView showsVerticalScrollIndicator={false} style={styles.myScroller} contentContainerStyle={styles.containerStyle}>
+                                {typeof convos !== "undefined" && convos.length > 0 ? convos.map((conversation, index) => {
+                                    if (conversation.profilePic.type === "video") {
+                                        if (index % 3 === 0) {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    this.props.props.navigation.push("individual-message-thread", { conversation })
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                                <Video  
+                                                                    resizeMode="cover"
+                                                                    repeat
+                                                                    source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
+                                                                    autoplay={true}
+                                                                    ref={(ref) => {
+                                                                        this.player = ref
+                                                                    }}
+                                                                    muted={true}
+                                                                    style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
+                                                                />  
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        } else {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    this.props.props.navigation.push("individual-message-thread", { conversation })
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={styles.circleTwo}>
+                                                                <Video  
+                                                                    resizeMode="cover"
+                                                                    repeat
+                                                                    source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
+                                                                    autoplay={true}
+                                                                    ref={(ref) => {
+                                                                        this.player = ref
+                                                                    }}
+                                                                    muted={true}
+                                                                    style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
+                                                                />  
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        }
+                                    } else {
+                                        if (index % 3 === 0) {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    this.props.props.navigation.push("individual-message-thread", { conversation })
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                                <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        } else {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    this.props.props.navigation.push("individual-message-thread", { conversation })
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={styles.circleTwo}>
+                                                                <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        }
+                                    }
+                                }) : null}
+                            </ScrollView>
+                        </View>
+                    </ScrollView>
+                </Fragment>
+            );
+          case 'second':
+            return (
+                <Fragment>
+                    <ScrollView style={styles.container}>
+                        <SearchBar
+                            ref="searchBar"
+                            placeholder="Search"
+                            onChangeText={(searchValue) => {
+                                this.setState({
+                                    searchValue
+                                })
+                            }}
+                            barTintColor={"white"}
+                            textFieldBackgroundColor={"#f0f0f0"}
+                            onSearchButtonPress={this.handleSearch}
+                            onCancelButtonPress={this.handleCancellation}
+                        />
+                        <View style={{ margin: 5 }}>
+                            <AwesomeButtonBlue type={"secondary"} textColor={"black"} onPress={() => {
+                                this.RBSheet.open();
+                            }} stretch={true}>Create Group Chat</AwesomeButtonBlue>
+                            <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
+                                <TouchableOpacity style={[styles.centered, { marginTop: 10 }]} onPress={() => {
+
+                                }}>
+                                    <View style={styles.circle}>
+                                        <Image source={require("../../../assets/icons/plus.png")} style={{ maxWidth: 30, maxHeight: 30 }} />    
+                                    </View>
+                                    <View style={{ marginTop: 0 }} />
+                                    <Text style={[styles.name, { marginTop: 10 }]}>Your Story</Text>
+                                </TouchableOpacity>
+                                {typeof data !== "undefined" && data.length > 0 ? data.map((person, index) => {
+                                    if (index % 3 === 0) {
+                                        return (
+                                            <TouchableOpacity key={index} style={styles.centered} onPress={() => {
+
+                                            }}>
+                                                <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                    <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                </View>
+                                                <Text style={styles.name}>{person.name.first}</Text>
+                                            </TouchableOpacity>
+                                        );
+                                    } else {
+                                        return (
+                                            <TouchableOpacity key={index} style={styles.centered} onPress={() => {
+
+                                            }}>
+                                                <View style={styles.circleTwo}>
+                                                    <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                </View>
+                                                <Text style={styles.name}>{person.name.first}</Text>
+                                            </TouchableOpacity>
+                                        );
+                                    }
+                                }) : null}
+                            </ScrollView>
+                            <ScrollView showsVerticalScrollIndicator={false} style={styles.myScroller} contentContainerStyle={styles.containerStyle}>
+                                
+                            </ScrollView>
+                        </View>
+                    </ScrollView>
+                </Fragment>
+            )
+        }
+    };
+    handleSearch = (query) => {
+        console.log("query", query);
+
+        axios.get(`${Config.ngrok_url}/gather/friends/by/name`, {
+            params: {
+                query
+            }
+        }).then((res) => {
+            if (res.data.message === "Gathered matches!") {
+                console.log(res.data);
+                
+                const { friends } = res.data;
+
+                this.setState({
+                    friends
+                })
+            } else {
+                console.log("err", res.data);
+            }
+        }).catch((err) => {
+            console.log(err);``
+        })
+    }
+    render () {
+        console.log("conversations state", this.state);
+
+        const { data, convos, query, friends, selected } = this.state;
 
         const menu = <Side props={this.props} />;
         
@@ -144,174 +441,108 @@ constructor (props) {
                                 </TouchableOpacity>
                             </Right>
                         </Header>
-                        <ScrollView style={styles.container}>
-                            <SearchBar
-                                ref="searchBar"
-                                placeholder="Search"
-                                onChangeText={(searchValue) => {
-                                    this.setState({
-                                        searchValue
-                                    })
-                                }}
-                                barTintColor={"white"}
-                                textFieldBackgroundColor={"#f0f0f0"}
-                                onSearchButtonPress={this.handleSearch}
-                                onCancelButtonPress={this.handleCancellation}
-                            />
-                            <View style={{ margin: 5 }}>
-                                <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
-                                    <TouchableOpacity style={[styles.centered, { marginTop: 10 }]} onPress={() => {
-
-                                    }}>
-                                        <View style={styles.circle}>
-                                            <Image source={require("../../../assets/icons/plus.png")} style={{ maxWidth: 30, maxHeight: 30 }} />    
-                                        </View>
-                                        <View style={{ marginTop: 0 }} />
-                                        <Text style={[styles.name, { marginTop: 10 }]}>Your Story</Text>
-                                    </TouchableOpacity>
-                                    {typeof data !== "undefined" && data.length > 0 ? data.map((person, index) => {
-                                        if (index % 3 === 0) {
+                        <TabView 
+                            swipeEnabled={false}
+                            navigationState={this.state}
+                            renderTabBar={this._renderTabBar}
+                            onIndexChange={index => this.setState({ index })}
+                            renderScene={this.renderScene} 
+                        />
+                        <RBSheet
+                            ref={ref => {
+                                this.RBSheet = ref;
+                            }}
+                            height={height}
+                            openDuration={250}
+                            customStyles={{
+                                container: {
+                                    
+                                }
+                            }}
+                        >
+                            <Header style={{ backgroundColor: "#303030", width }}>
+                                <Left>
+                                    <Button onPress={() => {
+                                        this.RBSheet.close();
+                                    }} transparent>
+                                        <Icon style={{ color: "#ffffff" }} name='close' />
+                                    </Button>
+                                </Left>
+                                <Body>
+                                    <Title style={styles.whiteText}>Group Chat</Title>
+                                    <Subtitle style={styles.whiteText}>Manage & Invite</Subtitle>
+                                </Body>
+                                <Right>
+                                    {/* <Button transparent>
+                                        <Icon style={{ color: "#ffffff" }} name='heart' />
+                                    </Button> */}
+                                </Right>
+                            </Header>
+                            <View style={styles.rbContainer}>
+                                <List>
+                                <Autocomplete
+                                    data={friends}
+                                    value={query}
+                                    hideResults={this.state.hide}
+                                    placeholder={"Search for your friends name's (first + last)"}
+                                    placeholderTextColor={"grey"}
+                                    onChangeText={(text) => this.setState({ 
+                                        query: text,
+                                        hide: false
+                                    }, () => {
+                                        this.handleSearch(this.state.query);
+                                    })}
+                                    flatListProps={{
+                                        keyExtractor: (_, idx) => idx,
+                                        renderItem: ({ item }) => {
                                             return (
-                                                <TouchableOpacity key={index} style={styles.centered} onPress={() => {
-
+                                                <ListItem button={true} onPress={() => {
+                                                    this.setState({
+                                                        selected: [...this.state.selected, item],
+                                                        hide: true,
+                                                        query: ""
+                                                    })
                                                 }}>
-                                                    <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
-                                                        <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
-                                                    </View>
-                                                    <Text style={styles.name}>{person.name.first}</Text>
-                                                </TouchableOpacity>
+                                                    <Left>
+                                                        <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
+                                                    </Left>
+                                                    <Right>
+                                                        <Icon name="arrow-forward" />
+                                                    </Right>
+                                                </ListItem>
                                             );
-                                        } else {
-                                            return (
-                                                <TouchableOpacity key={index} style={styles.centered} onPress={() => {
-
-                                                }}>
-                                                    <View style={styles.circleTwo}>
-                                                        <Image source={{ uri: person.picture.large }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
-                                                    </View>
-                                                    <Text style={styles.name}>{person.name.first}</Text>
-                                                </TouchableOpacity>
-                                            );
-                                        }
-                                    }) : null}
-                                </ScrollView>
-                                <ScrollView showsVerticalScrollIndicator={false} style={styles.myScroller} contentContainerStyle={styles.containerStyle}>
-                                    {typeof convos !== "undefined" && convos.length > 0 ? convos.map((conversation, index) => {
-                                        if (conversation.profilePic.type === "video") {
-                                            if (index % 3 === 0) {
-                                                return (
-                                                    <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
-                                                        this.props.props.navigation.push("individual-message-thread", { conversation })
-                                                    }}>
-                                                        <View style={styles.columnLeft}>
-                                                            <View style={styles.centered}>
-                                                                <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
-                                                                    <Video  
-                                                                        resizeMode="cover"
-                                                                        repeat
-                                                                        source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
-                                                                        autoplay={true}
-                                                                        ref={(ref) => {
-                                                                            this.player = ref
-                                                                        }}
-                                                                        muted={true}
-                                                                        style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
-                                                                    />  
-                                                                </View>
-                                                            
-                                                            </View>
-                                                        </View>
-                                                        <View style={styles.rightColumn}>
-                                                            <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
-                                                            <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                );
-                                            } else {
-                                                return (
-                                                    <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
-                                                        this.props.props.navigation.push("individual-message-thread", { conversation })
-                                                    }}>
-                                                        <View style={styles.columnLeft}>
-                                                            <View style={styles.centered}>
-                                                                <View style={styles.circleTwo}>
-                                                                    <Video  
-                                                                        resizeMode="cover"
-                                                                        repeat
-                                                                        source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
-                                                                        autoplay={true}
-                                                                        ref={(ref) => {
-                                                                            this.player = ref
-                                                                        }}
-                                                                        muted={true}
-                                                                        style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
-                                                                    />  
-                                                                </View>
-                                                            
-                                                            </View>
-                                                        </View>
-                                                        <View style={styles.rightColumn}>
-                                                            <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
-                                                            <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                );
-                                            }
-                                        } else {
-                                            if (index % 3 === 0) {
-                                                return (
-                                                    <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
-                                                        this.props.props.navigation.push("individual-message-thread", { conversation })
-                                                    }}>
-                                                        <View style={styles.columnLeft}>
-                                                            <View style={styles.centered}>
-                                                                <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
-                                                                    <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
-                                                                </View>
-                                                            
-                                                            </View>
-                                                        </View>
-                                                        <View style={styles.rightColumn}>
-                                                            <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
-                                                            <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                );
-                                            } else {
-                                                return (
-                                                    <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
-                                                        this.props.props.navigation.push("individual-message-thread", { conversation })
-                                                    }}>
-                                                        <View style={styles.columnLeft}>
-                                                            <View style={styles.centered}>
-                                                                <View style={styles.circleTwo}>
-                                                                    <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
-                                                                </View>
-                                                            
-                                                            </View>
-                                                        </View>
-                                                        <View style={styles.rightColumn}>
-                                                            <Text style={styles.topTextSmall}>{conversation.conversationWith.name}</Text>
-                                                            <Text style={styles.topTextSmaller}>{conversation.lastMessage.text && conversation.lastMessage.text.length > 0 ? conversation.lastMessage.text.slice(0, 30) : ""}... {moment(new Date(conversation.lastMessage.sentAt * 1000)).fromNow()}</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                );
-                                            }
-                                        }
-                                    }) : null}
-                                </ScrollView>
+                                        },
+                                    }}
+                                />
+                                {typeof selected !== "undefined" && selected.length > 0 ? selected.map((item, index) => {
+                                    return (
+                                        <Fragment>
+                                            <ListItem button={true} onPress={() => {
+                                                this.setState({
+                                                    selected: this.state.selected.filter((each, i) => {
+                                                        if (each.unique_id !== item.unique_id) {
+                                                            return item;
+                                                        }
+                                                    }),
+                                                    query: ""
+                                                })
+                                            }}>
+                                                <Left>
+                                                    <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <Icon name="close" />
+                                                </Right>
+                                            </ListItem>
+                                        </Fragment>
+                                    );
+                                }) : null}
+                                </List>
                             </View>
-                        </ScrollView>
-                    <Footer>
-                        <FooterTab>
-                            <Button style={styles.greyButton} active>
-                                <Text style={styles.goldText}>Chats</Text>
-                            </Button>
-                            <Button style={styles.greyButton}>
-                                <Text style={styles.goldText}>People</Text>
-                            </Button>
-                        </FooterTab>
-                    </Footer>
+                            <AwesomeButtonBlue type={"secondary"} textColor={"black"} onPress={() => {
+                                
+                            }} stretch={true}>Start Group Chat</AwesomeButtonBlue>
+                        </RBSheet>
                 </SideMenu>
             </Fragment>
         );
