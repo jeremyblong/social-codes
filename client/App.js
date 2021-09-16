@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { navigationRef } from "./RootNavigation.js";
 import Config from "react-native-config";
+import FlashMessage from "react-native-flash-message";
 import uuid from "react-native-uuid";
 import IntroSlider from "./components/intro/intro.js";
 import { NavigationContainer } from '@react-navigation/native';
@@ -112,6 +113,7 @@ import MapsMainPage from "./pages/maps/main/index.js";
 import TermsAndConditionsPage from "./pages/helpAndSupport/terms/index.js";
 import ConditionsPage from "./pages/helpAndSupport/terms/conditions/index.js";
 import PrivacyPolicyPage from "./pages/helpAndSupport/privacyPolicy/index.js";
+import IndividualGroupConversationPage from "./pages/messaging/group/individualGroup.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -337,7 +339,7 @@ constructor(props) {
 
     const appID = Config.cometchat_app_id;
     console.log(appID);
-    const region = "US";
+    const region = "us";
     const appSetting = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
     
     CometChat.init(appID, appSetting).then(
@@ -587,9 +589,11 @@ constructor(props) {
               <Stack.Screen name="terms-and-conditions" component={TermsAndConditionsPage} />
               <Stack.Screen name="conditions-document" component={ConditionsPage} />
               <Stack.Screen name="privacy-policy" component={PrivacyPolicyPage} />
+              <Stack.Screen name="group-conversation-thread" component={IndividualGroupConversationPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast ref={(ref) => Toast.setRef(ref)} />
+          <FlashMessage position="top" />
           </Root>
           </UserInactivity>
         </View> 

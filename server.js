@@ -240,6 +240,8 @@ app.use("/gather/users/age/range", require("./routes/people/listUsers/filter/age
 //////////////////////////////////////////////// ^^^^^^^^^^^^^^ get rid of these potentially ^^^^^^^^^^^^^^ ///////////////////////////////////////
 app.use("/stripe/webhook", require("./routes/webhooks/stripe/webhook.js"));
 app.use("/gather/friends/by/name", require("./routes/friends/query/findFriendsByName.js"));
+app.use("/initiate/group/chat", require("./routes/messaging/group/initiate/startGroupConvo.js"));
+app.use("/gather/profile/pictures/group", require("./routes/messaging/group/gather/gatherActiveGroupConvos.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

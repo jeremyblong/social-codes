@@ -45,6 +45,8 @@ target 'client' do
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+  # pod 'CometChatPro', '3.0.3'
+  # pod 'CometChatCalls', '2.1.1'
 
   target 'clientTests' do
     inherit! :complete

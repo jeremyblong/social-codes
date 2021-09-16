@@ -985,7 +985,7 @@ constructor (props) {
                     <Left>
                         <Button transparent>
                             {this.renderPicOrVideo()}
-                            {Platform.OS === "ios" ? <Title style={styles.title}>{this.props.props.route.params.conversation.conversationWith.name}</Title> : null}
+                            {Platform.OS === "ios" ? <Title style={Platform.OS === "ios" ? [styles.title, { color: "white" }] : styles.title}>{this.props.props.route.params.conversation.conversationWith.name}</Title> : null}
                         </Button>
                     </Left>
                     <Body>

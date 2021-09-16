@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { Header, Left, Body, Right, Button, Icon, Title, Footer, FooterTab, Subtitle, List, ListItem } from 'native-base';
+import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { Header, Left, Body, Right, Button, Icon, Title, Footer, FooterTab, Subtitle, List, ListItem, Item, Label, Input } from 'native-base';
 import styles from './styles.js';
 import SearchBar from 'react-native-search-bar';
 import Config from "react-native-config";
@@ -14,8 +14,38 @@ import { TabBar, TabView, SceneMap } from 'react-native-tab-view';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Autocomplete from "react-native-autocomplete-input";
+import RNPickerSelect from 'react-native-picker-select';
+import uuid from "react-native-uuid";
+import { connect } from "react-redux";
+import Toast from 'react-native-toast-message';
+import DialogInput from 'react-native-dialog-input';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const { height, width } = Dimensions.get("window");
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+      fontSize: 16,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 4,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      borderRadius: 8,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+});
+  
 
 class MessagingHomeChannelsHelper extends Component {
 constructor (props) {
@@ -25,9 +55,16 @@ constructor (props) {
         data: [],
         conversationList: [],
         selected: [],
+        friends: [],
         convos: [],
         hide: true,
         index: 0,
+        password: "",
+        groupName: "",
+        conversationSelected: null,
+        groupConversations: [],
+        isDialogVisible: false,
+        privacy: null,
         routes: [
             { key: 'first', title: 'Private' },
             { key: 'second', title: 'Groups' },
@@ -41,7 +78,7 @@ constructor (props) {
         console.log("handleSearch clicked.");
     }
     componentDidMount() {
-        const conversationsRequest = new CometChat.ConversationsRequestBuilder().setLimit(50).build();
+        const conversationsRequest = new CometChat.ConversationsRequestBuilder().setLimit(50).setConversationType("user").build();
 
         conversationsRequest.fetchNext().then(
             conversationList => {
@@ -86,6 +123,66 @@ constructor (props) {
             console.log(err);
         });
     }
+    fetchGroupConversations = () => {
+        const groupsRequest = new CometChat.GroupsRequestBuilder().setLimit(20).build();
+
+        groupsRequest.fetchNext().then(
+            conversationList => {
+                console.log("Group conversations list received:", conversationList);
+
+                axios.post(`${Config.ngrok_url}/gather/profile/pictures/group`, {
+                    conversationList
+                }).then((res) => {
+                    if (res.data.message === "Success!") {
+                        console.log(res.data);
+
+                        const { convos } = res.data;
+
+                        this.setState({
+                            groupConversations: convos
+                        })
+                    } else {
+                        console.log("Err", res.data);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                })
+            },
+            error => {
+                console.log("Group conversations list fetching failed with error:", error);
+            }
+        );
+    }
+    fetchIndividualConversations = () => {
+        const conversationsRequest = new CometChat.ConversationsRequestBuilder().setLimit(50).setConversationType("user").build();
+
+        conversationsRequest.fetchNext().then(
+            conversationList => {
+                console.log("Conversations list received:", conversationList);
+
+                axios.post(`${Config.ngrok_url}/gather/profile/pictures`, {
+                    conversationList
+                }).then((res) => {
+                    if (res.data.message === "Success!") {
+                        console.log(res.data);
+
+                        const { convos } = res.data;
+
+                        this.setState({
+                            convos
+                        })
+                    } else {
+                        console.log("Err", res.data);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                })
+            },
+            error => {
+                console.log("Conversations list fetching failed with error:", error);
+            }
+        );
+    }
     _renderTabBar = (props) => {  
         console.log("props", props);  
         return (
@@ -96,6 +193,8 @@ constructor (props) {
                             <Button key={i} onPress={() => {
                                     this.setState({ 
                                         index: i 
+                                    }, () => {
+                                        this.fetchIndividualConversations();
                                     })
                                 }} style={styles.greyButton} active>
                                     <Text style={styles.goldText}>{route.title}</Text>
@@ -106,6 +205,8 @@ constructor (props) {
                             <Button key={i} onPress={() => {
                                 this.setState({ 
                                     index: i 
+                                }, () => {
+                                    this.fetchGroupConversations();
                                 })
                             }} style={styles.greyButton} active>
                                 <Text style={styles.goldText}>{route.title}</Text>
@@ -117,7 +218,7 @@ constructor (props) {
         );
     };
     renderScene = ({ route, jumpTo }) => {
-        const { convos, data } = this.state;
+        const { convos, data, groupConversations } = this.state;
 
         switch (route.key) {
           case 'first':
@@ -341,7 +442,137 @@ constructor (props) {
                                 }) : null}
                             </ScrollView>
                             <ScrollView showsVerticalScrollIndicator={false} style={styles.myScroller} contentContainerStyle={styles.containerStyle}>
-                                
+                                {typeof groupConversations !== "undefined" && groupConversations.length > 0 ? groupConversations.map((conversation, index) => {
+                                    if (conversation.profilePic.type === "video") {
+                                        if (index % 3 === 0) {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    if (conversation.type !== "password") {
+                                                        this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                                    } else {
+                                                        this.setState({
+                                                            conversationSelected: conversation,
+                                                            isDialogVisible: true
+                                                        })
+                                                    }
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                                <Video  
+                                                                    resizeMode="cover"
+                                                                    repeat
+                                                                    source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
+                                                                    autoplay={true}
+                                                                    ref={(ref) => {
+                                                                        this.player = ref
+                                                                    }}
+                                                                    muted={true}
+                                                                    style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
+                                                                />  
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        } else {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    if (conversation.type !== "password") {
+                                                        this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                                    } else {
+                                                        this.setState({
+                                                            conversationSelected: conversation,
+                                                            isDialogVisible: true
+                                                        })
+                                                    }
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={styles.circleTwo}>
+                                                                <Video  
+                                                                    resizeMode="cover"
+                                                                    repeat
+                                                                    source={{uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} 
+                                                                    autoplay={true}
+                                                                    ref={(ref) => {
+                                                                        this.player = ref
+                                                                    }}
+                                                                    muted={true}
+                                                                    style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }}
+                                                                />  
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        }
+                                    } else {
+                                        if (index % 3 === 0) {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    if (conversation.type !== "password") {
+                                                        this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                                    } else {
+                                                        this.setState({
+                                                            conversationSelected: conversation,
+                                                            isDialogVisible: true
+                                                        })
+                                                    }
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={[styles.circleTwo, { borderColor: "blue", borderWidth: 4 }]}>
+                                                                <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        } else {
+                                            return (
+                                                <TouchableOpacity key={index} style={[styles.centered, { flexDirection: "row" }]} onPress={() => {
+                                                    if (conversation.type !== "password") {
+                                                        this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                                    } else {
+                                                        this.setState({
+                                                            conversationSelected: conversation,
+                                                            isDialogVisible: true
+                                                        })
+                                                    }
+                                                }}>
+                                                    <View style={styles.columnLeft}>
+                                                        <View style={styles.centered}>
+                                                            <View style={styles.circleTwo}>
+                                                                <Image source={{ uri: `${Config.wasabi_url}/${conversation.profilePic.picture}` }} style={{ maxWidth: "100%", maxHeight: "100%", minWidth: "100%", minHeight: "100%", borderRadius: 40, marginTop: 0 }} />    
+                                                            </View>
+                                                        
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.rightColumn}>
+                                                        <Text style={styles.topTextSmall}>{conversation.name}</Text>
+                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            );
+                                        }
+                                    }
+                                }) : null}
                             </ScrollView>
                         </View>
                     </ScrollView>
@@ -372,10 +603,87 @@ constructor (props) {
             console.log(err);``
         })
     }
+    handleGroupStart = () => {
+        const { privacy, selected, groupName, password } = this.state;
+
+        const GUID = uuid.v4();
+        const groupNameVar = groupName;
+        const groupType = (privacy === "public" ? CometChat.GROUP_TYPE.PUBLIC : privacy === "private" ? CometChat.GROUP_TYPE.PRIVATE : privacy === "password" ? CometChat.GROUP_TYPE.PASSWORD : null);
+        const pass = (privacy === "password" ? password : "");
+
+        const group = new CometChat.Group(GUID, groupNameVar, groupType, pass);
+
+        CometChat.createGroup(group).then(
+            groupppp => {
+                console.log("Group created successfully:", groupppp);
+
+                const membersList = [];
+                const members = [];
+
+                const promiseee = new Promise((resolve, reject) => {
+                    for (let index = 0; index < selected.length; index++) {
+                        const element = selected[index];
+                        
+                        membersList.push(new CometChat.GroupMember(element.unique_id, CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT));
+                        members.push(element.unique_id);
+
+                        if ((selected.length - 1) === index) {
+                            resolve({
+                                membersList, 
+                                members
+                            });
+                        }
+                    }
+                })
+
+                promiseee.then((passedValues) => {
+                    CometChat.addMembersToGroup(GUID, passedValues.membersList, []).then(
+                        response => {
+                            console.log("response", response);
+    
+                            axios.post(`${Config.ngrok_url}/initiate/group/chat`, {
+                                privacy,
+                                selected,
+                                group: groupppp,
+                                id: this.props.unique_id,
+                                others: passedValues.members
+                            }).then((res) => {
+                                if (res.data.message === "Initiated group!") {
+                                    console.log(res.data);
+            
+                                    const { customGroup } = res.data;
+            
+                                    this.setState({
+                                        groupConversations: [...this.state.groupConversations, customGroup],
+                                        privacy: null,
+                                        selected: [],
+                                        password: "",
+                                        groupName: ""
+                                    }, () => {
+                                        this.RBSheet.close();
+                                    })
+                                } else {
+                                    console.log("err", res.data);
+                                }
+                            }).catch((err) => {
+                                console.log(err);``
+                            })
+                        },
+                        error => {
+                          console.log("Something went wrong", error);
+                        }
+                    );
+                })
+            },
+            error => {
+                console.log("Group creation failed with exception:", error);
+            }
+        );
+    }
     render () {
         console.log("conversations state", this.state);
 
-        const { data, convos, query, friends, selected } = this.state;
+        const { data, convos, query, friends, selected, groupName, privacy } = this.state;
 
         const menu = <Side props={this.props} />;
         
@@ -441,6 +749,44 @@ constructor (props) {
                                 </TouchableOpacity>
                             </Right>
                         </Header>
+                        <DialogInput 
+                            isDialogVisible={this.state.isDialogVisible}
+                            title={"Enter Password to enter..."}
+                            message={"Please enter the password to enter - if you do not have this password, message the group leader..."}
+                            hintInput ={"Password"}
+                            submitInput={ (inputText) => {
+                                const GUID = this.state.conversationSelected.guid;
+                                const groupType = CometChat.GROUP_TYPE.PASSWORD;
+
+                                CometChat.joinGroup(GUID, groupType, inputText).then(
+                                group => {
+                                    console.log("Group joined successfully:", group);
+
+                                    this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                },
+                                error => {
+                                    console.log("Group joining failed with exception:", error);
+
+                                    this.setState({
+                                        isDialogVisible: false
+                                    }, () => {
+                                        showMessage({
+                                            message: "Password does NOT match our records...",
+                                            description: "The entered password doesn't match our records - passwords are 'case' sensitive.",
+                                            type: "danger",
+                                            duration: 3500
+                                        });
+                                    })
+                                }
+                                );
+                            }}
+                            closeDialog={ () => {
+                                this.setState({
+                                    isDialogVisible: false
+                                })
+                            }}
+                        >
+                        </DialogInput>
                         <TabView 
                             swipeEnabled={false}
                             navigationState={this.state}
@@ -460,6 +806,7 @@ constructor (props) {
                                 }
                             }}
                         >
+                            
                             <Header style={{ backgroundColor: "#303030", width }}>
                                 <Left>
                                     <Button onPress={() => {
@@ -478,75 +825,142 @@ constructor (props) {
                                     </Button> */}
                                 </Right>
                             </Header>
+                            
                             <View style={styles.rbContainer}>
-                                <List>
-                                <Autocomplete
-                                    data={friends}
-                                    value={query}
-                                    hideResults={this.state.hide}
-                                    placeholder={"Search for your friends name's (first + last)"}
-                                    placeholderTextColor={"grey"}
-                                    onChangeText={(text) => this.setState({ 
-                                        query: text,
-                                        hide: false
-                                    }, () => {
-                                        this.handleSearch(this.state.query);
-                                    })}
-                                    flatListProps={{
-                                        keyExtractor: (_, idx) => idx,
-                                        renderItem: ({ item }) => {
-                                            return (
-                                                <ListItem button={true} onPress={() => {
-                                                    this.setState({
-                                                        selected: [...this.state.selected, item],
-                                                        hide: true,
-                                                        query: ""
-                                                    })
-                                                }}>
-                                                    <Left>
-                                                        <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
-                                                    </Left>
-                                                    <Right>
-                                                        <Icon name="arrow-forward" />
-                                                    </Right>
-                                                </ListItem>
-                                            );
-                                        },
-                                    }}
-                                />
-                                {typeof selected !== "undefined" && selected.length > 0 ? selected.map((item, index) => {
-                                    return (
-                                        <Fragment>
-                                            <ListItem button={true} onPress={() => {
-                                                this.setState({
-                                                    selected: this.state.selected.filter((each, i) => {
-                                                        if (each.unique_id !== item.unique_id) {
-                                                            return item;
-                                                        }
-                                                    }),
-                                                    query: ""
-                                                })
-                                            }}>
-                                                <Left>
-                                                    <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
-                                                </Left>
-                                                <Right>
-                                                    <Icon name="close" />
-                                                </Right>
-                                            </ListItem>
-                                        </Fragment>
-                                    );
-                                }) : null}
-                                </List>
-                            </View>
-                            <AwesomeButtonBlue type={"secondary"} textColor={"black"} onPress={() => {
                                 
-                            }} stretch={true}>Start Group Chat</AwesomeButtonBlue>
+                                <Text style={styles.headerText}>Please select the "Group Type" visibility settings</Text>
+                                <RNPickerSelect
+                                    value={this.state.privacy}
+                                    style={pickerSelectStyles}
+                                    onValueChange={(value) => {
+                                        this.setState({
+                                            privacy: value
+                                        })
+                                    }}
+                                    items={[
+                                        { label: 'Public', value: 'public' },
+                                        { label: 'Private', value: 'private' },
+                                        { label: 'Password Enabled', value: 'password' },
+                                    ]}
+                                />                               
+                                {this.state.privacy === "password" ? <Item stackedLabel>
+                                    <Label style={{ color: "black" }}>Group Password</Label>
+                                    <Input placeholderTextColor={"grey"} placeholder={"Enter a group password for your chat"} onChangeText={(value) => {
+                                        this.setState({
+                                            password: value
+                                        })
+                                    }} value={this.state.password} />
+                                </Item> : null}
+                                <Item stackedLabel>
+                                    <Label style={{ color: "black" }}>Group Name</Label>
+                                    <Input placeholderTextColor={"grey"} placeholder={"Enter your group 'name' for your chat"} onChangeText={(value) => {
+                                        this.setState({
+                                            groupName: value
+                                        })
+                                    }} value={this.state.groupName} />
+                                </Item>
+                                <Text style={styles.headerText}>Search for a name(s) - first and last</Text>
+                                <List>
+                                    <Autocomplete
+                                        data={friends}
+                                        value={query}
+                                        hideResults={this.state.hide}
+                                        placeholder={"Search for your friends name's (first + last)"}
+                                        placeholderTextColor={"grey"}
+                                        listContainerStyle={{height: friends.length * 70}}
+                                        onChangeText={(text) => this.setState({ 
+                                            query: text,
+                                            hide: false
+                                        }, () => {
+                                            this.handleSearch(this.state.query);
+                                        })}
+                                        flatListProps={{
+                                            keyExtractor: (_, idx) => idx,
+                                            renderItem: ({ item }) => {
+                                                return (
+                                                    <ListItem style={{ zIndex: 999999 }} button={true} onPress={() => {
+                                                        if (typeof selected !== "undefined" && selected.length > 0) {
+                                                            if (selected.filter(e => e.username === item.username).length > 0) {
+                                                                console.log("Includes...");
+
+                                                                Toast.show({
+                                                                    type: 'error',
+                                                                    text1: 'Already included in selected list!',
+                                                                    text2: 'This user is already selected - select a user that you have NOT selected yet...',
+                                                                    visibilityTime: 4000,
+                                                                    position: "bottom"
+                                                                });
+                                                            } else {
+                                                                console.log("Doesn't include...");
+
+                                                                this.setState({
+                                                                    selected: [...this.state.selected, item],
+                                                                    hide: true,
+                                                                    query: ""
+                                                                })
+                                                            }
+                                                        } else {
+                                                            this.setState({
+                                                                selected: [...this.state.selected, item],
+                                                                hide: true,
+                                                                query: ""
+                                                            })
+                                                        }
+                                                    }}>
+                                                        <Left>
+                                                            <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
+                                                        </Left>
+                                                        <Right>
+                                                            <Icon name="arrow-forward" />
+                                                        </Right>
+                                                    </ListItem>
+                                                );
+                                            },
+                                        }}
+                                    />
+                                </List>
+                                <ScrollView vertical={true} showsVerticalScrollIndicator={false} style={styles.scrollerCustom}>
+                                    <List>
+                                        {typeof selected !== "undefined" && selected.length > 0 ? selected.map((item, index) => {
+                                            return (
+                                                <Fragment>
+                                                    <ListItem button={true} onPress={() => {
+                                                        this.setState({
+                                                            selected: this.state.selected.filter((each, i) => {
+                                                                if (each.unique_id !== item.unique_id) {
+                                                                    return item;
+                                                                }
+                                                            }),
+                                                            query: ""
+                                                        })
+                                                    }}>
+                                                        <Left>
+                                                            <Text><Text style={{ fontSize: 20 }}>{item.firstName + " " + item.lastName}</Text>{"\n"}{item.username}</Text>
+                                                        </Left>
+                                                        <Right>
+                                                            <Icon name="close" />
+                                                        </Right>
+                                                    </ListItem>
+                                                </Fragment>
+                                            );
+                                        }) : null}
+                                    </List>
+                                </ScrollView>
+                                
+                            </View>
+                            {(typeof selected !== "undefined" && selected.length > 0) && (typeof groupName !== "undefined" && groupName.length > 0) && (privacy !== null) ? <AwesomeButtonBlue type={"secondary"} textColor={"black"} onPress={() => {
+                                this.handleGroupStart();
+                            }} stretch={true}>Start Group Chat</AwesomeButtonBlue> : null}
+                            <Toast ref={(ref) => Toast.setRef(ref)} />
                         </RBSheet>
                 </SideMenu>
             </Fragment>
         );
     }
 };
-
-export default MessagingHomeChannelsHelper;
+const mapStateToProps = (state) => {
+    return {
+        unique_id: state.signupData.authData.unique_id
+    }
+}
+export default connect(mapStateToProps, {})(MessagingHomeChannelsHelper);

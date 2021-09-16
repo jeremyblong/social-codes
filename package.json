@@ -14,6 +14,7 @@
     "@google-cloud/language": "^4.2.2",
     "@sendgrid/mail": "^7.4.0",
     "algorithmia": "^0.3.10",
+    "api": "^3.4.0",
     "authy": "^1.4.0",
     "aws-sdk": "^2.809.0",
     "axios": "^0.21.0",

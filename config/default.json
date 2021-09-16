@@ -24,5 +24,6 @@
     "emsiSkillsAPISecret": "kjqkZ8Vm",
     "emsiSkillsScope": "emsi_open",
     "no_image_avaliable": "https://s3.us-east-1.wasabisys.com/social-codes-usa/fairwage-freelancing/no-image-available.jpeg",
-    "wasabi_url": "https://s3.us-east-1.wasabisys.com/social-codes-usa/fairwage-freelancing"
+    "wasabi_url": "https://s3.us-east-1.wasabisys.com/social-codes-usa/fairwage-freelancing",
+    "CometChatRestAPIKey": "bf01dc6519803609686253fd3d1b0dcf44ebad20"
 }

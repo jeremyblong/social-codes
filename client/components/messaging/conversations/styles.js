@@ -18,6 +18,10 @@ export default StyleSheet.create({
         height,
         width
     }, 
+    scrollerCustom: {
+        height: "100%",
+        width
+    },  
     whiteText: {
         color: "white"
     },
@@ -25,6 +29,11 @@ export default StyleSheet.create({
         width,
         height: "100%",
         flex: 1  
+    },
+    headerText: {
+        fontSize: 17.5,
+        padding: 5,
+        fontWeight: "bold"
     },
     rbContainer: {
         width,

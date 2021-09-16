@@ -18,8 +18,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         collection.findOne({ unique_id: userID }, { fields: { profilePics: 1, photo: 1, username: 1, firstName: 1, lastName: 1, accountType: 1, birthdate: 1 }}).then((user) => {
             if (user) {
 
-                console.log(user);
-
                 res.json({
                     message: "Located the desired user!",
                     photo: typeof user.profilePics !== "undefined" && user.profilePics.length > 0 ? `${config.get("wasabi_url")}/${user.profilePics[user.profilePics.length - 1].picture}` : _.has(user, "photo") ? user.photo : config.get("no_image_avaliable"),

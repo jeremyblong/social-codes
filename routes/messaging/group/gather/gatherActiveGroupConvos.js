@@ -25,7 +25,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         
         for (let i = 0; i < conversationList.length; i++) {
             const convooooo = conversationList[i];
-            conversations.push(convooooo.lastMessage.receiverId);
+            conversations.push(convooooo.owner);
         }
 
         collection.find({ unique_id: { $in: conversations }}).toArray((err, users) => {
