@@ -242,6 +242,9 @@ app.use("/stripe/webhook", require("./routes/webhooks/stripe/webhook.js"));
 app.use("/gather/friends/by/name", require("./routes/friends/query/findFriendsByName.js"));
 app.use("/initiate/group/chat", require("./routes/messaging/group/initiate/startGroupConvo.js"));
 app.use("/gather/profile/pictures/group", require("./routes/messaging/group/gather/gatherActiveGroupConvos.js"));
+app.use("/delete/group/conversation", require("./routes/messaging/group/delete/deleteConversation.js"));
+app.use("/leave/conversation/only/individual", require("./routes/messaging/group/leave/leaveGroup.js"));
+app.use("/add/additional/users/group/chat", require("./routes/messaging/group/add/addAdditionalMembers.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')

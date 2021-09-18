@@ -55,6 +55,12 @@ export default StyleSheet.create({
         color: "#ffffff",
         fontWeight: "bold"
     },
+    textRightSmall: {
+        textAlign: "right",
+        color: "blue",
+        width: width * 0.30,
+        paddingRight: 10
+    },
     greyButton: {
         backgroundColor: "#303030",
         width: "50%",
@@ -71,7 +77,7 @@ export default StyleSheet.create({
         height: 60
     },
     topTextSmaller: {
-
+        width: width * 0.50
     },
     smallerIcon: {
         maxWidth: 35,

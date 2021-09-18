@@ -467,6 +467,12 @@ constructor(props) {
                                         <Text style={styles.largeSized}>Completed Jobs</Text>
                                         <Text style={styles.sub}>View your already completed jobs/gigs</Text>
                                     </TouchableOpacity></Fragment> : null}
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("messaging-conversations");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/message.png")} style={[styles.shortViewIcon, {   tintColor: "black" }]} />
+                                        <Text style={styles.largeSized}>Private/Group Messaging</Text>
+                                    </TouchableOpacity>
                                 </View>   
                             </View>
                             <List>

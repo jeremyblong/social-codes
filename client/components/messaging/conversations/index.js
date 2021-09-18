@@ -84,23 +84,30 @@ constructor (props) {
             conversationList => {
                 console.log("Conversations list received:", conversationList);
 
-                axios.post(`${Config.ngrok_url}/gather/profile/pictures`, {
-                    conversationList
-                }).then((res) => {
-                    if (res.data.message === "Success!") {
-                        console.log(res.data);
-
-                        const { convos } = res.data;
-
-                        this.setState({
-                            convos
-                        })
-                    } else {
-                        console.log("Err", res.data);
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                })
+                if (typeof conversationList !== "undefined" && conversationList.length === 0) {
+                    this.setState({
+                        index: 0
+                    })
+                } else {
+                    axios.post(`${Config.ngrok_url}/gather/profile/pictures`, {
+                        conversationList
+                    }).then((res) => {
+                        if (res.data.message === "Success!") {
+                            console.log(res.data);
+    
+                            const { convos } = res.data;
+    
+                            this.setState({
+                                convos,
+                                index: 0
+                            })
+                        } else {
+                            console.log("Err", res.data);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                }
             },
             error => {
                 console.log("Conversations list fetching failed with error:", error);
@@ -124,29 +131,35 @@ constructor (props) {
         });
     }
     fetchGroupConversations = () => {
-        const groupsRequest = new CometChat.GroupsRequestBuilder().setLimit(20).build();
+        const groupsRequest = new CometChat.GroupsRequestBuilder().setLimit(35).joinedOnly(true).build();
 
         groupsRequest.fetchNext().then(
             conversationList => {
                 console.log("Group conversations list received:", conversationList);
 
-                axios.post(`${Config.ngrok_url}/gather/profile/pictures/group`, {
-                    conversationList
-                }).then((res) => {
-                    if (res.data.message === "Success!") {
-                        console.log(res.data);
-
-                        const { convos } = res.data;
-
-                        this.setState({
-                            groupConversations: convos
-                        })
-                    } else {
-                        console.log("Err", res.data);
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                })
+                if (typeof conversationList !== "undefined" && conversationList.length === 0) {
+                    this.setState({
+                        groupConversations: []
+                    });
+                } else {
+                    axios.post(`${Config.ngrok_url}/gather/profile/pictures/group`, {
+                        conversationList
+                    }).then((res) => {
+                        if (res.data.message === "Success!") {
+                            console.log(res.data);
+    
+                            const { convos } = res.data;
+    
+                            this.setState({
+                                groupConversations: convos
+                            })
+                        } else {
+                            console.log("Err", res.data);
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                }
             },
             error => {
                 console.log("Group conversations list fetching failed with error:", error);
@@ -217,6 +230,20 @@ constructor (props) {
           </Footer>
         );
     };
+    calculateType = (type) => {
+        switch (type) {
+            case "password":
+                return "Password Required";
+                break;
+            case "public":
+                return "Anyone/Open";
+                break;
+            case "private":
+                return "Invite ONLY";
+            default:
+                break;
+        }
+    }
     renderScene = ({ route, jumpTo }) => {
         const { convos, data, groupConversations } = this.state;
 
@@ -476,7 +503,10 @@ constructor (props) {
                                                     </View>
                                                     <View style={styles.rightColumn}>
                                                         <Text style={styles.topTextSmall}>{conversation.name}</Text>
-                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                        <View style={{ flexDirection: "row", width: width * 0.80 }}>
+                                                            <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                            <Text style={styles.textRightSmall}>{this.calculateType(conversation.type)}</Text>
+                                                        </View>
                                                     </View>
                                                 </TouchableOpacity>
                                             );
@@ -512,7 +542,10 @@ constructor (props) {
                                                     </View>
                                                     <View style={styles.rightColumn}>
                                                         <Text style={styles.topTextSmall}>{conversation.name}</Text>
-                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                        <View style={{ flexDirection: "row", width: width * 0.80 }}>
+                                                            <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                            <Text style={styles.textRightSmall}>{this.calculateType(conversation.type)}</Text>
+                                                        </View>
                                                     </View>
                                                 </TouchableOpacity>
                                             );
@@ -540,7 +573,10 @@ constructor (props) {
                                                     </View>
                                                     <View style={styles.rightColumn}>
                                                         <Text style={styles.topTextSmall}>{conversation.name}</Text>
-                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                        <View style={{ flexDirection: "row", width: width * 0.80 }}>
+                                                            <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                            <Text style={styles.textRightSmall}>{this.calculateType(conversation.type)}</Text>
+                                                        </View>
                                                     </View>
                                                 </TouchableOpacity>
                                             );
@@ -566,7 +602,10 @@ constructor (props) {
                                                     </View>
                                                     <View style={styles.rightColumn}>
                                                         <Text style={styles.topTextSmall}>{conversation.name}</Text>
-                                                        <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                        <View style={{ flexDirection: "row", width: width * 0.80 }}>
+                                                            <Text style={styles.topTextSmaller}>Members Joined: {conversation.membersCount}</Text>
+                                                            <Text style={styles.textRightSmall}>{this.calculateType(conversation.type)}</Text>
+                                                        </View>
                                                     </View>
                                                 </TouchableOpacity>
                                             );
@@ -703,7 +742,7 @@ constructor (props) {
                         <Header style={styles.topHeader}>
                             <Left style={{ maxWidth: 50 }}>
                                 <Button onPress={() => {
-                                    this.props.props.navigation.push("homepage");
+                                    this.props.props.navigation.goBack();
                                 }} transparent>
                                     <Image source={require("../../../assets/icons/go-back.png")} style={[styles.smallerIcon, { tintColor: "#ffffff" }]} />
                                 </Button>
@@ -762,21 +801,33 @@ constructor (props) {
                                 group => {
                                     console.log("Group joined successfully:", group);
 
-                                    this.props.props.navigation.push("group-conversation-thread", { conversation })
+                                    this.setState({
+                                        isDialogVisible: false
+                                    }, () => {
+                                        this.props.props.navigation.push("group-conversation-thread", { conversation: this.state.conversationSelected });
+                                    })
                                 },
                                 error => {
                                     console.log("Group joining failed with exception:", error);
 
-                                    this.setState({
-                                        isDialogVisible: false
-                                    }, () => {
-                                        showMessage({
-                                            message: "Password does NOT match our records...",
-                                            description: "The entered password doesn't match our records - passwords are 'case' sensitive.",
-                                            type: "danger",
-                                            duration: 3500
-                                        });
-                                    })
+                                    if (error.code === "ERR_ALREADY_JOINED") {
+                                        this.setState({
+                                            isDialogVisible: false
+                                        }, () => {
+                                            this.props.props.navigation.push("group-conversation-thread", { conversation: this.state.conversationSelected });
+                                        })
+                                    } else {
+                                        this.setState({
+                                            isDialogVisible: false
+                                        }, () => {
+                                            showMessage({
+                                                message: "Password does NOT match our records...",
+                                                description: "The entered password doesn't match our records - passwords are 'case' sensitive.",
+                                                type: "danger",
+                                                duration: 3500
+                                            });
+                                        })
+                                    }
                                 }
                                 );
                             }}

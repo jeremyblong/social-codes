@@ -26,6 +26,11 @@ export default StyleSheet.create({
     columnLeft: {
         width: width * 0.20
     },
+    absolutelyPositioned: {
+        position: "absolute",
+        right: 20,
+        bottom: 125
+    },  
     topHeader: {
         borderBottomColor: "transparent",
         backgroundColor: "white",

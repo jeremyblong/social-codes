@@ -5,13 +5,14 @@ import { GiftedChat, Composer, Bubble } from 'react-native-gifted-chat';
 import { CometChat } from "@cometchat-pro/react-native-chat";
 import uuid from 'react-native-uuid';
 import moment from 'moment';
-import { Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { Header, Left, Body, Right, Button, Icon, Title, ListItem, List, Text as NativeText, Thumbnail } from 'native-base';
 import styles from './styles.js';
-import { View, Text, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions, Platform, ScrollView } from 'react-native';
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RBSheet from "react-native-raw-bottom-sheet";
-
+import ActionSheet from "react-native-actions-sheet";
+import SheetOptionsHelper from "./helpers/sheetOne/index.js";
 
 const { height, width } = Dimensions.get("window");
 
@@ -25,11 +26,32 @@ constructor(props){
         isTyping: false,
         message: "",
         isVisible: false,
-        mediaMsg: null
+        mediaMsg: null,
+        groupMembers: []
     }
+
+    this.scrollViewRef = React.createRef();
+    this.actionSheetRef = React.createRef();
+    this.actionSheetRefTwo = React.createRef();
+    this.sheetRefActions = React.createRef();
 }
     componentDidMount() {
         const { conversation } = this.props.props.route.params;
+
+        const groupMemberRequest = new CometChat.GroupMembersRequestBuilder(conversation.guid).setLimit(50).build();
+
+        groupMemberRequest.fetchNext().then(
+            groupMembers => {
+                console.log("Group Member list fetched successfully:", groupMembers);
+
+                this.setState({
+                    groupMembers
+                })
+            },
+            error => {
+                console.log("Group Member list fetching failed with exception:", error);
+            }
+        );
 
         console.log("conversation", conversation);
     }
@@ -250,12 +272,15 @@ constructor(props){
         );
     };
     render() {
+        const { conversation } = this.props.props.route.params;
+
+        const { groupMembers } = this.state;
         return (
             <Fragment>
                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left style={{ maxWidth: 50 }}>
                         <Button onPress={() => {
-                            this.props.props.navigation.push("messaging-conversations");
+                            this.props.props.navigation.replace("messaging-conversations");
                         }} transparent>
                             <Image source={require("../../../assets/icons/go-back.png")} style={styles.smallerIcon} />
                         </Button>
@@ -317,8 +342,8 @@ constructor(props){
                     </Right>
                 </Header>
                 <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {
-                    props.props.navigation.replace("homepage");
-                }} stretch={true}>User's List (hiring)</AwesomeButtonBlue>
+                    this.actionSheetRef.current.setModalVisible();
+                }} stretch={true}>User's List (involved member's)</AwesomeButtonBlue>
                 <GiftedChat 
                     onInputTextChanged={(value) => {
                         // this.typing(value);
@@ -337,6 +362,51 @@ constructor(props){
                     renderFooter={this.renderFooter}
                     text={this.state.message}
                 />
+                <TouchableOpacity onPress={() => {
+                    this.sheetRefActions.current.show();
+                }} style={styles.absolutelyPositioned}>
+                    <Image source={require("../../../assets/icons/more.png")} style={{ maxHeight: 50, maxWidth: 50 }} />
+                </TouchableOpacity>
+                <ActionSheet ref={this.actionSheetRef}>
+                    <View>
+                    <ScrollView
+                        ref={this.scrollViewRef}
+                        nestedScrollEnabled={true}
+                        onScrollEndDrag={() =>
+                            this.actionSheetRef.current.handleChildScrollEnd()
+                        }
+                        onScrollAnimationEnd={() =>
+                            this.actionSheetRef.current.handleChildScrollEnd()
+                        }
+                        onMomentumScrollEnd={() =>
+                            this.actionSheetRef.current.handleChildScrollEnd()
+                        }
+                    >
+                        <List>
+                            <ListItem itemDivider>
+                                <Text>Users in this chat group</Text>
+                            </ListItem>       
+                            {typeof groupMembers !== "undefined" && groupMembers.length > 0 ? groupMembers.map((member, index) => {
+                                console.log("Member", member)
+                                return (
+                                    <ListItem avatar>
+                                        <Left>
+                                            {member.status === "offline" ? <Thumbnail style={{ maxWidth: 40, maxHeight: 40 }} source={require("../../../assets/icons/offline-dot.png")} /> : <Thumbnail style={{ maxWidth: 40, maxHeight: 40 }} source={require("../../../assets/icons/online-dot.png")} />}
+                                        </Left>
+                                        <Body>
+                                            <NativeText style={{ fontWeight: "bold" }}>{member.name}</NativeText>
+                                            <NativeText style={{ color: "black" }} note>{member.scope}</NativeText>
+                                        </Body>
+                                        <Right>
+                                            <NativeText style={{ color: "black" }} note>Last Active: {moment(member.lastActiveAt * 1000).fromNow()}</NativeText>
+                                        </Right>
+                                    </ListItem>
+                                );
+                            }) : null}               
+                        </List>
+                        </ScrollView>
+                    </View>
+                </ActionSheet>
                 <RBSheet
                     ref={ref => {
                         this.RBSheet = ref;
@@ -362,6 +432,7 @@ constructor(props){
                     <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} textColor={"black"} shadowColor={"grey"} onPress={this.sendMediaMessage} stretch={true}>Submit & Send Message</AwesomeButtonBlue>
                     </View>
                 </RBSheet>
+                <SheetOptionsHelper groupMembers={groupMembers} props={this.props} conversation={conversation} sheetRefActions={this.sheetRefActions} />
             </Fragment>
         )
     }

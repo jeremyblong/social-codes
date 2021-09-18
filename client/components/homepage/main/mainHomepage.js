@@ -76,7 +76,8 @@ constructor () {
         alreadyPooled: [],
         stored: [],
         taggedUsers: [],
-        hideVideo: false
+        hideVideo: false,
+        renderItems: false
     }
 
     this.sheetRef = React.createRef();
@@ -450,6 +451,7 @@ constructor () {
                     this.setState({
                         ready: true,
                         postLoaded: true,
+                        renderItems: true,
                         alreadyPooled: passedValues,
                         hideVideo: true
                     })
@@ -1216,12 +1218,17 @@ constructor () {
         }
         return `${sum} comments`;
     }
+    componentWillUnmount () {
+        this.setState({
+            renderItems: false
+        })
+    }
     render() {
         const menu = <Side props={this.props} />;
 
         const { posts, selection } = this.props;
 
-        const { countFrom, selectedPost, ready, user, data, pictures, images, hideVideo } = this.state;
+        const { countFrom, selectedPost, ready, user, data, pictures, images, hideVideo, renderItems } = this.state;
 
         const imagesToShow = [...images];
 
@@ -1229,318 +1236,556 @@ constructor () {
             imagesToShow.length = countFrom;
         }
         if (hideVideo === true) {
-            return (
-                <View style={Platform.OS === "ios" ? { backgroundColor: "black", zIndex: -4, height: 1500, width, flex: 1 } : {  }}>
-                <SideMenu onChange={(value) => {
-                    if (value === false) {
-                        this.setState({
-                            menuOpen: false
-                        })
-                    }
-                }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
-                    <TouchableOpacity onPress={() => {
-                        this.setState({
-                            menuOpen: !this.state.menuOpen
-                        })
-                    }} style={styles.bottomRightCorner}>
-                        <Image source={require("../../../assets/icons/circle-menu.png")} style={styles.circleMenu} />
-                    </TouchableOpacity>
-                    <Toast ref={(ref) => Toast.setRef(ref)} /> 
-                    <SafeAreaView>    
-                    <View style={Platform.OS === "android" ? styles.containerAndroid : styles.containerIos}>              
-                        {ready === true ? <FlatList   
-                            ListHeaderComponent={() => {
-                                return (
-                                    <View style={{ height: 340, minHeight: 340, marginBottom: 20 }}>
-                                        <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030", paddingTop: 15, paddingBottom: 10, height: 100 }}>
-                                            <Left>
-                                                <Button transparent>
-                                                    <Image source={require("../../../assets/images/banner_big_white.png")} style={styles.maxedIconLogo} />
-                                                </Button>
-                                            </Left>
-                                            <Body>
-                                        
-                                            </Body>
-                                            <Right style={{ position: "absolute", right: -15 }}>
-                                                
-                                                <Button transparent>
-                                                    <Icon style={{ color: "#ffffff" }} name='search' />
-                                                </Button>
-                                                <Button button={true} onPress={() => {
-                                                    this.props.props.navigation.push("messaging-conversations");
-                                                }} transparent>
-                                                    <Image source={require("../../../assets/icons/chat.png")} style={[styles.maxedIcon, { tintColor: "#ffffff" }]} />
-                                                </Button>
-                                            </Right>
-                                        </Header>
-                                        <Footer style={{ borderColor: "transparent", height: 65 }}>
-                                            <FooterTab style={{ backgroundColor: "#303030" }}>
-                                                <Button style={{ backgroundColor: "#ffffff" }} active>
-                                                    <Image source={require("../../../assets/icons/home.png")} style={[styles.maxedIconSmall, { tintColor: "#303030" }]} />
-                                                </Button>
-                                                <Button button={true} onPress={() => {
-                                                    this.props.props.navigation.push("jobs-homepage");
-                                                }}>
-                                                    <Image source={require("../../../assets/icons/seeker.png")} style={[styles.maxedIconSmallCustom, { tintColor: "#ffffff" }]} />
-                                                </Button>
-                                                <Button button={true} onPress={() => {
-                                                    this.props.props.navigation.push("people-list-all");
-                                                }}>
-                                                    <Image source={require("../../../assets/icons/people.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
-                                                </Button>
-                                                <Button button={true} onPress={() => {
-                                                    this.props.props.navigation.push("notifications");
-                                                }}>
-                                                    <Image source={require("../../../assets/icons/bell.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
-                                                    {/* <LottieView source={require('../../../assets/icons/notify-gold.json')} autoPlay loop /> */}
-                                                    <Badge style={styles.absoluteBadge}><Text style={{ color: "white", fontSize: 10 }}>51</Text></Badge>
-                                                </Button>
-                                                <Button onPress={() => {
-                                                    this.props.props.navigation.push("navigation-menu-main");
-                                                }}>
-                                                    <Image source={require("../../../assets/icons/menu.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
-                                                </Button>
-                                            </FooterTab>
-                                        </Footer>
-                                        
-                                        <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50 }}>
-                                            <FooterTab>
-                                                <Button onPress={() => {
-                                                    this.props.props.navigation.push("maps-locals-main");
-                                                }} style={styles.greyButton}>
-                                                    <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/map-two.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
-                                                        <Text style={styles.iconText}>View Map (local talent)</Text>
+            if (renderItems === true) {
+                return (
+                    <View style={Platform.OS === "ios" ? { backgroundColor: "black", zIndex: -4, height: 1500, width, flex: 1 } : {  }}>
+                    <SideMenu onChange={(value) => {
+                        if (value === false) {
+                            this.setState({
+                                menuOpen: false
+                            })
+                        }
+                    }} openMenuOffset={width * 0.80} menuPosition={"right"} isOpen={this.state.menuOpen} menu={menu}>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                menuOpen: !this.state.menuOpen
+                            })
+                        }} style={styles.bottomRightCorner}>
+                            <Image source={require("../../../assets/icons/circle-menu.png")} style={styles.circleMenu} />
+                        </TouchableOpacity>
+                        <Toast ref={(ref) => Toast.setRef(ref)} /> 
+                        <SafeAreaView>    
+                        <View style={Platform.OS === "android" ? styles.containerAndroid : styles.containerIos}>              
+                            {ready === true ? <FlatList   
+                                ListHeaderComponent={() => {
+                                    return (
+                                        <View style={{ height: 340, minHeight: 340, marginBottom: 20 }}>
+                                            <Header style={{ borderBottomColor: "transparent", backgroundColor: "#303030", paddingTop: 15, paddingBottom: 10, height: 100 }}>
+                                                <Left>
+                                                    <Button transparent>
+                                                        <Image source={require("../../../assets/images/banner_big_white.png")} style={styles.maxedIconLogo} />
+                                                    </Button>
+                                                </Left>
+                                                <Body>
+                                            
+                                                </Body>
+                                                <Right style={{ position: "absolute", right: -15 }}>
+                                                    
+                                                    <Button transparent>
+                                                        <Icon style={{ color: "#ffffff" }} name='search' />
+                                                    </Button>
+                                                    <Button button={true} onPress={() => {
+                                                        this.props.props.navigation.push("messaging-conversations");
+                                                    }} transparent>
+                                                        <Image source={require("../../../assets/icons/chat.png")} style={[styles.maxedIcon, { tintColor: "#ffffff" }]} />
+                                                    </Button>
+                                                </Right>
+                                            </Header>
+                                            <Footer style={{ borderColor: "transparent", height: 65 }}>
+                                                <FooterTab style={{ backgroundColor: "#303030" }}>
+                                                    <Button style={{ backgroundColor: "#ffffff" }} active>
+                                                        <Image source={require("../../../assets/icons/home.png")} style={[styles.maxedIconSmall, { tintColor: "#303030" }]} />
+                                                    </Button>
+                                                    <Button button={true} onPress={() => {
+                                                        this.props.props.navigation.push("jobs-homepage");
+                                                    }}>
+                                                        <Image source={require("../../../assets/icons/seeker.png")} style={[styles.maxedIconSmallCustom, { tintColor: "#ffffff" }]} />
+                                                    </Button>
+                                                    <Button button={true} onPress={() => {
+                                                        this.props.props.navigation.push("people-list-all");
+                                                    }}>
+                                                        <Image source={require("../../../assets/icons/people.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
+                                                    </Button>
+                                                    <Button button={true} onPress={() => {
+                                                        this.props.props.navigation.push("notifications");
+                                                    }}>
+                                                        <Image source={require("../../../assets/icons/bell.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
+                                                        {/* <LottieView source={require('../../../assets/icons/notify-gold.json')} autoPlay loop /> */}
+                                                        <Badge style={styles.absoluteBadge}><Text style={{ color: "white", fontSize: 10 }}>51</Text></Badge>
+                                                    </Button>
+                                                    <Button onPress={() => {
+                                                        this.props.props.navigation.push("navigation-menu-main");
+                                                    }}>
+                                                        <Image source={require("../../../assets/icons/menu.png")} style={[styles.maxedIconSmall, { tintColor: "#ffffff" }]} />
+                                                    </Button>
+                                                </FooterTab>
+                                            </Footer>
+                                            
+                                            <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50 }}>
+                                                <FooterTab>
+                                                    <Button onPress={() => {
+                                                        this.props.props.navigation.push("maps-locals-main");
+                                                    }} style={styles.greyButton}>
+                                                        <View style={styles.row}>
+                                                            <Image source={require("../../../assets/icons/map-two.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
+                                                            <Text style={styles.iconText}>View Map (local talent)</Text>
+                                                        </View>
+                                                    </Button>
+                                                    {/* <Button style={styles.greyButton}>
+                                                        <View style={styles.row}>
+                                                            <Image source={require("../../../assets/icons/gallery.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
+                                                            <Text style={styles.iconText}>Photo</Text>
+                                                        </View>
+                                                    </Button> */}
+                                                    <Button style={styles.greyButton}>
+                                                        <View style={styles.row}>
+                                                            <Image source={require("../../../assets/icons/job.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
+                                                            <Text style={styles.iconText}>Active Jobs</Text>
+                                                        </View>
+                                                    </Button>
+                                                </FooterTab>
+                                            </Footer>
+                                            {/* <View style={styles.thickLine} /> */}
+                                            <View style={[styles.row, { height: 100 }]}>
+                                                {user !== null ? <View style={[styles.columnSmall, { paddingRight: 20 }]}>
+                                                    {this.renderPhotoOrVideo(user, 45)}
+                                                </View> : <Fragment><View style={styles.loadingProfileOutter}><View style={styles.loadingProfilePic}></View></View></Fragment>}
+                                                <TouchableOpacity onPress={() => {
+                                                    console.log("clicked");
+                                                    
+                                                    this.RBSheet.open();
+                                                }} style={styles.columnLarge}>
+                                                    <View style={{ height: 45, borderColor: '#ffffff', borderWidth: 1, borderRadius: 5, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
+                                                        <Text style={{ marginTop: 12, fontSize: 15, color: "white" }}>What's got ya thinkin'...</Text>
                                                     </View>
-                                                </Button>
-                                                {/* <Button style={styles.greyButton}>
-                                                    <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/gallery.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
-                                                        <Text style={styles.iconText}>Photo</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            {/* <View style={styles.thickLine} /> */}
+                                            <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
+                                                <TouchableOpacity style={styles.buttonCustom}>
+                                                    <View style={styles.roundedButton}>
+                                                        <Image source={require("../../../assets/icons/job.png")} style={styles.createMeetingIcon} />
+                                                        <Text style={styles.innerText}>Create {"\n"}Job Stream</Text>
                                                     </View>
-                                                </Button> */}
-                                                <Button style={styles.greyButton}>
-                                                    <View style={styles.row}>
-                                                        <Image source={require("../../../assets/icons/job.png")} style={[styles.maxedIconSmallTwo, { tintColor: "#ffffff" }]} />
-                                                        <Text style={styles.iconText}>Active Jobs</Text>
-                                                    </View>
-                                                </Button>
-                                            </FooterTab>
-                                        </Footer>
-                                        {/* <View style={styles.thickLine} /> */}
-                                        <View style={[styles.row, { height: 100 }]}>
-                                            {user !== null ? <View style={[styles.columnSmall, { paddingRight: 20 }]}>
-                                                {this.renderPhotoOrVideo(user, 45)}
-                                            </View> : <Fragment><View style={styles.loadingProfileOutter}><View style={styles.loadingProfilePic}></View></View></Fragment>}
-                                            <TouchableOpacity onPress={() => {
-                                                console.log("clicked");
-                                                
-                                                this.RBSheet.open();
-                                            }} style={styles.columnLarge}>
-                                                <View style={{ height: 45, borderColor: '#ffffff', borderWidth: 1, borderRadius: 5, maxWidth: "90%", marginBottom: 5, paddingLeft: 15 }} >
-                                                    <Text style={{ marginTop: 12, fontSize: 15, color: "white" }}>What's got ya thinkin'...</Text>
-                                                </View>
-                                            </TouchableOpacity>
+                                                </TouchableOpacity>
+                                                {typeof data !== "undefined" && data.length > 0 ? data.map((item, index) => {
+                                                    return (
+                                                        <Fragment key={index}>
+                                                            <TouchableOpacity style={styles.centered} onPress={() => {}}>
+                                                                <Image source={{ uri: item.picture.medium }} style={styles.contact} />
+                                                                <Image source={require("../../../assets/icons/green-circle.png")} style={styles.online} />
+                                                            </TouchableOpacity>
+                                                        </Fragment>
+                                                    );
+                                                }) : null}
+                                            </ScrollView>
+                                            <View style={styles.thickLine} />
                                         </View>
-                                        {/* <View style={styles.thickLine} /> */}
-                                        <ScrollView showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} horizontal={true}>
-                                            <TouchableOpacity style={styles.buttonCustom}>
-                                                <View style={styles.roundedButton}>
-                                                    <Image source={require("../../../assets/icons/job.png")} style={styles.createMeetingIcon} />
-                                                    <Text style={styles.innerText}>Create {"\n"}Job Stream</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                            {typeof data !== "undefined" && data.length > 0 ? data.map((item, index) => {
-                                                return (
-                                                    <Fragment key={index}>
-                                                        <TouchableOpacity style={styles.centered} onPress={() => {}}>
-                                                            <Image source={{ uri: item.picture.medium }} style={styles.contact} />
-                                                            <Image source={require("../../../assets/icons/green-circle.png")} style={styles.online} />
-                                                        </TouchableOpacity>
-                                                    </Fragment>
-                                                );
-                                            }) : null}
-                                        </ScrollView>
-                                        <View style={styles.thickLine} />
-                                    </View>
-                                );
-                            }}
-                            data={this.props.posts}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh}
-                            renderItem={({ item, index }) => {
-                                const post = item;
-                                if (_.has(post, "newData") && post.shared === true) {
-                                    return (
-                                        <Fragment> 
-                                        {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
-                                            <Card>
-                                                <SharedItemPostHelper 
-                                                    postLoaded={this.state.postLoaded} 
-                                                    index={index} 
-                                                    post={post} 
-                                                    props={this.props} 
-                                                />
-                                                <CardItem style={{ width: width, marginLeft: -20 }}>
-                                                    <Body>
-                                                        <Footer style={{ width: width, backgroundColor: "#303030" }}>
-                                                            <FooterTab style={{ width: width }}>
-                                                                {post.newData.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
-                                                                    onRequestClose={() => {
-                                                                        this.setState({
-                                                                            [`visible-${index}`]: false
-                                                                        })
-                                                                    }}
-                                                                    isVisible={this.state[`visible-${index}`]}  
-                                                                    placement={"top"}
-                                                                    from={(
-                                                                        <Button onPress={() => {
+                                    );
+                                }}
+                                data={this.props.posts}
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                                renderItem={({ item, index }) => {
+                                    const post = item;
+                                    if (_.has(post, "newData") && post.shared === true) {
+                                        return (
+                                            <Fragment> 
+                                            {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
+                                                <Card>
+                                                    <SharedItemPostHelper 
+                                                        postLoaded={this.state.postLoaded} 
+                                                        index={index} 
+                                                        post={post} 
+                                                        props={this.props} 
+                                                    />
+                                                    <CardItem style={{ width: width, marginLeft: -20 }}>
+                                                        <Body>
+                                                            <Footer style={{ width: width, backgroundColor: "#303030" }}>
+                                                                <FooterTab style={{ width: width }}>
+                                                                    {post.newData.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
+                                                                        onRequestClose={() => {
                                                                             this.setState({
-                                                                                [`visible-${index}`]: true
+                                                                                [`visible-${index}`]: false
                                                                             })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
-                                                                            <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
-                                                                            <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
-                                                                        </Button>
-                                                                    )}>
-                                                                    <View style={styles.popoverTwo}>
-                                                                        <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                            <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`
-                                                                            }, () => {
-                                                                                this.revokeSharedLikeResponse(post);
-                                                                            })
-                                                                        }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                        }}
+                                                                        isVisible={this.state[`visible-${index}`]}  
+                                                                        placement={"top"}
+                                                                        from={(
+                                                                            <Button onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: true
+                                                                                })
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
+                                                                                <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
+                                                                                <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
+                                                                            </Button>
+                                                                        )}>
+                                                                        <View style={styles.popoverTwo}>
+                                                                            <View style={{ paddingTop: 5, width: "100%" }}>
+                                                                                <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`
+                                                                                }, () => {
+                                                                                    this.revokeSharedLikeResponse(post);
+                                                                                })
+                                                                            }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                            </View>
                                                                         </View>
-                                                                    </View>
-                                                                </Popover> : <Popover  
-                                                                    onRequestClose={() => {
+                                                                    </Popover> : <Popover  
+                                                                        onRequestClose={() => {
+                                                                            this.setState({
+                                                                                [`visible-${index}`]: false
+                                                                            })
+                                                                        }}
+                                                                        isVisible={this.state[`visible-${index}`]}  
+                                                                        placement={"top"}
+                                                                        from={(
+                                                                            <Button onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: true
+                                                                                })
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                <Text style={{ color: "#ffffff" }}>Like</Text>
+                                                                            </Button>
+                                                                        )}>
+                                                                        <View style={styles.popoverTwo}>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "screaming"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "exploding"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "tearsOfJoy"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "clapping"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "angry"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "heart"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "wow"
+                                                                                }, () => {
+                                                                                    this.likeSharedPostRespond(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                        </View>
+                                                                    </Popover>}
+                                                                    
+                                                                    <Button onPress={() => {
+                                                                        this.handleRedirectToIndividualPage(post);
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                        <Text style={{ color: "#ffffff" }}>Comment</Text>
+                                                                    </Button>
+                                                                    <Button onPress={() => {
                                                                         this.setState({
-                                                                            [`visible-${index}`]: false
+                                                                            pickedOutPost: post
+                                                                        }, () => {
+                                                                            setTimeout(() => {
+                                                                                this.openBottomSheetCustom();
+                                                                            }, 650)
                                                                         })
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                        <Text style={{ color: "#ffffff" }}>Share</Text>
+                                                                    </Button>
+                                                                </FooterTab>
+                                                            </Footer>
+                                                            </Body>
+                                                        </CardItem>
+                                                </Card>
+                                            </Fragment>
+                                            );
+                                    } else {
+                                        console.log("POST", post);
+                                        return (
+                                            <Fragment key={index}>
+                                            
+                                            {_.has(post, "videoLinkIncluded") && post.videoLinkIncluded === true ? <Fragment>
+                                            {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
+                                                <InView onChange={(viewport) => {
+                                                    this.handlePlaying(viewport, index);
+                                                }}>
+                                                    <Card>
+                                                        <CardItem>
+                                                        <Left>
+                                                            {this.renderPhotoOrVideo(post)}
+                                                            <Body>
+                                                            <Text><Text style={{ fontWeight: "bold" }}>{`${post.firstName} ${post.lastName}`}</Text>{post.taggedLocation === true ? ` is at ` : null} <TouchableOpacity style={{ }} onPress={() => {
+                                                                this.lookupCompany(post.taggedLocationData);
+                                                            }}><Text style={{ fontWeight: "bold" }}>{post.taggedLocation === true ? post.taggedLocationData.poi.name : null}</Text></TouchableOpacity></Text>
+                                                            <Text note>{post.date}</Text>
+                                                            </Body>
+                                                        </Left>
+                                                        </CardItem>
+                                                        <CardItem>
+                                                        <Body style={{  }}>
+                                                            {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
+                                                                <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
+                                                                    {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
+                                                                    {post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
+                                                                    {post.pictures.length >= 4 && this.renderThreeLive(post.pictures)}
+                                                                </View>
+                                                            </View> : null}
+                                                            <ReadMore
+                                                            numberOfLines={3}
+                                                            renderTruncatedFooter={this._renderTruncatedFooter}
+                                                            renderRevealedFooter={this._renderRevealedFooter}
+                                                            onReady={this._handleTextReady}>
+                                                                {this.checkHighlight(post) ? <Highlighter 
+                                                                    onPressHighlightedText={(username) => {
+                                                                        this.redirectBasedOnUsername(username);
                                                                     }}
-                                                                    isVisible={this.state[`visible-${index}`]}  
-                                                                    placement={"top"}
-                                                                    from={(
-                                                                        <Button onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: true
-                                                                            })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                            <Text style={{ color: "#ffffff" }}>Like</Text>
-                                                                        </Button>
-                                                                    )}>
-                                                                    <View style={styles.popoverTwo}>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "screaming"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "exploding"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "tearsOfJoy"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "clapping"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "angry"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "heart"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "wow"
-                                                                            }, () => {
-                                                                                this.likeSharedPostRespond(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                    </View>
-                                                                </Popover>}
-                                                                
-                                                                <Button onPress={() => {
-                                                                    this.handleRedirectToIndividualPage(post);
-                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                    <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                    <Text style={{ color: "#ffffff" }}>Comment</Text>
-                                                                </Button>
-                                                                <Button onPress={() => {
-                                                                    this.setState({
-                                                                        pickedOutPost: post
-                                                                    }, () => {
-                                                                        setTimeout(() => {
-                                                                            this.openBottomSheetCustom();
-                                                                        }, 650)
-                                                                    })
-                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                    <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                    <Text style={{ color: "#ffffff" }}>Share</Text>
-                                                                </Button>
-                                                            </FooterTab>
-                                                        </Footer>
+                                                                    highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
+                                                                    searchWords={post.taggedUsers}
+                                                                    textToHighlight={post.text}
+                                                                /> : <Text style={styles.cardText}>
+                                                                    {post.text}
+                                                                </Text>}
+                                                            </ReadMore>
+            
+                                                            {typeof post.taggedLocation !== 'undefined' && post.taggedLocation === true ? <MapView
+                                                                style={styles.mapCustom}
+                                                                region={{
+                                                                    latitude: post.taggedLocationData.position.lat, 
+                                                                    longitude: post.taggedLocationData.position.lon,
+                                                                    latitudeDelta: 0.0922,
+                                                                    longitudeDelta: 0.0421
+                                                                }}
+                                                            >
+                                                                <Marker
+                                                                    key={index}
+                                                                    coordinate={{ 
+                                                                        latitude: post.taggedLocationData.position.lat, 
+                                                                        longitude: post.taggedLocationData.position.lon 
+                                                                    }}
+                                                                    title={post.taggedLocationData.poi.name}
+                                                                    description={post.taggedLocationData.address.freeformAddress}
+                                                                >
+                                                                    <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                                                </Marker>
+                                                            </MapView> : null}
+                                                            <Video 
+                                                                source={{ uri: post.videoLink }}   // Can be a URL or a local file.
+                                                                ref={ref => { this.video = ref}} 
+                                                                muted={true}
+                                                                paused={!this.state[`playing-${index}`]} 
+                                                                controls={true}
+                                                                onError={this.errored}
+                                                                style={styles.postVideoStyles} 
+                                                            />
                                                         </Body>
-                                                    </CardItem>
-                                            </Card>
-                                        </Fragment>
-                                        );
-                                } else {
-                                    console.log("POST", post);
-                                    return (
-                                        <Fragment key={index}>
-                                        
-                                        {_.has(post, "videoLinkIncluded") && post.videoLinkIncluded === true ? <Fragment>
-                                        {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
-                                            <InView onChange={(viewport) => {
-                                                this.handlePlaying(viewport, index);
-                                            }}>
+                                                        </CardItem>
+                                                        <CardItem>
+                                                            <View style={{ alignContent: "flex-start", flexDirection: "row", width: width * 0.65 }}>
+                                                                {this.renderEmojis(post)}
+                                                                <Text style={styles.likeCount}>{this.calculateLikeCount(post)}</Text>
+                                                            </View>
+                                                            <TouchableOpacity onPress={() => {
+                                                                this.setState({
+                                                                    selectedPost: post
+                                                                }, () => {
+                                                                    this.RBSheetCustom.open();
+                                                                })
+                                                            }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
+                                                                <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
+                                                            </TouchableOpacity>
+                                                        </CardItem>
+                                                        <CardItem style={{ width: width, marginLeft: -20 }}>
+                                                            <Body>
+                                                            <Footer style={{ width: width }}>
+                                                                <FooterTab style={{ width: width, backgroundColor: "#ffffff" }}>
+                                                                    {post.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
+                                                                        onRequestClose={() => {
+                                                                            this.setState({
+                                                                                [`visible-${index}`]: false
+                                                                            })
+                                                                        }}
+                                                                        isVisible={this.state[`visible-${index}`]}  
+                                                                        placement={"top"}
+                                                                        from={(
+                                                                            <Button onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: true
+                                                                                })
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
+                                                                                <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
+                                                                                <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
+                                                                            </Button>
+                                                                        )}>
+                                                                        <View style={styles.popoverTwo}>
+                                                                            <View style={{ paddingTop: 5, width: "100%" }}>
+                                                                                <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`
+                                                                                }, () => {
+                                                                                    this.removeLikeResponse(post);
+                                                                                })
+                                                                            }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                            </View>
+                                                                        </View>
+                                                                    </Popover> : <Popover  
+                                                                        onRequestClose={() => {
+                                                                            this.setState({
+                                                                                [`visible-${index}`]: false
+                                                                            })
+                                                                        }}
+                                                                        isVisible={this.state[`visible-${index}`]}  
+                                                                        placement={"top"}
+                                                                        from={(
+                                                                            <Button onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: true
+                                                                                })
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                <Text style={{ color: "#ffffff" }}>Like</Text>
+                                                                            </Button>
+                                                                        )}>
+                                                                        <View style={styles.popoverTwo}>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "screaming"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "exploding"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "tearsOfJoy"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "clapping"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "angry"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "heart"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                            <TouchableOpacity onPress={() => {
+                                                                                this.setState({
+                                                                                    [`visible-${index}`]: !`visible-${index}`,
+                                                                                    like: "wow"
+                                                                                }, () => {
+                                                                                    this.likeReactPost(post);
+                                                                                })
+                                                                            }} style={styles.lottiContainer}>
+                                                                                <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                            </TouchableOpacity>
+                                                                        </View>
+                                                                    </Popover>}
+                                                                    
+                                                                    <Button onPress={() => {
+                                                                        this.handleRedirectToIndividualPage(post);
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                        <Text style={{ color: "#ffffff" }}>Comment</Text>
+                                                                    </Button>
+                                                                    <Button onPress={() => {
+                                                                        this.setState({
+                                                                            pickedOutPost: post
+                                                                        }, () => {
+                                                                            setTimeout(() => {
+                                                                                this.openBottomSheetCustom();
+                                                                            }, 650)
+                                                                        })
+                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                        <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff"}} />
+                                                                        <Text style={{ color: "#ffffff" }}>Share</Text>
+                                                                    </Button>
+                                                                </FooterTab>
+                                                            </Footer>
+                                                            </Body>
+                                                        </CardItem>
+                                                    </Card>
+                                                    <View style={styles.thickLine} />
+                                                    </InView>
+                                                </Fragment> : <Fragment>
+                                                {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
                                                 <Card>
                                                     <CardItem>
                                                     <Left>
@@ -1554,7 +1799,7 @@ constructor () {
                                                     </Left>
                                                     </CardItem>
                                                     <CardItem>
-                                                    <Body style={{  }}>
+                                                    <Body style={{}}>
                                                         {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
                                                             <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
                                                                 {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
@@ -1579,864 +1824,630 @@ constructor () {
                                                             </Text>}
                                                         </ReadMore>
         
-                                                        {typeof post.taggedLocation !== 'undefined' && post.taggedLocation === true ? <MapView
-                                                            style={styles.mapCustom}
-                                                            region={{
-                                                                latitude: post.taggedLocationData.position.lat, 
-                                                                longitude: post.taggedLocationData.position.lon,
-                                                                latitudeDelta: 0.0922,
-                                                                longitudeDelta: 0.0421
-                                                            }}
-                                                        >
-                                                            <Marker
-                                                                key={index}
-                                                                coordinate={{ 
+                                                            {typeof post.taggedLocation !== 'undefined' && post.taggedLocation === true ? <MapView
+                                                                style={styles.mapCustom}
+                                                                region={{
                                                                     latitude: post.taggedLocationData.position.lat, 
-                                                                    longitude: post.taggedLocationData.position.lon 
+                                                                    longitude: post.taggedLocationData.position.lon,
+                                                                    latitudeDelta: 0.0922,
+                                                                    longitudeDelta: 0.0421
                                                                 }}
-                                                                title={post.taggedLocationData.poi.name}
-                                                                description={post.taggedLocationData.address.freeformAddress}
                                                             >
-                                                                <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
-                                                            </Marker>
-                                                        </MapView> : null}
-                                                        <Video 
-                                                            source={{ uri: post.videoLink }}   // Can be a URL or a local file.
-                                                            ref={ref => { this.video = ref}} 
-                                                            muted={true}
-                                                            paused={!this.state[`playing-${index}`]} 
-                                                            controls={true}
-                                                            onError={this.errored}
-                                                            style={styles.postVideoStyles} 
-                                                        />
-                                                    </Body>
-                                                    </CardItem>
-                                                    <CardItem>
-                                                        <View style={{ alignContent: "flex-start", flexDirection: "row", width: width * 0.65 }}>
-                                                            {this.renderEmojis(post)}
-                                                            <Text style={styles.likeCount}>{this.calculateLikeCount(post)}</Text>
-                                                        </View>
-                                                        <TouchableOpacity onPress={() => {
-                                                            this.setState({
-                                                                selectedPost: post
-                                                            }, () => {
-                                                                this.RBSheetCustom.open();
-                                                            })
-                                                        }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
-                                                            <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
-                                                        </TouchableOpacity>
-                                                    </CardItem>
-                                                    <CardItem style={{ width: width, marginLeft: -20 }}>
-                                                        <Body>
-                                                        <Footer style={{ width: width }}>
-                                                            <FooterTab style={{ width: width, backgroundColor: "#ffffff" }}>
-                                                                {post.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
-                                                                    onRequestClose={() => {
-                                                                        this.setState({
-                                                                            [`visible-${index}`]: false
-                                                                        })
+                                                                <Marker
+                                                                    key={index}
+                                                                    coordinate={{ 
+                                                                        latitude: post.taggedLocationData.position.lat, 
+                                                                        longitude: post.taggedLocationData.position.lon 
                                                                     }}
-                                                                    isVisible={this.state[`visible-${index}`]}  
-                                                                    placement={"top"}
-                                                                    from={(
-                                                                        <Button onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: true
-                                                                            })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333 }}>
-                                                                            <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
-                                                                            <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
-                                                                        </Button>
-                                                                    )}>
-                                                                    <View style={styles.popoverTwo}>
-                                                                        <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                            <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`
-                                                                            }, () => {
-                                                                                this.removeLikeResponse(post);
-                                                                            })
-                                                                        }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
-                                                                        </View>
+                                                                    title={post.taggedLocationData.poi.name}
+                                                                    description={post.taggedLocationData.address.freeformAddress}
+                                                                >
+                                                                    <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                                                </Marker>
+                                                            </MapView> : null}
+                                                            </Body>
+                                                                </CardItem>
+                                                                <CardItem>
+                                                                    <View style={{ alignContent: "flex-start", flexDirection: "row", width: width * 0.65 }}>
+                                                                        {this.renderEmojis(post)}
+                                                                        <Text style={styles.likeCount}>{this.calculateLikeCount(post)}</Text>
                                                                     </View>
-                                                                </Popover> : <Popover  
-                                                                    onRequestClose={() => {
+                                                                    <TouchableOpacity onPress={() => {
                                                                         this.setState({
-                                                                            [`visible-${index}`]: false
+                                                                            selectedPost: post
+                                                                        }, () => {
+                                                                            this.RBSheetCustom.open();
                                                                         })
-                                                                    }}
-                                                                    isVisible={this.state[`visible-${index}`]}  
-                                                                    placement={"top"}
-                                                                    from={(
-                                                                        <Button onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: true
-                                                                            })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                            <Text style={{ color: "#ffffff" }}>Like</Text>
-                                                                        </Button>
-                                                                    )}>
-                                                                    <View style={styles.popoverTwo}>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "screaming"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "exploding"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "tearsOfJoy"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "clapping"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "angry"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "heart"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                        <TouchableOpacity onPress={() => {
-                                                                            this.setState({
-                                                                                [`visible-${index}`]: !`visible-${index}`,
-                                                                                like: "wow"
-                                                                            }, () => {
-                                                                                this.likeReactPost(post);
-                                                                            })
-                                                                        }} style={styles.lottiContainer}>
-                                                                            <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                        </TouchableOpacity>
-                                                                    </View>
-                                                                </Popover>}
-                                                                
-                                                                <Button onPress={() => {
-                                                                    this.handleRedirectToIndividualPage(post);
-                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                    <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                    <Text style={{ color: "#ffffff" }}>Comment</Text>
-                                                                </Button>
-                                                                <Button onPress={() => {
-                                                                    this.setState({
-                                                                        pickedOutPost: post
-                                                                    }, () => {
-                                                                        setTimeout(() => {
-                                                                            this.openBottomSheetCustom();
-                                                                        }, 650)
-                                                                    })
-                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                    <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff"}} />
-                                                                    <Text style={{ color: "#ffffff" }}>Share</Text>
-                                                                </Button>
-                                                            </FooterTab>
-                                                        </Footer>
-                                                        </Body>
-                                                    </CardItem>
-                                                </Card>
-                                                <View style={styles.thickLine} />
-                                                </InView>
-                                            </Fragment> : <Fragment>
-                                            {index !== 0 && index % 3 === 0 ? <AdvertisementComponent props={this.props} /> : null}
-                                            <Card>
-                                                <CardItem>
-                                                <Left>
-                                                    {this.renderPhotoOrVideo(post)}
-                                                    <Body>
-                                                    <Text><Text style={{ fontWeight: "bold" }}>{`${post.firstName} ${post.lastName}`}</Text>{post.taggedLocation === true ? ` is at ` : null} <TouchableOpacity style={{ }} onPress={() => {
-                                                        this.lookupCompany(post.taggedLocationData);
-                                                    }}><Text style={{ fontWeight: "bold" }}>{post.taggedLocation === true ? post.taggedLocationData.poi.name : null}</Text></TouchableOpacity></Text>
-                                                    <Text note>{post.date}</Text>
-                                                    </Body>
-                                                </Left>
-                                                </CardItem>
-                                                <CardItem>
-                                                <Body style={{}}>
-                                                    {typeof post.pictures !== "undefined" && post.pictures !== null ? <View style={{  }}>
-                                                        <View style={post.pictures !== null && typeof post.pictures !== "undefined" && post.pictures.length <= 2 ? styles.normallyBoxed : styles.normallyBoxedElse}>
-                                                            {[1, 3, 4].includes(post.pictures.length)  && this.renderOneLive(post.pictures)}
-                                                            {post.pictures.length >= 2 && post.pictures.length != 4 && this.renderTwoLive(post.pictures)}
-                                                            {post.pictures.length >= 4 && this.renderThreeLive(post.pictures)}
-                                                        </View>
-                                                    </View> : null}
-                                                    <ReadMore
-                                                    numberOfLines={3}
-                                                    renderTruncatedFooter={this._renderTruncatedFooter}
-                                                    renderRevealedFooter={this._renderRevealedFooter}
-                                                    onReady={this._handleTextReady}>
-                                                        {this.checkHighlight(post) ? <Highlighter 
-                                                            onPressHighlightedText={(username) => {
-                                                                this.redirectBasedOnUsername(username);
-                                                            }}
-                                                            highlightStyle={{backgroundColor: '#0057ff', color: "white" }}
-                                                            searchWords={post.taggedUsers}
-                                                            textToHighlight={post.text}
-                                                        /> : <Text style={styles.cardText}>
-                                                            {post.text}
-                                                        </Text>}
-                                                    </ReadMore>
-    
-                                                        {typeof post.taggedLocation !== 'undefined' && post.taggedLocation === true ? <MapView
-                                                            style={styles.mapCustom}
-                                                            region={{
-                                                                latitude: post.taggedLocationData.position.lat, 
-                                                                longitude: post.taggedLocationData.position.lon,
-                                                                latitudeDelta: 0.0922,
-                                                                longitudeDelta: 0.0421
-                                                            }}
-                                                        >
-                                                            <Marker
-                                                                key={index}
-                                                                coordinate={{ 
-                                                                    latitude: post.taggedLocationData.position.lat, 
-                                                                    longitude: post.taggedLocationData.position.lon 
-                                                                }}
-                                                                title={post.taggedLocationData.poi.name}
-                                                                description={post.taggedLocationData.address.freeformAddress}
-                                                            >
-                                                                <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
-                                                            </Marker>
-                                                        </MapView> : null}
-                                                        </Body>
-                                                            </CardItem>
-                                                            <CardItem>
-                                                                <View style={{ alignContent: "flex-start", flexDirection: "row", width: width * 0.65 }}>
-                                                                    {this.renderEmojis(post)}
-                                                                    <Text style={styles.likeCount}>{this.calculateLikeCount(post)}</Text>
-                                                                </View>
-                                                                <TouchableOpacity onPress={() => {
-                                                                    this.setState({
-                                                                        selectedPost: post
-                                                                    }, () => {
-                                                                        this.RBSheetCustom.open();
-                                                                    })
-                                                                }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
-                                                                    <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
-                                                                </TouchableOpacity>
-                                                            </CardItem>
-                                                            <CardItem style={{ width: width, marginLeft: -20 }}>
-                                                                <Body>
-                                                                <Footer style={{ width: width }}>
-                                                                    <FooterTab style={{ width: width }}>
-                                                                        {post.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
-                                                                            onRequestClose={() => {
-                                                                                this.setState({
-                                                                                    [`visible-${index}`]: false
-                                                                                })
-                                                                            }}
-                                                                            isVisible={this.state[`visible-${index}`]}  
-                                                                            placement={"top"}
-                                                                            from={(
-                                                                                <Button onPress={() => {
+                                                                    }} style={{ alignContent: "flex-end", width: width * 0.35 }}>
+                                                                        <Text style={{ textAlign: "right", marginRight: 30 }}>{this.calculateCommentsLength(post.comments)}</Text>
+                                                                    </TouchableOpacity>
+                                                                </CardItem>
+                                                                <CardItem style={{ width: width, marginLeft: -20 }}>
+                                                                    <Body>
+                                                                    <Footer style={{ width: width }}>
+                                                                        <FooterTab style={{ width: width }}>
+                                                                            {post.peopleReactedIDs.includes(this.props.unique_id) ? <Popover  
+                                                                                onRequestClose={() => {
                                                                                     this.setState({
-                                                                                        [`visible-${index}`]: true
+                                                                                        [`visible-${index}`]: false
                                                                                     })
-                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
-                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
-                                                                                    <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
-                                                                                </Button>
-                                                                            )}>
-                                                                            <View style={styles.popoverTwo}>
-                                                                                <View style={{ paddingTop: 5, width: "100%" }}>
-                                                                                    <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`
-                                                                                    }, () => {
-                                                                                        this.removeLikeResponse(post);
-                                                                                    })
-                                                                                }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                                }}
+                                                                                isVisible={this.state[`visible-${index}`]}  
+                                                                                placement={"top"}
+                                                                                from={(
+                                                                                    <Button onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: true
+                                                                                        })
+                                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#ffffff" }}>
+                                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#303030" }} />
+                                                                                        <Text style={{ color: "#303030", fontWeight: "bold" }}>Un-Like</Text>
+                                                                                    </Button>
+                                                                                )}>
+                                                                                <View style={styles.popoverTwo}>
+                                                                                    <View style={{ paddingTop: 5, width: "100%" }}>
+                                                                                        <AwesomeButtonBlue backgroundColor={"blue"} textColor={"white"} type={"secondary"} onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`
+                                                                                        }, () => {
+                                                                                            this.removeLikeResponse(post);
+                                                                                        })
+                                                                                    }} stretch={true}>Remove/Revoke Response</AwesomeButtonBlue>
+                                                                                    </View>
                                                                                 </View>
-                                                                            </View>
-                                                                        </Popover> : <Popover  
-                                                                            onRequestClose={() => {
+                                                                            </Popover> : <Popover  
+                                                                                onRequestClose={() => {
+                                                                                    this.setState({
+                                                                                        [`visible-${index}`]: false
+                                                                                    })
+                                                                                }}
+                                                                                isVisible={this.state[`visible-${index}`]}  
+                                                                                placement={"top"}
+                                                                                from={(
+                                                                                    <Button onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: true
+                                                                                        })
+                                                                                    }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                        <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                        <Text style={{ color: "#ffffff" }}>Like</Text>
+                                                                                    </Button>
+                                                                                )}>
+                                                                                <View style={styles.popoverTwo}>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "screaming"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "exploding"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "tearsOfJoy"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "clapping"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "angry"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "heart"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                    <TouchableOpacity onPress={() => {
+                                                                                        this.setState({
+                                                                                            [`visible-${index}`]: !`visible-${index}`,
+                                                                                            like: "wow"
+                                                                                        }, () => {
+                                                                                            this.likeReactPost(post);
+                                                                                        })
+                                                                                    }} style={styles.lottiContainer}>
+                                                                                        <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
+                                                                                    </TouchableOpacity>
+                                                                                </View>
+                                                                            </Popover>}
+                                                                            
+                                                                            <Button onPress={() => {
+                                                                                this.handleRedirectToIndividualPage(post);
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                <Text style={{ color: "#ffffff" }}>Comment</Text>
+                                                                            </Button>
+                                                                            <Button onPress={() => {
                                                                                 this.setState({
-                                                                                    [`visible-${index}`]: false
+                                                                                    pickedOutPost: post
+                                                                                }, () => {
+                                                                                    setTimeout(() => {
+                                                                                        this.openBottomSheetCustom();
+                                                                                    }, 650)
                                                                                 })
-                                                                            }}
-                                                                            isVisible={this.state[`visible-${index}`]}  
-                                                                            placement={"top"}
-                                                                            from={(
-                                                                                <Button onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: true
-                                                                                    })
-                                                                                }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                                    <Image source={require("../../../assets/icons/like.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                                    <Text style={{ color: "#ffffff" }}>Like</Text>
-                                                                                </Button>
-                                                                            )}>
-                                                                            <View style={styles.popoverTwo}>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "screaming"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/screaming.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "exploding"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/exploding.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "tearsOfJoy"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/tears-of-joy.json')} autoPlay loop style={{ width: 80, maxWidth: 80, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "clapping"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/clapping.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "angry"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/angry.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "heart"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/love.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                                <TouchableOpacity onPress={() => {
-                                                                                    this.setState({
-                                                                                        [`visible-${index}`]: !`visible-${index}`,
-                                                                                        like: "wow"
-                                                                                    }, () => {
-                                                                                        this.likeReactPost(post);
-                                                                                    })
-                                                                                }} style={styles.lottiContainer}>
-                                                                                    <LottieView source={require('../../../assets/animations/wow.json')} autoPlay loop style={{ width: 50, maxWidth: 50, height: 65 }} />
-                                                                                </TouchableOpacity>
-                                                                            </View>
-                                                                        </Popover>}
-                                                                        
-                                                                        <Button onPress={() => {
-                                                                            this.handleRedirectToIndividualPage(post);
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/add-comment.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                            <Text style={{ color: "#ffffff" }}>Comment</Text>
-                                                                        </Button>
-                                                                        <Button onPress={() => {
-                                                                            this.setState({
-                                                                                pickedOutPost: post
-                                                                            }, () => {
-                                                                                setTimeout(() => {
-                                                                                    this.openBottomSheetCustom();
-                                                                                }, 650)
-                                                                            })
-                                                                        }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
-                                                                            <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
-                                                                            <Text style={{ color: "#ffffff" }}>Share</Text>
-                                                                        </Button>
-                                                                    </FooterTab>
-                                                                </Footer>
-                                                                </Body>
-                                                            </CardItem>
-                                                        </Card>
-                                                        <View style={styles.thickLine} />
-                                            </Fragment>}
-                                        </Fragment>
-                                    );
-                                }
-                            }}
-                            extraData={this.state}
-                            initialNumToRender={5}
-                            onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-                            onScroll={(value) => {
-                                if (this.state.scrolling === false) {
-                                        this.setState({
-                                            scrolling: true,
-                                            onEndReachedCalledDuringMomentum: false
-                                        })
-                                }
-                            }}
-                            keyExtractor={(item) => _.has(item, "newData") ? (item.newData.unique_id || uuid.v4()) : (item.unique_id || uuid.v4())}
-                            onEndReachedThreshold={0.25}
-                            onEndReached={(info) => {
-                                if (!this.state.onEndReachedCalledDuringMomentum) {
-                                    this.setState({
-                                        onEndReachedCalledDuringMomentum: true
-                                    }, () => {
-                                        this.loadMoreContentForWall(info);
-                                    })
-                                }
-                            }}
-                        /> : null}
-                    {typeof posts !== 'undefined' && posts.length > 0 ? null : this.renderAfterInitialLoad()}
-                    </View>
-                    </SafeAreaView> 
-                    <RBSheet
-                        animation={new Animated.Value(0)}
-                        ref={ref => {
-                            this.RBSheetGallery = ref;
-                        }}
-                        height={height}
-                        openDuration={250}
-                        customStyles={{
-                            container: {
-                            
-                            }
-                        }}
-                        >
-                        <TouchableOpacity onPress={() => {
-                            this.RBSheetGallery.close();
-                        }} style={styles.closeIconTopLeft}>
-                            <Image source={require("../../../assets/icons/close.png")} style={styles.innerImage} />
-                        </TouchableOpacity>
-                        {typeof this.state.allImages !== "undefined" && this.state.allImages.length > 0 ? <Gallery 
-                            initialPage={this.state.index}
-                            style={{ flex: 1, backgroundColor: 'black', width, height: 500, minHeight: 500, minWidth: width }}
-                            images={this.state.allImages.map((image) => {
-                                return { source: { uri: `${Config.wasabi_url}/${image}` } };
-                            })}
-                        /> : null}
-                    </RBSheet>
-                    {selectedPost !== null ? <RBSheet 
-                        animation={new Animated.Value(0)}
-                        closeOnDragDown={true}
-                        ref={ref => {
-                            this.RBSheetCustom = ref;
-                        }}
-                        height={height}
-                        openDuration={250}
-                        customStyles={{
-                            container: {
-                                paddingTop: 40
-                            },
-                            draggableIcon: {
-                                backgroundColor: "grey",
-                                width: 250
-                            }
-                        }}
-                    >
-                        <RBSheetCustomHelper selectedPost={this.state.selectedPost} props={this.props} />
-                    </RBSheet> : null}
-                    <BottomSheetCustomHelper pickedOutPost={this.state.pickedOutPost} sheetRef={this.sheetRef} />
-                    
-                    <RBSheet 
-                        animation={new Animated.Value(0)}
-                        ref={ref => {
-                            this.RBSheet = ref;
-                        }}
-                        height={height}
-                        openDuration={250}
-                        customStyles={{
-                            container: {
-                          
-                            }
-                        }}
-                        >
-                            <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
-                            <ShareLocationSlideUpPaneHelper CheckinRBSheet={this.CheckinRBSheet} />
-                            <UploadVideoPaneHelper props={this.props} uploadVideoPaneRef={this.UploadVideoPane} />
-                                <Header style={{ backgroundColor: "#303030" }}>
-                                    <Left>
-                                        <Button onPress={() => {
+                                                                            }} style={{ flexDirection: "column", width: width * 0.33333333333, backgroundColor: "#303030" }}>
+                                                                                <Image source={require("../../../assets/icons/share.png")} style={{ maxWidth: 20, maxHeight: 20, tintColor: "#ffffff" }} />
+                                                                                <Text style={{ color: "#ffffff" }}>Share</Text>
+                                                                            </Button>
+                                                                        </FooterTab>
+                                                                    </Footer>
+                                                                    </Body>
+                                                                </CardItem>
+                                                            </Card>
+                                                            <View style={styles.thickLine} />
+                                                </Fragment>}
+                                            </Fragment>
+                                        );
+                                    }
+                                }}
+                                extraData={this.state}
+                                initialNumToRender={5}
+                                onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+                                onScroll={(value) => {
+                                    if (this.state.scrolling === false) {
                                             this.setState({
-                                                wallText: "",
-                                                images: []
-                                            }, () => {
-                                                this.props.addPostCreationOptions({});
-    
-                                                this.RBSheet.close();
+                                                scrolling: true,
+                                                onEndReachedCalledDuringMomentum: false
                                             })
-                                        }} transparent>
-                                                <Icon style={Platform.OS === "ios" ? { color: "white" } : {}} name='arrow-back' />
-                                                {Platform.OS === "ios" ? <Text style={Platform.OS === "ios" ? { fontSize: 18, color: "white" } : { fontSize: 18 }}>Back</Text> : null}
-                                        </Button>
-                                    </Left>
-                                    <Body>
-                                        <Title style={{ color: "#ffffff" }}>Create Post</Title>
-                                    </Body>
-                                    <Right>
-                                        <Button onPress={() => {
-                                            this.handlePostUpload();
-                                        }} style={styles.myButton}>
-                                            <Text style={{ color: "white", fontWeight: "bold" }}>POST</Text>
-                                        </Button>
-                                    </Right>
-                                </Header>
-                                <View style={styles.margin}>
-                                    <View style={{ flexDirection: "row", maxWidth: width }}>
-                                        <Image source={require("../../../assets/images/me.jpg")} style={styles.profilePicTwo} />
-                                        <View style={{ flexDirection: "column", maxWidth: width * 0.75 }}>
-                                            {this.renderNameAndActivity()}
-                                            <View style={styles.visibility}>
-                                                <Popover    
-                                                    placement={"bottom"}
-                                                    from={(
-                                                        <TouchableOpacity>
-                                                        <Text>Visibility</Text>
-                                                        </TouchableOpacity>
-                                                    )}>
-                                                    <View style={styles.popover}>
-                                                        <List>
-                                                            <ListItem button={true} onPress={() => {
-                                                                this.setState({
-                                                                    visibility: "public"
-                                                                })
-                                                            }} icon>
-                                                                <Left>
-                                                                <Button transparent>
-                                                                    <Image source={require("../../../assets/icons/globe.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                                                </Button>
-                                                                </Left>
-                                                                <Body>
-                                                                    <Text style={this.state.visibility === "public" ? styles.textColorBlue : null}>Public (anyone)</Text>
-                                                                    <Text style={this.state.visibility === "public" ? styles.textColorBlue : null}>Everyone can view</Text>
-                                                                </Body>
-                                                                <Right>
-                                                                    <Icon style={this.state.visibility === "public" ? { color: "blue" } : null} active name="arrow-forward" />
-                                                                </Right>
-                                                            </ListItem>
-                                                            <ListItem button={true} onPress={() => {
-                                                                this.setState({
-                                                                    visibility: "friends"
-                                                                })
-                                                            }} icon>
-                                                                <Left>
-                                                                <Button transparent>
-                                                                    <Image source={require("../../../assets/icons/groups.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                                                </Button>
-                                                                </Left>
-                                                                <Body>
-                                                                    <Text style={this.state.visibility === "friends" ? styles.textColorBlue : null}>Friends</Text>
-                                                                    <Text style={this.state.visibility === "friends" ? styles.textColorBlue : null}>Only friends can view</Text>
-                                                                </Body>
-                                                                <Right>
-                                                                    <Icon style={this.state.visibility === "friends" ? { color: "blue" } : null} active name="arrow-forward" />
-                                                                </Right>
-                                                            </ListItem>
-                                                            
-                                                        </List>
-                                                    </View>
-                                                </Popover>
-                                                <Image source={require("../../../assets/icons/down.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
+                                    }
+                                }}
+                                keyExtractor={(item) => _.has(item, "newData") ? (item.newData.unique_id || uuid.v4()) : (item.unique_id || uuid.v4())}
+                                onEndReachedThreshold={0.25}
+                                onEndReached={(info) => {
+                                    if (!this.state.onEndReachedCalledDuringMomentum) {
+                                        this.setState({
+                                            onEndReachedCalledDuringMomentum: true
+                                        }, () => {
+                                            this.loadMoreContentForWall(info);
+                                        })
+                                    }
+                                }}
+                            /> : null}
+                        {typeof posts !== 'undefined' && posts.length > 0 ? null : this.renderAfterInitialLoad()}
+                        </View>
+                        </SafeAreaView> 
+                        <RBSheet
+                            animation={new Animated.Value(0)}
+                            ref={ref => {
+                                this.RBSheetGallery = ref;
+                            }}
+                            height={height}
+                            openDuration={250}
+                            customStyles={{
+                                container: {
+                                
+                                }
+                            }}
+                            >
+                            <TouchableOpacity onPress={() => {
+                                this.RBSheetGallery.close();
+                            }} style={styles.closeIconTopLeft}>
+                                <Image source={require("../../../assets/icons/close.png")} style={styles.innerImage} />
+                            </TouchableOpacity>
+                            {typeof this.state.allImages !== "undefined" && this.state.allImages.length > 0 ? <Gallery 
+                                initialPage={this.state.index}
+                                style={{ flex: 1, backgroundColor: 'black', width, height: 500, minHeight: 500, minWidth: width }}
+                                images={this.state.allImages.map((image) => {
+                                    return { source: { uri: `${Config.wasabi_url}/${image}` } };
+                                })}
+                            /> : null}
+                        </RBSheet>
+                        {selectedPost !== null ? <RBSheet 
+                            animation={new Animated.Value(0)}
+                            closeOnDragDown={true}
+                            ref={ref => {
+                                this.RBSheetCustom = ref;
+                            }}
+                            height={height}
+                            openDuration={250}
+                            customStyles={{
+                                container: {
+                                    paddingTop: 40
+                                },
+                                draggableIcon: {
+                                    backgroundColor: "grey",
+                                    width: 250
+                                }
+                            }}
+                        >
+                            <RBSheetCustomHelper selectedPost={this.state.selectedPost} props={this.props} />
+                        </RBSheet> : null}
+                        <BottomSheetCustomHelper pickedOutPost={this.state.pickedOutPost} sheetRef={this.sheetRef} />
+                        
+                        <RBSheet 
+                            animation={new Animated.Value(0)}
+                            ref={ref => {
+                                this.RBSheet = ref;
+                            }}
+                            height={height}
+                            openDuration={250}
+                            customStyles={{
+                                container: {
+                                
+                                }
+                            }}
+                            >
+                                <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
+                                <ShareLocationSlideUpPaneHelper CheckinRBSheet={this.CheckinRBSheet} />
+                                <UploadVideoPaneHelper props={this.props} uploadVideoPaneRef={this.UploadVideoPane} />
+                                    <Header style={{ backgroundColor: "#303030" }}>
+                                        <Left>
+                                            <Button onPress={() => {
+                                                this.setState({
+                                                    wallText: "",
+                                                    images: []
+                                                }, () => {
+                                                    this.props.addPostCreationOptions({});
+        
+                                                    this.RBSheet.close();
+                                                })
+                                            }} transparent>
+                                                    <Icon style={Platform.OS === "ios" ? { color: "white" } : {}} name='arrow-back' />
+                                                    {Platform.OS === "ios" ? <Text style={Platform.OS === "ios" ? { fontSize: 18, color: "white" } : { fontSize: 18 }}>Back</Text> : null}
+                                            </Button>
+                                        </Left>
+                                        <Body>
+                                            <Title style={{ color: "#ffffff" }}>Create Post</Title>
+                                        </Body>
+                                        <Right>
+                                            <Button onPress={() => {
+                                                this.handlePostUpload();
+                                            }} style={styles.myButton}>
+                                                <Text style={{ color: "white", fontWeight: "bold" }}>POST</Text>
+                                            </Button>
+                                        </Right>
+                                    </Header>
+                                    <View style={styles.margin}>
+                                        <View style={{ flexDirection: "row", maxWidth: width }}>
+                                            <Image source={require("../../../assets/images/me.jpg")} style={styles.profilePicTwo} />
+                                            <View style={{ flexDirection: "column", maxWidth: width * 0.75 }}>
+                                                {this.renderNameAndActivity()}
+                                                <View style={styles.visibility}>
+                                                    <Popover    
+                                                        placement={"bottom"}
+                                                        from={(
+                                                            <TouchableOpacity>
+                                                            <Text>Visibility</Text>
+                                                            </TouchableOpacity>
+                                                        )}>
+                                                        <View style={styles.popover}>
+                                                            <List>
+                                                                <ListItem button={true} onPress={() => {
+                                                                    this.setState({
+                                                                        visibility: "public"
+                                                                    })
+                                                                }} icon>
+                                                                    <Left>
+                                                                    <Button transparent>
+                                                                        <Image source={require("../../../assets/icons/globe.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                                                    </Button>
+                                                                    </Left>
+                                                                    <Body>
+                                                                        <Text style={this.state.visibility === "public" ? styles.textColorBlue : null}>Public (anyone)</Text>
+                                                                        <Text style={this.state.visibility === "public" ? styles.textColorBlue : null}>Everyone can view</Text>
+                                                                    </Body>
+                                                                    <Right>
+                                                                        <Icon style={this.state.visibility === "public" ? { color: "blue" } : null} active name="arrow-forward" />
+                                                                    </Right>
+                                                                </ListItem>
+                                                                <ListItem button={true} onPress={() => {
+                                                                    this.setState({
+                                                                        visibility: "friends"
+                                                                    })
+                                                                }} icon>
+                                                                    <Left>
+                                                                    <Button transparent>
+                                                                        <Image source={require("../../../assets/icons/groups.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                                                    </Button>
+                                                                    </Left>
+                                                                    <Body>
+                                                                        <Text style={this.state.visibility === "friends" ? styles.textColorBlue : null}>Friends</Text>
+                                                                        <Text style={this.state.visibility === "friends" ? styles.textColorBlue : null}>Only friends can view</Text>
+                                                                    </Body>
+                                                                    <Right>
+                                                                        <Icon style={this.state.visibility === "friends" ? { color: "blue" } : null} active name="arrow-forward" />
+                                                                    </Right>
+                                                                </ListItem>
+                                                                
+                                                            </List>
+                                                        </View>
+                                                    </Popover>
+                                                    <Image source={require("../../../assets/icons/down.png")} style={{ maxWidth: 20, maxHeight: 20 }} />
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
-                                <MentionsTextInput
-                                    textInputStyle={{ borderColor: '#ebebeb', borderWidth: 1, padding: 5, fontSize: 15 }}
-                                    suggestionsPanelStyle={{ backgroundColor: 'rgba(100,100,100,0.1)' }}
-                                    loadingComponent={() => <View style={{ flex: 1, width, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator style={{ paddingTop: 15 }} /></View>}
-                                    textInputMinHeight={100}
-                                    placeholder={"What's on your mind? \nTag a friend with the @ symbol"}
-                                    textInputMaxHeight={(typeof pictures !== "undefined" && pictures.length > 0) || (this.props.selection !== null) ? 150 : 250}
-                                    trigger={'@'}
-                                    triggerLocation={'new-word-only'} // 'new-word-only', 'anywhere'
-                                    value={this.state.wallText}
-                                    onBlur={() => {
-                                        this.checkUsernames();
-                                    }}
-                                    onChangeText={this.onChangeTextMainInput}
-                                    triggerCallback={this.wallPostCallback}
-                                    renderSuggestionsRow={this.renderSuggestionsRow}
-                                    suggestionsData={this.state.friends} 
-                                    keyExtractor={(item, index) => item.acquaintance} 
-                                    suggestionRowHeight={45}
-                                    placeholderTextColor={"grey"}
-                                    horizontal={false} 
-                                    MaxVisibleRowCount={5}
-                                />
-                                {this.props.selection !== null ? <View style={{ marginBottom: 35 }} /> : null}
-                                <View style={typeof pictures !== "undefined" && pictures.length > 0 ? styles.pictureContainer : styles.hideContainer}>
-                                    <View style={{ minHeight: 500, marginBottom: 50 }}>
-                                        {[1, 3, 4].includes(imagesToShow.length)  && this.renderOne()}
-                                        {imagesToShow.length >= 2 && imagesToShow.length != 4 && this.renderTwo()}
-                                        {imagesToShow.length >= 4 && this.renderThree()}
-                                    </View>
-                                </View>
-                                {this.props.prep !== null ? <View style={{ marginTop: 20 }}>
-                                <Video 
-                                    source={{ uri: this.props.prep, type: "mp4" }}   // Can be a URL or a local file.
-                                    ref={(player) => {
-                                        this.player = player;
-                                    }} 
-                                    controls={true}
-                                    muted={true}
-                                    onError={this.errored}
-                                    repeat={true}
-                                    style={styles.backgroundVideo} 
-                                />
-                                <TouchableOpacity onPress={() => {
-                                    this.props.addVideoToWallQueue({});
-    
-                                    this.setState({
-                                        
-                                    })
-                                }} style={styles.closeVideo}>
-                                    <Image source={require("../../../assets/icons/close.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
-                                    <Text style={styles.closeVideoText}>Remove video from post</Text>
-                                </TouchableOpacity>
-                                </View> : null}
-                                {selection !== null ? <Fragment>
-                                <TouchableOpacity onPress={() => {
-                                    this.props.addPostCreationOptions({});
-                                }} style={styles.mapTouchable}>
-                                    <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
-                                </TouchableOpacity>
-                                <View style={styles.centered}>   
-                                    <MapView
-                                        loadingEnabled 
-                                        style={styles.map}
-                                        region={{
-                                            latitude: selection.position.lat, 
-                                            longitude: selection.position.lon,
-                                            latitudeDelta: 0.0922,
-                                            longitudeDelta: 0.0421
+                                    <MentionsTextInput
+                                        textInputStyle={{ borderColor: '#ebebeb', borderWidth: 1, padding: 5, fontSize: 15 }}
+                                        suggestionsPanelStyle={{ backgroundColor: 'rgba(100,100,100,0.1)' }}
+                                        loadingComponent={() => <View style={{ flex: 1, width, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator style={{ paddingTop: 15 }} /></View>}
+                                        textInputMinHeight={100}
+                                        placeholder={"What's on your mind? \nTag a friend with the @ symbol"}
+                                        textInputMaxHeight={(typeof pictures !== "undefined" && pictures.length > 0) || (this.props.selection !== null) ? 150 : 250}
+                                        trigger={'@'}
+                                        triggerLocation={'new-word-only'} // 'new-word-only', 'anywhere'
+                                        value={this.state.wallText}
+                                        onBlur={() => {
+                                            this.checkUsernames();
                                         }}
-                                    >
-                                        {/* <TouchableOpacity onPress={() => {
-                                            this.props.addPostCreationOptions({});
-                                        }} style={styles.mapTouchable}>
-                                            <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
-                                        </TouchableOpacity> */}
-                                        <Marker
-                                            key={1}
-                                            coordinate={{ 
+                                        onChangeText={this.onChangeTextMainInput}
+                                        triggerCallback={this.wallPostCallback}
+                                        renderSuggestionsRow={this.renderSuggestionsRow}
+                                        suggestionsData={this.state.friends} 
+                                        keyExtractor={(item, index) => item.acquaintance} 
+                                        suggestionRowHeight={45}
+                                        placeholderTextColor={"grey"}
+                                        horizontal={false} 
+                                        MaxVisibleRowCount={5}
+                                    />
+                                    {this.props.selection !== null ? <View style={{ marginBottom: 35 }} /> : null}
+                                    <View style={typeof pictures !== "undefined" && pictures.length > 0 ? styles.pictureContainer : styles.hideContainer}>
+                                        <View style={{ minHeight: 500, marginBottom: 50 }}>
+                                            {[1, 3, 4].includes(imagesToShow.length)  && this.renderOne()}
+                                            {imagesToShow.length >= 2 && imagesToShow.length != 4 && this.renderTwo()}
+                                            {imagesToShow.length >= 4 && this.renderThree()}
+                                        </View>
+                                    </View>
+                                    {this.props.prep !== null ? <View style={{ marginTop: 20 }}>
+                                    <Video 
+                                        source={{ uri: this.props.prep, type: "mp4" }}   // Can be a URL or a local file.
+                                        ref={(player) => {
+                                            this.player = player;
+                                        }} 
+                                        controls={true}
+                                        muted={true}
+                                        onError={this.errored}
+                                        repeat={true}
+                                        style={styles.backgroundVideo} 
+                                    />
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.addVideoToWallQueue({});
+        
+                                        this.setState({
+                                            
+                                        })
+                                    }} style={styles.closeVideo}>
+                                        <Image source={require("../../../assets/icons/close.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                        <Text style={styles.closeVideoText}>Remove video from post</Text>
+                                    </TouchableOpacity>
+                                    </View> : null}
+                                    {selection !== null ? <Fragment>
+                                    <TouchableOpacity onPress={() => {
+                                        this.props.addPostCreationOptions({});
+                                    }} style={styles.mapTouchable}>
+                                        <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
+                                    </TouchableOpacity>
+                                    <View style={styles.centered}>   
+                                        <MapView
+                                            loadingEnabled 
+                                            style={styles.map}
+                                            region={{
                                                 latitude: selection.position.lat, 
-                                                longitude: selection.position.lon 
+                                                longitude: selection.position.lon,
+                                                latitudeDelta: 0.0922,
+                                                longitudeDelta: 0.0421
                                             }}
-                                            title={selection.poi.name}
-                                            description={selection.address.freeformAddress}
                                         >
-                                            <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
-                                        </Marker>
-                                    </MapView>
-                                </View></Fragment> : null}
-                               
-                            </ScrollView>
-                            <Spinner
-                                overlayColor={"rgba(0, 0, 0, 0.75)"}
-                                visible={this.state.spinner}
-                                textContent={'Uploading content...'}
-                                textStyle={styles.spinnerTextStyle}
-                            />
-                            <View style={Platform.OS === "ios" ? styles.bottomContainer : styles.bottomContainerAndroid}>
-                                    <TouchableOpacity onPress={() => {
-                                        this._panel.show()
-                                    }}>
-                                        <Text style={styles.addText}>Add to your post</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
-                                        this._panel.show();
-                                    }} style={{ flexDirection: "row", position: "absolute", right: 0}}>
-                                        <Image source={require("../../../assets/icons/pictures.png")} style={styles.iconSmall} />
-                                        <Image source={require("../../../assets/icons/groups.png")} style={styles.iconSmall} />
-                                        <Image source={require("../../../assets/icons/grinning.png")} style={styles.iconSmall} />
-                                        <Image source={require("../../../assets/icons/marker.png")} style={styles.iconSmall} />
-                                    </TouchableOpacity>
-                            </View>
-                            <SlidingUpPanel allowDragging={false} ref={c => this._panel = c}>
-                                <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.paneContainer}>
-                                <List>
-                                    <ListItem button={true} onPress={this.launchImageLibrary} icon>
-                                        <Left>
-                                        <Button transparent>
-                                            <Image source={require("../../../assets/icons/gallery.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "green" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Upload photo(s)</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem button={true} onPress={() => {
-                                        this._panel.hide();
-    
-                                        setTimeout(() => {
-                                            this.UploadVideoPane.current.open();
-                                        }, 1000);
-                                    }} icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/video-reel.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Upload A Video</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/grinning.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Feeling/Activity</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem button={true} onPress={() => {
-                                        this._panel.hide();
-    
-                                        setTimeout(() => {
-                                            this.CheckinRBSheet.current.open();
-                                        }, 1000);
-                                    }} icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/marker.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Check-in</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/video-on.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "blue" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Live Video</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/camera.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "darkred" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Camera</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/room.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Create Room</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/text.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Text Background Color</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
-                                    <ListItem icon>
-                                        <Left>
-                                        <Button transparent>
-                                           <Image source={require("../../../assets/icons/hint.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </Button>
-                                        </Left>
-                                        <Body>
-                                        <Text>Ask for recommendations</Text>
-                                        </Body>
-                                        <Right>
-                                        <Icon active name="arrow-forward" />
-                                        </Right>
-                                    </ListItem>
+                                            {/* <TouchableOpacity onPress={() => {
+                                                this.props.addPostCreationOptions({});
+                                            }} style={styles.mapTouchable}>
+                                                <Image source={require("../../../assets/icons/close.png")} style={styles.mapCloseIcon} />
+                                            </TouchableOpacity> */}
+                                            <Marker
+                                                key={1}
+                                                coordinate={{ 
+                                                    latitude: selection.position.lat, 
+                                                    longitude: selection.position.lon 
+                                                }}
+                                                title={selection.poi.name}
+                                                description={selection.address.freeformAddress}
+                                            >
+                                                <Image source={require("../../../assets/icons/map-pin.png")} style={{ maxWidth: 30, maxHeight: 30 }} />
+                                            </Marker>
+                                        </MapView>
+                                    </View></Fragment> : null}
                                     
-                                </List>
                                 </ScrollView>
-                            </SlidingUpPanel>
-                    </RBSheet>
-                    </SideMenu>
-                </View>
-            ) 
+                                <Spinner
+                                    overlayColor={"rgba(0, 0, 0, 0.75)"}
+                                    visible={this.state.spinner}
+                                    textContent={'Uploading content...'}
+                                    textStyle={styles.spinnerTextStyle}
+                                />
+                                <View style={Platform.OS === "ios" ? styles.bottomContainer : styles.bottomContainerAndroid}>
+                                        <TouchableOpacity onPress={() => {
+                                            this._panel.show()
+                                        }}>
+                                            <Text style={styles.addText}>Add to your post</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            this._panel.show();
+                                        }} style={{ flexDirection: "row", position: "absolute", right: 0}}>
+                                            <Image source={require("../../../assets/icons/pictures.png")} style={styles.iconSmall} />
+                                            <Image source={require("../../../assets/icons/groups.png")} style={styles.iconSmall} />
+                                            <Image source={require("../../../assets/icons/grinning.png")} style={styles.iconSmall} />
+                                            <Image source={require("../../../assets/icons/marker.png")} style={styles.iconSmall} />
+                                        </TouchableOpacity>
+                                </View>
+                                <SlidingUpPanel allowDragging={false} ref={c => this._panel = c}>
+                                    <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.paneContainer}>
+                                    <List>
+                                        <ListItem button={true} onPress={this.launchImageLibrary} icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/gallery.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "green" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Upload photo(s)</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem button={true} onPress={() => {
+                                            this._panel.hide();
+        
+                                            setTimeout(() => {
+                                                this.UploadVideoPane.current.open();
+                                            }, 1000);
+                                        }} icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/video-reel.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Upload A Video</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/grinning.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Feeling/Activity</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem button={true} onPress={() => {
+                                            this._panel.hide();
+        
+                                            setTimeout(() => {
+                                                this.CheckinRBSheet.current.open();
+                                            }, 1000);
+                                        }} icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/marker.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Check-in</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/video-on.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "blue" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Live Video</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/camera.png")} style={{ maxWidth: "100%", maxHeight: "100%", tintColor: "darkred" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Camera</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/room.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Create Room</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/text.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Text Background Color</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        <ListItem icon>
+                                            <Left>
+                                            <Button transparent>
+                                                <Image source={require("../../../assets/icons/hint.png")} style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                            </Button>
+                                            </Left>
+                                            <Body>
+                                            <Text>Ask for recommendations</Text>
+                                            </Body>
+                                            <Right>
+                                            <Icon active name="arrow-forward" />
+                                            </Right>
+                                        </ListItem>
+                                        
+                                    </List>
+                                    </ScrollView>
+                                </SlidingUpPanel>
+                        </RBSheet>
+                        </SideMenu>
+                    </View>
+                ) 
+            } else {
+                return null;
+            }
         } else {
             return (
                 <Fragment>
