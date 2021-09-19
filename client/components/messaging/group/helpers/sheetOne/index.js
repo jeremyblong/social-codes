@@ -1,8 +1,8 @@
 import React, { Component, Fragment, useEffect, useRef, useState } from 'react'
 import { ActionSheetCustom as ActionSheetTwo } from 'react-native-actionsheet';
 import styles from "./styles.js";
-import { ListItem, List, Left, Body, Right, Icon } from "native-base";
-import { Text, Image, View, TouchableOpacity, ScrollView } from "react-native";
+import { ListItem, List, Left, Body, Right, Icon, Title, Subtitle, Header, Button } from "native-base";
+import { Text, Image, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { Switch } from 'react-native-gesture-handler';
 import { connect } from "react-redux";
 import { showMessage, hideMessage } from "react-native-flash-message";
@@ -13,39 +13,53 @@ import { useNavigation } from '@react-navigation/native';
 import ActionSheet from "react-native-actions-sheet";
 import Autocomplete from "react-native-autocomplete-input";
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Dialog from "react-native-dialog";
+
+
+const { height, width } = Dimensions.get("window");
 
 const options = [
-    <View onPress={() => {}}>
+    <View>
         <Text>Leave Group</Text>
     </View>,
-    <View onPress={() => {}}>
+    <View>
         <Text style={{ color: "red" }}>Delete Group</Text>
     </View>,
-    <View onPress={() => {}}>
+    <View>
         <Text>Ban/Kick Member(s) From Group</Text>
     </View>,
-    <View onPress={() => {}}>
+    <View>
         <Text>Transfer Group Ownership</Text>
     </View>,
-    <View onPress={() => {}}>
+    <View>
         <Text>Add Members To Group</Text>
     </View>,
-    <View onPress={() => {}}>
+    <View>
         <Text>Cancel/Close</Text>
     </View>
 ]
 
 const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMembers }) => {
+    const [members, setMembers] = useState([]);
     const [ query, setQuery ] = useState("");
+    const [ searchValue, setSearchValue ] = useState("");
     const scrollViewRef = useRef();
     const myCustomActionSheet = useRef();
     const [relevantUsers, setRelevantMembers] = useState([]);
     const navigation = useNavigation();
     const [ selected, setSelected ] = useState([]);
     const [ hide, setHide ] = useState(true);
+    const RBSheetRef = useRef();
+    const [ hideBan, setHideBan ] = useState(true);
+    const [ available, setAvaliable ] = useState([]);
+    const [ isVisible, setVisible ] = useState(false);
+    const [ selectedSingle, setSelectedSingle ] = useState(null);
 
     useEffect(() => {
         console.log("conversation", conversation);
+
+        setMembers(groupMembers);
     }, [])
 
     const leaveGroup = () => {
@@ -117,6 +131,24 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
     const banKickMembers = () => {
         console.log("banKickMembers clicked.");
 
+        const GUID = conversation.guid;
+        const limit = 35;
+        const groupMemberRequest = new CometChat.GroupMembersRequestBuilder(GUID).setLimit(limit).build();
+
+        groupMemberRequest.fetchNext().then(
+            groupMembers => {
+                console.log("Group Member list fetched successfully:", groupMembers);
+
+                setMembers(groupMembers);
+
+                setTimeout(() => {
+                    RBSheetRef.current.open();
+                }, 750)
+            },
+            error => {
+                console.log("Group Member list fetching failed with exception:", error);
+            }
+        );
     }
     const transferGroupOwnership = () => {
         console.log("transferGroupOwnership clicked.");
@@ -165,17 +197,21 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                     
                     const keys = Object.keys(response);
 
+                    const size = Object.keys(response).length - 1;
+
+                    console.log("size", size);
+
                     keys.forEach((key, index) => {
-                        console.log(`${key}: ${response[key]}`);
+                        console.log(`${key}: ${response[key]}`, index);
 
                         if (response[key] !== "Member already has the same scope participant.") {
                             membersIDS.push(user.unique_id);
 
-                            if (((keys.length - 1) === index)) {
+                            if ((size === index)) {
                                 resolve(membersIDS);
                             }
                         } else {
-                            if (((keys.length - 1) === index)) {
+                            if ((size === index)) {
                                 resolve(membersIDS);
                             }
                         }
@@ -183,6 +219,9 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                 })
 
                 promiseee.then((passedValues) => {
+
+                    console.log("passedValues", passedValues);
+
                     axios.post(`${Config.ngrok_url}/add/additional/users/group/chat`, {
                         membersIDS: passedValues,
                         id: unique_id,
@@ -203,9 +242,69 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
             }
         );
     }
-    console.log(relevantUsers, selected);
+    const handleSearchBanKick = (value) => {
+        console.log("handleSearchBanKick", value);
+
+        setAvaliable(members.filter((member, index) => {
+            if (member.name.includes(value.toLowerCase().trim())) {
+                return true;
+            }
+        }));
+    }
+    const bankKickMemberForGood = () => {
+        console.log("bankKickMemberForGood ran...");
+
+        const otherID = selectedSingle.uid;
+        const GUID = selectedSingle.guid;
+
+        CometChat.banGroupMember(GUID, otherID).then(
+        response => {
+            console.log("Group member banned successfully", response);
+
+            axios.put(`${Config.ngrok_url}/ban/user/conversation`, {
+                otherID,
+                GUID
+            }).then((res) => {
+                if (res.data.message === "Banned!") {
+                    console.log(res.data);
+
+                    showMessage({
+                        message: "Banned user successfully!",
+                        description: "We have successfully banned this user from your group - they will no longer be able to view this group.",
+                        type: "success",
+                        duration: 2750
+                    });
+                } else {
+                    console.log("Err", res.data);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        },
+        error => {
+            console.log("Group member banning failed with error", error);
+        }
+        );
+    }
+    console.log(relevantUsers, selected, selectedSingle);
     return (
         <Fragment>
+            <View>
+                <Dialog.Container visible={isVisible}>
+                <Dialog.Title>Ban/Kick {selectedSingle.name}</Dialog.Title>
+                <Dialog.Description>
+                    Are you sure you'd like to ban/kick this user from the group chat?
+                </Dialog.Description>
+                <Dialog.Button onPress={() => {
+                    setVisible(false);
+                }} label="Cancel" />
+                <Dialog.Button onPress={() => {
+                    setVisible(false);
+                    
+                    bankKickMemberForGood();
+                }} label="BAN/KICK" />
+                </Dialog.Container>
+            </View>
             <ActionSheetTwo
                 ref={sheetRefActions}
                 title={'Selectable chat options...'}
@@ -367,6 +466,76 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                         </ScrollView>
                 </View>
             </ActionSheet>
+            <RBSheet
+            ref={RBSheetRef}
+            height={height * 0.75}
+            openDuration={250}
+            customStyles={{
+                container: {
+                
+                }
+            }}
+            >
+                <Header>
+                    <Left>
+                        <Button onPress={() => {
+                            RBSheetRef.current.close();
+                        }} transparent>
+                            <Icon name='close' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Ban/Kick User(s)</Title>
+                        <Subtitle>Kick or ban user(s)</Subtitle>
+                    </Body>
+                    <Right />
+                </Header>
+                    <List>
+                    <ListItem itemDivider>
+                        <Text>Search for user(s) in this group to ban/kick</Text>
+                    </ListItem>   
+                    <Autocomplete
+                        data={available}
+                        value={searchValue}
+                        hideResults={hideBan}
+                        placeholder={"Search for your users name's (first + last)"}
+                        placeholderTextColor={"grey"}
+                        listContainerStyle={{ minHeight: available.length * 70}}
+                        onChangeText={(text) => {
+                            setSearchValue(text);
+                            setHideBan(false);
+
+                            handleSearchBanKick(searchValue);
+                        }}
+                        flatListProps={{
+                            keyExtractor: (_, idx) => idx,
+                            renderItem: ({ item }) => {
+                                return (
+                                    <ListItem style={{ zIndex: 999999 }} button={true} onPress={() => {
+                                        
+                                        console.log("clicked.");
+
+                                        RBSheetRef.current.close();
+                                        
+                                        setSelectedSingle(item);
+
+                                        setTimeout(() => {
+                                            setVisible(true);
+                                        }, 750)
+                                    }}>
+                                        <Left>
+                                            <Text><Text style={{ fontSize: 20 }}>Ban/Kick member {item.name}</Text>{"\n"}Scope: {item.scope}</Text>
+                                        </Left>
+                                        <Right>
+                                            <Icon name="arrow-forward" />
+                                        </Right>
+                                    </ListItem>
+                                );
+                            },
+                        }}
+                    /> 
+                </List>
+            </RBSheet>
         </Fragment>
     );
 }

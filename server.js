@@ -245,6 +245,7 @@ app.use("/gather/profile/pictures/group", require("./routes/messaging/group/gath
 app.use("/delete/group/conversation", require("./routes/messaging/group/delete/deleteConversation.js"));
 app.use("/leave/conversation/only/individual", require("./routes/messaging/group/leave/leaveGroup.js"));
 app.use("/add/additional/users/group/chat", require("./routes/messaging/group/add/addAdditionalMembers.js"));
+app.use("/ban/user/conversation", require("./routes/messaging/group/ban/banUserGroupChat.js"));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname, './client/public/index.html')
