@@ -23,13 +23,21 @@ export default StyleSheet.create({
         marginLeft: 0,
         width: 175
     },
+    rightTyping: {
+        position: "absolute",
+        left: 10
+    },
+    footerContainer: {
+        margin: 10,
+        marginBottom: 50
+    },
     columnLeft: {
         width: width * 0.20
     },
     absolutelyPositioned: {
         position: "absolute",
-        right: 20,
-        bottom: 125
+        left: 20,
+        top: 200
     },  
     topHeader: {
         borderBottomColor: "transparent",

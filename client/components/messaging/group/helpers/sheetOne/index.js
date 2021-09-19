@@ -289,7 +289,7 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
     console.log(relevantUsers, selected, selectedSingle);
     return (
         <Fragment>
-            <View>
+            {selectedSingle !== null ? <View>
                 <Dialog.Container visible={isVisible}>
                 <Dialog.Title>Ban/Kick {selectedSingle.name}</Dialog.Title>
                 <Dialog.Description>
@@ -304,7 +304,7 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                     bankKickMemberForGood();
                 }} label="BAN/KICK" />
                 </Dialog.Container>
-            </View>
+            </View> : null}
             <ActionSheetTwo
                 ref={sheetRefActions}
                 title={'Selectable chat options...'}

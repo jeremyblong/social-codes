@@ -977,7 +977,7 @@ constructor (props) {
                 <Header style={{ backgroundColor: "#303030" }}>
                     <Left style={{ maxWidth: 50 }}>
                         <Button onPress={() => {
-                            this.props.props.navigation.push("messaging-conversations");
+                            this.props.props.navigation.replace("messaging-conversations");
                         }} transparent>
                             <Image source={require("../../../assets/icons/go-back.png")} style={styles.smallerIcon} />
                         </Button>

@@ -13,6 +13,8 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RBSheet from "react-native-raw-bottom-sheet";
 import ActionSheet from "react-native-actions-sheet";
 import SheetOptionsHelper from "./helpers/sheetOne/index.js";
+import LottieView from 'lottie-react-native';
+
 
 const { height, width } = Dimensions.get("window");
 
@@ -40,6 +42,8 @@ constructor(props){
 
         const groupMemberRequest = new CometChat.GroupMembersRequestBuilder(conversation.guid).setLimit(50).build();
 
+        const listenerID = conversation.guid;
+
         groupMemberRequest.fetchNext().then(
             groupMembers => {
                 console.log("Group Member list fetched successfully:", groupMembers);
@@ -53,7 +57,558 @@ constructor(props){
             }
         );
 
+        const UID = conversation.guid;
+        const limit = 50;
+
+        const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(limit).setGUID(UID).build();
+
+        messagesRequest.fetchPrevious().then(
+            messages => {
+                console.log("Message list fetched:", messages);
+                // Handle the list of messages
+
+                const messageArray = [];
+
+                const reversed = messages.reverse();
+
+                for (let index = 0; index < reversed.length; index++) {
+                    const message = reversed[index];
+
+                    console.log(message);
+                    
+                    if (message.type === "text") {
+                        if (message.sender.uid !== this.props.unique_id) {
+
+                            let customName = message.sender.name.replace(" ", "+");
+                            // this is the other user 
+                            messageArray.push({
+                                _id: uuid(),
+                                text: <Text>{message.text}</Text>,
+                                createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                user: {
+                                    _id: message.sender.uid,
+                                    name: message.sender.name,
+                                    avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                },
+                            })
+                        } else {
+                            let customName = message.sender.name.replace(" ", "+");
+                            // this is the logged in user
+                            messageArray.push({
+                                _id: uuid(),
+                                text: <Text onPress={() => {
+                                    this.setState({
+                                        isVisible: !this.state.isVisible,
+                                        selected: message.id
+                                    })
+                                }}>{message.text}</Text>,
+                                createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                user: {
+                                    _id: this.props.unique_id,
+                                    name: message.sender.name,
+                                    avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                },
+                            })
+                        }
+                    } else if (message.type === "file") {
+                        console.log("message is a file", message);
+
+                        if (message.sender.uid !== this.props.unique_id) {
+
+                            let customName = message.sender.name.replace(" ", "+");
+                            // this is the logged in user
+                            messageArray.push({
+                                _id: uuid(),
+                                image: message.data.url,
+                                createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                user: {
+                                _id: message.sender.uid,
+                                name: message.sender.name,
+                                avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                },
+                            })
+                        } else {
+                            let customName = message.sender.name.replace(" ", "+");
+                            // this is the logged in user
+                            messageArray.push({
+                                _id: uuid(),
+                                image: message.data.url,
+                                createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                user: {
+                                _id: this.props.unique_id,
+                                name: message.sender.name,
+                                avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                },
+                            })
+                        }
+                    }
+                }
+
+                this.setState({
+                    messages: messageArray,
+                    message: ""
+                })
+            },
+            error => {
+                console.log("Message fetching failed with error:", error);
+            }
+        );
+
+        CometChat.addMessageListener(
+            listenerID,
+            new CometChat.MessageListener({
+                onTextMessageReceived: textMessage => {
+                    console.log("Text message received successfully", textMessage);
+                    // Handle text message
+
+                    const UID = conversation.guid;
+                    const limit = 50;
+
+                    const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(limit).setGUID(UID).build();
+
+                    messagesRequest.fetchPrevious().then(
+                        messages => {
+                            console.log("Message list fetched:", messages);
+                            // Handle the list of messages
+
+                            const messageArray = [];
+
+                            const reversed = messages.reverse();
+
+                            for (let index = 0; index < reversed.length; index++) {
+                                const message = reversed[index];
+
+                                console.log(message);
+                                if (message.type === "text") {
+                                    if (message.sender.uid !== this.props.unique_id) {
+
+                                        let customName = message.sender.name.replace(" ", "+");
+                                        // this is the other user 
+                                        messageArray.push({
+                                            _id: uuid(),
+                                            text: <Text>{message.text}</Text>,
+                                            createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                            user: {
+                                            _id: message.sender.uid,
+                                            name: message.sender.name,
+                                            avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                            },
+                                        })
+                                    } else {
+                                        let customName = message.sender.name.replace(" ", "+");
+                                        // this is the logged in user
+                                        messageArray.push({
+                                            _id: uuid(),
+                                            text: <Text onPress={() => {
+                                                this.setState({
+                                                    isVisible: !this.state.isVisible,
+                                                    selected: message.id
+                                                })
+                                            }}>{message.text}</Text>,
+                                            createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                            user: {
+                                            _id: this.props.unique_id,
+                                            name: message.sender.name,
+                                            avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                            },
+                                        })
+                                    }
+                                } else if (message.type === "file") {
+                                    console.log("message is a file", message);
+
+                                    if (message.sender.uid !== this.props.unique_id) {
+
+                                        let customName = message.sender.name.replace(" ", "+");
+                                        // this is the logged in user
+                                        messageArray.push({
+                                            _id: uuid(),
+                                            image: message.data.url,
+                                            createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                            user: {
+                                            _id: message.sender.uid,
+                                            name: message.sender.name,
+                                            avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                            },
+                                        })
+                                    } else {
+                                        let customName = message.sender.name.replace(" ", "+");
+                                        // this is the logged in user
+                                        messageArray.push({
+                                            _id: uuid(),
+                                            image: message.data.url,
+                                            createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                            user: {
+                                            _id: this.props.unique_id,
+                                            name: message.sender.name,
+                                            avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                            },
+                                        })
+                                    }
+                                }
+                            }
+
+                            this.setState({
+                                messages: messageArray
+                            })
+                        },
+                        error => {
+                            console.log("Message fetching failed with error:", error);
+                        }
+                    );
+                },
+                onMediaMessageReceived: mediaMessage => {
+                    console.log("Media message received successfully", mediaMessage);
+                    // Handle media message
+
+                    const UID = conversation.guid;
+                    const limit = 50;
+
+                    const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(limit).setGUID(UID).build();
+
+                    // messagesRequest.fetchPrevious().then(
+                    //     messages => {
+                    //         console.log("Message list fetched:", messages);
+                    //         // Handle the list of messages
+
+                    //         const messageArray = [];
+
+                    //         const reversed = messages.reverse();
+
+                    //         for (let index = 0; index < reversed.length; index++) {
+                    //             const message = reversed[index];
+
+                    //             console.log(message);
+                    //             if (message.type === "text") {
+                    //                 if (message.sender.uid !== this.props.unique_id) {
+
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the other user 
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         text: <Text>{message.text}</Text>,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: message.sender.uid,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 } else {
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         text: <Text onPress={() => {
+                    //                             this.setState({
+                    //                                 isVisible: !this.state.isVisible,
+                    //                                 selected: message.id
+                    //                             })
+                    //                         }}>{message.text}</Text>,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: this.props.unique_id,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 }
+                    //             } else if (message.type === "file") {
+                    //                 console.log("message is a file", message);
+
+                    //                 if (message.sender.uid !== this.props.unique_id) {
+
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         image: message.data.url,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: message.sender.uid,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 } else {
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         image: message.data.url,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: this.props.unique_id,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 }
+                    //             }
+                    //         }
+
+                    //         this.setState({
+                    //             messages: messageArray
+                    //         })
+                    //     },
+                    //     error => {
+                    //         console.log("Message fetching failed with error:", error);
+                    //     }
+                    // );
+                },
+                onCustomMessageReceived: customMessage => {
+                    console.log("Custom message received successfully", customMessage);
+                    // Handle custom message
+                },
+                onMessageDeleted: message => {
+                    console.log("Deleted Message", message);
+
+                    const UID = conversation.guid;
+                    const limit = 50;
+
+                    const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(limit).setGUID(UID).build();
+
+                    // messagesRequest.fetchPrevious().then(
+                    //     messages => {
+                    //         console.log("Message list fetched:", messages);
+                    //         // Handle the list of messages
+
+                    //         const messageArray = [];
+
+                    //         const reversed = messages.reverse();
+
+                    //         for (let index = 0; index < reversed.length; index++) {
+                    //             const message = reversed[index];
+
+                    //             console.log(message);
+                    //             if (message.type === "text") {
+                    //                 if (message.sender.uid !== this.props.unique_id) {
+
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the other user 
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         text: <Text>{message.text}</Text>,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: message.sender.uid,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 } else {
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         text: <Text onPress={() => {
+                    //                             this.setState({
+                    //                                 isVisible: !this.state.isVisible,
+                    //                                 selected: message.id
+                    //                             })
+                    //                         }}>{message.text}</Text>,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: this.props.unique_id,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 }
+                    //             } else if (message.type === "file") {
+                    //                 console.log("message is a file", message);
+
+                    //                 if (message.sender.uid !== this.props.unique_id) {
+
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         image: message.data.url,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: message.sender.uid,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 } else {
+                    //                     let customName = message.sender.name.replace(" ", "+");
+                    //                     // this is the logged in user
+                    //                     messageArray.push({
+                    //                         _id: uuid(),
+                    //                         image: message.data.url,
+                    //                         createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                    //                         user: {
+                    //                         _id: this.props.unique_id,
+                    //                         name: message.sender.name,
+                    //                         avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                    //                         },
+                    //                     })
+                    //                 }
+                    //             }
+                    //         }
+
+                    //         this.setState({
+                    //             messages: messageArray
+                    //         })
+                    //     },
+                    //     error => {
+                    //         console.log("Message fetching failed with error:", error);
+                    //     }
+                    // );
+                },
+                onTypingStarted: typingIndicator => {
+                    console.log("Typing started :", typingIndicator);
+
+                    if (typeof this.state.message !== "undefined" && this.state.message.length > 0) {
+
+                        this.setState({
+                            isTyping: true
+                        })
+                    }
+                },
+                onTypingEnded: typingIndicator => {
+                    console.log("Typing ended :", typingIndicator);
+
+                    this.setState({
+                        isTyping: false
+                    })
+                }
+            })
+        );
         console.log("conversation", conversation);
+    }
+    handleMessageSend = (message) => {
+        const { conversation } = this.props.props.route.params;
+
+        const receiverID = conversation.guid;
+        const messageText = message;
+        const receiverType = CometChat.RECEIVER_TYPE.GROUP;
+        const textMessage = new CometChat.TextMessage(
+            receiverID,
+            messageText,
+            receiverType
+        );
+
+        CometChat.sendMessage(textMessage).then(
+            message => {
+                console.log("Message sent successfully:", message);
+
+                const UID = conversation.guid;
+                const limit = 50;
+        
+                const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(limit).setGUID(UID).build();
+
+                messagesRequest.fetchPrevious().then(
+                    messages => {
+                        console.log("Message list fetched:", messages);
+                        // Handle the list of messages
+        
+                        const messageArray = [];
+        
+                        const reversed = messages.reverse();
+        
+                        for (let index = 0; index < reversed.length; index++) {
+                            const message = reversed[index];
+        
+                            console.log(message);
+                            
+                            if (message.type === "text") {
+                                if (message.sender.uid !== this.props.unique_id) {
+        
+                                    let customName = message.sender.name.replace(" ", "+");
+                                    // this is the other user 
+                                    messageArray.push({
+                                        _id: uuid(),
+                                        text: <Text>{message.text}</Text>,
+                                        createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                        user: {
+                                          _id: message.sender.uid,
+                                          name: message.sender.name,
+                                          avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                        },
+                                    })
+                                } else {
+                                    let customName = message.sender.name.replace(" ", "+");
+                                    // this is the logged in user
+                                    messageArray.push({
+                                        _id: uuid(),
+                                        text: <Text onPress={() => {
+                                            this.setState({
+                                                isVisible: !this.state.isVisible,
+                                                selected: message.id
+                                            })
+                                        }}>{message.text}</Text>,
+                                        createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                        user: {
+                                          _id: this.props.unique_id,
+                                          name: message.sender.name,
+                                          avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                        },
+                                    })
+                                }
+                            } else if (message.type === "file") {
+                                console.log("message is a file", message);
+
+                                if (message.sender.uid !== this.props.unique_id) {
+
+                                    let customName = message.sender.name.replace(" ", "+");
+                                    // this is the logged in user
+                                    messageArray.push({
+                                        _id: uuid(),
+                                        image: message.data.url,
+                                        createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                        user: {
+                                        _id: message.sender.uid,
+                                        name: message.sender.name,
+                                        avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                        },
+                                    })
+                                } else {
+                                    let customName = message.sender.name.replace(" ", "+");
+                                    // this is the logged in user
+                                    messageArray.push({
+                                        _id: uuid(),
+                                        image: message.data.url,
+                                        createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
+                                        user: {
+                                        _id: this.props.unique_id,
+                                        name: message.sender.name,
+                                        avatar: `https://ui-avatars.com/api/?name=${customName}`,
+                                        },
+                                    })
+                                }
+                            }
+                        }
+        
+                        this.setState({
+                            messages: messageArray,
+                            message: ""
+                        })
+                    },
+                    error => {
+                        console.log("Message fetching failed with error:", error);
+                    }
+                );
+            },
+            error => {
+                console.log("Message sending failed with error:", error);
+            }
+        );
+    }
+    typing = (value) => {
+        const { conversation } = this.props.props.route.params;
+
+        console.log("typing:", value);
+
+        let receiverId = conversation.guid;
+        let receiverType = CometChat.RECEIVER_TYPE.GROUP;
+
+        let typingNotification = new CometChat.TypingIndicator(
+            receiverId,
+            receiverType
+        );
+        CometChat.startTyping(typingNotification);
     }
     renderPicOrVideo = () => {
         const { conversation } = this.props.props.route.params;
@@ -73,128 +628,6 @@ constructor(props){
         } else {
             return <Image source={require("../../../assets/images/me.jpg")} style={styles.headerProfilePic} />;
         }
-    }
-    handleMessageSend = (message) => {
-        console.log("message", message);
-        // const { conversation } = this.props.props.route.params;
-
-        // const receiverID = conversation.conversationWith.uid;
-        // const messageText = message;
-        // const receiverType = CometChat.RECEIVER_TYPE.USER;
-        // const textMessage = new CometChat.TextMessage(
-        //     receiverID,
-        //     messageText,
-        //     receiverType
-        // );
-
-        // CometChat.sendMessage(textMessage).then(
-        //     message => {
-        //         console.log("Message sent successfully:", message);
-
-        //         const UID = conversation.conversationWith.uid;
-        //         const limit = 50;
-        
-        //         const messagesRequest = new CometChat.MessagesRequestBuilder()
-        //         .setLimit(limit)
-        //         .setUID(UID)
-        //         .build();
-
-        //         messagesRequest.fetchPrevious().then(
-        //             messages => {
-        //                 console.log("Message list fetched:", messages);
-        //                 // Handle the list of messages
-        
-        //                 const messageArray = [];
-        
-        //                 const reversed = messages.reverse();
-        
-        //                 for (let index = 0; index < reversed.length; index++) {
-        //                     const message = reversed[index];
-        
-        //                     console.log(message);
-                            
-        //                     if (message.type === "text") {
-        //                         if (message.sender.uid !== this.props.unique_id) {
-        
-        //                             let customName = message.sender.name.replace(" ", "+");
-        //                             // this is the other user 
-        //                             messageArray.push({
-        //                                 _id: uuid(),
-        //                                 text: <Text>{message.text}</Text>,
-        //                                 createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
-        //                                 user: {
-        //                                   _id: message.sender.uid,
-        //                                   name: message.sender.name,
-        //                                   avatar: `https://ui-avatars.com/api/?name=${customName}`,
-        //                                 },
-        //                             })
-        //                         } else {
-        //                             let customName = message.sender.name.replace(" ", "+");
-        //                             // this is the logged in user
-        //                             messageArray.push({
-        //                                 _id: uuid(),
-        //                                 text: <Text onPress={() => {
-        //                                     this.setState({
-        //                                         isVisible: !this.state.isVisible,
-        //                                         selected: message.id
-        //                                     })
-        //                                 }}>{message.text}</Text>,
-        //                                 createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
-        //                                 user: {
-        //                                   _id: this.props.unique_id,
-        //                                   name: message.sender.name,
-        //                                   avatar: `https://ui-avatars.com/api/?name=${customName}`,
-        //                                 },
-        //                             })
-        //                         }
-        //                     } else if (message.type === "file") {
-        //                         console.log("message is a file", message);
-
-        //                         if (message.sender.uid !== this.props.unique_id) {
-
-        //                             let customName = message.sender.name.replace(" ", "+");
-        //                             // this is the logged in user
-        //                             messageArray.push({
-        //                                 _id: uuid(),
-        //                                 image: message.data.url,
-        //                                 createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
-        //                                 user: {
-        //                                 _id: message.sender.uid,
-        //                                 name: message.sender.name,
-        //                                 avatar: `https://ui-avatars.com/api/?name=${customName}`,
-        //                                 },
-        //                             })
-        //                         } else {
-        //                             let customName = message.sender.name.replace(" ", "+");
-        //                             // this is the logged in user
-        //                             messageArray.push({
-        //                                 _id: uuid(),
-        //                                 image: message.data.url,
-        //                                 createdAt: moment(new Date(message.sentAt * 1000)).format("MM-DD-YYYY HH:mm:ss"),
-        //                                 user: {
-        //                                 _id: this.props.unique_id,
-        //                                 name: message.sender.name,
-        //                                 avatar: `https://ui-avatars.com/api/?name=${customName}`,
-        //                                 },
-        //                             })
-        //                         }
-        //                     }
-        //                 }
-        
-        //                 this.setState({
-        //                     messages: messageArray,
-        //                     message: ""
-        //                 })
-        //             },
-        //             error => {
-        //                 console.log("Message fetching failed with error:", error);
-        //             }
-        //         );
-        //     },
-        //     error => {
-        //         console.log("Message sending failed with error:", error);
-        //     }
-        // );
     }
     pickPicture = () => {
         const options = {
@@ -271,6 +704,21 @@ constructor(props){
           </View>
         );
     };
+    renderFooter = () => {
+        const { isTyping, messages } = this.state;
+
+        if (isTyping === true && typeof messages !== "undefined" && messages.length > 0) {
+          return (
+            <View style={styles.footerContainer}>
+              <View style={styles.rightTyping}>
+                <LottieView source={require('../../../assets/animations/typing.json')} autoPlay loop style={{ minWidth: 40, minHeight: 40 }} />
+              </View>
+            </View>
+          );
+        } else {
+            return null;
+        }
+    }
     render() {
         const { conversation } = this.props.props.route.params;
 
@@ -346,7 +794,19 @@ constructor(props){
                 }} stretch={true}>User's List (involved member's)</AwesomeButtonBlue>
                 <GiftedChat 
                     onInputTextChanged={(value) => {
-                        // this.typing(value);
+                        console.log(value);
+
+                        if (typeof value !== "undefined" && value.length > 0) {
+                            this.setState({
+                                message: value
+                            }, () => {
+                                this.typing(value);
+                            })
+                        } else {
+                            this.setState({
+                                message: value
+                            })
+                        }
                     }}
                     renderComposer={this.renderComposer}
                     infiniteScroll
@@ -389,7 +849,7 @@ constructor(props){
                             {typeof groupMembers !== "undefined" && groupMembers.length > 0 ? groupMembers.map((member, index) => {
                                 console.log("Member", member)
                                 return (
-                                    <ListItem avatar>
+                                    <ListItem key={index} avatar>
                                         <Left>
                                             {member.status === "offline" ? <Thumbnail style={{ maxWidth: 40, maxHeight: 40 }} source={require("../../../assets/icons/offline-dot.png")} /> : <Thumbnail style={{ maxWidth: 40, maxHeight: 40 }} source={require("../../../assets/icons/online-dot.png")} />}
                                         </Left>
@@ -437,4 +897,9 @@ constructor(props){
         )
     }
 }
-export default IndividualGroupConversationHelper;
+const mapStateToProps = (state) => {
+    return {
+        unique_id: state.signupData.authData.unique_id
+    }
+}
+export default connect(mapStateToProps, {})(IndividualGroupConversationHelper);
