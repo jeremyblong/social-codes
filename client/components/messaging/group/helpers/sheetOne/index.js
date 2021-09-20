@@ -356,7 +356,17 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                             }
                             break;
                         case 4:
-                            addMembersToGroup();
+                            if (conversation.owner === unique_id) {
+                                addMembersToGroup();
+                            } else {
+                                showMessage({
+                                    message: "You do not have the permission to 'add members to group' permissions.",
+                                    description: "ONLY group ADMIN(S) may 'add members to group', you are not an admin.",
+                                    type: "danger",
+                                    duration: 3500
+                                });
+                            }
+                            
                             break;
                         default: 
                             return;
