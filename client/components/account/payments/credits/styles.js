@@ -13,6 +13,17 @@ export default StyleSheet.create({
         maxWidth: 40,
         maxHeight: 40
     },
+    customAnimation: {
+        maxWidth: 400,
+        maxHeight: 400,
+        minWidth: 400,
+        minHeight: 400
+    },
+    centeredCustom: {
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center"
+    },
     listItem: {
         minHeight: 70,
         maxHeight: 70,
@@ -37,10 +48,12 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
-        marginTop: 20
+        marginTop: 20,
+        height: "35%"
     },
     customBtn: {
-        marginBottom: 25
+        marginBottom: 25,
+        marginTop: 20
     },
     middle: {
         position: "absolute",

@@ -8,7 +8,7 @@ const stripe = require('stripe')(config.get("stripeSecretKey"));
 const axios = require("axios");
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment');
-
+const _ = require("lodash");
 
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, respppppppp) => {
@@ -45,7 +45,18 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         otherUserData = element;
                     }
                 }
+                
                 console.log("otherUserData", otherUserData);
+
+                const calculateDateForCoupon = (user) => {
+                    if (_.has(user, "coupon") && (new Date() < new Date(user.coupon.end))) {
+                        return 0.15 - user.coupon.discount;
+                    } else {
+                        return 0.15;
+                    }
+                }
+
+                
                 const promise = new Promise(async (resolve, reject) => {
                     for (let index = 0; index < users.length; index++) {
                         const user = users[index];
@@ -61,7 +72,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                         payment_method_types: ['card'],
                                         customer: user.stripeCustomerAccount.id,
                                         description: 'Pre-Complete payment for project completion.',
-                                        application_fee_amount: Math.round(Number(Math.round(rate * 100) * 0.20)),
+                                        application_fee_amount: Math.round(Number(Math.round(Number(rate) * 100) * calculateDateForCoupon(user))),
                                         on_behalf_of: otherUserData.stripeConnectAccount.id,
                                         capture_method: 'manual',
                                         confirm: true,

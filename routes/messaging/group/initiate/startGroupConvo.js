@@ -11,7 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTopology: true }, cors(), (err, db) => {
     router.post("/", (req, respppppp) => {
 
-        const { privacy, selected, group, id, others } = req.body;
+        const { privacy, selected, group, id, others, fullName } = req.body;
 
         const database = db.db("db");
 
@@ -29,166 +29,94 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 })
             } else {
 
+                console.log("users", users);
+
                 const customGroup = {
                     ...group,
                     selected,
                     privacy
                 };
 
-                const finalizedUsers = [];
+                const configgg = {
+                    headers: {
+                        "Authorization": `key=${config.get("firebaseCloudMessagingServerKey")}`,
+                        "Content-Type": "application/json"
+                    }
+                };
+
+                const notificationAddition = {
+                    id: uuidv4(),
+                    system_date: Date.now(),
+                    date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                    data: {
+                        title: `${fullName} invited you to a group and you have automatically joined!`,
+                        body: `${fullName} sent you a group invitation and you were automatically joined - if you'd like to not join this group you can visit the group and hit the 'leave group' option`,
+                        data: group
+                    },
+                    from: id,
+                    link: "started-group-chat"
+                };
+
+                const generated = (Math.floor(Math.random() * (users.length - 1)) + 1);
+
 
                 for (let index = 0; index < users.length; index++) {
-
                     const user = users[index];
 
-                    if ((users.length - 2) === index) {
-                        if(user.unique_id === id) {
-                            // self
+                    if (generated === index) {
+                        customGroup["profilePic"] =  (typeof user.profilePics !== "undefined" && user.profilePics.length > 0 ? user.profilePics[user.profilePics.length - 1] : {
+                            date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                            id: uuidv4(),
+                            picture: "no-image-available.jpeg",
+                            type: "picture",
+                            systemDate: Date.now()
+                        });
+                    }
 
-                            console.log("match ID")
+                    if (user.unique_id !== id) {
+                        axios.post("https://fcm.googleapis.com/fcm/send", {
+                            "to": user.firebasePushNotificationToken,
+                            "notification": {
+                                "title": `${fullName} invited you to a group and you have automatically joined!`,
+                                "body": `${fullName} sent you a group invitation and you were automatically joined - if you'd like to not join this group you can visit the group and hit the 'leave group' option`,
+                                "mutable_content": true,
+                                "sound": "Tri-tone"
+                            },
+                            "data": {
+                                // use company logo 
+                                "url": `${config.get("logoImage")}`,
+                                "dl": "notifications"
+                                // use company logo ^^^^^^^^^^^^^^^^^^^^^^^^^
+                            }
+                        }, configgg).then((res) => {
+        
+                            console.log("RES", res.data);
+        
+                            if (user.notifications) {
+                                user.notifications.push(notificationAddition);
+                            } else {
+                                user["notifications"] = [notificationAddition];
+                            }
+                            
+                            collection.save(user);
 
-                            axios.get(`${config.get("ngrok_url")}/gather/user/pics/only`, {
-                                params: {
-                                    id: user.unique_id
-                                }
-                            }).then((responseeeeee) => {
-                                if (responseeeeee.data.message === "Located the desired user!") {
-
-                                    const { profilePics } = responseeeeee.data;
-
-                                    console.log("ran!");
-
-                                    customGroup["profilePic"] =  (typeof profilePics !== "undefined" && profilePics.length > 0 ? profilePics : {
-                                        date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-                                        id: uuidv4(),
-                                        picture: "no-image-available.jpeg",
-                                        type: "picture",
-                                        systemDate: Date.now()
-                                    });
-
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                } else {
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                }
-                            }).catch((errrrrrrror) => {
-                                console.log(errrrrrrror);
-                            })
-                        } else {
-                            axios.get(`${config.get("ngrok_url")}/gather/user/pics/only`, {
-                                params: {
-                                    id: user.unique_id
-                                }
-                            }).then((responseeeeee) => {
-                                if (responseeeeee.data.message === "Located the desired user!") {
-
-                                    const { profilePics } = responseeeeee.data;
-
-                                    console.log("ran!");
-
-                                    customGroup["profilePic"] =  (typeof profilePics !== "undefined" && profilePics.length > 0 ? profilePics : {
-                                        date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-                                        id: uuidv4(),
-                                        picture: "no-image-available.jpeg",
-                                        type: "picture",
-                                        systemDate: Date.now()
-                                    });
-
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                } else {
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                }
-                            }).catch((errrrrrrror) => {
-                                console.log(errrrrrrror);
-                            })
-                        }
+                            if ((users.length - 1) === index) {
+                                respppppp.json({
+                                    message: "Initiated group!",
+                                    customGroup,
+                                    users
+                                })
+                            }
+        
+                        }).catch((err) => {
+                            console.log(err);
+                        })
                     } else {
-                        if(user.unique_id === id) {
-                            // self
-    
-                            axios.get(`${config.get("ngrok_url")}/gather/user/pics/only`, {
-                                params: {
-                                    id: user.unique_id
-                                }
-                            }).then((responseeeeee) => {
-                                if (responseeeeee.data.message === "Located the desired user!") {
-
-                                    const { profilePics } = responseeeeee.data;
-
-                                    console.log("ran!");
-
-                                    customGroup["profilePic"] =  (typeof profilePics !== "undefined" && profilePics.length > 0 ? profilePics : {
-                                        date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-                                        id: uuidv4(),
-                                        picture: "no-image-available.jpeg",
-                                        type: "picture",
-                                        systemDate: Date.now()
-                                    });
-
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                } else {
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                }
-                            }).catch((errrrrrrror) => {
-                                console.log(errrrrrrror);
-                            })
-                        } else {
-                            axios.get(`${config.get("ngrok_url")}/gather/user/pics/only`, {
-                                params: {
-                                    id: user.unique_id
-                                }
-                            }).then((responseeeeee) => {
-                                if (responseeeeee.data.message === "Located the desired user!") {
-
-                                    const { profilePics } = responseeeeee.data;
-
-                                    console.log("ran!");
-
-                                    customGroup["profilePic"] =  (typeof profilePics !== "undefined" && profilePics.length > 0 ? profilePics : {
-                                        date: moment(new Date()).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-                                        id: uuidv4(),
-                                        picture: "no-image-available.jpeg",
-                                        type: "picture",
-                                        systemDate: Date.now()
-                                    });
-
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                } else {
-                                    respppppp.json({
-                                        message: "Initiated group!",
-                                        customGroup,
-                                        users: finalizedUsers
-                                    })
-                                }
-                            }).catch((errrrrrrror) => {
-                                console.log(errrrrrrror);
+                        if ((users.length - 1) === index) {
+                            respppppp.json({
+                                message: "Initiated group!",
+                                customGroup,
+                                users
                             })
                         }
                     }

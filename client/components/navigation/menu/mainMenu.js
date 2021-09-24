@@ -427,7 +427,7 @@ constructor(props) {
                                         this.props.props.navigation.push("payments-main");
                                     }} style={styles.shortView}>
                                         <Image source={require("../../../assets/icons/topoff.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
-                                        <Text style={styles.largeSized}>Payment Methods</Text>
+                                        <Text style={styles.largeSized}>Payment Methods & Coupon Codes</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => {
                                         this.props.props.navigation.push("forums-main");

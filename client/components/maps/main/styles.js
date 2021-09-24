@@ -58,7 +58,7 @@ export default StyleSheet.create({
     },
     containerCustom: {
         position: "absolute",
-        bottom: 75,
+        bottom: 125,
         right: 25,
         left: 25
     },
@@ -71,7 +71,7 @@ export default StyleSheet.create({
         zIndex: -1,
         shadowOpacity: 0.5,
         shadowRadius: 4,
-        marginVertical: 8,
+        marginVertical: 5,
         minHeight: 250,
         backgroundColor:"white",
         flexBasis: '47%',

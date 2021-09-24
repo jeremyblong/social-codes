@@ -47,7 +47,9 @@ const FriendsListHomepageMenuHelper = (props) => {
                             <Icon name="arrow-forward" />
                         </Right>
                     </ListItem>
-                    <ListItem>
+                    <ListItem button={true} onPress={() => {
+                        props.props.navigation.push("people-list-all");
+                    }}>
                         <Left>
                             <Text>Add new friends</Text>
                         </Left>
@@ -75,9 +77,11 @@ const FriendsListHomepageMenuHelper = (props) => {
                         </Right>
                     </ListItem>
                 </List>
-                <View style={styles.centered}>
-                    <LottieView style={styles.animation} source={require('../../assets/animations/friends.json')} autoPlay loop />
-                </View>
+                {/* <View style={styles.centeredOutter}> */}
+                    <View style={styles.centered}>
+                        <LottieView style={styles.animation} source={require('../../assets/animations/friends.json')} autoPlay loop />
+                    </View>
+                {/* </View> */}
             </View>
         </Fragment>
     )

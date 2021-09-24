@@ -1311,7 +1311,7 @@ constructor () {
                                                 </FooterTab>
                                             </Footer>
                                             
-                                            <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50 }}>
+                                            <Footer style={Platform.OS === "android" ? { borderColor: "transparent", height: 50 } : { borderColor: "transparent", height: 50, backgroundColor: "#303030" }}>
                                                 <FooterTab>
                                                     <Button onPress={() => {
                                                         this.props.props.navigation.push("maps-locals-main");
@@ -2135,7 +2135,7 @@ constructor () {
                                     </Header>
                                     <View style={styles.margin}>
                                         <View style={{ flexDirection: "row", maxWidth: width }}>
-                                            <Image source={require("../../../assets/images/me.jpg")} style={styles.profilePicTwo} />
+                                            {user !== null ? this.renderPhotoOrVideo(user, 45) : null}
                                             <View style={{ flexDirection: "column", maxWidth: width * 0.75 }}>
                                                 {this.renderNameAndActivity()}
                                                 <View style={styles.visibility}>

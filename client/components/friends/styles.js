@@ -21,6 +21,11 @@ export default StyleSheet.create({
     container: {
         backgroundColor: "white"
     },
+    centeredOutter: {
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center"
+    },
     animation: {
         maxWidth: 350,
         maxHeight: 225,

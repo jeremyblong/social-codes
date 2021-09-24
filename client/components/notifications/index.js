@@ -144,7 +144,17 @@ constructor(props) {
                         this.lookupNotificationVideoCall(notification);
                     } else if (notification.link === "files-pending-project") {
                         this.lookupNotificationFile(notification);
-                    } 
+                    } else if (notification.link === "accepted-job-interview") {
+                        this.props.props.navigation.push("active-live-jobs-main");
+                    } else if (notification.link === "started-group-chat") {
+                        this.props.props.navigation.push("group-conversation-thread", { conversation: notification.data.data });
+                    } else if (notification.link === "accepted-job-interview") {
+
+                    } else if (notification.link === "submitted-work") {
+
+                    } else if (notification.link === "reviews") {
+                        
+                    }
                 })
             } else {
                 console.log("err", res.data);

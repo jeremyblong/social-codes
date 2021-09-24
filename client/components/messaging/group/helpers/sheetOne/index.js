@@ -40,7 +40,7 @@ const options = [
     </View>
 ]
 
-const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMembers }) => {
+const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMembers, fullName }) => {
     const [members, setMembers] = useState([]);
     const [ query, setQuery ] = useState("");
     const [ searchValue, setSearchValue ] = useState("");
@@ -263,7 +263,9 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
 
             axios.put(`${Config.ngrok_url}/ban/user/conversation`, {
                 otherID,
-                GUID
+                GUID,
+                id: unique_id,
+                fullName
             }).then((res) => {
                 if (res.data.message === "Banned!") {
                     console.log(res.data);
@@ -551,7 +553,8 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
 }
 const mapStateToProps = (state) => {
     return {
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`
     };
 }
 export default connect(mapStateToProps, { })(SheetOptionsHelper);

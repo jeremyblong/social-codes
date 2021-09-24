@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.740623513253-5d4cchi4sh6ckm5hvpr2baiidala3ctr</string>
+				<string>com.googleusercontent.apps.796752027417-kimdu3u2st4lall64hrhnp44falinitp</string>
 			</array>
 		</dict>
 	</array>
@@ -36,7 +36,7 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9779394432278063~5441251879</string>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

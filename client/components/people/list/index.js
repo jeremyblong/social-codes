@@ -1260,7 +1260,8 @@ class PeopleBrowseListHelper extends Component {
                                 }
                             }}
                         />
-                    </List> : <FlatList
+                    </List> : <View><FlatList
+                    contentContainerStyle={{ flexDirection: "row", flexWrap: 'wrap' }}
                     data={users}
                     keyExtractor={(item) => item._id}
                     onEndReachedThreshold={0.1}
@@ -1304,7 +1305,7 @@ class PeopleBrowseListHelper extends Component {
                             )
                         }
                     }}
-                />}
+                /></View>}
                 {this.renderLoadingContent()}
             {/* </ScrollView> */}
         </View>

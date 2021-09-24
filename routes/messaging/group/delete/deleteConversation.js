@@ -10,8 +10,6 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
 
         const { guid, group, id } = req.body;
 
-        console.log(req.body)
-
         const database = db.db("db");
 
         const collection = database.collection("users");

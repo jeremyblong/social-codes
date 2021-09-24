@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import Toast from 'react-native-toast-message';
 import DialogInput from 'react-native-dialog-input';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import _ from "lodash";
 
 const { height, width } = Dimensions.get("window");
 
@@ -685,7 +686,8 @@ constructor (props) {
                                 selected,
                                 group: groupppp,
                                 id: this.props.unique_id,
-                                others: passedValues.members
+                                others: passedValues.members,
+                                fullName: this.props.fullName
                             }).then((res) => {
                                 if (res.data.message === "Initiated group!") {
                                     console.log(res.data);
@@ -749,7 +751,7 @@ constructor (props) {
                             </Left>
                             <Left>
                                 <Button transparent>
-                                    <Image source={require("../../../assets/images/me.jpg")} style={styles.headerProfilePic} />
+                                    {/* {_.has(this.props.profilePic, "picture") ? <Image source={{ uri: `${Config.wasabi_url}/${this.props.profilePic.picture}` }} style={styles.headerProfilePic} /> : null} */}
                                     <Title style={styles.title}>Chats</Title>
                                 </Button>
                             </Left>
@@ -1010,8 +1012,11 @@ constructor (props) {
     }
 };
 const mapStateToProps = (state) => {
+    // console.log("!!!", state, `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`, state.signupData.authData.firstName);
     return {
-        unique_id: state.signupData.authData.unique_id
+        unique_id: state.signupData.authData.unique_id,
+        fullName: `${state.signupData.authData.firstName} ${state.signupData.authData.lastName}`,
+        profilePic: typeof state.signupData.authData.profilePics !== "undefined" && state.signupData.authData.profilePics.length > 0 ? state.signupData.authData.profilePics[state.signupData.authData.profilePics - 1] : null
     }
 }
 export default connect(mapStateToProps, {})(MessagingHomeChannelsHelper);

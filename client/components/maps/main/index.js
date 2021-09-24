@@ -205,23 +205,6 @@ constructor(props) {
                         </Right>
                     </Header>
                     <Toast ref={(ref) => Toast.setRef(ref)} />
-                    {/* <View style={styles.row}>
-                        <SearchBar 
-                            style={styles.searchBar}
-                            ref="searchBar"
-                            placeholder="Search anything..."
-                            onChangeText={(value) => {}}
-                            onSearchButtonPress={() => {}}
-                            onCancelButtonPress={() => {}}
-                        />
-                        <TouchableOpacity onPress={() => {
-                            this.setState({
-                                hide: !this.state.hide
-                            })
-                        }} style={styles.hideTouchOutter}>
-                            <Image source={require("../../../assets/icons/hide-150.png")} style={styles.hideTouch} />
-                        </TouchableOpacity>
-                    </View>  */}
                     <Spinner
                         visible={this.state.spinner}
                         textContent={'Loading content...'}

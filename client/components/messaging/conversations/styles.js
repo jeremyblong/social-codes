@@ -9,6 +9,8 @@ const screenHeight = Dimensions.get("screen").height;
 export default StyleSheet.create({
     headerProfilePic: {
         maxWidth: 50, 
+        minWidth: 50,
+        minHeight: 50,
         borderRadius: 120,
         maxHeight: 50,
         marginRight: 10
